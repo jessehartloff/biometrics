@@ -69,7 +69,7 @@ public class Fingerprint extends Biometric{
 					+ centerY);
 
 			rotatedMinutia.theta = minutia.theta + Math.round(degrees);
-			while(rotatedMinutia.theta > 360){rotatedMinutia.theta -= 360;}
+			while(rotatedMinutia.theta >= 360){rotatedMinutia.theta -= 360;}
 		    while(rotatedMinutia.theta < 0)  {rotatedMinutia.theta += 360;}
 			
 			rotatedMinutia.confidence = minutia.confidence;
