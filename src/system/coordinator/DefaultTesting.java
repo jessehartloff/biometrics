@@ -71,7 +71,7 @@ public class DefaultTesting extends Coordinator {
 		Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
 		
-		assert(Math.abs(score1 - score) < 0.001); // TODO test this in unit test
+		assert(Math.abs(score1 - score) < 0.001); {}// TODO test this in unit test
 		
 		return score; 
 	}

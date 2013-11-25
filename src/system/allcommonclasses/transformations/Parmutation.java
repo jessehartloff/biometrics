@@ -6,7 +6,7 @@ public class Parmutation extends Transformation{
 
 	@Override
 	public BigInteger transform(BigInteger template) {
-		// TODO Permutation
+		{}// TODO Permutation
 		return null;
 	}
 

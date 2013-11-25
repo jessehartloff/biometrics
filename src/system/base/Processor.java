@@ -10,7 +10,7 @@ import system.allcommonclasses.*;
  */
 public class Processor {
 
-	// TODO Processor. This one will be a bit of a mess. Could benefit from helper classes to divide an conquer.
+	{}// TODO Processor. This one will be a bit of a mess. Could benefit from helper classes to divide an conquer.
 	
 	/**
 	 * Does things
@@ -24,8 +24,8 @@ public class Processor {
 	}
 
 	
-	// TODO read biometrics from files
+	{}{}// TODO read biometrics from files
 	
-	// TODO make all the users
+	{}// TODO make all the users
 	
 }

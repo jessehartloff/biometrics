@@ -13,9 +13,9 @@ public class GenerateFVCStyleTests extends GenerateTests{
 	@Override
 	public Tests generateTests(Users enrollees) {
 		
-		// TODO generate all genuines
+		{}{}// TODO generate all genuines
 		
-		// TODO generate imposters by comparing the first readings of all users
+		{}{}// TODO generate imposters by comparing the first readings of all users
 		
 		return null;
 	}

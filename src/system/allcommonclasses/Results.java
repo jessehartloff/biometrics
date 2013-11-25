@@ -8,6 +8,6 @@ package system.allcommonclasses;
  */
 public class Results {
 
-	// TODO Results
+	{}// TODO Results
 	
 }

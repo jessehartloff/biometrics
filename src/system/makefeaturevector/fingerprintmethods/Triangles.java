@@ -42,7 +42,7 @@ public class Triangles extends FingerprintMethod {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
-		// TODO quantize triangles
+		{}// TODO quantize triangles
 		return null;
 	}
 
@@ -55,7 +55,7 @@ public class Triangles extends FingerprintMethod {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO triangle distance
+		{}// TODO triangle distance
 		return null;
 	}
 

@@ -41,21 +41,21 @@ public class MinutiaeMethod extends FingerprintMethod {
 
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
-		// TODO quantize minutiae
+		{}// TODO quantize minutiae
 		return null;
 	}
 
 
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
-		// TODO brute force minutiae quantization
+		{}// TODO brute force minutiae quantization
 		return null;
 	}
 
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO minutiae distance
+		{}// TODO minutiae distance
 		return null;
 	}
 }

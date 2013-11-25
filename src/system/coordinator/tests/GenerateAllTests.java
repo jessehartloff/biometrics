@@ -12,7 +12,7 @@ public class GenerateAllTests extends GenerateTests {
 	@Override
 	public Tests generateTests(Users enrollees) {
 		
-		// TODO generate all possible genuine and impostor tests
+		{}// TODO generate all possible genuine and impostor tests
 		
 		return null;
 	}

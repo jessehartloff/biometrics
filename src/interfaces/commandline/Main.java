@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		// TODO Main/GUI
+		{}// TODO Main/GUI
 		
 		Parameters parameters = new Parameters();
 		// new Parameters or read serialized from file

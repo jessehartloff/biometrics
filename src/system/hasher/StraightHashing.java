@@ -16,7 +16,7 @@ public class StraightHashing extends Hasher {
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {
 		Template template = biometric.quantizeOne();
-		// TODO !hash these values. Probably make a new base class
+		{}// TODO hash these values. Probably make a new base class
 		//      for hash functions with a method to hash big ints to big ints. Could be more general
 		//      and include permutations.
 		return template;
@@ -25,7 +25,7 @@ public class StraightHashing extends Hasher {
 	@Override
 	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
 		ArrayList<Template> templates = biometric.quantizeAll();
-		// TODO hash these values.
+		{}// TODO hash these values.
 		return templates;
 	}
 

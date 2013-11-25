@@ -15,19 +15,19 @@ public class ShortcutFuzzyVault extends Hasher {
 
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {
-		// TODO ShortcutFuzzyVault enrolled template
+		{}// TODO ShortcutFuzzyVault enrolled template
 		return null;
 	}
 
 	@Override
 	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
-		// TODO ShortcutFuzzyVault test template
+		{}// TODO ShortcutFuzzyVault test template
 		return null;
 	}
 
 	@Override
 	public Double compareTemplates(Template enrolledTemplate, ArrayList<Template> testTemplates) {
-		// TODO ShortcutFuzzyVault compare templates
+		{}// TODO ShortcutFuzzyVault compare templates
 		return null;
 	}
 

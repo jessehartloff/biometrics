@@ -1,6 +1,7 @@
 package system.allcommonclasses.modalities;
 
 import java.util.ArrayList;
+
 import system.allcommonclasses.Template;
 
 /**
@@ -25,4 +26,6 @@ public abstract class Biometric {
 	 * @return ArrayList of feature vectors to be hashed
 	 */
 	public abstract ArrayList<Template> quantizeAll();
+
+
 }

@@ -7,5 +7,5 @@ package system.allcommonclasses;
  */
 public class Parameters {
 
-	// TODO Parameters.
+	{}// TODO Parameters.
 }

@@ -29,6 +29,6 @@ public abstract class Coordinator {
 	 */
 	public abstract RawScores run();
 
-	// TODO Could have some methods to add more users or replace the existing users
+	{}// TODO could have some methods to add more users or replace the existing users
 	
 }

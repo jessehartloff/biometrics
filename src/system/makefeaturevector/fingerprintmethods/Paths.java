@@ -14,22 +14,22 @@ import system.vectordistance.MeasurableDistance;
  */
 public class Paths extends FingerprintMethod {
 
-	// TODO might not need subclasses like this
+	{}// TODO might not need subclasses like this
 	private class Path implements MeasurableDistance<Path>{
 
 		int d1;
-		// TODO variables for Path
+		{}// TODO variables for Path
 		
 		@Override
 		public Double distanceFrom(Path compareT) {
-			// TODO distance
+			{}// TODO distance
 			return null;
 		}
 		
 
 	}
 
-	
+	{}
 	private Paths(/* TODO parameters for paths such as bin widths. 
 	might use setter methods instead of constructor, or both*/) {
 	}
@@ -59,7 +59,7 @@ public class Paths extends FingerprintMethod {
 
 	@Override
 	public Template quantizeOne(Fingerprint biometric) {
-		// TODO quantize paths
+		{}// TODO quantize paths
 		return null;
 	}
 
@@ -74,7 +74,7 @@ public class Paths extends FingerprintMethod {
 	
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO path distance
+		{}// TODO path distance
 		return null;
 	}
 

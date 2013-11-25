@@ -14,19 +14,19 @@ public class PinSketch extends Hasher {
 
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {
-		// TODO PinSketch enrolled template
+		{}// TODO PinSketch enrolled template
 		return null;
 	}
 
 	@Override
 	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
-		// TODO PinSketch test template
+		{}// TODO PinSketch test template
 		return null;
 	}
 
 	@Override
 	public Double compareTemplates(Template enrolledTemplate, ArrayList<Template> testTemplates) {
-		// TODO PinSketch compare templates
+		{}// TODO PinSketch compare templates
 		return null;
 	}
 

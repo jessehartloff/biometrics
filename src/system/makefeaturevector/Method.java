@@ -1,13 +1,7 @@
 package system.makefeaturevector;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-
-import system.allcommonclasses.*;
-import system.allcommonclasses.modalities.Biometric;
-import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 import system.vectordistance.Distance;
-import system.vectordistance.ExactDistance;
 
 
 /**
@@ -18,13 +12,14 @@ import system.vectordistance.ExactDistance;
  */
 public abstract class Method {
 
-	Distance distanceFunction; // TODO distance function
+	//Distance distanceFunction; 
+	{}// TODO distance function
 	
 	/**
 	 * This constructor defaults to ExactDistance for the distance function.
 	 */
 	protected Method(){
-		this.distanceFunction = new ExactDistance();
+	//	this.distanceFunction = new ExactDistance();
 	}	
 	
 	/**
@@ -32,8 +27,8 @@ public abstract class Method {
 	 * 
 	 * @param distanceFunction
 	 */
-	protected Method(Distance distanceFunction){ // TODO move distance to a setter method?
-		this.distanceFunction = distanceFunction;
+	protected Method(Distance<?> distanceFunction){ {}// TODO move distance to a setter method?
+	//	this.distanceFunction = distanceFunction;
 	}
 	
 	

@@ -40,7 +40,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
-		// TODO quantize triples of triangles
+		{}// TODO quantize triples of triangles
 		return null;
 	}
 
@@ -53,7 +53,7 @@ public class TriplesOfTriangles extends Triangles {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO triple of triangles distance
+		{}// TODO triple of triangles distance
 		return null;
 	}
 }
