@@ -13,6 +13,7 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
+	
 	protected TriplesOfTrianglesAllRotations() {
 	}
 	
@@ -40,8 +41,14 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
-		{}// TODO quantize triples of triangles all rotations
-		return null;
+		Template toReturn = new Template();
+		ArrayList<Template> manyTemplates = super.quantizeAll(fingerprint);
+		for(Template template : manyTemplates){
+			for(BigInteger bigInt : template.hashes){
+				toReturn.hashes.add(bigInt);
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
@@ -53,7 +60,7 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		{}// TODO triple of triangles all rotations distance
+		// TODO triple of triangles all rotations distance
 		return null;
 	}
 	

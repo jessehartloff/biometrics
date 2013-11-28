@@ -3,7 +3,9 @@
  */
 package system.hasher;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+
 import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.transformations.Transformation;
@@ -54,10 +56,9 @@ public abstract class Hasher {
 	 * @return Permuted template
 	 */
 	public Template permute(Template template, Transformation permutation){
-		int n = template.hashes.size();
 		
-		for(int i=0; i<n; i++){
-			template.hashes.set(i, permutation.transform(template.hashes.get(i)));
+		for(BigInteger hash : template.hashes){
+			hash = permutation.transform(hash);
 		}
 		
 		return template; // don't really need to return this

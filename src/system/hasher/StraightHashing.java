@@ -3,8 +3,9 @@ package system.hasher;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.Biometric;
+import system.allcommonclasses.transformations.*;
 
 /**
  * 
@@ -16,16 +17,26 @@ public class StraightHashing extends Hasher {
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {
 		Template template = biometric.quantizeOne();
-		{}// TODO hash these values. Probably make a new base class
-		//      for hash functions with a method to hash big ints to big ints. Could be more general
-		//      and include permutations.
+		
+		Transformation hashFunction = new SHA2();
+		for(BigInteger bigInt : template.hashes){
+			bigInt = hashFunction.transform(bigInt);
+		}
+		
 		return template;
 	}
 
 	@Override
 	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
 		ArrayList<Template> templates = biometric.quantizeAll();
-		{}// TODO hash these values.
+		
+		Transformation hashFunction = new SHA2();
+		for(Template template : templates){
+			for(BigInteger bigInt : template.hashes){
+				bigInt = hashFunction.transform(bigInt);
+			}
+		}
+		
 		return templates;
 	}
 

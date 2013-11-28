@@ -2,6 +2,8 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
@@ -13,6 +15,37 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class TriplesOfTriangles extends Triangles {
 
+	protected class TriangleTriplet{
+		Triangle t0;
+		Triangle t1;
+		Triangle t2;
+		
+		ArrayList<Triangle> ts;
+		
+		protected void order(){
+			ArrayList<Triangle> threeTriangles = new ArrayList<Triangle>();
+			threeTriangles.add(t0);
+			threeTriangles.add(t1);
+			threeTriangles.add(t2);
+			Collections.sort(threeTriangles);
+			t0 = threeTriangles.get(0);
+			t1 = threeTriangles.get(1);
+			t2 = threeTriangles.get(2);
+			
+		}
+		
+		protected BigInteger toBigInt(){
+			{}// TODO triangle to big int
+			return null;
+		}
+		
+		protected void fromBigInt(BigInteger bigInt){
+			{}// TODO  big int to triangle
+		}
+	}
+	
+	
+	
 	protected TriplesOfTriangles() {
 	}
 	
@@ -40,20 +73,45 @@ public class TriplesOfTriangles extends Triangles {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
-		{}// TODO quantize triples of triangles
-		return null;
+		Template template = new Template();
+		ArrayList<Triangle> triangles = super.fingerprintToTriangles(fingerprint);
+		
+		int n = triangles.size();
+		for(int i=0; i<n; i++){
+			for(int j=i+1; j<n; j++){
+				for(int k=j+1; k<n; k++){
+					if(true/*TODO condition*/){
+						TriangleTriplet triplet = new TriangleTriplet();
+						triplet.t0 = triangles.get(i);
+						triplet.t1 = triangles.get(j);
+						triplet.t2 = triangles.get(k);
+						triplet.order();
+						template.hashes.add(triplet.toBigInt());
+					}
+				}
+			}
+		}
+		return template;
 	}
 
+	
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		templates.add(this.quantizeOne(fingerprint));
+		
+		for(double rotation=this.rotationStart; rotation<this.rotationStop; rotation+=this.rotationStep){
+			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
+			templates.add(this.quantizeOne(rotatedPrint));
+		}
 		return templates;
 	}
 
+	
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		{}// TODO triple of triangles distance
+		// TODO triple of triangles distance
 		return null;
 	}
+	
+	
 }

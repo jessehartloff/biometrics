@@ -38,18 +38,18 @@ public class FuzzyVault extends Hasher implements Indexable {
 
 		
 		
-		{}{}{}{}{}// TODO make secret polynomial
+		{}// TODO make secret polynomial
 		
 		// adds the genuine points to vaultPoints
 		for (BigInteger bigInt : template.hashes) {
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
 			genuinePoint.z = bigInt;
-			{}{}{}{}// TODO evaluate secret polynomial to get gamma
+			{}// TODO evaluate secret polynomial to get gamma
 			genuinePoint.chaff = false;
 			vaultPoints.add(genuinePoint);
 		}
 		
-		{}{}{}{}// TODO add chaff points
+		{}// TODO add chaff points
 		
 		Template returnTemplate = new Template();
 		
@@ -90,7 +90,7 @@ public class FuzzyVault extends Hasher implements Indexable {
 		for (Template template : testTemplates) {
 			Double score = 0.0;
 			for (BigInteger hash : template.hashes) {
-				{}{}{}{}// TODO try to unlock and get a score. Will involve bigIntToPoint.
+				{}// TODO try to unlock and get a score. Will involve bigIntToPoint.
 				//      Not sure what to really return yet. ShortcutFuzzyVault can be 
 				//      used to get scores, this should return the polynomial from decoding.
 				//      It might be a long time(if ever) before we need this, but it should
@@ -106,16 +106,14 @@ public class FuzzyVault extends Hasher implements Indexable {
 	@Override
 	public Template permute(Template template, Transformation permutation){
 
-		int n = template.hashes.size();
-		
-		for(int i=0; i<n; i++){
-			FuzzyVaultPoint point = this.bigIntToPoint(template.hashes.get(i));
-			{}{}{}{}// TODO might have to recover the secret polynomial...
+		for(BigInteger hash : template.hashes){
+			FuzzyVaultPoint point = this.bigIntToPoint(hash);
+			{}// TODO might have to recover the secret polynomial...
 			//      Maybe the permutation should be part of template creation.
 			//      If so, need to keep multiple servers in mind.
 			point.z = permutation.transform(point.z);
-			{}{}{}{}// TODO re-evaluate gamma...
-			template.hashes.set(i, this.pointToBigInt(point));
+			{}// TODO re-evaluate gamma...
+			hash = this.pointToBigInt(point);
 		}
 		
 		return template; // don't really need to return this
@@ -128,7 +126,7 @@ public class FuzzyVault extends Hasher implements Indexable {
 	 * @return
 	 */
 	private BigInteger pointToBigInt(FuzzyVaultPoint point){
-		{}{}{}{}// TODO pointToBigInt. will use fieldSize
+		{}// TODO pointToBigInt. will use fieldSize
 		return null;
 	}
 
@@ -140,7 +138,7 @@ public class FuzzyVault extends Hasher implements Indexable {
 	 * @return
 	 */
 	private FuzzyVaultPoint bigIntToPoint(BigInteger bigInt){
-		{}{}{}{}// TODO bigIntToPoint. will use fieldSize
+		{}// TODO bigIntToPoint. will use fieldSize
 		return null;
 	}
 	

@@ -11,6 +11,10 @@ public class Tests {
 
 	public ArrayList<Test> tests;
 	
+	public Tests(){
+		this.tests = new ArrayList<Test>();
+	}
+	
 	// some useful functions
 	
 }

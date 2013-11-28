@@ -12,7 +12,7 @@ import system.vectordistance.MeasurableDistance;
  * Determines how Paths are quantized and compared. Paths are... (describe paths here)
  *
  */
-public class Paths extends FingerprintMethod {
+public class PathsMethod extends FingerprintMethod {
 
 	{}// TODO might not need subclasses like this
 	private class Path implements MeasurableDistance<Path>{
@@ -30,7 +30,7 @@ public class Paths extends FingerprintMethod {
 	}
 
 	{}
-	private Paths(/* TODO parameters for paths such as bin widths. 
+	private PathsMethod(/* TODO parameters for paths such as bin widths. 
 	might use setter methods instead of constructor, or both*/) {
 	}
 	
@@ -47,7 +47,7 @@ public class Paths extends FingerprintMethod {
 	 */
 	public static FingerprintMethod getInstance(){
 		if(singleFingerprintMethod == null){
-			singleFingerprintMethod = new Paths();
+			singleFingerprintMethod = new PathsMethod();
 		}
 		else{
 			FingerprintMethod.checkClass("Paths");

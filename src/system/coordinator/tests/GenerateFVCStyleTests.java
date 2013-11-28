@@ -1,6 +1,6 @@
 package system.coordinator.tests;
 
-import system.allcommonclasses.Users;
+import system.allcommonclasses.*;
 
 /**
  * 
@@ -11,13 +11,36 @@ import system.allcommonclasses.Users;
 public class GenerateFVCStyleTests extends GenerateTests{
 
 	@Override
-	public Tests generateTests(Users enrollees) {
+	public Tests generateTests(Users users) {
 		
-		{}{}// TODO generate all genuines
+		Tests tests = new Tests();
 		
-		{}{}// TODO generate imposters by comparing the first readings of all users
+		for(User user : users.users){
+			int m = user.readings.size();
+			for(int i=0; i<m; i++){
+				for(int j=i+1; j<m; j++){
+					Test testToAdd = new Test();
+					testToAdd.enroll = user.readings.get(i);
+					testToAdd.test = user.readings.get(j);
+					testToAdd.genuine = true;
+					tests.tests.add(testToAdd);
+				}
+			}
+		}
+
+		int n = users.users.size();
+		for(int i=0; i<n; i++){
+			for(int j=i+1; j<n; j++){
+				Test testToAdd = new Test();
+				testToAdd.enroll = users.users.get(i).readings.get(0);
+				testToAdd.test = users.users.get(j).readings.get(0);
+				testToAdd.genuine = false;
+				tests.tests.add(testToAdd);
+			}
+		}
 		
-		return null;
+		
+		return tests;
 	}
 
 }

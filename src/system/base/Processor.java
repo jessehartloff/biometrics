@@ -24,7 +24,7 @@ public class Processor {
 	}
 
 	
-	{}{}// TODO read biometrics from files
+	{}// TODO read biometrics from files
 	
 	{}// TODO make all the users
 	

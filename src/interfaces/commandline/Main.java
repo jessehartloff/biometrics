@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		{}// TODO Main/GUI
+		{}// TODO main
 		
 		Parameters parameters = new Parameters();
 		// new Parameters or read serialized from file
@@ -57,19 +57,7 @@ public class Main {
 		//System.out.println("c: " + c);
 		//System.out.println("DISTANCE: " + dist);
 
-		/*
-		FingerprintMethod method;
-		method = MinutiaeMethod.getInstance();
-		method = Paths.getInstance();
-		method = MinutiaeMethod.getInstance();
-		method = Paths.getInstance();
-		method = Paths.getInstance();
-		method = Paths.getInstance();
-		method = Paths.getInstance();
-		method = Paths.getInstance();
-		
-		System.out.println("class: " + method.getClass().toString() );
-		*/
+
 	}
 	
 }

@@ -1,11 +1,13 @@
 package system.allcommonclasses.modalities;
 
-public class Minutia{
 
-	public long x;
-	public long y;
-	public long theta;
+public class Minutia implements Comparable<Minutia>{
+
+	public Long x;
+	public Long y;
+	public Long theta;
 	public long confidence; 
+	public long index;
 	
 	public Minutia(){
 		
@@ -23,6 +25,12 @@ public class Minutia{
 		this.y = y;
 		this.theta = theta;
 		this.confidence = confidence;
+	}
+	
+	@Override
+	public int compareTo(Minutia that) {
+		int compareX = this.x.compareTo(that.x);
+		return compareX == 0 ? this.y.compareTo(that.y) : compareX;
 	}
 	
 	@Override

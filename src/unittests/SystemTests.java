@@ -11,7 +11,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void translateFingerprint() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -27,8 +27,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(505, 508, 359));
 		expected.minutiae.add(new Minutia(5, 8, 0));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.translate(computed, 5, 8);
+		Fingerprint computed = test.translate(5, 8);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -36,7 +35,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void translateFingerprintNoTranslation() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -52,8 +51,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(500, 500, 359));
 		expected.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.translate(computed, 0, 0);
+		Fingerprint computed = test.translate(0, 0);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -61,7 +59,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintDefaultCenter() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -77,8 +75,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(-183, -683, 29));
 		expected.minutiae.add(new Minutia(0, 0, 30));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.rotate(computed, 30.0);
+		Fingerprint computed = test.rotate(30.0);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -86,7 +83,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprint() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -102,8 +99,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(735, -354, 99));
 		expected.minutiae.add(new Minutia(155, 52, 100));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.rotate(computed, 100.0, 56, 91);
+		Fingerprint computed = test.rotate(100.0, 56, 91);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -111,7 +107,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintNegativeDegrees() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -127,8 +123,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(-561, 631, 259));
 		expected.minutiae.add(new Minutia(-155, 52, 260));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.rotate(computed, -100.0, -56, 91);
+		Fingerprint computed = test.rotate(-100.0, -56, 91);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -136,7 +131,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintNoRotation() {
-		FingerprintMethod method = Paths.getInstance();
+		FingerprintMethod method = PathsMethod.getInstance();
 		
 		Fingerprint test = new Fingerprint(method);
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -152,14 +147,29 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(500, 500, 359));
 		expected.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint computed = new Fingerprint(method);
-		test.rotate(computed, 0.0, 50, 34);
+		Fingerprint computed = test.rotate(0.0, 50, 34);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
 	}
 	
-	{}// TODO test Singleton creation
-	{}// TODO test Singleton errors for wrong class
+	@org.junit.Test
+	public void singletonTest() {
+
+		FingerprintMethod method;
+		FingerprintMethod anotherMethod;
+		FingerprintMethod anotherOtherMethod;
+		
+		method = PathsMethod.getInstance();
+		anotherMethod = MinutiaeMethod.getInstance();
+		anotherOtherMethod = PathsMethod.getInstance();
+		
+		assertTrue("Class is: " + method.getClass().toString(), 
+				method.getClass().equals(anotherMethod.getClass()) 
+				&& anotherOtherMethod.getClass().equals(method.getClass())
+				&& anotherOtherMethod.getClass().equals(anotherMethod.getClass())   
+				);
+		
+	}
 
 }

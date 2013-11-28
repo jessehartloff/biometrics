@@ -2,7 +2,7 @@ package system.allcommonclasses;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * 
@@ -15,10 +15,10 @@ public class Template implements Serializable{
 	
 	private static final long serialVersionUID = 6938186447187369796L;
 
-	public ArrayList<BigInteger> hashes;
+	public HashSet<BigInteger> hashes;
 	
 	public Template(){
-		hashes = new ArrayList<BigInteger>();
+		hashes = new HashSet<BigInteger>();
 	}
 
 }

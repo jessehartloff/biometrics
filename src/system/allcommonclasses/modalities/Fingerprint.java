@@ -42,8 +42,8 @@ public class Fingerprint extends Biometric{
 	 * @param toRotate reference to the fingerprint that will store the rotated fingerprint
 	 * @param degrees the amount of rotation in degrees
 	 */
-	public void rotate(Fingerprint toRotate, double degrees){
-		rotate(toRotate, degrees, 0, 0);
+	public Fingerprint rotate(double degrees){
+		return rotate(degrees, 0, 0);
 	}
 	
 	/**
@@ -54,8 +54,9 @@ public class Fingerprint extends Biometric{
 	 * @param centerX
 	 * @param centerY
 	 */
-	public void rotate(Fingerprint toRotate, double degrees, int centerX, int centerY){
-		toRotate.minutiae.clear();
+	public Fingerprint rotate(double degrees, int centerX, int centerY){
+		
+		Fingerprint toRotate = new Fingerprint(this.theFingerprintMethod);
 		
 		for(Minutia minutia : this.minutiae){
 			Minutia rotatedMinutia = new Minutia();
@@ -77,6 +78,7 @@ public class Fingerprint extends Biometric{
 			toRotate.minutiae.add(rotatedMinutia);
 			
 		}
+		return toRotate;
 	}
 
 	/**
@@ -86,9 +88,10 @@ public class Fingerprint extends Biometric{
 	 * @param dx
 	 * @param dy
 	 */
-	public void translate(Fingerprint toTranslate, int dx, int dy){
-		toTranslate.minutiae.clear();
+	public Fingerprint translate(int dx, int dy){
 
+		Fingerprint toTranslate = new Fingerprint(this.theFingerprintMethod);
+		
 		for(Minutia minutia : this.minutiae){
 			
 			Minutia translatedMinutia = new Minutia();
@@ -101,6 +104,7 @@ public class Fingerprint extends Biometric{
 			toTranslate.minutiae.add(translatedMinutia);
 		}
 		
+		return toTranslate;
 	}
 	
 	@Override
