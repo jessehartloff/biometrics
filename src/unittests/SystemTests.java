@@ -13,14 +13,14 @@ public class SystemTests {
 	public void translateFingerprint() {
 		FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(500, 500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(11, 11, 230));
 		expected.minutiae.add(new Minutia(64, 38, 25));
 		expected.minutiae.add(new Minutia(968, 332, 109));
@@ -37,14 +37,14 @@ public class SystemTests {
 	public void translateFingerprintNoTranslation() {
 		FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(500, 500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(6, 3, 230));
 		expected.minutiae.add(new Minutia(59, 30, 25));
 		expected.minutiae.add(new Minutia(963, 324, 109));
@@ -59,16 +59,16 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintDefaultCenter() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		//FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(-500, -500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(4, 6, 260));
 		expected.minutiae.add(new Minutia(36, 55, 55));
 		expected.minutiae.add(new Minutia(672, 762, 139));
@@ -85,14 +85,14 @@ public class SystemTests {
 	public void rotateFingerprint() {
 		FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(-500, -500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(151, 57, 330));
 		expected.minutiae.add(new Minutia(116, 105, 125));
 		expected.minutiae.add(new Minutia(-331, 944, 209));
@@ -109,14 +109,14 @@ public class SystemTests {
 	public void rotateFingerprintNegativeDegrees() {
 		FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(-500, -500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(-153, 45, 130));
 		expected.minutiae.add(new Minutia(-136, -12, 285));
 		expected.minutiae.add(new Minutia(-3, -953, 9));
@@ -133,14 +133,14 @@ public class SystemTests {
 	public void rotateFingerprintNoRotation() {
 		FingerprintMethod method = PathsMethod.getInstance();
 		
-		Fingerprint test = new Fingerprint(method);
+		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(500, 500, 359));
 		test.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint expected = new Fingerprint(method);
+		Fingerprint expected = new Fingerprint();
 		expected.minutiae.add(new Minutia(6, 3, 230));
 		expected.minutiae.add(new Minutia(59, 30, 25));
 		expected.minutiae.add(new Minutia(963, 324, 109));

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import system.allcommonclasses.Template;
-import system.allcommonclasses.modalities.Fingerprint;
-import system.allcommonclasses.modalities.Minutia;
+import system.allcommonclasses.modalities.*;
+import system.allcommonclasses.settings.TriangleSettings;
 
 
 /**
@@ -16,31 +16,61 @@ import system.allcommonclasses.modalities.Minutia;
  *
  */
 public class Triangles extends FingerprintMethod {
-
-	double rotationStep;
-	double rotationStart;
-	double rotationStop;
 	
 	
 	protected class Triangle implements Comparable<Triangle>{
-
-		int d1;
-		{}// TODO variables for Triangle
 		
-		//int p1;
-		//int p2;
-		//int p3;
+		Long theta0;
+		
+		Long x1;
+		Long y1;
+		Long theta1;
+		
+		Long x2;
+		Long y2;
+		Long theta2;
 		
 		Double centerX;
 		Double centerY;
 		
 		protected BigInteger toBigInt(){
-			{}// TODO triangle to big int
-			return null;
+			BigInteger toReturn = BigInteger.ZERO;
+			
+			toReturn.add(BigInteger.valueOf(theta0));
+			toReturn.shiftLeft(TriangleSettings.bitsForTheta0);
+			
+			toReturn.add(BigInteger.valueOf(x1));
+			toReturn.shiftLeft(TriangleSettings.bitsForX1);
+			
+			toReturn.add(BigInteger.valueOf(y1));
+			toReturn.shiftLeft(TriangleSettings.bitsForY1);
+			
+			toReturn.add(BigInteger.valueOf(theta1));
+			toReturn.shiftLeft(TriangleSettings.bitsForTheta1);
+			
+			toReturn.add(BigInteger.valueOf(x2));
+			toReturn.shiftLeft(TriangleSettings.bitsForX2);
+			
+			toReturn.add(BigInteger.valueOf(y2));
+			toReturn.shiftLeft(TriangleSettings.bitsForY2);
+			
+			toReturn.add(BigInteger.valueOf(theta2));
+			toReturn.shiftLeft(TriangleSettings.bitsForTheta2);
+			
+			return toReturn;
 		}
 		
 		protected void fromBigInt(BigInteger bigInt){
-			{}// TODO  big int to triangle
+			{}// TODO the following needs to be tested or changed to not suck
+			BigInteger bigTwo = BigInteger.valueOf(2);
+			
+			this.theta0 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta0).add(BigInteger.valueOf(-1))).longValue();
+			this.x1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForX1).add(BigInteger.valueOf(-1))).longValue();
+			this.y1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForY1).add(BigInteger.valueOf(-1))).longValue();
+			this.theta1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta1).add(BigInteger.valueOf(-1))).longValue();
+			this.x2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForX2).add(BigInteger.valueOf(-1))).longValue();
+			this.y2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForY2).add(BigInteger.valueOf(-1))).longValue();
+			this.theta2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta2).add(BigInteger.valueOf(-1))).longValue();
 		}
 
 		@Override
@@ -91,7 +121,7 @@ public class Triangles extends FingerprintMethod {
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		for(double rotation=this.rotationStart; rotation<this.rotationStop; rotation+=this.rotationStep){
+		for(double rotation=TriangleSettings.rotationStart; rotation<TriangleSettings.rotationStop; rotation+=TriangleSettings.rotationStep){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.quantizeOne(rotatedPrint));
 		}
@@ -106,7 +136,26 @@ public class Triangles extends FingerprintMethod {
 	
 	protected ArrayList<Triangle> fingerprintToTriangles(Fingerprint fingerprint){
 		ArrayList<Triangle> triangles = new ArrayList<Triangle>();
-		{}// TODO fingerprintToTriangles
+		
+		ArrayList<Minutia> minutiaeCopy = new ArrayList<Minutia>();
+		
+		for(Minutia minutia : fingerprint.minutiae){
+			minutiaeCopy.add(minutia);
+		}
+		
+		for(Minutia minutia : fingerprint.minutiae){
+			Collections.sort(minutiaeCopy, minutia.getComparator()); // sorts by distance to minutia
+			
+			int startingIndex;
+			for(startingIndex=0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
+			
+			Triangle triangle = makeTriangle(minutia, 
+					minutiaeCopy.get(startingIndex), 
+					minutiaeCopy.get(startingIndex+1));
+			
+			triangles.add(triangle);	
+		}
+	
 		return triangles;
 	}
 	
@@ -122,10 +171,27 @@ public class Triangles extends FingerprintMethod {
 		m1 = minutiae.get(1);
 		m2 = minutiae.get(2);
 		
+		
 		Triangle triangleToReturn = new Triangle();
-		{}// TODO makeTriangle(Minutiae)
+		
+		triangleToReturn.centerX = (m0.x + m1.x + m2.x)/3.0;
+		triangleToReturn.centerY = (m0.y + m1.y + m2.y)/3.0;
+
+		triangleToReturn.theta0 = m0.theta;
+		
+		triangleToReturn.x1 = m1.x - m0.x;
+		triangleToReturn.y1 = m1.y - m0.y;
+		triangleToReturn.theta1 = m1.theta;
+		
+		triangleToReturn.x2 = m2.x - m0.x;
+		triangleToReturn.y2 = m2.y - m0.y;
+		triangleToReturn.theta2 = m2.theta;
+
+		{}// TODO triangle binning
+		
 		return triangleToReturn;
 	}
 	
 
-}
+	
+}// end class

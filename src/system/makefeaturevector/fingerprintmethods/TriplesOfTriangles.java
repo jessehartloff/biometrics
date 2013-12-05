@@ -2,11 +2,11 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
+import system.allcommonclasses.settings.TriangleSettings;
 
 /**
  * 
@@ -35,12 +35,12 @@ public class TriplesOfTriangles extends Triangles {
 		}
 		
 		protected BigInteger toBigInt(){
-			{}// TODO triangle to big int
+			{}// TODO triangles to big int
 			return null;
 		}
 		
 		protected void fromBigInt(BigInteger bigInt){
-			{}// TODO  big int to triangle
+			{}// TODO  big int to triangles
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class TriplesOfTriangles extends Triangles {
 		for(int i=0; i<n; i++){
 			for(int j=i+1; j<n; j++){
 				for(int k=j+1; k<n; k++){
-					if(true/*TODO condition*/){
+					if(true/*TODO condition*/){{}
 						TriangleTriplet triplet = new TriangleTriplet();
 						triplet.t0 = triangles.get(i);
 						triplet.t1 = triangles.get(j);
@@ -99,7 +99,7 @@ public class TriplesOfTriangles extends Triangles {
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
 		
-		for(double rotation=this.rotationStart; rotation<this.rotationStop; rotation+=this.rotationStep){
+		for(double rotation=TriangleSettings.rotationStart; rotation<TriangleSettings.rotationStop; rotation+=TriangleSettings.rotationStep){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.quantizeOne(rotatedPrint));
 		}

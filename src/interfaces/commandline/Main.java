@@ -3,6 +3,7 @@ package interfaces.commandline;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.parameters.GeneralParameters;
 import system.base.Processor;
 import system.vectordistance.*;
 
@@ -14,7 +15,7 @@ public class Main {
 		
 		{}// TODO main
 		
-		Parameters parameters = new Parameters();
+		GeneralParameters parameters = new GeneralParameters();
 		// new Parameters or read serialized from file
 		
 		Processor runner = new Processor();

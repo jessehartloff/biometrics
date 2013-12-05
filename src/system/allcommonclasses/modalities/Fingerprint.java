@@ -1,8 +1,9 @@
 package system.allcommonclasses.modalities;
 
 import java.util.ArrayList;
+
 import system.allcommonclasses.Template;
-import system.makefeaturevector.fingerprintmethods.*;
+import system.allcommonclasses.settings.GlobalSettings;
 
 /**
  * A fingerprint.
@@ -11,8 +12,6 @@ import system.makefeaturevector.fingerprintmethods.*;
 public class Fingerprint extends Biometric{
 
 
-
-	private FingerprintMethod theFingerprintMethod; // The fingerprints carry their method with them.
 	public ArrayList<Minutia> minutiae;
 	
 	/**
@@ -20,20 +19,19 @@ public class Fingerprint extends Biometric{
 	 * 
 	 * @param method the method determining how the print will be quantized for template generation.
 	 */
-	public Fingerprint(FingerprintMethod method){
-		this.theFingerprintMethod = method;
+	public Fingerprint(){
 		this.minutiae = new ArrayList<Minutia>();
 	}
 	
 
 	public Template quantizeOne(){
-		return theFingerprintMethod.quantizeOne(this);
+		return GlobalSettings.singleFingerprintMethod.quantizeOne(this);
 	}
 
 	
 
 	public ArrayList<Template> quantizeAll(){
-		return theFingerprintMethod.quantizeAll(this);
+		return GlobalSettings.singleFingerprintMethod.quantizeAll(this);
 	}
 	
 	/**
@@ -56,7 +54,7 @@ public class Fingerprint extends Biometric{
 	 */
 	public Fingerprint rotate(double degrees, int centerX, int centerY){
 		
-		Fingerprint toRotate = new Fingerprint(this.theFingerprintMethod);
+		Fingerprint toRotate = new Fingerprint();
 		
 		for(Minutia minutia : this.minutiae){
 			Minutia rotatedMinutia = new Minutia();
@@ -90,7 +88,7 @@ public class Fingerprint extends Biometric{
 	 */
 	public Fingerprint translate(int dx, int dy){
 
-		Fingerprint toTranslate = new Fingerprint(this.theFingerprintMethod);
+		Fingerprint toTranslate = new Fingerprint();
 		
 		for(Minutia minutia : this.minutiae){
 			

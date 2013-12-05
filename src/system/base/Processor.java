@@ -1,5 +1,6 @@
 package system.base;
 import system.allcommonclasses.*;
+import system.allcommonclasses.parameters.GeneralParameters;
 
 /**
  * 
@@ -18,7 +19,7 @@ public class Processor {
 	 * @param parameters
 	 * @return
 	 */
-	public Results go(Parameters parameters){
+	public Results go(GeneralParameters parameters){
 		//System.out.println("At least it runs...");
 		return null;
 	}

@@ -1,13 +1,39 @@
 package system.allcommonclasses.modalities;
 
+import java.util.Comparator;
+
 
 public class Minutia implements Comparable<Minutia>{
 
 	public Long x;
 	public Long y;
 	public Long theta;
-	public long confidence; 
-	public long index;
+	public Long confidence; 
+	public Long index;
+	
+	
+	public class MinutiaComparator implements Comparator<Minutia>{
+
+		Minutia referencePoint;
+		
+		public MinutiaComparator(Minutia referencePoint){
+			this.referencePoint = referencePoint;
+		}
+		
+		@Override
+		public int compare(Minutia m0, Minutia m1) {
+			Double d0 = referencePoint.distanceTo(m0);
+			Double d1 = referencePoint.distanceTo(m1);
+			{}// TODO test minutia sorting
+			return d0.compareTo(d1);
+		}
+		
+	}
+	
+	public MinutiaComparator getComparator(){
+		return new MinutiaComparator(this);
+	}
+
 	
 	public Minutia(){
 		
@@ -25,6 +51,15 @@ public class Minutia implements Comparable<Minutia>{
 		this.y = y;
 		this.theta = theta;
 		this.confidence = confidence;
+	}
+	
+	public Double distanceTo(Minutia that){
+		
+		Double distance;
+		Long dx = this.x - that.x;
+		Long dy = this.y - that.y;
+		distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+		return distance;
 	}
 	
 	@Override
@@ -47,9 +82,9 @@ public class Minutia implements Comparable<Minutia>{
 	    
 	    Minutia otherMinutia = (Minutia)other;
 	    
-	    return this.x == otherMinutia.x && 
-	    		this.y == otherMinutia.y && 
-	    		this.theta == otherMinutia.theta;
+	    return this.x.equals(otherMinutia.x) && 
+	    		this.y.equals(otherMinutia.y) && 
+	    		this.theta.equals(otherMinutia.theta);
 	}
 	
 	@Override
