@@ -8,6 +8,7 @@ import system.makefeaturevector.Method;
 
 public abstract class FingerprintMethod extends Method{
 
+	
 	// singleton
 	protected static FingerprintMethod singleFingerprintMethod;
 	

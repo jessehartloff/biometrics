@@ -14,7 +14,7 @@ import system.hasher.Hasher;
  */
 public class DefaultTesting extends Coordinator {
 
-	GenerateTests testGenerator;
+	TestGenerator testGenerator;
 	Tests tests;
 	
 	/**
@@ -24,7 +24,7 @@ public class DefaultTesting extends Coordinator {
 	 * @param users
 	 * @param testGenerator determines which pairs of readings should be tested
 	 */
-	DefaultTesting(Hasher hasher, Users users, GenerateTests testGenerator){
+	public DefaultTesting(Hasher hasher, Users users, TestGenerator testGenerator){
 		super(hasher, users);
 		this.testGenerator = testGenerator;
 	}

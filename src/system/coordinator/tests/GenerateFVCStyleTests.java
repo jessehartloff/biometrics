@@ -8,7 +8,7 @@ import system.allcommonclasses.*;
  * genuine pair and the impostors from using the first reading of every user.
  *
  */
-public class GenerateFVCStyleTests extends GenerateTests{
+public class GenerateFVCStyleTests extends TestGenerator{
 
 	@Override
 	public Tests generateTests(Users users) {

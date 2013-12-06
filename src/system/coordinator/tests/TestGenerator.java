@@ -8,9 +8,9 @@ import system.allcommonclasses.Users;
  * Determines which pairs of reading to test based on the users.
  *
  */
-public abstract class GenerateTests {
+public abstract class TestGenerator {
 
-	GenerateTests(){
+	TestGenerator(){
 	}
 	
 	/**

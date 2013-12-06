@@ -12,7 +12,7 @@ import system.allcommonclasses.transformations.*;
  * Hashes the set using a standard hash function and scores by set intersection.
  *
  */
-public class StraightHashing extends Hasher {
+public class StraightHasher extends Hasher {
 
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {

@@ -8,7 +8,7 @@ import system.allcommonclasses.Users;
  * Tests every possible genuine and impostor pair.
  *
  */
-public class GenerateAllTests extends GenerateTests {
+public class GenerateAllTests extends TestGenerator {
 
 	@Override
 	public Tests generateTests(Users users) {

@@ -19,7 +19,7 @@ public class Main {
 		// new Parameters or read serialized from file
 		
 		Processor runner = new Processor();
-		runner.go(parameters);
+		//runner.go(parameters);
 		
 		
 		//int i = 67;
@@ -55,7 +55,8 @@ public class Main {
 		
 		c = a + b;
 
-		//System.out.println("c: " + c);
+		
+		System.out.println("c: " + c);
 		//System.out.println("DISTANCE: " + dist);
 
 

@@ -10,7 +10,9 @@ import system.vectordistance.Distance;
  * should be able compare two BigIntegers which are template points. 
  *
  */
-public abstract class Method {
+public abstract class Method{
+
+
 
 	//Distance distanceFunction; 
 	{}// TODO distance function
