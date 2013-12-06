@@ -55,7 +55,7 @@ public class Main {
 		
 		c = a + b;
 
-		
+		System.out.println("Happy last day of the semester!");
 		System.out.println("c: " + c);
 		//System.out.println("DISTANCE: " + dist);
 
