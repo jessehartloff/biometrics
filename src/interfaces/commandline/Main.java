@@ -2,8 +2,8 @@ package interfaces.commandline;
 
 import java.util.ArrayList;
 
-import system.allcommonclasses.*;
 import system.allcommonclasses.parameters.GeneralParameters;
+import system.allcommonclasses.settings.Settings;
 import system.base.Processor;
 import system.vectordistance.*;
 
@@ -12,6 +12,12 @@ import system.vectordistance.*;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		Settings settings = new Settings();
+		
+		settings.globalSettings.setFingerprintMethod("triangles");
+		settings.globalSettings.setCoordinator("defaulttesting");
+		settings.globalSettings.setHasher("straighthasher");
 		
 		{}// TODO main
 		

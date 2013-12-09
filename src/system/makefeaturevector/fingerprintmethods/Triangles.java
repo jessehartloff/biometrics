@@ -17,6 +17,7 @@ import system.allcommonclasses.settings.TriangleSettings;
  */
 public class Triangles extends FingerprintMethod {
 	
+	protected TriangleSettings settings;
 	
 	protected class Triangle implements Comparable<Triangle>{
 		
@@ -37,40 +38,44 @@ public class Triangles extends FingerprintMethod {
 			BigInteger toReturn = BigInteger.ZERO;
 			
 			toReturn.add(BigInteger.valueOf(theta0));
-			toReturn.shiftLeft(TriangleSettings.bitsForTheta0);
+			toReturn.shiftLeft(settings.getBitsForTheta0());
 			
 			toReturn.add(BigInteger.valueOf(x1));
-			toReturn.shiftLeft(TriangleSettings.bitsForX1);
+			toReturn.shiftLeft(settings.getBitsForX1());
 			
 			toReturn.add(BigInteger.valueOf(y1));
-			toReturn.shiftLeft(TriangleSettings.bitsForY1);
+			toReturn.shiftLeft(settings.getBitsForY1());
 			
 			toReturn.add(BigInteger.valueOf(theta1));
-			toReturn.shiftLeft(TriangleSettings.bitsForTheta1);
+			toReturn.shiftLeft(settings.getBitsForTheta1());
 			
 			toReturn.add(BigInteger.valueOf(x2));
-			toReturn.shiftLeft(TriangleSettings.bitsForX2);
+			toReturn.shiftLeft(settings.getBitsForX2());
 			
 			toReturn.add(BigInteger.valueOf(y2));
-			toReturn.shiftLeft(TriangleSettings.bitsForY2);
+			toReturn.shiftLeft(settings.getBitsForY2());
 			
 			toReturn.add(BigInteger.valueOf(theta2));
-			toReturn.shiftLeft(TriangleSettings.bitsForTheta2);
+			toReturn.shiftLeft(settings.getBitsForTheta2());
 			
 			return toReturn;
 		}
 		
+		//TriangleSettings ts = TriangleSettings.getInstance();
+		
+		//ts.getBitsForTheta0();
+		
 		protected void fromBigInt(BigInteger bigInt){
 			{}// TODO the following needs to be tested or changed to not suck
 			BigInteger bigTwo = BigInteger.valueOf(2);
-			
-			this.theta0 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta0).add(BigInteger.valueOf(-1))).longValue();
-			this.x1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForX1).add(BigInteger.valueOf(-1))).longValue();
-			this.y1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForY1).add(BigInteger.valueOf(-1))).longValue();
-			this.theta1 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta1).add(BigInteger.valueOf(-1))).longValue();
-			this.x2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForX2).add(BigInteger.valueOf(-1))).longValue();
-			this.y2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForY2).add(BigInteger.valueOf(-1))).longValue();
-			this.theta2 = bigInt.and(bigTwo.pow(TriangleSettings.bitsForTheta2).add(BigInteger.valueOf(-1))).longValue();
+			{}// TODO this is broke. need to shift right
+			this.theta0 = bigInt.and(bigTwo.pow(settings.getBitsForTheta0()).add(BigInteger.valueOf(-1))).longValue();
+			this.x1 = bigInt.and(bigTwo.pow(settings.getBitsForX1()).add(BigInteger.valueOf(-1))).longValue();
+			this.y1 = bigInt.and(bigTwo.pow(settings.getBitsForY1()).add(BigInteger.valueOf(-1))).longValue();
+			this.theta1 = bigInt.and(bigTwo.pow(settings.getBitsForTheta1()).add(BigInteger.valueOf(-1))).longValue();
+			this.x2 = bigInt.and(bigTwo.pow(settings.getBitsForX2()).add(BigInteger.valueOf(-1))).longValue();
+			this.y2 = bigInt.and(bigTwo.pow(settings.getBitsForY2()).add(BigInteger.valueOf(-1))).longValue();
+			this.theta2 = bigInt.and(bigTwo.pow(settings.getBitsForTheta2()).add(BigInteger.valueOf(-1))).longValue();
 		}
 
 		@Override
@@ -84,6 +89,8 @@ public class Triangles extends FingerprintMethod {
 	
 	
 	protected Triangles() {
+		
+		{}//TODO get settings instance
 	}
 	
 	/**
@@ -121,7 +128,10 @@ public class Triangles extends FingerprintMethod {
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		for(double rotation=TriangleSettings.rotationStart; rotation<TriangleSettings.rotationStop; rotation+=TriangleSettings.rotationStep){
+		for(double rotation=settings.getRotationStart(); 
+				rotation<settings.getRotationStop(); 
+				rotation+=settings.getRotationStep())
+		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.quantizeOne(rotatedPrint));
 		}
@@ -148,7 +158,7 @@ public class Triangles extends FingerprintMethod {
 			
 			int startingIndex;
 			for(startingIndex=0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
-			
+			// could do remove spurious by changing the min distance
 			Triangle triangle = makeTriangle(minutia, 
 					minutiaeCopy.get(startingIndex), 
 					minutiaeCopy.get(startingIndex+1));

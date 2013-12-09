@@ -17,7 +17,7 @@ public class Minutia implements Comparable<Minutia>{
 		Minutia referencePoint;
 		
 		public MinutiaComparator(Minutia referencePoint){
-			this.referencePoint = referencePoint;
+			this.referencePoint = referencePoint;			
 		}
 		
 		@Override

@@ -2,13 +2,43 @@ package system.allcommonclasses.settings;
 
 import java.io.Serializable;
 
-import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
-
 public class Settings implements Serializable {
-	
-	// Not thrilled about this idea, but it should work.
+
+	public GlobalSettings globalSettings;
+	public MinutiaeSettings minutiaeSettings;
+	public PathSettings pathSettings;
+	public TriangleSettings triangleSettings;
 	
 	public static final long serialVersionUID = 1L;
+	
+	public Settings(){
+		saveSettings();
+	}
+	
+	public void saveSettings(){
+		globalSettings = GlobalSettings.getInstance();
+		minutiaeSettings = MinutiaeSettings.getInstance();
+		pathSettings = PathSettings.getInstance();
+		triangleSettings = TriangleSettings.getInstance();
+	}
+	
+	public void loadSettings(){
+		GlobalSettings g = GlobalSettings.getInstance();
+		g = this.globalSettings;
+		
+		MinutiaeSettings m = MinutiaeSettings.getInstance();
+		m = this.minutiaeSettings;
+		
+		PathSettings p = PathSettings.getInstance();
+		p = this.pathSettings;
+		
+		TriangleSettings t = TriangleSettings.getInstance();
+		t = this.triangleSettings;
+	}
+	
+	/*
+	// Not thrilled about this idea, but it should work.
+	
 	
 	
 	// GlobalSettings
@@ -138,4 +168,5 @@ public class Settings implements Serializable {
 		TriangleSettings.rotationStart = rotationStart;
 		TriangleSettings.rotationStop = rotationStop;
 	}
+	*/
 }

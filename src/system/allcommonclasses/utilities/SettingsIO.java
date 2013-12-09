@@ -1,4 +1,4 @@
-package system.allcommonclasses.ioutilities;
+package system.allcommonclasses.utilities;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

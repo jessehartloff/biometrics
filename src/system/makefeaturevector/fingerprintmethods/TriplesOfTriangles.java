@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
-import system.allcommonclasses.settings.TriangleSettings;
 
 /**
  * 
@@ -99,7 +98,10 @@ public class TriplesOfTriangles extends Triangles {
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
 		
-		for(double rotation=TriangleSettings.rotationStart; rotation<TriangleSettings.rotationStop; rotation+=TriangleSettings.rotationStep){
+		for(double rotation=settings.getRotationStart(); 
+				rotation<settings.getRotationStop(); 
+				rotation+=settings.getRotationStep())
+		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.quantizeOne(rotatedPrint));
 		}
