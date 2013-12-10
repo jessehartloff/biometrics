@@ -1,11 +1,13 @@
 package interfaces.commandline;
 
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
 import system.allcommonclasses.modalities.Minutia;
 import system.allcommonclasses.parameters.GeneralParameters;
 import system.allcommonclasses.settings.Settings;
+import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
 import system.vectordistance.*;
 
@@ -18,8 +20,38 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+	
 		
+//		BufferedReader in = new BufferedReader(new FileReader("/Users/jessehartloff/Documents/CUBS_FP_DATA/DB1/features/1_1.fp"));
+//		String text = in.readLine();
+//		in.close();
+//
+//		System.out.println("text: " + text);
+//		
+//		"/Users/jessehartloff/Documents/CUBS_FP_DATA/DB1/features/1_1.fp"
 
+		Settings settings = new Settings();
+		
+		settings.globalSettings.setFingerprintMethod("triangles");
+		settings.globalSettings.setCoordinator("defaulttesting");
+		settings.globalSettings.setHasher("straighthasher");
+
+		settings.triangleSettings.theta0.setBins(4);
+		settings.triangleSettings.x1.setBins(4);
+		settings.triangleSettings.y1.setBins(4);
+		settings.triangleSettings.theta1.setBins(4);
+		settings.triangleSettings.x2.setBins(4);
+		settings.triangleSettings.y2.setBins(4);
+		settings.triangleSettings.theta2.setBins(4);
+
+		settings.triangleSettings.setRotationStart(-20.0);
+		settings.triangleSettings.setRotationStop(20.0);
+		settings.triangleSettings.setRotationStep(20.0);
+		
+		Processor p = new Processor();
+		p.go(settings);
+		
+		
 		Minutia m = new Minutia();
 		m.x = 50L;
 		
@@ -30,9 +62,9 @@ public class Main {
 		BigInteger big = BigInteger.TEN;
 		BigInteger big2 = big;
 		
-		System.out.println("m: " + m);
-		System.out.println("m2: " + m2);
-		System.out.println("");
+//		System.out.println("m: " + m);
+//		System.out.println("m2: " + m2);
+//		System.out.println("");
 		
 //		big2 = BigInteger.ZERO;
 //
@@ -47,11 +79,6 @@ public class Main {
 //		System.out.println("");
 		
 		
-		Settings settings = new Settings();
-		
-		settings.globalSettings.setFingerprintMethod("triangles");
-		settings.globalSettings.setCoordinator("defaulttesting");
-		settings.globalSettings.setHasher("straighthasher");
 		
 		{}// TODO main
 		

@@ -10,7 +10,7 @@ import system.allcommonclasses.modalities.*;
  */
 public class User implements Comparable<User>{
 
-	public Integer ID;
+	public Integer id;
 	//public ArrayList<Fingerprint> fingerprintReadings;
 	//public ArrayList<Iris> irisReadings;
 	//public ArrayList<Face> faceReadings;
@@ -21,7 +21,7 @@ public class User implements Comparable<User>{
 	// Allows sorting by ID
 	@Override
 	public int compareTo(User compareUser) {
-		return this.ID - compareUser.ID;
+		return this.id - compareUser.id;
 	}
 	
 }

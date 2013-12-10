@@ -48,6 +48,7 @@ public class DefaultTesting extends Coordinator {
 		// Run the tests
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
+			System.out.println(score);
 			if(test.genuine){
 				scores.genuineScores.add(score);
 			}

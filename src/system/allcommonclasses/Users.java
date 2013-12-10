@@ -11,5 +11,8 @@ public class Users {
 
 	public ArrayList<User> users;
 	
+	public Users(){
+		this.users = new ArrayList<User>();
+	}
 	// some useful functions
 }

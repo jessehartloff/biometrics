@@ -14,7 +14,7 @@ public class GlobalSettings implements Serializable{
 	private String hasher;
 	private String distanceFunction;
 	
-	public static FingerprintMethod singleFingerprintMethod;
+	public static FingerprintMethod singleFingerprintMethod; 
 	//public static IrisMethod singleIrisMethod;
 	//public static FaceMethod singleFaceMethod;
 	
