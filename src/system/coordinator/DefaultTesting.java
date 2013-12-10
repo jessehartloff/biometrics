@@ -40,6 +40,8 @@ public class DefaultTesting extends Coordinator {
 		
 		RawScores scores = new RawScores();
 		
+		super.doTheBinning();
+		
 		// Generate the tests
 		this.generateTests();
 		

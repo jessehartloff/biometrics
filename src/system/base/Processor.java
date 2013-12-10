@@ -31,6 +31,7 @@ public class Processor {
 
 		{}// TODO read biometrics from files
 		Users users = new Users();
+		
 		{}// TODO make all the users
 		Hasher hasher = new StraightHasher();
 		TestGenerator testMaker = new GenerateFVCStyleTests();
@@ -42,6 +43,9 @@ public class Processor {
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);
+
+		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n\n\n");
+		System.out.println("Imposters:\n" + scores.imposterScores + "\n\n\n");
 		
 		return results;
 	}

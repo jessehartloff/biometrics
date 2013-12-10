@@ -29,9 +29,8 @@ public class PathsMethod extends FingerprintMethod {
 
 	}
 
-	{}
-	private PathsMethod(/* TODO parameters for paths such as bin widths. 
-	might use setter methods instead of constructor, or both*/) {
+	
+	public PathsMethod() {
 	}
 	
 	/**
@@ -45,16 +44,16 @@ public class PathsMethod extends FingerprintMethod {
 	 *  
 	 * @return An instance of a FingerprintMethod
 	 */
-	public static FingerprintMethod getInstance(){
-		if(singleFingerprintMethod == null){
-			singleFingerprintMethod = new PathsMethod();
-		}
-		else{
-			FingerprintMethod.checkClass("Paths");
-		}
-		return singleFingerprintMethod;
-	}
-	
+//	public static FingerprintMethod getInstance(){
+//		if(singleFingerprintMethod == null){
+//			singleFingerprintMethod = new PathsMethod();
+//		}
+//		else{
+//			FingerprintMethod.checkClass("Paths");
+//		}
+//		return singleFingerprintMethod;
+//	}
+
 
 
 	@Override
@@ -76,6 +75,12 @@ public class PathsMethod extends FingerprintMethod {
 	public Double distance(BigInteger point1, BigInteger point2) {
 		{}// TODO path distance
 		return null;
+	}
+
+	@Override
+	public void doAllTheBinning(ArrayList<Template> templates) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

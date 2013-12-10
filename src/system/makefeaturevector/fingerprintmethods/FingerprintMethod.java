@@ -9,12 +9,10 @@ import system.makefeaturevector.Method;
 public abstract class FingerprintMethod extends Method{
 
 	
-	// singleton
-	protected static FingerprintMethod singleFingerprintMethod;
+
 	
-	
-	protected FingerprintMethod() {
-	}
+	//protected FingerprintMethod() {
+	//}
 
 
 	/**
@@ -47,7 +45,7 @@ public abstract class FingerprintMethod extends Method{
 	 * 
 	 * @param expectedClass Sting representing the expected class without package identifiers. ("Paths")
 	 */
-	protected static void checkClass(String expectedClass){
+/*	protected static void checkClass(String expectedClass){
 		String s = singleFingerprintMethod.getClass().toString();
 		if(s.substring(s.lastIndexOf(".")+1).compareTo(expectedClass) != 0){
 			{}// TODO make this warning more noticeable. Maybe crash the whole program.
@@ -55,7 +53,7 @@ public abstract class FingerprintMethod extends Method{
 					singleFingerprintMethod.getClass().toString());
 		}
 	}
-
+*/
 
 	
 }

@@ -1,7 +1,9 @@
 package interfaces.commandline;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
+import system.allcommonclasses.modalities.Minutia;
 import system.allcommonclasses.parameters.GeneralParameters;
 import system.allcommonclasses.settings.Settings;
 import system.base.Processor;
@@ -10,8 +12,40 @@ import system.vectordistance.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
+	
+	private static void bigger(BigInteger big){
+		big = big.add(BigInteger.TEN);
+	}
 
 	public static void main(String[] args) {
+		
+
+		Minutia m = new Minutia();
+		m.x = 50L;
+		
+		Minutia m2 = m;
+		
+		m2.x += 100L;
+		
+		BigInteger big = BigInteger.TEN;
+		BigInteger big2 = big;
+		
+		System.out.println("m: " + m);
+		System.out.println("m2: " + m2);
+		System.out.println("");
+		
+//		big2 = BigInteger.ZERO;
+//
+//		System.out.println("big: " + big);
+//		System.out.println("big2: " + big2);
+//		System.out.println("");
+//		
+//		bigger(big2);
+//
+//		System.out.println("big: " + big);
+//		System.out.println("big2: " + big2);
+//		System.out.println("");
+		
 		
 		Settings settings = new Settings();
 		
@@ -62,11 +96,11 @@ public class Main {
 		c = a + b;
 
 
-		System.out.println("Dammit Jim!");
-
-		System.out.println("Happy last day of the semester!");
-
-		System.out.println("c: " + c);
+//		System.out.println("Dammit Jim!");
+//
+//		System.out.println("Happy last day of the semester!");
+//
+//		System.out.println("c: " + c);
 		//System.out.println("DISTANCE: " + dist);
 
 

@@ -13,8 +13,7 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class MinutiaeMethod extends FingerprintMethod {
 
-	// Yes, this is a private constructor.
-	private MinutiaeMethod() {
+	public MinutiaeMethod() {
 	}
 
 	/**
@@ -28,7 +27,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 	 *  
 	 * @return An instance of a FingerprintMethod
 	 */
-	public static FingerprintMethod getInstance(){
+/*	public static FingerprintMethod getInstance(){
 		if(singleFingerprintMethod == null){
 			singleFingerprintMethod = new MinutiaeMethod();
 		}
@@ -37,7 +36,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 		}
 		return singleFingerprintMethod;
 	}
-
+*/
 
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
@@ -57,5 +56,11 @@ public class MinutiaeMethod extends FingerprintMethod {
 	public Double distance(BigInteger point1, BigInteger point2) {
 		{}// TODO minutiae distance
 		return null;
+	}
+
+	@Override
+	public void doAllTheBinning(ArrayList<Template> templates) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,17 +1,36 @@
 package unittests;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import system.allcommonclasses.modalities.*;
+import system.allcommonclasses.utilities.Functions;
 import system.makefeaturevector.fingerprintmethods.*;
 
 public class SystemTests {
 
 	{}// TODO tons of unit tests
+	//test binning
 	
+	@org.junit.Test
+	public void testBinsToBits() {
+		Boolean result = true;
+		ArrayList<Integer> bins = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,13,15,16,17)); 
+		ArrayList<Integer> bits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
+		ArrayList<Integer> computedBits = new ArrayList<Integer>(); 
+		int n=bins.size();
+		for(int i=0; i<n; i++){
+			result = result && Functions.binsToBits(bins.get(i)) == bits.get(i);
+			computedBits.add(Functions.binsToBits(bins.get(i)));
+		}
+		assertTrue("\nexpected: " + bits + "\ncomputed: " + computedBits, result);
+	}
 	
 	@org.junit.Test
 	public void translateFingerprint() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -35,7 +54,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void translateFingerprintNoTranslation() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -83,7 +102,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprint() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -107,7 +126,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintNegativeDegrees() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -131,7 +150,7 @@ public class SystemTests {
 	
 	@org.junit.Test
 	public void rotateFingerprintNoRotation() {
-		FingerprintMethod method = PathsMethod.getInstance();
+		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
 		test.minutiae.add(new Minutia(6, 3, 230));
@@ -153,23 +172,6 @@ public class SystemTests {
 				computed.equals(expected));
 	}
 	
-	@org.junit.Test
-	public void singletonTest() {
 
-		FingerprintMethod method;
-		FingerprintMethod anotherMethod;
-		FingerprintMethod anotherOtherMethod;
-		
-		method = PathsMethod.getInstance();
-		anotherMethod = MinutiaeMethod.getInstance();
-		anotherOtherMethod = PathsMethod.getInstance();
-		
-		assertTrue("Class is: " + method.getClass().toString(), 
-				method.getClass().equals(anotherMethod.getClass()) 
-				&& anotherOtherMethod.getClass().equals(method.getClass())
-				&& anotherOtherMethod.getClass().equals(anotherMethod.getClass())   
-				);
-		
-	}
 
 }

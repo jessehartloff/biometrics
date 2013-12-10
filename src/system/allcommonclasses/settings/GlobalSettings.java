@@ -1,7 +1,6 @@
 package system.allcommonclasses.settings;
 
 import java.io.Serializable;
-
 import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 
 public class GlobalSettings implements Serializable{
@@ -21,9 +20,7 @@ public class GlobalSettings implements Serializable{
 	
 	
 	private static GlobalSettings instance;
-	
 	private GlobalSettings(){}
-	
 	public static GlobalSettings getInstance(){
 		if(instance == null){
 			instance = new GlobalSettings();

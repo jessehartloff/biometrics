@@ -14,7 +14,7 @@ import system.allcommonclasses.modalities.Fingerprint;
 public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
 	
-	protected TriplesOfTrianglesAllRotations() {
+	public TriplesOfTrianglesAllRotations() {
 	}
 	
 	/**
@@ -28,15 +28,15 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	 *  
 	 * @return An instance of a FingerprintMethod
 	 */
-	public static FingerprintMethod getInstance(){
-		if(singleFingerprintMethod == null){
-			singleFingerprintMethod = new TriplesOfTrianglesAllRotations();
-		}
-		else{
-			FingerprintMethod.checkClass("TriplesOfTrianglesAllRotations");
-		}
-		return singleFingerprintMethod;
-	}
+//	public static FingerprintMethod getInstance(){
+//		if(singleFingerprintMethod == null){
+//			singleFingerprintMethod = new TriplesOfTrianglesAllRotations();
+//		}
+//		else{
+//			FingerprintMethod.checkClass("TriplesOfTrianglesAllRotations");
+//		}
+//		return singleFingerprintMethod;
+//	}
 	
 	
 	@Override

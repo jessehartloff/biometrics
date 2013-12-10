@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
+import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	
-	protected TriplesOfTriangles() {
+	public TriplesOfTriangles() {
 	}
 	
 	/**
@@ -59,15 +60,15 @@ public class TriplesOfTriangles extends Triangles {
 	 *  
 	 * @return An instance of a FingerprintMethod
 	 */
-	public static FingerprintMethod getInstance(){
-		if(singleFingerprintMethod == null){
-			singleFingerprintMethod = new TriplesOfTriangles();
-		}
-		else{
-			FingerprintMethod.checkClass("TriplesOfTriangles");
-		}
-		return singleFingerprintMethod;
-	}
+//	public static FingerprintMethod getInstance(){
+//		if(singleFingerprintMethod == null){
+//			singleFingerprintMethod = new TriplesOfTriangles();
+//		}
+//		else{
+//			FingerprintMethod.checkClass("TriplesOfTriangles");
+//		}
+//		return singleFingerprintMethod;
+//	}
 	
 	
 	@Override
@@ -113,6 +114,40 @@ public class TriplesOfTriangles extends Triangles {
 	public Double distance(BigInteger point1, BigInteger point2) {
 		// TODO triple of triangles distance
 		return null;
+	}
+	
+	@Override
+	public void doAllTheBinning(ArrayList<Template> templates) {
+		{}//TODO fix binning to triplets
+		ArrayList<Long> allTheta0 = new ArrayList<Long>();
+		ArrayList<Long> allX1 = new ArrayList<Long>();
+		ArrayList<Long> allY1 = new ArrayList<Long>();
+		ArrayList<Long> allTheta1 = new ArrayList<Long>();
+		ArrayList<Long> allX2 = new ArrayList<Long>();
+		ArrayList<Long> allY2 = new ArrayList<Long>();
+		ArrayList<Long> allTheta2 = new ArrayList<Long>();
+		
+		Triangle triangle = new Triangle();
+		for(Template template : templates){
+			for(BigInteger bigInt : template.hashes){
+				triangle.fromBigInt(bigInt);
+				allTheta0.add(triangle.theta0);
+				allX1.add(triangle.x1);
+				allY1.add(triangle.y1);
+				allTheta1.add(triangle.theta1);
+				allX2.add(triangle.x2);
+				allY2.add(triangle.y2);
+				allTheta2.add(triangle.theta2);
+			}
+		}
+		
+		settings.theta0.computeBinBoundaries(allTheta2);
+		settings.x1.computeBinBoundaries(allX1);
+		settings.y1.computeBinBoundaries(allY1);
+		settings.theta1.computeBinBoundaries(allTheta1);
+		settings.x2.computeBinBoundaries(allX2);
+		settings.y2.computeBinBoundaries(allY2);
+		settings.theta2.computeBinBoundaries(allTheta2);
 	}
 	
 	

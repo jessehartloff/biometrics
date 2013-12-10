@@ -1,5 +1,9 @@
 package system.coordinator;
+import java.util.ArrayList;
+
 import system.allcommonclasses.*;
+import system.allcommonclasses.modalities.Biometric;
+import system.allcommonclasses.settings.GlobalSettings;
 import system.hasher.*;
 
 /**
@@ -21,7 +25,7 @@ public abstract class Coordinator {
 		this.hasher = hasher;
 		this.users = users;
 	}
-
+	
 	/**
 	 * Runs the tests to evaluate the system.
 	 * 
@@ -29,6 +33,16 @@ public abstract class Coordinator {
 	 */
 	public abstract RawScores run();
 
+	protected void doTheBinning(){
+		ArrayList<Template> templates = new ArrayList<Template>();
+		for(User user : users.users){
+			for(Biometric b : user.readings){
+				templates.add(b.quantizeOne());
+			}
+		}
+		GlobalSettings.singleFingerprintMethod.doAllTheBinning(templates); // bad bad bad TODO fix this before iris and face goes up
+	}
+	
 	{}// TODO could have some methods to add more users or replace the existing users
 	
 }

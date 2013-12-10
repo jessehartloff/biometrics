@@ -38,44 +38,54 @@ public class Triangles extends FingerprintMethod {
 			BigInteger toReturn = BigInteger.ZERO;
 			
 			toReturn.add(BigInteger.valueOf(theta0));
-			toReturn.shiftLeft(settings.getBitsForTheta0());
+			toReturn.shiftLeft(settings.theta0.getBits());
 			
 			toReturn.add(BigInteger.valueOf(x1));
-			toReturn.shiftLeft(settings.getBitsForX1());
+			toReturn.shiftLeft(settings.theta0.getBits());
 			
 			toReturn.add(BigInteger.valueOf(y1));
-			toReturn.shiftLeft(settings.getBitsForY1());
+			toReturn.shiftLeft(settings.y1.getBits());
 			
 			toReturn.add(BigInteger.valueOf(theta1));
-			toReturn.shiftLeft(settings.getBitsForTheta1());
+			toReturn.shiftLeft(settings.theta1.getBits());
 			
 			toReturn.add(BigInteger.valueOf(x2));
-			toReturn.shiftLeft(settings.getBitsForX2());
+			toReturn.shiftLeft(settings.x2.getBits());
 			
 			toReturn.add(BigInteger.valueOf(y2));
-			toReturn.shiftLeft(settings.getBitsForY2());
+			toReturn.shiftLeft(settings.y2.getBits());
 			
 			toReturn.add(BigInteger.valueOf(theta2));
-			toReturn.shiftLeft(settings.getBitsForTheta2());
+			toReturn.shiftLeft(settings.theta2.getBits());
 			
 			return toReturn;
 		}
 		
-		//TriangleSettings ts = TriangleSettings.getInstance();
-		
-		//ts.getBitsForTheta0();
 		
 		protected void fromBigInt(BigInteger bigInt){
-			{}// TODO the following needs to be tested or changed to not suck
+			
+			{}// TODO the following needs to be tested and/or changed to not suck
 			BigInteger bigTwo = BigInteger.valueOf(2);
-			{}// TODO this is broke. need to shift right
-			this.theta0 = bigInt.and(bigTwo.pow(settings.getBitsForTheta0()).add(BigInteger.valueOf(-1))).longValue();
-			this.x1 = bigInt.and(bigTwo.pow(settings.getBitsForX1()).add(BigInteger.valueOf(-1))).longValue();
-			this.y1 = bigInt.and(bigTwo.pow(settings.getBitsForY1()).add(BigInteger.valueOf(-1))).longValue();
-			this.theta1 = bigInt.and(bigTwo.pow(settings.getBitsForTheta1()).add(BigInteger.valueOf(-1))).longValue();
-			this.x2 = bigInt.and(bigTwo.pow(settings.getBitsForX2()).add(BigInteger.valueOf(-1))).longValue();
-			this.y2 = bigInt.and(bigTwo.pow(settings.getBitsForY2()).add(BigInteger.valueOf(-1))).longValue();
-			this.theta2 = bigInt.and(bigTwo.pow(settings.getBitsForTheta2()).add(BigInteger.valueOf(-1))).longValue();
+			this.theta0 = bigInt.and(bigTwo.pow(settings.theta0.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.theta0.getBits());
+			
+			this.x1 = bigInt.and(bigTwo.pow(settings.x1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.x1.getBits());
+			
+			this.y1 = bigInt.and(bigTwo.pow(settings.y1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.y1.getBits());
+			
+			this.theta1 = bigInt.and(bigTwo.pow(settings.theta1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.theta1.getBits());
+			
+			this.x2 = bigInt.and(bigTwo.pow(settings.x2.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.x2.getBits());
+			
+			this.y2 = bigInt.and(bigTwo.pow(settings.y2.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.y2.getBits());
+			
+			this.theta2 = bigInt.and(bigTwo.pow(settings.theta2.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt.shiftRight(settings.theta2.getBits());
 		}
 
 		@Override
@@ -88,9 +98,8 @@ public class Triangles extends FingerprintMethod {
 	
 	
 	
-	protected Triangles() {
-		
-		{}//TODO get settings instance
+	public Triangles() {
+		settings = TriangleSettings.getInstance();
 	}
 	
 	/**
@@ -104,15 +113,15 @@ public class Triangles extends FingerprintMethod {
 	 *  
 	 * @return An instance of a FingerprintMethod
 	 */
-	public static FingerprintMethod getInstance(){
-		if(singleFingerprintMethod == null){
-			singleFingerprintMethod = new Triangles();
-		}
-		else{
-			FingerprintMethod.checkClass("Triangles");
-		}
-		return singleFingerprintMethod;
-	}
+//	public static FingerprintMethod getInstance(){
+//		if(singleFingerprintMethod == null){
+//			singleFingerprintMethod = new Triangles();
+//		}
+//		else{
+//			FingerprintMethod.checkClass("Triangles");
+//		}
+//		return singleFingerprintMethod;
+//	}
 	
 	
 	@Override
@@ -186,20 +195,66 @@ public class Triangles extends FingerprintMethod {
 		
 		triangleToReturn.centerX = (m0.x + m1.x + m2.x)/3.0;
 		triangleToReturn.centerY = (m0.y + m1.y + m2.y)/3.0;
+		
+		
+		Long prequantizedTheta0 = m0.theta;
+		
+		Long prequantizedX1     = m1.x - m0.x;
+		Long prequantizedY1     = m1.y - m0.y;
+		Long prequantizedTheta1 = m1.theta;
+		
+		Long prequantizedX2     = m2.x - m0.x;
+		Long prequantizedY2     = m2.y - m0.y;
+		Long prequantizedTheta2 = m2.theta;
+		
 
-		triangleToReturn.theta0 = m0.theta;
+		triangleToReturn.theta0 = settings.theta0.findBin(prequantizedTheta0);
 		
-		triangleToReturn.x1 = m1.x - m0.x;
-		triangleToReturn.y1 = m1.y - m0.y;
-		triangleToReturn.theta1 = m1.theta;
+		triangleToReturn.x1 = settings.x1.findBin(prequantizedX1);
+		triangleToReturn.y1 = settings.y1.findBin(prequantizedY1);
+		triangleToReturn.theta1 = settings.theta1.findBin(prequantizedTheta1);
 		
-		triangleToReturn.x2 = m2.x - m0.x;
-		triangleToReturn.y2 = m2.y - m0.y;
-		triangleToReturn.theta2 = m2.theta;
+		triangleToReturn.x2 = settings.x2.findBin(prequantizedX2);
+		triangleToReturn.y2 = settings.y2.findBin(prequantizedY2);
+		triangleToReturn.theta2 = settings.theta2.findBin(prequantizedTheta2);
 
 		{}// TODO triangle binning
 		
 		return triangleToReturn;
+	}
+
+	@Override
+	public void doAllTheBinning(ArrayList<Template> templates) {
+		
+		ArrayList<Long> allTheta0 = new ArrayList<Long>();
+		ArrayList<Long> allX1 = new ArrayList<Long>();
+		ArrayList<Long> allY1 = new ArrayList<Long>();
+		ArrayList<Long> allTheta1 = new ArrayList<Long>();
+		ArrayList<Long> allX2 = new ArrayList<Long>();
+		ArrayList<Long> allY2 = new ArrayList<Long>();
+		ArrayList<Long> allTheta2 = new ArrayList<Long>();
+		
+		Triangle triangle = new Triangle();
+		for(Template template : templates){
+			for(BigInteger bigInt : template.hashes){
+				triangle.fromBigInt(bigInt);
+				allTheta0.add(triangle.theta0);
+				allX1.add(triangle.x1);
+				allY1.add(triangle.y1);
+				allTheta1.add(triangle.theta1);
+				allX2.add(triangle.x2);
+				allY2.add(triangle.y2);
+				allTheta2.add(triangle.theta2);
+			}
+		}
+		
+		settings.theta0.computeBinBoundaries(allTheta2);
+		settings.x1.computeBinBoundaries(allX1);
+		settings.y1.computeBinBoundaries(allY1);
+		settings.theta1.computeBinBoundaries(allTheta1);
+		settings.x2.computeBinBoundaries(allX2);
+		settings.y2.computeBinBoundaries(allY2);
+		settings.theta2.computeBinBoundaries(allTheta2);
 	}
 	
 

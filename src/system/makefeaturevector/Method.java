@@ -1,6 +1,9 @@
 package system.makefeaturevector;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+
+import system.allcommonclasses.Template;
 import system.vectordistance.Distance;
 
 
@@ -44,5 +47,7 @@ public abstract class Method{
 	 */
 	public abstract Double distance(BigInteger templatePoint1, BigInteger templatePoint2);
 	
+	
+	public abstract void doAllTheBinning(ArrayList<Template> templates);
 	
 }
