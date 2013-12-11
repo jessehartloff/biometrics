@@ -48,6 +48,5 @@ public abstract class Method{
 	public abstract Double distance(BigInteger templatePoint1, BigInteger templatePoint2);
 	
 	
-	public abstract void doAllTheBinning(ArrayList<Template> templates);
 	
 }

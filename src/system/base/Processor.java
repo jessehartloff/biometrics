@@ -1,8 +1,10 @@
 package system.base;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.FingerprintIO;
@@ -30,7 +32,8 @@ public class Processor {
 	 */
 	public Results go(Settings settings){
 		Results results = new Results();
-		
+
+		GlobalSettings.fingerprintMethod = new Triangles();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();
@@ -39,7 +42,9 @@ public class Processor {
 		TestGenerator testMaker = new GenerateFVCStyleTests();
 		{}// TODO make hasher
 		{}// TODO make method
-		GlobalSettings.fingerprintMethod = new Triangles();
+		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+		
+//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints);
 		{}// TODO make coordinator(hasher, users)
 		RawScores scores = new RawScores();
 		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
@@ -51,7 +56,8 @@ public class Processor {
 		Collections.sort(scores.imposterScores);
 		
 		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
-		System.out.println("Imposters:\n" + scores.imposterScores + "\n\n\n");
+		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
+		System.out.println("EER:\n" + results.getEer());
 
 		
 		return results;

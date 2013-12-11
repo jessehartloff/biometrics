@@ -21,4 +21,10 @@ public class Template implements Serializable{
 		hashes = new HashSet<BigInteger>();
 	}
 
+	@Override
+	public String toString() {
+		return hashes.toString();
+	}
+
+	
 }

@@ -84,7 +84,6 @@ public class Triangles extends FingerprintMethod {
 		
 		public void fromBigInt(BigInteger bigInt){
 			
-			{}// TODO the following needs to be tested and/or changed to not suck
 			BigInteger bigTwo = BigInteger.valueOf(2);
 			
 			this.theta2 = bigInt.and(bigTwo.pow(settings.theta2.getBits()).add(BigInteger.valueOf(-1))).longValue();
@@ -176,7 +175,7 @@ public class Triangles extends FingerprintMethod {
 		for(Triangle triangle : triangles){
 			template.hashes.add(triangle.toBigInt());
 		}
-		System.out.println(template.hashes);
+//		System.out.println(template.hashes);
 		return template;
 	}
 
@@ -230,7 +229,7 @@ public class Triangles extends FingerprintMethod {
 		
 		// order the minutiae
 		ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
-		minutiae.add(m0); // this code is ugly
+		minutiae.add(m0);
 		minutiae.add(m1);
 		minutiae.add(m2);
 		Collections.sort(minutiae);
@@ -268,8 +267,9 @@ public class Triangles extends FingerprintMethod {
 		return triangleToReturn;
 	}
 
+	
 	@Override
-	public void doAllTheBinning(ArrayList<Template> templates) {
+	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
 		
 		ArrayList<Long> allTheta0 = new ArrayList<Long>();
 		ArrayList<Long> allX1 = new ArrayList<Long>();
@@ -279,22 +279,20 @@ public class Triangles extends FingerprintMethod {
 		ArrayList<Long> allY2 = new ArrayList<Long>();
 		ArrayList<Long> allTheta2 = new ArrayList<Long>();
 		
-		for(Template template : templates){
-			for(BigInteger bigInt : template.hashes){
-				Triangle triangle = new Triangle();
-				triangle.fromBigInt(bigInt);
-				allTheta0.add(triangle.theta0);
-				allX1.add(triangle.x1);
-				allY1.add(triangle.y1);
-				allTheta1.add(triangle.theta1);
-				allX2.add(triangle.x2);
-				allY2.add(triangle.y2);
-				allTheta2.add(triangle.theta2);
+		for(Fingerprint fingerprint : fingerprints){
+			ArrayList<Triangle> triangles = this.fingerprintToTriangles(fingerprint);
+			for(Triangle triangle : triangles){
+				allTheta0.add(triangle.prequantizedTheta0);
+				allX1.add(triangle.prequantizedX1);
+				allY1.add(triangle.prequantizedY1);
+				allTheta1.add(triangle.prequantizedTheta1);
+				allX2.add(triangle.prequantizedX2);
+				allY2.add(triangle.prequantizedY2);
+				allTheta2.add(triangle.prequantizedTheta2);
 			}
 		}
 		
 		settings.theta0.computeBinBoundaries(allTheta0);
-		System.out.println("thetas: " + allTheta0);
 		settings.x1.computeBinBoundaries(allX1);
 		settings.y1.computeBinBoundaries(allY1);
 		settings.theta1.computeBinBoundaries(allTheta1);

@@ -8,6 +8,16 @@ package system.allcommonclasses;
  */
 public class Results {
 
+	private Double eer;
+	
+	public Double getEer() {
+		return eer;
+	}
+	
+	public void setEer(Double eer) {
+		this.eer = eer;
+	}
+	
 	{}// TODO Results
 	
 }

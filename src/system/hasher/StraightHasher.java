@@ -43,7 +43,7 @@ public class StraightHasher extends Hasher {
 	@Override
 	public Double compareTemplates(Template enrolledTemplate, ArrayList<Template> testTemplates) {
 	// returns to maximum set intersection between the enrolled template and a test template
-		Double maxScore = Double.MIN_VALUE;
+		Double maxScore = Double.NEGATIVE_INFINITY;
 		for (Template template : testTemplates) {
 			Double score = 0.0;
 			for (BigInteger hash : template.hashes) {

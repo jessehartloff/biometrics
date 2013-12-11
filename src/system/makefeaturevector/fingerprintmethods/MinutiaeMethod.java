@@ -59,7 +59,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 	}
 
 	@Override
-	public void doAllTheBinning(ArrayList<Template> templates) {
+	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
 		// TODO Auto-generated method stub
 		
 	}

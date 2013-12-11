@@ -40,7 +40,7 @@ public class DefaultTesting extends Coordinator {
 		
 		RawScores scores = new RawScores();
 		
-		super.doTheBinning();
+//		super.doTheFingerprintBinning();
 		
 		// Generate the tests
 		this.generateTests();

@@ -43,13 +43,19 @@ public class Main {
 		settings.triangleSettings.y2.setBins(4);
 		settings.triangleSettings.theta2.setBins(4);
 
-		settings.triangleSettings.setRotationStart(-20.0);
-		settings.triangleSettings.setRotationStop(20.0);
-		settings.triangleSettings.setRotationStep(20.0);
+		settings.triangleSettings.setRotationStart(-50.0);
+		settings.triangleSettings.setRotationStop(50.0);
+		settings.triangleSettings.setRotationStep(5.0);
 		
 		Processor p = new Processor();
 		p.go(settings);
-		
+
+//		Double d = Double.NEGATIVE_INFINITY;
+//		Double dd = 0.0;
+//		if(dd > d){
+//			d = dd;
+//		}
+//		System.out.println("d: " + d);
 		
 		Minutia m = new Minutia();
 		m.x = 50L;

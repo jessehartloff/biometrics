@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.Biometric;
+import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.hasher.*;
 
@@ -33,16 +34,17 @@ public abstract class Coordinator {
 	 */
 	public abstract RawScores run();
 
-	protected void doTheBinning(){
-		ArrayList<Template> templates = new ArrayList<Template>();
-		for(User user : users.users){
-			for(Biometric b : user.readings){
-//				System.out.println(b.quantizeOne().hashes);
-				templates.add(b.quantizeOne());
-			}
-		}
-		GlobalSettings.fingerprintMethod.doAllTheBinning(templates); // bad bad bad TODO fix this before iris and face goes up
-	}
+	
+//	protected void doTheFingerprintBinning(){
+//		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+//		for(User user : users.users){
+//			for(Biometric b : user.readings){
+////				System.out.println(b.quantizeOne().hashes);
+//				templates.add(b.quantizeOne());
+//			}
+//		}
+//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints); // bad bad bad TODO fix this before iris and face goes up
+//	}
 	
 	{}// TODO could have some methods to add more users or replace the existing users
 	
