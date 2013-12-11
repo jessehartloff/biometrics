@@ -11,7 +11,7 @@ import system.allcommonclasses.utilities.FingerprintIO;
 import system.coordinator.*;
 import system.coordinator.tests.*;
 import system.hasher.*;
-import system.makefeaturevector.fingerprintmethods.Triangles;
+import system.makefeaturevector.fingerprintmethods.*;
 
 /**
  * 
@@ -33,7 +33,8 @@ public class Processor {
 	public Results go(Settings settings){
 		Results results = new Results();
 
-		GlobalSettings.fingerprintMethod = new Triangles();
+//		GlobalSettings.fingerprintMethod = new Triangles();
+		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();

@@ -34,13 +34,49 @@ public class TriplesOfTriangles extends Triangles {
 		}
 		
 		protected BigInteger toBigInt(){
+			Integer triangleBits = settings.theta0.getBits() + 
+					settings.x1.getBits() +
+					settings.y1.getBits() +
+					settings.theta1.getBits() +
+					settings.x2.getBits() +
+					settings.y2.getBits() +
+					settings.theta2.getBits();
 			
-			{}// TODO triangles to big int
-			return null;
+			BigInteger toReturn = t0.toBigInt();
+
+			toReturn = toReturn.shiftLeft(triangleBits);
+			toReturn = toReturn.add(t1.toBigInt());
+			
+			toReturn = toReturn.shiftLeft(triangleBits);
+			toReturn = toReturn.add(t2.toBigInt());
+			
+			return toReturn;
 		}
 		
 		protected void fromBigInt(BigInteger bigInt){
-			{}// TODO  big int to triangles
+			Integer triangleBits = settings.theta0.getBits() + 
+					settings.x1.getBits() +
+					settings.y1.getBits() +
+					settings.theta1.getBits() +
+					settings.x2.getBits() +
+					settings.y2.getBits() +
+					settings.theta2.getBits();
+
+			BigInteger bigTwo = BigInteger.valueOf(2);
+			
+			Triangle triangle2 = new Triangle();
+			triangle2.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			t2 = triangle2;
+			bigInt = bigInt.shiftRight(triangleBits);
+
+			Triangle triangle1 = new Triangle();
+			triangle1.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			t1 = triangle1;
+			bigInt = bigInt.shiftRight(triangleBits);
+
+			Triangle triangle0 = new Triangle();
+			triangle0.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			t0 = triangle0;
 		}
 	}
 	
@@ -80,7 +116,14 @@ public class TriplesOfTriangles extends Triangles {
 		for(int i=0; i<n; i++){
 			for(int j=i+1; j<n; j++){
 				for(int k=j+1; k<n; k++){
-					if(true/*TODO condition*/){{}
+					Triangle triangle0 = triangles.get(i);
+					Triangle triangle1 = triangles.get(j);
+					Triangle triangle2 = triangles.get(k);
+					Double distance0 = triangle0.distanceBetweenCenters(triangle1);
+					Double distance1 = triangle0.distanceBetweenCenters(triangle2);
+					Double distance2 = triangle1.distanceBetweenCenters(triangle2);
+					Double threshold = settings.getThresholdForTriplets();
+					if(distance0 < threshold && distance1 < threshold && distance2 < threshold){// TODO better condition?
 						TriangleTriplet triplet = new TriangleTriplet();
 						triplet.t0 = triangles.get(i);
 						triplet.t1 = triangles.get(j);

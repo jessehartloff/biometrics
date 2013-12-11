@@ -137,6 +137,14 @@ public class Triangles extends FingerprintMethod {
 		public String toString(){
 			return "" + theta0 + " " + x1 + " " + y1 + " " + theta1 + " " + x2 + " " + y2 + " " + theta2;
 		}
+		
+		public Double distanceBetweenCenters(Triangle that){
+			Double distance;
+			Double dx = this.centerX - that.centerX;
+			Double dy = this.centerY - that.centerY;
+			distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+			return distance;
+		}
 
 	}
 	

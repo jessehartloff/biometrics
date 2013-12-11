@@ -47,6 +47,8 @@ public class Main {
 		settings.triangleSettings.setRotationStop(50.0);
 		settings.triangleSettings.setRotationStep(5.0);
 		
+		settings.triangleSettings.setThresholdForTriplets(70.0);
+		
 		Processor p = new Processor();
 		p.go(settings);
 

@@ -19,6 +19,8 @@ public class TriangleSettings implements Serializable{
 	private Double rotationStep;
 	private Double rotationStart;
 	private Double rotationStop;
+	
+	private Double thresholdForTriplets;
 
 	private static TriangleSettings instance;
 	
@@ -64,6 +66,14 @@ public class TriangleSettings implements Serializable{
 
 	public void setRotationStop(Double rotationStop) {
 		this.rotationStop = rotationStop;
+	}
+
+	public Double getThresholdForTriplets() {
+		return thresholdForTriplets;
+	}
+
+	public void setThresholdForTriplets(Double thresholdForTriplets) {
+		this.thresholdForTriplets = thresholdForTriplets;
 	}
 
 	

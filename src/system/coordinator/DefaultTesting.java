@@ -45,15 +45,19 @@ public class DefaultTesting extends Coordinator {
 		// Generate the tests
 		this.generateTests();
 		
-		
+		Integer numberOfTests = tests.tests.size();
+		Integer testsRan = 0;
 		// Run the tests
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
-//			System.out.print(score + " ");
+			testsRan++;
+			System.out.print("score: " + score + "   progress: " + (testsRan.doubleValue()/numberOfTests.doubleValue())*100.0 + "%" );
 			if(test.genuine){
+				System.out.println("   genuine");
 				scores.genuineScores.add(score);
 			}
 			else{
+				System.out.println("   imposter");
 				scores.imposterScores.add(score);
 			}
 		}
