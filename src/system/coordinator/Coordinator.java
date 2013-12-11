@@ -8,7 +8,7 @@ import system.hasher.*;
 
 /**
  * Coordinates all the stuff. Generates and runs tests.
- * TODO comment Coordinator better
+ * 
  */
 public abstract class Coordinator {
 	
@@ -37,10 +37,11 @@ public abstract class Coordinator {
 		ArrayList<Template> templates = new ArrayList<Template>();
 		for(User user : users.users){
 			for(Biometric b : user.readings){
+//				System.out.println(b.quantizeOne().hashes);
 				templates.add(b.quantizeOne());
 			}
 		}
-		GlobalSettings.singleFingerprintMethod.doAllTheBinning(templates); // bad bad bad TODO fix this before iris and face goes up
+		GlobalSettings.fingerprintMethod.doAllTheBinning(templates); // bad bad bad TODO fix this before iris and face goes up
 	}
 	
 	{}// TODO could have some methods to add more users or replace the existing users

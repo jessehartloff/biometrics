@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
-import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
 
 /**
  * 

@@ -1,7 +1,6 @@
 package system.allcommonclasses.settings;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class TriangleSettings implements Serializable{
 

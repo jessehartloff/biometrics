@@ -5,9 +5,9 @@ import java.math.BigInteger;
 public class Permutation extends Transformation{
 
 	@Override
-	public BigInteger transform(BigInteger template) {
+	public BigInteger transform(BigInteger bigInt) {
 		{}// TODO Permutation
-		return template;
+		return bigInt;
 	}
 
 }

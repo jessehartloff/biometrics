@@ -19,79 +19,124 @@ public class Triangles extends FingerprintMethod {
 	
 	protected TriangleSettings settings;
 	
-	protected class Triangle implements Comparable<Triangle>{
+	public class Triangle implements Comparable<Triangle>{
+
+		public Long prequantizedTheta0;
+		public Long prequantizedX1;
+		public Long prequantizedY1;
+		public Long prequantizedTheta1;
+		public Long prequantizedX2;
+		public Long prequantizedY2;
+		public Long prequantizedTheta2;
 		
-		Long theta0;
+		public Long theta0;
+		public Long x1;
+		public Long y1;
+		public Long theta1;
+		public Long x2;
+		public Long y2;
+		public Long theta2;
 		
-		Long x1;
-		Long y1;
-		Long theta1;
+		public Double centerX;
+		public Double centerY;
 		
-		Long x2;
-		Long y2;
-		Long theta2;
+		protected TriangleSettings innerSettings;
+		public Triangle(TriangleSettings settings){
+			this.innerSettings = settings;
+		}
+		public Triangle(){
+			this.innerSettings = settings;
+		}
 		
-		Double centerX;
-		Double centerY;
-		
-		protected BigInteger toBigInt(){
-			BigInteger toReturn = BigInteger.ZERO;
+		public BigInteger toBigInt(){
+
+//			System.out.print(settings.theta0.getBinBoundaries() + " ");
+//			System.out.print(x1 + " ");
+//			System.out.print(y1 + " ");
+//			System.out.print(theta1 + " ");
+//			System.out.print(x2 + " ");
+//			System.out.print(y2 + " ");
+//			System.out.print(theta2 + " \n");
 			
-			toReturn.add(BigInteger.valueOf(theta0));
-			toReturn.shiftLeft(settings.theta0.getBits());
+			BigInteger toReturn = BigInteger.valueOf(theta0);
 			
-			toReturn.add(BigInteger.valueOf(x1));
-			toReturn.shiftLeft(settings.theta0.getBits());
+			toReturn = toReturn.shiftLeft(settings.x1.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(x1));
 			
-			toReturn.add(BigInteger.valueOf(y1));
-			toReturn.shiftLeft(settings.y1.getBits());
+			toReturn = toReturn.shiftLeft(settings.y1.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(y1));
 			
-			toReturn.add(BigInteger.valueOf(theta1));
-			toReturn.shiftLeft(settings.theta1.getBits());
+			toReturn = toReturn.shiftLeft(settings.theta1.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(theta1));
 			
-			toReturn.add(BigInteger.valueOf(x2));
-			toReturn.shiftLeft(settings.x2.getBits());
+			toReturn = toReturn.shiftLeft(settings.x2.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(x2));
 			
-			toReturn.add(BigInteger.valueOf(y2));
-			toReturn.shiftLeft(settings.y2.getBits());
+			toReturn = toReturn.shiftLeft(settings.y2.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(y2));
 			
-			toReturn.add(BigInteger.valueOf(theta2));
-			toReturn.shiftLeft(settings.theta2.getBits());
+			toReturn = toReturn.shiftLeft(settings.theta2.getBits());
+			toReturn = toReturn.add(BigInteger.valueOf(theta2));
 			
+//			System.out.print(toReturn + " ");
 			return toReturn;
 		}
 		
-		
-		protected void fromBigInt(BigInteger bigInt){
+		public void fromBigInt(BigInteger bigInt){
 			
 			{}// TODO the following needs to be tested and/or changed to not suck
 			BigInteger bigTwo = BigInteger.valueOf(2);
-			this.theta0 = bigInt.and(bigTwo.pow(settings.theta0.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.theta0.getBits());
-			
-			this.x1 = bigInt.and(bigTwo.pow(settings.x1.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.x1.getBits());
-			
-			this.y1 = bigInt.and(bigTwo.pow(settings.y1.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.y1.getBits());
-			
-			this.theta1 = bigInt.and(bigTwo.pow(settings.theta1.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.theta1.getBits());
-			
-			this.x2 = bigInt.and(bigTwo.pow(settings.x2.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.x2.getBits());
-			
-			this.y2 = bigInt.and(bigTwo.pow(settings.y2.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.y2.getBits());
 			
 			this.theta2 = bigInt.and(bigTwo.pow(settings.theta2.getBits()).add(BigInteger.valueOf(-1))).longValue();
-			bigInt.shiftRight(settings.theta2.getBits());
+			bigInt = bigInt.shiftRight(settings.theta2.getBits());
+			
+			this.y2 = bigInt.and(bigTwo.pow(settings.y2.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt = bigInt.shiftRight(settings.y2.getBits());
+			
+			this.x2 = bigInt.and(bigTwo.pow(settings.x2.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt = bigInt.shiftRight(settings.x2.getBits());
+			
+			this.theta1 = bigInt.and(bigTwo.pow(settings.theta1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt = bigInt.shiftRight(settings.theta1.getBits());
+			
+			this.y1 = bigInt.and(bigTwo.pow(settings.y1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt = bigInt.shiftRight(settings.y1.getBits());
+			
+			this.x1 = bigInt.and(bigTwo.pow(settings.x1.getBits()).add(BigInteger.valueOf(-1))).longValue();
+			bigInt = bigInt.shiftRight(settings.x1.getBits());
+			
+			this.theta0 = bigInt.and(bigTwo.pow(settings.theta0.getBits()).add(BigInteger.valueOf(-1))).longValue();
+//			bigInt = bigInt.shiftRight(settings.theta0.getBits());
 		}
 
 		@Override
 		public int compareTo(Triangle that) {
 			int compareX = this.centerX.compareTo(that.centerX);
 			return compareX == 0 ? this.centerY.compareTo(that.centerY) : compareX;
+		}
+		
+		@Override
+	    public boolean equals(Object obj) {
+	        if (obj == null)
+	            return false;
+	        if (obj == this)
+	            return true;
+	        if (!(obj instanceof Triangle))
+	            return false;
+
+	        Triangle otherTriangle = (Triangle) obj;
+	        return this.theta0.equals(otherTriangle.theta0) && 
+	        		this.x1.equals(otherTriangle.x1) && 
+	        		this.y1.equals(otherTriangle.y1) && 
+	        		this.theta1.equals(otherTriangle.theta1) && 
+	        		this.x2.equals(otherTriangle.x2) && 
+	        		this.y2.equals(otherTriangle.y2) && 
+	        		this.theta2.equals(otherTriangle.theta2); 
+	    }
+		
+		@Override
+		public String toString(){
+			return "" + theta0 + " " + x1 + " " + y1 + " " + theta1 + " " + x2 + " " + y2 + " " + theta2;
 		}
 
 	}
@@ -131,6 +176,7 @@ public class Triangles extends FingerprintMethod {
 		for(Triangle triangle : triangles){
 			template.hashes.add(triangle.toBigInt());
 		}
+		System.out.println(template.hashes);
 		return template;
 	}
 
@@ -153,7 +199,7 @@ public class Triangles extends FingerprintMethod {
 		return null;
 	}
 	
-	protected ArrayList<Triangle> fingerprintToTriangles(Fingerprint fingerprint){
+	public ArrayList<Triangle> fingerprintToTriangles(Fingerprint fingerprint){
 		ArrayList<Triangle> triangles = new ArrayList<Triangle>();
 		
 		ArrayList<Minutia> minutiaeCopy = new ArrayList<Minutia>();
@@ -172,6 +218,8 @@ public class Triangles extends FingerprintMethod {
 					minutiaeCopy.get(startingIndex), 
 					minutiaeCopy.get(startingIndex+1));
 			
+//			System.out.println(triangle);
+
 			triangles.add(triangle);	
 		}
 	
@@ -197,28 +245,25 @@ public class Triangles extends FingerprintMethod {
 		triangleToReturn.centerY = (m0.y + m1.y + m2.y)/3.0;
 		
 		
-		Long prequantizedTheta0 = m0.theta;
+		triangleToReturn.prequantizedTheta0 = m0.theta;
 		
-		Long prequantizedX1     = m1.x - m0.x;
-		Long prequantizedY1     = m1.y - m0.y;
-		Long prequantizedTheta1 = m1.theta;
+		triangleToReturn.prequantizedX1     = m1.x - m0.x;
+		triangleToReturn.prequantizedY1     = m1.y - m0.y;
+		triangleToReturn.prequantizedTheta1 = m1.theta;
 		
-		Long prequantizedX2     = m2.x - m0.x;
-		Long prequantizedY2     = m2.y - m0.y;
-		Long prequantizedTheta2 = m2.theta;
-		
+		triangleToReturn.prequantizedX2     = m2.x - m0.x;
+		triangleToReturn.prequantizedY2     = m2.y - m0.y;
+		triangleToReturn.prequantizedTheta2 = m2.theta;
 
-		triangleToReturn.theta0 = settings.theta0.findBin(prequantizedTheta0);
+		triangleToReturn.theta0 = settings.theta0.findBin(triangleToReturn.prequantizedTheta0);
 		
-		triangleToReturn.x1 = settings.x1.findBin(prequantizedX1);
-		triangleToReturn.y1 = settings.y1.findBin(prequantizedY1);
-		triangleToReturn.theta1 = settings.theta1.findBin(prequantizedTheta1);
+		triangleToReturn.x1 = settings.x1.findBin(triangleToReturn.prequantizedX1);
+		triangleToReturn.y1 = settings.y1.findBin(triangleToReturn.prequantizedY1);
+		triangleToReturn.theta1 = settings.theta1.findBin(triangleToReturn.prequantizedTheta1);
 		
-		triangleToReturn.x2 = settings.x2.findBin(prequantizedX2);
-		triangleToReturn.y2 = settings.y2.findBin(prequantizedY2);
-		triangleToReturn.theta2 = settings.theta2.findBin(prequantizedTheta2);
-
-		{}// TODO triangle binning
+		triangleToReturn.x2 = settings.x2.findBin(triangleToReturn.prequantizedX2);
+		triangleToReturn.y2 = settings.y2.findBin(triangleToReturn.prequantizedY2);
+		triangleToReturn.theta2 = settings.theta2.findBin(triangleToReturn.prequantizedTheta2);
 		
 		return triangleToReturn;
 	}
@@ -234,9 +279,9 @@ public class Triangles extends FingerprintMethod {
 		ArrayList<Long> allY2 = new ArrayList<Long>();
 		ArrayList<Long> allTheta2 = new ArrayList<Long>();
 		
-		Triangle triangle = new Triangle();
 		for(Template template : templates){
 			for(BigInteger bigInt : template.hashes){
+				Triangle triangle = new Triangle();
 				triangle.fromBigInt(bigInt);
 				allTheta0.add(triangle.theta0);
 				allX1.add(triangle.x1);
@@ -248,7 +293,8 @@ public class Triangles extends FingerprintMethod {
 			}
 		}
 		
-		settings.theta0.computeBinBoundaries(allTheta2);
+		settings.theta0.computeBinBoundaries(allTheta0);
+		System.out.println("thetas: " + allTheta0);
 		settings.x1.computeBinBoundaries(allX1);
 		settings.y1.computeBinBoundaries(allY1);
 		settings.theta1.computeBinBoundaries(allTheta1);

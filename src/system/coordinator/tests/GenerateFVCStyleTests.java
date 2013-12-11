@@ -27,6 +27,7 @@ public class GenerateFVCStyleTests extends TestGenerator{
 				}
 			}
 		}
+		
 
 		int n = users.users.size();
 		for(int i=0; i<n; i++){

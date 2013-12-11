@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.parameters.GeneralParameters;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
@@ -32,7 +31,7 @@ public class Main {
 
 		Settings settings = new Settings();
 		
-		settings.globalSettings.setFingerprintMethod("triangles");
+		settings.globalSettings.setFingerprintMethodString("triangles");
 		settings.globalSettings.setCoordinator("defaulttesting");
 		settings.globalSettings.setHasher("straighthasher");
 
@@ -82,7 +81,6 @@ public class Main {
 		
 		{}// TODO main
 		
-		GeneralParameters parameters = new GeneralParameters();
 		// new Parameters or read serialized from file
 		
 		Processor runner = new Processor();

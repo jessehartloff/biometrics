@@ -48,7 +48,7 @@ public abstract class FingerprintMethod extends Method{
 /*	protected static void checkClass(String expectedClass){
 		String s = singleFingerprintMethod.getClass().toString();
 		if(s.substring(s.lastIndexOf(".")+1).compareTo(expectedClass) != 0){
-			{}// TODO make this warning more noticeable. Maybe crash the whole program.
+			{}// make this warning more noticeable. Maybe crash the whole program.
 			System.out.println("Not what you were expecting. You got: " + 
 					singleFingerprintMethod.getClass().toString());
 		}

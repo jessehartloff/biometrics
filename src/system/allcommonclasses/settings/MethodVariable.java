@@ -15,7 +15,11 @@ public class MethodVariable implements Serializable{
 	private ArrayList<Long> binBoundaries;
 	
 	public MethodVariable(){
-		binBoundaries = new ArrayList<Long>();
+		this.binBoundaries = new ArrayList<Long>();
+		for(Long i=0L; i<1000; i++){
+			this.binBoundaries.add(i); // TODO TODO TODO this code sucks
+		}
+		this.setBins(1001);
 	}
 	
 	public Long findBin(Long prequantizedValue) {
@@ -25,7 +29,7 @@ public class MethodVariable implements Serializable{
 				return i.longValue();
 			}
 		}
-		return n.longValue() + 1;
+		return n.longValue();
 	}
 	
 	
@@ -55,8 +59,8 @@ public class MethodVariable implements Serializable{
 		Integer n = prequantizedValues.size();
 		Integer binSize = n/this.bins;
 		Collections.sort(prequantizedValues);
-		for(int i=1; i<this.bins-1; i++){
-			Long cutoff = (prequantizedValues.get(binSize*i) + prequantizedValues.get((binSize*i)+1))/2;
+		for(int i=1; i<this.bins; i++){
+			Long cutoff = (prequantizedValues.get((binSize*i)-1) + prequantizedValues.get(binSize*i))/2;
 			this.binBoundaries.add(cutoff);
 		}
 	}

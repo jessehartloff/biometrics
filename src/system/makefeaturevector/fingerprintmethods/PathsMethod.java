@@ -14,7 +14,6 @@ import system.vectordistance.MeasurableDistance;
  */
 public class PathsMethod extends FingerprintMethod {
 
-	{}// TODO might not need subclasses like this
 	private class Path implements MeasurableDistance<Path>{
 
 		int d1;

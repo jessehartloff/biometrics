@@ -3,7 +3,6 @@ package system.base;
 import java.util.Collections;
 
 import system.allcommonclasses.*;
-import system.allcommonclasses.parameters.GeneralParameters;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.FingerprintIO;
@@ -34,15 +33,13 @@ public class Processor {
 		
 		settings.loadSettings();
 
-		{}// TODO read biometrics from files
 		Users users = FingerprintIO.readFVC();
-		
-		{}// TODO make all the users
+		GlobalSettings globalSettings = GlobalSettings.getInstance();
 		Hasher hasher = new StraightHasher();
 		TestGenerator testMaker = new GenerateFVCStyleTests();
 		{}// TODO make hasher
 		{}// TODO make method
-		GlobalSettings.singleFingerprintMethod = new Triangles();
+		GlobalSettings.fingerprintMethod = new Triangles();
 		{}// TODO make coordinator(hasher, users)
 		RawScores scores = new RawScores();
 		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
@@ -52,8 +49,10 @@ public class Processor {
 
 		Collections.sort(scores.genuineScores);
 		Collections.sort(scores.imposterScores);
-		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n\n\n");
+		
+		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
 		System.out.println("Imposters:\n" + scores.imposterScores + "\n\n\n");
+
 		
 		return results;
 	}

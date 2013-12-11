@@ -7,14 +7,14 @@ public class GlobalSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String fingerprintMethod;
+	private String fingerprintMethodString;
 	private String irisMethod;
 	private String faceMethod;
 	private String coordinator;
 	private String hasher;
 	private String distanceFunction;
 	
-	public static FingerprintMethod singleFingerprintMethod; 
+	public static FingerprintMethod fingerprintMethod; 
 	//public static IrisMethod singleIrisMethod;
 	//public static FaceMethod singleFaceMethod;
 	
@@ -30,8 +30,8 @@ public class GlobalSettings implements Serializable{
 	
 	
 	//getters and setters
-	public String getFingerprintMethod() {return fingerprintMethod;}
-	public void setFingerprintMethod(String fingerprintMethod) {this.fingerprintMethod = fingerprintMethod;}
+	public String getFingerprintMethodString() {return fingerprintMethodString;}
+	public void setFingerprintMethodString(String fingerprintMethodString) {this.fingerprintMethodString = fingerprintMethodString;}
 	public String getIrisMethod() {return irisMethod;}
 	public void setIrisMethod(String irisMethod) {this.irisMethod = irisMethod;}
 	public String getFaceMethod() {return faceMethod;}

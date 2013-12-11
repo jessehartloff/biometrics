@@ -25,13 +25,13 @@ public class Fingerprint extends Biometric{
 	
 
 	public Template quantizeOne(){
-		return GlobalSettings.singleFingerprintMethod.quantizeOne(this);
+		return GlobalSettings.fingerprintMethod.quantizeOne(this);
 	}
 
 	
 
 	public ArrayList<Template> quantizeAll(){
-		return GlobalSettings.singleFingerprintMethod.quantizeAll(this);
+		return GlobalSettings.fingerprintMethod.quantizeAll(this);
 	}
 	
 	/**

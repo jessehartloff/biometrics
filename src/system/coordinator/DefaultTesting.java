@@ -45,10 +45,11 @@ public class DefaultTesting extends Coordinator {
 		// Generate the tests
 		this.generateTests();
 		
+		
 		// Run the tests
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
-			System.out.println(score);
+//			System.out.print(score + " ");
 			if(test.genuine){
 				scores.genuineScores.add(score);
 			}
@@ -56,6 +57,7 @@ public class DefaultTesting extends Coordinator {
 				scores.imposterScores.add(score);
 			}
 		}
+
 		
 		return scores; 
 	}
@@ -70,6 +72,8 @@ public class DefaultTesting extends Coordinator {
 	private Double runTest(Test test){
 		Template enrolledTemplate = hasher.makeEnrollTemplate(test.enroll);
 		ArrayList<Template> testTemplates = hasher.makeTestTemplates(test.test);
+		
+//		System.out.println("template: " + enrolledTemplate.hashes);
 		
 		Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
