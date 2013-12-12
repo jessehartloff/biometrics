@@ -109,6 +109,10 @@ public class TriplesOfTriangles extends Triangles {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
+		return triplesOfTrianglesQuantizeOne(fingerprint);
+	}
+	
+	public Template triplesOfTrianglesQuantizeOne(Fingerprint fingerprint) {
 		Template template = new Template();
 		ArrayList<Triangle> triangles = super.fingerprintToTriangles(fingerprint);
 		
@@ -140,6 +144,10 @@ public class TriplesOfTriangles extends Triangles {
 	
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
+		return triplesOfTrianglesQuantizeAll(fingerprint);
+	}
+
+	public ArrayList<Template> triplesOfTrianglesQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
 		
 		for(double rotation=settings.getRotationStart(); 
@@ -147,11 +155,11 @@ public class TriplesOfTriangles extends Triangles {
 				rotation+=settings.getRotationStep())
 		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
-			templates.add(this.quantizeOne(rotatedPrint));
+			templates.add(this.triplesOfTrianglesQuantizeOne(rotatedPrint));
 		}
 		return templates;
 	}
-
+	
 	
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {

@@ -178,6 +178,10 @@ public class Triangles extends FingerprintMethod {
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
+		return trianglesQuantizeOne(fingerprint);
+	}
+	
+	public Template trianglesQuantizeOne(Fingerprint fingerprint) {
 		Template template = new Template();
 		ArrayList<Triangle> triangles = this.fingerprintToTriangles(fingerprint);
 		for(Triangle triangle : triangles){
@@ -187,15 +191,20 @@ public class Triangles extends FingerprintMethod {
 		return template;
 	}
 
+
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
+		return this.triangleQuantizeAll(fingerprint);
+	}
+	
+	public ArrayList<Template> triangleQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
 		for(double rotation=settings.getRotationStart(); 
 				rotation<settings.getRotationStop(); 
 				rotation+=settings.getRotationStep())
 		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
-			templates.add(this.quantizeOne(rotatedPrint));
+			templates.add(this.trianglesQuantizeOne(rotatedPrint));
 		}
 		return templates;
 	}

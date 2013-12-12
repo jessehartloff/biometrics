@@ -2,7 +2,6 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 
@@ -38,11 +37,15 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 //		return singleFingerprintMethod;
 //	}
 	
-	
+
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
+		return triplesOfTrianglesAllRotationsQuantizeOne(fingerprint);
+	}
+	
+	public Template triplesOfTrianglesAllRotationsQuantizeOne(Fingerprint fingerprint) {
 		Template toReturn = new Template();
-		ArrayList<Template> manyTemplates = super.quantizeAll(fingerprint);
+		ArrayList<Template> manyTemplates = super.triplesOfTrianglesQuantizeAll(fingerprint);
 		for(Template template : manyTemplates){
 			for(BigInteger bigInt : template.hashes){
 				toReturn.hashes.add(bigInt);
@@ -53,8 +56,12 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
+		return triplesOfTrianglesAllRotationsQuantizeAll(fingerprint);
+	}
+		
+	public ArrayList<Template> triplesOfTrianglesAllRotationsQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		templates.add(this.quantizeOne(fingerprint));
+		templates.add(this.triplesOfTrianglesAllRotationsQuantizeOne(fingerprint));
 		return templates;
 	}
 

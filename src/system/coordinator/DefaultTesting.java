@@ -51,7 +51,8 @@ public class DefaultTesting extends Coordinator {
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
 			testsRan++;
-			System.out.print("score: " + score + "   progress: " + (testsRan.doubleValue()/numberOfTests.doubleValue())*100.0 + "%" );
+			Double progress = (testsRan.doubleValue()/numberOfTests.doubleValue())*100.0;
+			System.out.format("score:%3.0f   progress: %5.2f%%", score, progress );
 			if(test.genuine){
 				System.out.println("   genuine");
 				scores.genuineScores.add(score);
