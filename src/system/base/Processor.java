@@ -33,9 +33,9 @@ public class Processor {
 	public Results go(Settings settings){
 		Results results = new Results();
 
-		GlobalSettings.fingerprintMethod = new Triangles();
+//		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
-//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
+		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();

@@ -67,7 +67,7 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO triple of triangles all rotations distance
+		// TODO +triple of triangles all rotations distance
 		return null;
 	}
 	

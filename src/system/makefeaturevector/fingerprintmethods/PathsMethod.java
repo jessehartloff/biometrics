@@ -21,7 +21,7 @@ public class PathsMethod extends FingerprintMethod {
 		
 		@Override
 		public Double distanceFrom(Path compareT) {
-			{}// TODO distance
+			{}// TODO +distance
 			return null;
 		}
 		
@@ -72,13 +72,13 @@ public class PathsMethod extends FingerprintMethod {
 	
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		{}// TODO path distance
+		{}// TODO +path distance
 		return null;
 	}
 
 	@Override
 	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
-		// TODO Auto-generated method stub
+		// TODO path binning
 		
 	}
 

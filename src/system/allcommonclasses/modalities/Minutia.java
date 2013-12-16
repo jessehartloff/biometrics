@@ -5,11 +5,11 @@ import java.util.Comparator;
 
 public class Minutia implements Comparable<Minutia>{
 
-	public Long x;
-	public Long y;
-	public Long theta;
-	public Long confidence; 
-	public Long index;
+	private Long x;
+	private Long y;
+	private Long theta;
+	private Long confidence; 
+	private Long index;
 	
 	
 	public class MinutiaComparator implements Comparator<Minutia>{
@@ -24,7 +24,6 @@ public class Minutia implements Comparable<Minutia>{
 		public int compare(Minutia m0, Minutia m1) {
 			Double d0 = referencePoint.distanceTo(m0);
 			Double d1 = referencePoint.distanceTo(m1);
-			{}// TODO test minutia sorting
 			return d0.compareTo(d1);
 		}
 		
@@ -40,17 +39,17 @@ public class Minutia implements Comparable<Minutia>{
 	}
 	
 	public Minutia(long x, long y, long theta){
-		this.x = x;
-		this.y = y;
-		this.theta = theta;
+		this.setX(x);
+		this.setY(y);
+		this.setTheta(theta);
 	}
 		
 	
-	public Minutia(Long x, Long y, Long theta, Long confidence){
-		this.x = x;
-		this.y = y;
-		this.theta = theta;
-		this.confidence = confidence;
+	public Minutia(long x, long y, long theta, long confidence){
+		this.setX(x);
+		this.setY(y);
+		this.setTheta(theta);
+		this.setConfidence(confidence);
 	}
 	
 	public Double distanceTo(Minutia that){
@@ -91,4 +90,63 @@ public class Minutia implements Comparable<Minutia>{
 	public String toString(){
 		return "(" + this.x + ", " + this.y + ", " + this.theta + ")";
 	}
+
+
+	//getters and setters
+	public Long getX() {
+		return x;
+	}
+
+
+	public void setX(Long x) {
+		this.x = x;
+	}
+
+
+	public Long getY() {
+		return y;
+	}
+
+
+	public void setY(Long y) {
+		this.y = y;
+	}
+
+
+	public Long getTheta() {
+		return theta;
+	}
+
+/**
+ * sets theta to the value in [0,359] corresponding to the input.
+ * 
+ * @param theta value in degrees. can be any long as this setter will change it to a values from 0 to 359
+ */
+	public void setTheta(Long theta) {
+		while(theta >= 360){theta -= 360;}
+	    while(theta < 0)  {theta += 360;}
+		this.theta = theta;
+	}
+
+
+	public Long getConfidence() {
+		return confidence;
+	}
+
+
+	public void setConfidence(Long confidence) {
+		this.confidence = confidence;
+	}
+
+
+	public Long getIndex() {
+		return index;
+	}
+
+
+	public void setIndex(Long index) {
+		this.index = index;
+	}
+	
+	
 }

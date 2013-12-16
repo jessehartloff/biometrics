@@ -6,7 +6,7 @@ import system.hasher.Hasher;
 
 public class IndexTesting extends Coordinator {
 	
-	{}// TODO Index testing
+	{}// TODO +Index testing
 	
 	IndexTesting(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);

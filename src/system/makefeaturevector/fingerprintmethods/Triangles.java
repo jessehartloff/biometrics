@@ -21,24 +21,24 @@ public class Triangles extends FingerprintMethod {
 	
 	public class Triangle implements Comparable<Triangle>{
 
-		public Long prequantizedTheta0;
-		public Long prequantizedX1;
-		public Long prequantizedY1;
-		public Long prequantizedTheta1;
-		public Long prequantizedX2;
-		public Long prequantizedY2;
-		public Long prequantizedTheta2;
+		private Long prequantizedTheta0;
+		private Long prequantizedX1;
+		private Long prequantizedY1;
+		private Long prequantizedTheta1;
+		private Long prequantizedX2;
+		private Long prequantizedY2;
+		private Long prequantizedTheta2;
 		
-		public Long theta0;
-		public Long x1;
-		public Long y1;
-		public Long theta1;
-		public Long x2;
-		public Long y2;
-		public Long theta2;
+		private Long theta0;
+		private Long x1;
+		private Long y1;
+		private Long theta1;
+		private Long x2;
+		private Long y2;
+		private Long theta2;
 		
-		public Double centerX;
-		public Double centerY;
+		private Double centerX;
+		private Double centerY;
 		
 		protected TriangleSettings innerSettings;
 		public Triangle(TriangleSettings settings){
@@ -138,6 +138,22 @@ public class Triangles extends FingerprintMethod {
 			return "" + theta0 + " " + x1 + " " + y1 + " " + theta1 + " " + x2 + " " + y2 + " " + theta2;
 		}
 		
+	    public boolean prequantizedEquals(Triangle otherTriangle) {
+	        return this.getPrequantizedTheta0().equals(otherTriangle.getPrequantizedTheta0()) && 
+	        		this.getPrequantizedX1().equals(otherTriangle.getPrequantizedX1()) && 
+	        		this.getPrequantizedY1().equals(otherTriangle.getPrequantizedY1()) && 
+	        		this.getPrequantizedTheta1().equals(otherTriangle.getPrequantizedTheta1()) && 
+	        		this.getPrequantizedX2().equals(otherTriangle.getPrequantizedX2()) && 
+	        		this.getPrequantizedY2().equals(otherTriangle.getPrequantizedY2()) && 
+	        		this.getPrequantizedTheta2().equals(otherTriangle.getPrequantizedTheta2()); 
+	    }
+		
+		public String prequantizedToString(){
+			return "" + prequantizedTheta0 + " " + 
+					prequantizedX1 + " " + prequantizedY1 + " " + prequantizedTheta1 + " " + 
+					prequantizedX2 + " " + prequantizedY2 + " " + prequantizedTheta2;
+		}
+		
 		public Double distanceBetweenCenters(Triangle that){
 			Double distance;
 			Double dx = this.centerX - that.centerX;
@@ -145,7 +161,42 @@ public class Triangles extends FingerprintMethod {
 			distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 			return distance;
 		}
+		
+		public Long getPrequantizedTheta0() {return prequantizedTheta0;}
+		public void setPrequantizedTheta0(Long prequantizedTheta0) {this.prequantizedTheta0 = prequantizedTheta0;}
+		public Long getPrequantizedX1() {return prequantizedX1;}
+		public void setPrequantizedX1(Long prequantizedX1) {this.prequantizedX1 = prequantizedX1;}
+		public Long getPrequantizedY1() {return prequantizedY1;}
+		public void setPrequantizedY1(Long prequantizedY1) {this.prequantizedY1 = prequantizedY1;}
+		public Long getPrequantizedTheta1() {return prequantizedTheta1;}
+		public void setPrequantizedTheta1(Long prequantizedTheta1) {this.prequantizedTheta1 = prequantizedTheta1;}
+		public Long getPrequantizedX2() {return prequantizedX2;}
+		public void setPrequantizedX2(Long prequantizedX2) {this.prequantizedX2 = prequantizedX2;}
+		public Long getPrequantizedY2() {return prequantizedY2;}
+		public void setPrequantizedY2(Long prequantizedY2) {this.prequantizedY2 = prequantizedY2;}
+		public Long getPrequantizedTheta2() {return prequantizedTheta2;}
+		public void setPrequantizedTheta2(Long prequantizedTheta2) {this.prequantizedTheta2 = prequantizedTheta2;}
+		public Long getTheta0() {return theta0;}
+		public void setTheta0(Long theta0) {this.theta0 = theta0;}
+		public Long getX1() {return x1;}
+		public void setX1(Long x1) {this.x1 = x1;}
+		public Long getY1() {return y1;}
+		public void setY1(Long y1) {this.y1 = y1;}
+		public Long getTheta1() {return theta1;}
+		public void setTheta1(Long theta1) {this.theta1 = theta1;}
+		public Long getX2() {return x2;}
+		public void setX2(Long x2) {this.x2 = x2;}
+		public Long getY2() {return y2;}
+		public void setY2(Long y2) {this.y2 = y2;}
+		public Long getTheta2() {return theta2;}
+		public void setTheta2(Long theta2) {this.theta2 = theta2;}
+		public Double getCenterX() {return centerX;}
+		public void setCenterX(Double centerX) {this.centerX = centerX;}
+		public Double getCenterY() {return centerY;}
+		public void setCenterY(Double centerY) {this.centerY = centerY;}
 
+		
+		
 	}
 	
 	
@@ -211,7 +262,7 @@ public class Triangles extends FingerprintMethod {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO triangle distance
+		// TODO +triangle distance
 		return null;
 	}
 	
@@ -258,7 +309,7 @@ public class Triangles extends FingerprintMethod {
 		return triangles;
 	}
 	
-	protected Triangle makeTriangle(Minutia m0, Minutia m1, Minutia m2){
+	private Triangle makeTriangle(Minutia m0, Minutia m1, Minutia m2){
 		
 		// order the minutiae
 		ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
@@ -273,19 +324,19 @@ public class Triangles extends FingerprintMethod {
 		
 		Triangle triangleToReturn = new Triangle();
 		
-		triangleToReturn.centerX = (m0.x + m1.x + m2.x)/3.0;
-		triangleToReturn.centerY = (m0.y + m1.y + m2.y)/3.0;
+		triangleToReturn.centerX = (m0.getX() + m1.getX() + m2.getX())/3.0;
+		triangleToReturn.centerY = (m0.getY() + m1.getY() + m2.getY())/3.0;
 		
 		
-		triangleToReturn.prequantizedTheta0 = m0.theta;
+		triangleToReturn.prequantizedTheta0 = m0.getTheta();
 		
-		triangleToReturn.prequantizedX1     = m1.x - m0.x;
-		triangleToReturn.prequantizedY1     = m1.y - m0.y;
-		triangleToReturn.prequantizedTheta1 = m1.theta;
+		triangleToReturn.prequantizedX1     = m1.getX() - m0.getX();
+		triangleToReturn.prequantizedY1     = m1.getY() - m0.getY();
+		triangleToReturn.prequantizedTheta1 = m1.getTheta();
 		
-		triangleToReturn.prequantizedX2     = m2.x - m0.x;
-		triangleToReturn.prequantizedY2     = m2.y - m0.y;
-		triangleToReturn.prequantizedTheta2 = m2.theta;
+		triangleToReturn.prequantizedX2     = m2.getX() - m0.getX();
+		triangleToReturn.prequantizedY2     = m2.getY() - m0.getY();
+		triangleToReturn.prequantizedTheta2 = m2.getTheta();
 
 		triangleToReturn.theta0 = settings.theta0.findBin(triangleToReturn.prequantizedTheta0);
 		

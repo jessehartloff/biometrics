@@ -35,9 +35,9 @@ public class FingerprintIO {
 				//System.out.println(minutiaText);
 				String[] parseIt = minutiaText.split(" ");
 				
-				minutia.x = Long.valueOf(parseIt[0]);
-				minutia.y = Long.valueOf(parseIt[1]);
-				minutia.theta = Long.valueOf(parseIt[2]);
+				minutia.setX(Long.valueOf(parseIt[0]));
+				minutia.setY(Long.valueOf(parseIt[1]));
+				minutia.setTheta(Long.valueOf(parseIt[2]));
 				
 				fingerprint.minutiae.add(minutia);
 			}

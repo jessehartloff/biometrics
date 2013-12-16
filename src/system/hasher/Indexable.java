@@ -8,7 +8,7 @@ package system.hasher;
 public interface Indexable {
 
 	
-	// TODO Indexing
+	// TODO +Indexing
 	
 	// function: add to indexing structure
 	// function: remove from indexing structure? maybe needed in the future.

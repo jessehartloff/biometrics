@@ -17,7 +17,9 @@ public class MethodVariable implements Serializable{
 	public MethodVariable(){
 		this.binBoundaries = new ArrayList<Long>();
 		for(Long i=0L; i<1000; i++){
-			this.binBoundaries.add(i); // TODO TODO TODO this code sucks
+			this.binBoundaries.add(i); // TODO TODO TODO this code sucks					  
+			// This has to be done better. Currently it initializes to a fixed number of
+			// uniform bins 
 		}
 		this.setBins(1001);
 	}

@@ -12,7 +12,6 @@ public class EvaluatePerformance {
 		
 		// This needs to be looked over
 		Results results = new Results();
-		// TODO compute EER
 		Double eer = 1000.0;
 
 		ArrayList<Double> gens = scores.genuineScores;

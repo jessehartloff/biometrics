@@ -2,6 +2,8 @@ package unittests;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,10 +24,100 @@ public class SystemTests {
 
 	{}// TODO tons of unit tests
 
+	//do this test with a serialized testSettings
 //	Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
 //	Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
 //	
 //	assert(Math.abs(score1 - score) < 0.001); {} //  test this 
+	
+	//private Triangle makeTriangle(Minutia m0, Minutia m1, Minutia m2){
+	
+
+	@org.junit.Test
+	public void testMakingATrianglePrequantized() {
+		Triangles triangleMethod = new Triangles();
+		Triangle computedTriangle = triangleMethod.new Triangle();
+		
+		try {
+			Method makeTriangle = triangleMethod.getClass().getDeclaredMethod("makeTriangle", Minutia.class, Minutia.class, Minutia.class);
+			makeTriangle.setAccessible(true);
+			
+			Minutia m0 = new Minutia(102,  -75, 360);
+			Minutia m1 = new Minutia(52, 106, 721);
+			Minutia m2 = new Minutia(52, -10, 2);
+			
+			computedTriangle = (Triangle) makeTriangle.invoke(triangleMethod, m0,m1,m2);
+			
+		} 
+		catch (Exception e) {e.printStackTrace();}
+		
+		Triangle expectedTriangle = triangleMethod.new Triangle();
+		expectedTriangle.setPrequantizedTheta0(2L);
+		expectedTriangle.setPrequantizedX1(0L);
+		expectedTriangle.setPrequantizedY1(116L);
+		expectedTriangle.setPrequantizedTheta1(1L);
+		expectedTriangle.setPrequantizedX2(50L);
+		expectedTriangle.setPrequantizedY2(-65L);
+		expectedTriangle.setPrequantizedTheta2(0L);
+		expectedTriangle.setCenterX(68.6666666667);
+		expectedTriangle.setCenterY(7.0);
+		
+		assertTrue(
+				"\nExpected: " + expectedTriangle.prequantizedToString() + " " + 
+				expectedTriangle.getCenterX() + " " + expectedTriangle.getCenterY() +
+				"\nComputed: " + computedTriangle.prequantizedToString() + " " +
+				computedTriangle.getCenterX() + " " + computedTriangle.getCenterY(),
+				
+				expectedTriangle.prequantizedEquals(computedTriangle) &&
+				Math.abs(expectedTriangle.getCenterX() - computedTriangle.getCenterX()) < 0.001 &&
+				Math.abs(expectedTriangle.getCenterY() - computedTriangle.getCenterY()) < 0.001
+				);
+	}
+	
+
+	@org.junit.Test
+	public void testMinutiaSorting() {
+		boolean result = true;
+
+		Minutia reference = new Minutia(20,150, 359);
+		Minutia m0 = new Minutia(0,0,210); // distance to reference: 151.3
+		Minutia m1 = new Minutia(41, 299, 21); // distance to reference: 150.5
+		Minutia m2 = new Minutia(50,50,0); // distance to reference: 104.4
+		Minutia m3 = new Minutia(20, 150, 5); // distance to reference: 0.0
+		Minutia m4 = new Minutia(21, 150, 27); // distance to reference: 1.0
+		Minutia m5 = new Minutia(20, 148, 6); // distance to reference: 1.4
+		Minutia m6 = new Minutia(-10, -10, 55); // distance to reference: 162.8
+		Minutia m7 = new Minutia(1000, 1000, 12); // distance to reference: 1297.3
+		Minutia m8 = new Minutia(100, 140, 400); // distance to reference: 80.6
+
+		ArrayList<Minutia> expectedPoints = 
+				new ArrayList<Minutia>(Arrays.asList(m3,m4,m5,m8,m2,m1,m0,m6,m7));
+		ArrayList<Minutia> computedPoints = 
+				new ArrayList<Minutia>(Arrays.asList(m0,m1,m2,m3,m4,m5,m6,m7,m8));
+		
+		Collections.sort(computedPoints, reference.getComparator());
+		
+		for(int i=0; i < expectedPoints.size(); i++){
+			result &= (expectedPoints.get(i) == computedPoints.get(i) );
+		}
+		
+		assertTrue("\nExpected: " + expectedPoints + "\nComputed: " + computedPoints,
+				result);
+	}
+	
+	public void testThetaSetter(Long setTo, Long expected) {
+		Minutia m0 = new Minutia();
+		m0.setTheta(setTo);
+		Long computed = m0.getTheta();
+		assertTrue("\nExpected: " + expected + "\nComputed: " + computed,
+				expected.equals(computed));
+	}
+	@org.junit.Test public void thetaSetter0(){this.testThetaSetter(360L, 0L);}
+	@org.junit.Test public void thetaSetter1(){this.testThetaSetter(4340930L, 50L);}
+	@org.junit.Test public void thetaSetter2(){this.testThetaSetter(0L, 0L);}
+	@org.junit.Test public void thetaSetter4(){this.testThetaSetter(-50L, 310L);}
+	@org.junit.Test public void thetaSetter5(){this.testThetaSetter(183L, 183L);}
+	@org.junit.Test public void thetaSetter6(){this.testThetaSetter(-9770L, 310L);}
 	
 	@org.junit.Test
 	public void testTrianglesAsBigInts() {
@@ -51,13 +143,13 @@ public class SystemTests {
 		
 		Triangle t = triangleMethod.new Triangle(settings.triangleSettings);
 
-		t.theta0 = 2L;
-		t.x1 = 7L;
-		t.y1 = 1L;
-		t.theta1 = 1L;
-		t.x2 = 0L;
-		t.y2 = 1L;
-		t.theta2 = 10L;
+		t.setTheta0(2L);
+		t.setX1(7L);
+		t.setY1(1L);
+		t.setTheta1(1L);
+		t.setX2(0L);
+		t.setY2(1L);
+		t.setTheta2(10L);
 		
 		BigInteger expected = BigInteger.valueOf(1513498);
 		BigInteger computed = t.toBigInt();
@@ -83,13 +175,13 @@ public class SystemTests {
 		Triangle computed = triangleMethod.new Triangle(settings.triangleSettings);
 		Triangle expected = triangleMethod.new Triangle(settings.triangleSettings);
 		
-		expected.theta0 = 2L;
-		expected.x1 = 7L;
-		expected.y1 = 1L;
-		expected.theta1 = 1L;
-		expected.x2 = 0L;
-		expected.y2 = 1L;
-		expected.theta2 = 10L;
+		expected.setTheta0(2L);
+		expected.setX1(7L);
+		expected.setY1(1L);
+		expected.setTheta1(1L);
+		expected.setX2(0L);
+		expected.setY2(1L);
+		expected.setTheta2(10L);
 		
 		BigInteger bigInt = BigInteger.valueOf(1513498);
 		computed.fromBigInt(bigInt);
@@ -200,14 +292,14 @@ public class SystemTests {
 	public void testBinsToBits() {
 		Boolean result = true;
 		ArrayList<Integer> bins = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,13,15,16,17)); 
-		ArrayList<Integer> bits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
+		ArrayList<Integer> expectedBits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
 		ArrayList<Integer> computedBits = new ArrayList<Integer>(); 
 		int n=bins.size();
 		for(int i=0; i<n; i++){
-			result = result && Functions.binsToBits(bins.get(i)) == bits.get(i);
+			result = result && Functions.binsToBits(bins.get(i)) == expectedBits.get(i);
 			computedBits.add(Functions.binsToBits(bins.get(i)));
 		}
-		assertTrue("\nexpected: " + bits + "\ncomputed: " + computedBits, result);
+		assertTrue("\nexpected: " + expectedBits + "\ncomputed: " + computedBits, result);
 	}
 	
 	@org.junit.Test
@@ -215,7 +307,7 @@ public class SystemTests {
 		FingerprintMethod method = new PathsMethod();
 		
 		Fingerprint test = new Fingerprint();
-		test.minutiae.add(new Minutia(6, 3, 230));
+		test.minutiae.add(new Minutia(6L, 3L, 230L));
 		test.minutiae.add(new Minutia(59, 30, 25));
 		test.minutiae.add(new Minutia(963, 324, 109));
 		test.minutiae.add(new Minutia(500, 500, 359));

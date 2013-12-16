@@ -18,7 +18,7 @@ public abstract class Method{
 
 
 	//Distance distanceFunction; 
-	{}// TODO distance function
+	{}// TODO +distance function
 	
 	/**
 	 * This constructor defaults to ExactDistance for the distance function.
@@ -32,7 +32,7 @@ public abstract class Method{
 	 * 
 	 * @param distanceFunction
 	 */
-	protected Method(Distance<?> distanceFunction){ {}// TODO move distance to a setter method?
+	protected Method(Distance<?> distanceFunction){ {}// TODO +move distance to a setter method?
 	//	this.distanceFunction = distanceFunction;
 	}
 	

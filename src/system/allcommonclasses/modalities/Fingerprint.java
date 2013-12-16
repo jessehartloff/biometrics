@@ -11,7 +11,6 @@ import system.allcommonclasses.settings.GlobalSettings;
  */
 public class Fingerprint extends Biometric{
 
-
 	public ArrayList<Minutia> minutiae;
 	
 	/**
@@ -59,19 +58,17 @@ public class Fingerprint extends Biometric{
 		for(Minutia minutia : this.minutiae){
 			Minutia rotatedMinutia = new Minutia();
 			
-			rotatedMinutia.x = Math.round(Math.cos(degrees*(Math.PI/180))*(minutia.x-centerX)
-					- Math.sin(degrees*(Math.PI/180))*(minutia.y-centerY)
-					+ centerX);
+			rotatedMinutia.setX(Math.round(Math.cos(degrees*(Math.PI/180))*(minutia.getX()-centerX)
+					- Math.sin(degrees*(Math.PI/180))*(minutia.getY()-centerY)
+					+ centerX));
 			
-			rotatedMinutia.y = Math.round(Math.sin(degrees*(Math.PI/180))*(minutia.x-centerX)
-					+ Math.cos(degrees*(Math.PI/180))*(minutia.y-centerY)
-					+ centerY);
+			rotatedMinutia.setY(Math.round(Math.sin(degrees*(Math.PI/180))*(minutia.getX()-centerX)
+					+ Math.cos(degrees*(Math.PI/180))*(minutia.getY()-centerY)
+					+ centerY));
 
-			rotatedMinutia.theta = minutia.theta + Math.round(degrees);
-			while(rotatedMinutia.theta >= 360){rotatedMinutia.theta -= 360;}
-		    while(rotatedMinutia.theta < 0)  {rotatedMinutia.theta += 360;}
+			rotatedMinutia.setTheta(minutia.getTheta() + Math.round(degrees)); 
 			
-			rotatedMinutia.confidence = minutia.confidence;
+			rotatedMinutia.setConfidence(minutia.getConfidence());
 			
 			toRotate.minutiae.add(rotatedMinutia);
 			
@@ -94,10 +91,10 @@ public class Fingerprint extends Biometric{
 			
 			Minutia translatedMinutia = new Minutia();
 			
-			translatedMinutia.x = minutia.x + dx;
-			translatedMinutia.y = minutia.y + dy;
-			translatedMinutia.theta = minutia.theta;
-			translatedMinutia.confidence = minutia.confidence;
+			translatedMinutia.setX(minutia.getX() + dx);
+			translatedMinutia.setY(minutia.getY() + dy);
+			translatedMinutia.setTheta(minutia.getTheta());
+			translatedMinutia.setConfidence(minutia.getConfidence());
 			
 			toTranslate.minutiae.add(translatedMinutia);
 		}

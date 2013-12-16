@@ -31,6 +31,6 @@ public class Results {
 		this.eer = eer;
 	}
 	
-	{}// TODO Results
+	{}// TODO Results FARFRR class is kinda dumb. At least needs to be renamed
 	
 }

@@ -43,7 +43,7 @@ public abstract class Coordinator {
 //				templates.add(b.quantizeOne());
 //			}
 //		}
-//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints); // bad bad bad TODO fix this before iris and face goes up
+//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints); // bad bad bad TODO fix this before iris and face go up
 //	}
 	
 	{}// TODO could have some methods to add more users or replace the existing users

@@ -6,7 +6,7 @@ import system.hasher.Hasher;
 
 public class Client extends system.coordinator.Coordinator {
 
-	{}// TODO Client
+	{}// TODO +Client
 	
 	Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);

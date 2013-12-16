@@ -127,7 +127,7 @@ public class TriplesOfTriangles extends Triangles {
 					Double distance1 = triangle0.distanceBetweenCenters(triangle2);
 					Double distance2 = triangle1.distanceBetweenCenters(triangle2);
 					Double threshold = settings.getThresholdForTriplets();
-					if(distance0 < threshold && distance1 < threshold && distance2 < threshold){// TODO better condition?
+					if(distance0 < threshold && distance1 < threshold && distance2 < threshold){// TODO -better conditions for making a triplet?
 						TriangleTriplet triplet = new TriangleTriplet();
 						triplet.t0 = triangles.get(i);
 						triplet.t1 = triangles.get(j);
@@ -163,7 +163,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO triple of triangles distance
+		// TODO +triple of triangles distance
 		return null;
 	}
 	

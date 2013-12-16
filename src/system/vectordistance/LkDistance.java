@@ -2,7 +2,7 @@ package system.vectordistance;
 
 import java.util.ArrayList;
 
-// TODO can't use comparable
+// TODO +can't use comparable
 public class LkDistance<T extends Comparable<T>> extends Distance<T>{
 	
 	int k;

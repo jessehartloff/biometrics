@@ -54,13 +54,12 @@ public class MinutiaeMethod extends FingerprintMethod {
 
 	@Override
 	public Double distance(BigInteger point1, BigInteger point2) {
-		{}// TODO minutiae distance
+		{}// TODO +minutiae distance
 		return null;
 	}
 
 	@Override
 	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
-		// TODO Auto-generated method stub
-		
+		// TODO minutia binning		
 	}
 }
