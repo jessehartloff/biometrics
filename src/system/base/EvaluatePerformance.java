@@ -61,6 +61,7 @@ public class EvaluatePerformance {
 			}
 		}
 		
+		results.setRates(rates);
 		results.setEer(eer);
 		return results;
 	}

@@ -11,13 +11,17 @@ import system.allcommonclasses.modalities.*;
 public class User implements Comparable<User>{
 
 	public Integer id;
-	//public ArrayList<Fingerprint> fingerprintReadings;
-	//public ArrayList<Iris> irisReadings;
-	//public ArrayList<Face> faceReadings;
 
 	public ArrayList<? extends Biometric> readings;
 
+	public ArrayList<Template> prequantizedEnrolledTemplates;
+	public ArrayList<ArrayList<Template>> prequantizedTestTemplates;
 
+	public User(){
+		prequantizedEnrolledTemplates = new ArrayList<Template>();
+		prequantizedTestTemplates = new ArrayList<ArrayList<Template>>();
+	}
+	
 	// Allows sorting by ID
 	@Override
 	public int compareTo(User compareUser) {

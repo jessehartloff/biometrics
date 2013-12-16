@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import system.allcommonclasses.modalities.Minutia;
+import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
@@ -30,6 +31,13 @@ public class Main {
 //		"/Users/jessehartloff/Documents/CUBS_FP_DATA/DB1/features/1_1.fp"
 
 		Settings settings = new Settings();
+		
+		
+		// !! change to the directory where CUBS_FP_DATA reside. 
+		// This will change later to not be terrible.
+		GlobalSettings.setDirectoryPathForFVC("/Users/jessehartloff/Documents/");
+		
+		
 		
 		settings.globalSettings.setFingerprintMethodString("triangles");
 		settings.globalSettings.setCoordinator("defaulttesting");

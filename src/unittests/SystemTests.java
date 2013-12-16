@@ -22,6 +22,11 @@ public class SystemTests {
 
 	{}// TODO tons of unit tests
 
+//	Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
+//	Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
+//	
+//	assert(Math.abs(score1 - score) < 0.001); {} //  test this 
+	
 	@org.junit.Test
 	public void testTrianglesAsBigInts() {
 		Settings settings = new Settings();

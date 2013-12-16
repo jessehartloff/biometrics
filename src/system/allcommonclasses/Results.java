@@ -1,5 +1,9 @@
 package system.allcommonclasses;
 
+import java.util.ArrayList;
+
+import system.base.FARFRR;
+
 /**
  * 
  * The results to be returned to the interface. This is processed data that is ready to be 
@@ -9,7 +13,16 @@ package system.allcommonclasses;
 public class Results {
 
 	private Double eer;
+	private ArrayList<FARFRR> rates;
 	
+	public ArrayList<FARFRR> getRates() {
+		return rates;
+	}
+
+	public void setRates(ArrayList<FARFRR> rates) {
+		this.rates = rates;
+	}
+
 	public Double getEer() {
 		return eer;
 	}

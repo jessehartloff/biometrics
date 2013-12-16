@@ -23,6 +23,12 @@ public class GenerateFVCStyleTests extends TestGenerator{
 					testToAdd.enroll = user.readings.get(i);
 					testToAdd.test = user.readings.get(j);
 					testToAdd.genuine = true;
+					
+					testToAdd.enrolledUserID = user.id;
+					testToAdd.enrolledReadingNumber = i;
+					testToAdd.testUserID = user.id;
+					testToAdd.testReadingNumber = j;
+					
 					tests.tests.add(testToAdd);
 				}
 			}
@@ -36,6 +42,12 @@ public class GenerateFVCStyleTests extends TestGenerator{
 				testToAdd.enroll = users.users.get(i).readings.get(0);
 				testToAdd.test = users.users.get(j).readings.get(0);
 				testToAdd.genuine = false;
+				
+				testToAdd.enrolledUserID = users.users.get(i).id;
+				testToAdd.enrolledReadingNumber = 0;
+				testToAdd.testUserID = users.users.get(j).id;
+				testToAdd.testReadingNumber = 0;
+				
 				tests.tests.add(testToAdd);
 			}
 		}

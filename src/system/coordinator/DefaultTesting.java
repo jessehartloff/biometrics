@@ -74,16 +74,11 @@ public class DefaultTesting extends Coordinator {
 	 * @param test
 	 * @return matching score
 	 */
-	private Double runTest(Test test){
+	protected Double runTest(Test test){
 		Template enrolledTemplate = hasher.makeEnrollTemplate(test.enroll);
 		ArrayList<Template> testTemplates = hasher.makeTestTemplates(test.test);
 		
-//		System.out.println("template: " + enrolledTemplate.hashes);
-		
-		Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
-		
-		assert(Math.abs(score1 - score) < 0.001); {}// TODO test this in unit test
 		
 		return score; 
 	}

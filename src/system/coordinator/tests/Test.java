@@ -9,6 +9,12 @@ import system.allcommonclasses.modalities.Biometric;
  */
 public class Test {
 
+	public Integer enrolledUserID;
+	public Integer enrolledReadingNumber;
+	
+	public Integer testUserID;
+	public Integer testReadingNumber;
+	
 	public Biometric enroll;
 	public Biometric test;
 	public Boolean genuine;

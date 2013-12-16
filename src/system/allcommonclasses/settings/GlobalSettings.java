@@ -1,6 +1,7 @@
 package system.allcommonclasses.settings;
 
 import java.io.Serializable;
+
 import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 
 public class GlobalSettings implements Serializable{
@@ -20,6 +21,9 @@ public class GlobalSettings implements Serializable{
 	
 	
 	private static GlobalSettings instance;
+
+	private static String directoryPathForFVC;
+	
 	private GlobalSettings(){}
 	public static GlobalSettings getInstance(){
 		if(instance == null){
@@ -30,7 +34,10 @@ public class GlobalSettings implements Serializable{
 	
 	
 	//getters and setters
+	
 	public String getFingerprintMethodString() {return fingerprintMethodString;}
+	public static String getDirectoryPathForFVC() {return directoryPathForFVC;}
+	public static void setDirectoryPathForFVC(String directoryPathForFVC) {GlobalSettings.directoryPathForFVC = directoryPathForFVC;}
 	public void setFingerprintMethodString(String fingerprintMethodString) {this.fingerprintMethodString = fingerprintMethodString;}
 	public String getIrisMethod() {return irisMethod;}
 	public void setIrisMethod(String irisMethod) {this.irisMethod = irisMethod;}

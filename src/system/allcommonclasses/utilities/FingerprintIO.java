@@ -58,12 +58,12 @@ public class FingerprintIO {
 		ArrayList<Fingerprint> allFingerprints = new ArrayList<Fingerprint>();
 		for(int id=1; id<=100; id++){
 			User user = new User();
-			user.id = id;
+			user.id = id-1;
 			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 			user.readings = fingerprints;
 			
 			for(int reading=1; reading<=8; reading++){
-				String file = "/Users/jessehartloff/Documents/CUBS_FP_DATA/FVC2002/DB1/features/" 
+				String file = GlobalSettings.getDirectoryPathForFVC() + "CUBS_FP_DATA/FVC2002/DB1/features/" 
 						+ id +"_"+ reading + ".fp";
 				fingerprints.add(fingerprintFromFile(file));
 				allFingerprints.add(fingerprintFromFile(file));

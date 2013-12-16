@@ -33,8 +33,9 @@ public class Processor {
 	public Results go(Settings settings){
 		Results results = new Results();
 
-//		GlobalSettings.fingerprintMethod = new Triangles();
-		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
+		GlobalSettings.fingerprintMethod = new Triangles();
+//		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
+//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();
@@ -49,6 +50,7 @@ public class Processor {
 		{}// TODO make coordinator(hasher, users)
 		RawScores scores = new RawScores();
 		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
+//		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);
@@ -59,6 +61,7 @@ public class Processor {
 		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
 		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
 		System.out.println("EER:\n" + results.getEer());
+		System.out.println("rates:\n" + results.getRates());
 
 		
 		return results;
