@@ -2,8 +2,10 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
+import system.allcommonclasses.settings.*;
 
 
 /**
@@ -13,7 +15,10 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class MinutiaeMethod extends FingerprintMethod {
 
+	private MinutiaeSettings settings;
+	
 	public MinutiaeMethod() {
+		settings = MinutiaeSettings.getInstance();
 	}
 
 	/**
@@ -61,5 +66,12 @@ public class MinutiaeMethod extends FingerprintMethod {
 	@Override
 	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
 		// TODO minutia binning		
+	}
+
+	@Override
+	public Long getTotalBits() {
+		return settings.x.getBits().longValue() +
+				settings.y.getBits().longValue() +
+				settings.theta.getBits().longValue();
 	}
 }

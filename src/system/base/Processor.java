@@ -33,14 +33,17 @@ public class Processor {
 	public Results go(Settings settings){
 		Results results = new Results();
 
-//		GlobalSettings.fingerprintMethod = new Triangles();
+		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
-		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
+//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();
 		GlobalSettings globalSettings = GlobalSettings.getInstance();
+		
 		Hasher hasher = new StraightHasher();
+//		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
+		
 		TestGenerator testMaker = new GenerateFVCStyleTests();
 		{}// TODO make hasher
 		{}// TODO make method
@@ -49,8 +52,8 @@ public class Processor {
 //		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints);
 		{}// TODO make coordinator(hasher, users)
 		RawScores scores = new RawScores();
-		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
-//		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
+//		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
+		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);

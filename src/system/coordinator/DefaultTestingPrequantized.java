@@ -18,12 +18,23 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 	
 	private void prequantize(){
+		Long total = 0L;
+		Long completed = 0L;
+		Double progress;
+		for(User user : users.users){
+			total += user.readings.size();
+		}
+		
 		for(User user : users.users){
 			int numberOfReadings = user.readings.size();
 			for(int i=0; i<numberOfReadings; i++){
 				user.prequantizedEnrolledTemplates.add(hasher.makeEnrollTemplate(user.readings.get(i)));
 				user.prequantizedTestTemplates.add(hasher.makeTestTemplates(user.readings.get(i)));
+				completed++;
 			}
+			progress = (completed.doubleValue()/total.doubleValue())*100.0;
+			System.out.format("prequantizing: %5.2f%%%n", progress);
+			
 		}
 	}
 

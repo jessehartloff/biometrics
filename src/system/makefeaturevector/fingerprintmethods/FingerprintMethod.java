@@ -56,5 +56,8 @@ public abstract class FingerprintMethod extends Method{
 */
 
 	public abstract void doAllTheBinning(ArrayList<Fingerprint> fingerprints);
+
+
+	public abstract Long getTotalBits();
 	
 }

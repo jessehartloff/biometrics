@@ -17,7 +17,7 @@ import system.makefeaturevector.Method;
  */
 public abstract class Hasher {
 
-	Method method;
+//	Method method;
 	
 	/**
 	 * Converts a biometric to an enrolling template.

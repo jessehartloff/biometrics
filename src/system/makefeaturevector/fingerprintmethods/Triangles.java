@@ -384,6 +384,17 @@ public class Triangles extends FingerprintMethod {
 		settings.y2.computeBinBoundaries(allY2);
 		settings.theta2.computeBinBoundaries(allTheta2);
 	}
+
+	@Override
+	public Long getTotalBits() {
+		return settings.theta0.getBits().longValue() + 
+				settings.x1.getBits().longValue() + 
+				settings.y1.getBits().longValue() + 
+				settings.theta1.getBits().longValue() + 
+				settings.x2.getBits().longValue() + 
+				settings.y2.getBits().longValue() + 
+				settings.theta2.getBits().longValue();
+	}
 	
 
 	

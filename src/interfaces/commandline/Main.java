@@ -46,6 +46,8 @@ public class Main {
 		
 		settings.triangleSettings.setThresholdForTriplets(70.0);
 		
+		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
+		
 		Processor p = new Processor();
 		p.go(settings);
 
