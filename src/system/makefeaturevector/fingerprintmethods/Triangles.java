@@ -3,7 +3,6 @@ package system.makefeaturevector.fingerprintmethods;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.TriangleSettings;
@@ -281,29 +280,32 @@ public class Triangles extends FingerprintMethod {
 			int startingIndex;
 			for(startingIndex=0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
 			// could do remove spurious by changing the min distance
-			Triangle triangle = makeTriangle(minutia, 
+			Triangle triangle = makeTriangle(
+					minutia, 
 					minutiaeCopy.get(startingIndex), 
 					minutiaeCopy.get(startingIndex+1));
 			
-//			Triangle triangle2 = makeTriangle(minutia, 
-//					minutiaeCopy.get(startingIndex), 
-//					minutiaeCopy.get(startingIndex+2));
-//			
-//			Triangle triangle3 = makeTriangle(minutia, 
-//					minutiaeCopy.get(startingIndex+1), 
-//					minutiaeCopy.get(startingIndex+2));
-//
-//			Triangle triangle4 = makeTriangle(
-//					minutiaeCopy.get(startingIndex), 
-//					minutiaeCopy.get(startingIndex+1), 
-//					minutiaeCopy.get(startingIndex+2));
+			Triangle triangle2 = makeTriangle(
+					minutia, 
+					minutiaeCopy.get(startingIndex), 
+					minutiaeCopy.get(startingIndex+2));
+			
+			Triangle triangle3 = makeTriangle(
+					minutia, 
+					minutiaeCopy.get(startingIndex+1), 
+					minutiaeCopy.get(startingIndex+2));
+
+			Triangle triangle4 = makeTriangle(
+					minutiaeCopy.get(startingIndex), 
+					minutiaeCopy.get(startingIndex+1), 
+					minutiaeCopy.get(startingIndex+2));
 			
 //			System.out.println(triangle);
 
 			triangles.add(triangle);
-//			triangles.add(triangle2);
-//			triangles.add(triangle3);
-//			triangles.add(triangle4);	
+			triangles.add(triangle2);
+			triangles.add(triangle3);
+			triangles.add(triangle4);	
 		}
 	
 		return triangles;

@@ -32,7 +32,8 @@ public class Processor {
 	 */
 	public Results go(Settings settings){
 		Results results = new Results();
-
+		{}// TODO binning progress and make binning better
+//		GlobalSettings.fingerprintMethod = new PathsMethod();
 		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
@@ -52,8 +53,8 @@ public class Processor {
 //		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints);
 		{}// TODO make coordinator(hasher, users)
 		RawScores scores = new RawScores();
-//		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
-		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
+		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
+//		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);

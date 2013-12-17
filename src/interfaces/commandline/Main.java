@@ -45,6 +45,18 @@ public class Main {
 		settings.triangleSettings.setRotationStep(5.0);
 		
 		settings.triangleSettings.setThresholdForTriplets(70.0);
+
+		settings.pathSettings.d0.setBins(4);
+		settings.pathSettings.d1.setBins(4);
+		settings.pathSettings.d2.setBins(1);
+		settings.pathSettings.d3.setBins(1);
+		settings.pathSettings.phi1.setBins(4);
+		settings.pathSettings.phi2.setBins(1);
+		settings.pathSettings.phi3.setBins(1);
+		settings.pathSettings.sigma0.setBins(4);
+		settings.pathSettings.sigma1.setBins(4);
+		settings.pathSettings.sigma2.setBins(1);
+		settings.pathSettings.sigma3.setBins(1);
 		
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		

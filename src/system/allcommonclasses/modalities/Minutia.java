@@ -149,4 +149,13 @@ public class Minutia implements Comparable<Minutia>{
 	}
 	
 	
+	public static Double computeInsideAngle(Minutia m0, Minutia m1, Minutia m2){
+		// variables names follow the law of cosines equation
+		Double a = m0.distanceTo(m1);
+		Double b = m1.distanceTo(m2);
+		Double c = m2.distanceTo(m0);
+		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
+		return (inRadians * 180.0)/Math.PI;
+	}
+	
 }
