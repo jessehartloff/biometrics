@@ -99,6 +99,8 @@ public class Main {
 		
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
+		settings.nGonSettings.setN(3L);
+		
 		Processor p = new Processor();
 		p.go(settings);
 

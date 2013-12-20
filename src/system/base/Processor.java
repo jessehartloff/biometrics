@@ -40,6 +40,7 @@ public class Processor {
 		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
+//		GobalSettings.fingerprintMethod = new Ngon(n);
 
 		Users users = UsersIO.getUsers(globalSettings.getDataset());
 		users.computeBins();
