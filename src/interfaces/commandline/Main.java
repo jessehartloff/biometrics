@@ -48,7 +48,7 @@ public class Main {
 		
 		// !! change to the directory where CUBS_FP_DATA reside. 
 		// This will change later to not be terrible. TODO
-		GlobalSettings.setDirectoryPathForFVC("/Users/jessehartloff/Documents/");
+		GlobalSettings.setDirectoryPathForFVC("/Users/Matt/Dropbox/biometrics/URGE files/fingerprint-hash/");
 		
 //		LinkedHashMap<String, Integer> mapping = new LinkedHashMap<String, Integer>();
 //		mapping.put("thing1", 5);
