@@ -12,37 +12,6 @@ public class Main {
 
 		Settings settings = new Settings();
 		
-
-		// !! change to the directory where CUBS_FP_DATA reside. 
-		// This will change later to not be terrible. TODO
-		
-//		LinkedHashMap<String, Integer> mapping = new LinkedHashMap<String, Integer>();
-//		mapping.put("thing1", 5);
-//		mapping.put("thing2", 77);
-//		mapping.put("thing3", -38);
-//		mapping.put("thing4", 1);
-//
-//		Integer f = mapping.get("crap that's not there"); // returns null
-//		System.out.println(mapping.get("crap that's not there")); // returns null
-//		
-//		ArrayList<Integer> vals = new ArrayList<Integer>(mapping.values());
-//		
-//		for(Integer inter : vals){
-//			System.out.println(inter);
-//		}
-//		System.out.println("");
-//		Collections.reverse(vals);
-//		for(Integer inter : vals){
-//			System.out.println(inter);
-//		}
-//		
-//
-//		ArrayList<Method> meths = new ArrayList<Method>();
-//
-//		PathsMethod m1 = new PathsMethod();
-//		meths.add(m1);
-//		Triangles m2 = new Triangles();
-//		meths.add(m2);
 		
 //		settings.globalSettings.setFingerprintMethodString("triangles");
 //		settings.globalSettings.setCoordinator("defaulttesting");
