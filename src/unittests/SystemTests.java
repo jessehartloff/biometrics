@@ -22,7 +22,7 @@ import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
 
 public class SystemTests {
 
-	{}// TODO ongoing-tons of unit tests
+	{}// TODO ongoing - tons of unit tests
 
 	//do this test with a serialized testSettings
 //	Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);

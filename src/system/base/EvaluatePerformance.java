@@ -24,10 +24,10 @@ public class EvaluatePerformance {
 		Double max = Math.min(gens.get(gens.size()-1), imps.get(imps.size()-1));
 		Double stepSize = 0.9;
 		
-		ArrayList<FARFRR> rates = new ArrayList<FARFRR>();
+		ArrayList<RatesPoint> rates = new ArrayList<RatesPoint>();
 		
 		for(Double i = min-stepSize; i<=max+stepSize; i+=stepSize){
-			FARFRR point = new FARFRR();
+			RatesPoint point = new RatesPoint();
 			point.threshold=i;
 			
 			Double falseAccepts = Double.valueOf(imps.size());
@@ -53,7 +53,7 @@ public class EvaluatePerformance {
 			rates.add(point);
 		}
 		
-		for(FARFRR point : rates){
+		for(RatesPoint point : rates){
 			if(point.frr >= point.far){
 				eer = (point.frr + point.far)/2.0;
 				break;

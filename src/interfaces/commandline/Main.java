@@ -1,54 +1,20 @@
 package interfaces.commandline;
 
-import java.io.*;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
-import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
-import system.makefeaturevector.Method;
-import system.makefeaturevector.fingerprintmethods.PathsMethod;
-import system.makefeaturevector.fingerprintmethods.Triangles;
-import system.vectordistance.*;
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
-	
-	private static void bigger(BigInteger big){
-		big = big.add(BigInteger.TEN);
-	}
+
 
 	public static void main(String[] args) {
-//		ArrayList<Long> ints = new ArrayList<Long>();
-//		for(int i=0; i<114600000; i++){
-//			ints.add(3L);
-//		}
-//		
-		
 
-//		HashSet<Long> minutiaIndecies = new HashSet<Long>();
-//
-//		minutiaIndecies.add(7L);
-//		minutiaIndecies.add(77L);
-//		minutiaIndecies.add(777L);
-//		minutiaIndecies.add(7L);
-//		
-//		
-//		System.out.println("size: " + minutiaIndecies.size() + "  " + minutiaIndecies);
-		
 		Settings settings = new Settings();
 		
+
 		// !! change to the directory where CUBS_FP_DATA reside. 
 		// This will change later to not be terrible. TODO
-		GlobalSettings.setDirectoryPathForFVC("/Users/Matt/Dropbox/biometrics/URGE files/fingerprint-hash/");
 		
 //		LinkedHashMap<String, Integer> mapping = new LinkedHashMap<String, Integer>();
 //		mapping.put("thing1", 5);
@@ -82,6 +48,8 @@ public class Main {
 //		settings.globalSettings.setCoordinator("defaulttesting");
 //		settings.globalSettings.setHasher("straighthasher");
 
+		settings.globalSettings.setDataset("FVC2002-DB1");
+		
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);
 		settings.triangleSettings.y1.setBins(8);

@@ -1,15 +1,20 @@
 package system.allcommonclasses.modalities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import system.allcommonclasses.Template;
+import system.makefeaturevector.feature.Feature;
 
 /**
  * 
  * Ensures every biometrics has functions for quantization for template generation.
  *
  */
-public abstract class Biometric {
+public abstract class Biometric implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 
 	/**
 	 * converts this biometric into hashable data
@@ -27,5 +32,7 @@ public abstract class Biometric {
 	 */
 	public abstract ArrayList<Template> quantizeAll();
 
+
+	public abstract ArrayList<Feature> toFeatures();
 
 }

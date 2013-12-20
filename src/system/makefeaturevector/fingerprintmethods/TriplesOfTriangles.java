@@ -191,18 +191,18 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	@Override
-	protected ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
+	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
 		return new ArrayList<Feature>(this.fingerprintToTriangles(fingerprint));
 	}
 	
 	
 	@Override
-	protected Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForBinning(){
 		return new Triangle();
 	}
 	
 	@Override
-	protected Feature getBlankFeatureForTotalBits(){
+	public Feature getBlankFeatureForTotalBits(){
 		return new TriangleTriplet();
 	}
 }

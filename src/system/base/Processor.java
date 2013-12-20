@@ -7,7 +7,7 @@ import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
-import system.allcommonclasses.utilities.FingerprintIO;
+import system.allcommonclasses.utilities.UsersIO;
 import system.coordinator.*;
 import system.coordinator.tests.*;
 import system.hasher.*;
@@ -31,16 +31,18 @@ public class Processor {
 	 * @return
 	 */
 	public Results go(Settings settings){
+		settings.loadSettings();
+		GlobalSettings globalSettings = GlobalSettings.getInstance();
+		
 		Results results = new Results();
 //		GlobalSettings.fingerprintMethod = new MinutiaeMethod();
 //		GlobalSettings.fingerprintMethod = new PathsMethod();
-//		GlobalSettings.fingerprintMethod = new Triangles();
+		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
-		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
-		settings.loadSettings();
+//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 
-		Users users = FingerprintIO.readFVC();
-		GlobalSettings globalSettings = GlobalSettings.getInstance();
+		Users users = UsersIO.getUsers(globalSettings.getDataset());
+		users.computeBins();
 		
 		Hasher hasher = new StraightHasher();
 //		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
@@ -50,7 +52,6 @@ public class Processor {
 		{}// TODO -make method
 		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 		
-//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints);
 		{}// TODO -make coordinator(hasher, users)
 		RawScores scores = new RawScores();
 //		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);

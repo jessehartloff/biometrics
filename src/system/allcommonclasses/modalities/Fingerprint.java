@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.settings.GlobalSettings;
+import system.makefeaturevector.feature.Feature;
 
 /**
  * A fingerprint.
@@ -11,6 +12,8 @@ import system.allcommonclasses.settings.GlobalSettings;
  */
 public class Fingerprint extends Biometric{
 
+	private static final long serialVersionUID = 1L;
+	
 	public ArrayList<Minutia> minutiae;
 	
 	/**
@@ -22,17 +25,24 @@ public class Fingerprint extends Biometric{
 		this.minutiae = new ArrayList<Minutia>();
 	}
 	
-
+	@Override
 	public Template quantizeOne(){
 //		System.out.println("this: " + this.minutiae.get(0).getIndex());
 		return GlobalSettings.fingerprintMethod.quantizeOne(this);
 	}
 
 	
-
+	@Override
 	public ArrayList<Template> quantizeAll(){
 		return GlobalSettings.fingerprintMethod.quantizeAll(this);
 	}
+	
+
+	@Override
+	public ArrayList<Feature> toFeatures() {
+		return GlobalSettings.fingerprintMethod.fingerprintToFeatures(this);
+	}
+
 	
 	/**
 	 * Rotate the fingerprint around the point (0,0)
@@ -139,5 +149,6 @@ public class Fingerprint extends Biometric{
 	public String toString(){
 		return this.minutiae.toString();
 	}
+
 	
 }

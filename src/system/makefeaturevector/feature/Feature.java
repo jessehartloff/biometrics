@@ -38,7 +38,8 @@ public abstract class Feature implements MeasurableDistance<Feature> {
 	}
 		
 	@Override
-	public Double distanceFrom(Feature compareFeature) {
+	public Double distanceFrom(Feature compareFeature/*,Distance distanceFunction*/) {
+		//return distanceFunction.distance(this,compareFeature);
         Double result = 0.0;
         for(String varKey : variables.keySet()){
         	result += Math.pow(this.variables.get(varKey).getQuantizedValue().doubleValue() -

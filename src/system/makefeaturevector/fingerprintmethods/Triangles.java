@@ -51,11 +51,11 @@ public class Triangles extends FingerprintMethod {
 			minutiaIndecies = new HashSet<Long>();
 			this.innerSettings = settings;
 			variables.put("theta0", new ThetaVariable(settings.theta0));
-			variables.put("x1", new ThetaVariable(settings.x1));
-			variables.put("y1", new ThetaVariable(settings.y1));
+			variables.put("x1", new XYVariable(settings.x1));
+			variables.put("y1", new XYVariable(settings.y1));
 			variables.put("theta1", new ThetaVariable(settings.theta1));
-			variables.put("x2", new ThetaVariable(settings.x2));
-			variables.put("y2", new ThetaVariable(settings.y2));
+			variables.put("x2", new XYVariable(settings.x2));
+			variables.put("y2", new XYVariable(settings.y2));
 			variables.put("theta2", new ThetaVariable(settings.theta2));
 		}
 		
@@ -197,13 +197,13 @@ public class Triangles extends FingerprintMethod {
 	}
 	
 	@Override
-	protected ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
+	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
 		return new ArrayList<Feature>(this.fingerprintToTriangles(fingerprint));
 	}
 
 	
 	@Override
-	protected Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForBinning(){
 		return new Triangle();
 	}
 	

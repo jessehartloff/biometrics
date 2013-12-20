@@ -1,10 +1,13 @@
 package system.allcommonclasses.modalities;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 
-public class Minutia implements Comparable<Minutia>{
+public class Minutia implements Comparable<Minutia>, Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long x;
 	private Long y;
 	private Long theta;

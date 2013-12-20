@@ -2,7 +2,7 @@ package system.allcommonclasses;
 
 import java.util.ArrayList;
 
-import system.base.FARFRR;
+import system.base.RatesPoint;
 
 /**
  * 
@@ -13,13 +13,14 @@ import system.base.FARFRR;
 public class Results {
 
 	private Double eer;
-	private ArrayList<FARFRR> rates;
+	private ArrayList<RatesPoint> rates;
+	//indexingResults
 	
-	public ArrayList<FARFRR> getRates() {
+	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}
 
-	public void setRates(ArrayList<FARFRR> rates) {
+	public void setRates(ArrayList<RatesPoint> rates) {
 		this.rates = rates;
 	}
 
@@ -30,7 +31,5 @@ public class Results {
 	public void setEer(Double eer) {
 		this.eer = eer;
 	}
-	
-	{}// TODO Results FARFRR class is kinda dumb. At least needs to be renamed
 	
 }

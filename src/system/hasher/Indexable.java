@@ -16,7 +16,10 @@ public interface Indexable {
 	// function: test a biometric against the indexing structure (probably return its rank)
 	
 	
-	// ??? not sure if following will be needed. Maybe just make test template for faster testing (pre-compute)
+	// ??? not sure if following will be needed. Maybe just make test template for 
+	// faster testing (pre-compute)... I don't think precomputing makes sense here
+	// the enrolled are naturally precomputed and the test templates are only used once each.
+	//
 	// function: make enroll template
 	// function: make test template
 	// function: compare a test and enrolled template

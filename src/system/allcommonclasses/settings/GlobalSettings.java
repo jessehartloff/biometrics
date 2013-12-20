@@ -14,6 +14,7 @@ public class GlobalSettings implements Serializable{
 	private String coordinator;
 	private String hasher;
 	private String distanceFunction;
+	private String dataset;
 	
 	public static FingerprintMethod fingerprintMethod; 
 	//public static IrisMethod singleIrisMethod;
@@ -49,4 +50,7 @@ public class GlobalSettings implements Serializable{
 	public void setHasher(String hasher) {this.hasher = hasher;}
 	public String getDistanceFunction() {return distanceFunction;}
 	public void setDistanceFunction(String distanceFunction) {this.distanceFunction = distanceFunction;}
+	public String getDataset() {return dataset;}
+	public void setDataset(String dataset) {this.dataset = dataset;}
+
 }

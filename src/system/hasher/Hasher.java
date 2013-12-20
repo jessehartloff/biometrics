@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.transformations.Transformation;
-import system.makefeaturevector.Method;
 
 /**
  * Controls all the hashing details. Typically, this class is in charge of the security of the scheme.

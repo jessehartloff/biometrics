@@ -1,7 +1,7 @@
 package system.base;
 
 
-public class FARFRR {
+public class RatesPoint {
 	Double far;
 	Double frr;
 	Double threshold;
@@ -9,7 +9,7 @@ public class FARFRR {
 	
 	@Override
 	public String toString() {
-		return "FARFRR [far=" + far + ", frr=" + frr + ", threshold="
+		return "RatesPoint [far=" + far + ", frr=" + frr + ", threshold="
 				+ threshold + "]";
 	}
 	

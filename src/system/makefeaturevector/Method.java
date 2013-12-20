@@ -1,11 +1,8 @@
 package system.makefeaturevector;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
 import system.makefeaturevector.feature.Feature;
-import system.makefeaturevector.fingerprintmethods.MinutiaeMethod.InnerMinutia;
 import system.vectordistance.Distance;
 
 
@@ -61,9 +58,9 @@ public abstract class Method{
 		return feature.getTotalBits();
 	}
 
-	protected abstract Feature getBlankFeatureForBinning();
+	public abstract Feature getBlankFeatureForBinning();
 	
-	protected Feature getBlankFeatureForTotalBits(){
+	public Feature getBlankFeatureForTotalBits(){
 		return this.getBlankFeatureForBinning();
 	}
 	

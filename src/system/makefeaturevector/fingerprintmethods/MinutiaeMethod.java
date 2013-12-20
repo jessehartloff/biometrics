@@ -90,31 +90,6 @@ public class MinutiaeMethod extends FingerprintMethod {
 		return m1.distanceFrom(m2);
 	}
 
-	@Override
-	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
-		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
-		InnerMinutia m = new InnerMinutia();
-		for(Variable var : m.variables.values()){
-			allPrequantizedValues.add(new ArrayList<Long>());
-		}
-		
-		for(Fingerprint fingerprint : fingerprints){
-			ArrayList<InnerMinutia> minutiae = this.fingerprintToMinutia(fingerprint);
-			for(InnerMinutia minutia : minutiae){
-				int i=0;
-				for(Variable var : minutia.variables.values()){
-					allPrequantizedValues.get(i).add(var.getPrequantizedValue());
-					i++;
-				}
-			}
-		}
-		
-		int i=0;
-		for(Variable var : m.variables.values()){
-			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
-			i++;
-		}	
-	}
 
 	@Override
 	public Long getTotalBits() {
@@ -123,12 +98,12 @@ public class MinutiaeMethod extends FingerprintMethod {
 	}
 	
 	@Override
-	protected ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
+	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
 		return new ArrayList<Feature>(this.fingerprintToMinutia(fingerprint));
 	}
 	
 	@Override
-	protected Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForBinning(){
 		return new InnerMinutia();
 	}
 	

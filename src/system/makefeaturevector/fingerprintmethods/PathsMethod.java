@@ -158,33 +158,6 @@ public class PathsMethod extends FingerprintMethod {
 		return pathToReturn;
 	}
 
-	
-	@Override
-	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints) {
-		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
-		Path p = new Path();
-		for(Variable var : p.variables.values()){
-			allPrequantizedValues.add(new ArrayList<Long>());
-		}
-		
-		for(Fingerprint fingerprint : fingerprints){
-			ArrayList<Path> paths = this.fingerprintToPaths(fingerprint);
-			for(Path path : paths){
-				int i=0;
-				for(Variable var : path.variables.values()){
-					allPrequantizedValues.get(i).add(var.getPrequantizedValue());
-					i++;
-				}
-			}
-		}
-		
-		int i=0;
-		for(Variable var : p.variables.values()){
-			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
-			i++;
-		}
-	}
-
 
 	@Override
 	public Long getTotalBits() {
@@ -193,12 +166,12 @@ public class PathsMethod extends FingerprintMethod {
 	}
 
 	@Override
-	protected ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
+	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
 		return new ArrayList<Feature>(this.fingerprintToPaths(fingerprint));
 	}
 	
 	@Override
-	protected Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForBinning(){
 		return new Path();
 	}
 	
