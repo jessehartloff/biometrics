@@ -14,7 +14,6 @@ public class Server2 extends system.coordinator.Coordinator {
 
 	@Override
 	public RawScores run() {
-		
 		return null;
 	}
 

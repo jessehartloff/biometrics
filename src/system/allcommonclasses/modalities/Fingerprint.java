@@ -24,6 +24,7 @@ public class Fingerprint extends Biometric{
 	
 
 	public Template quantizeOne(){
+//		System.out.println("this: " + this.minutiae.get(0).getIndex());
 		return GlobalSettings.fingerprintMethod.quantizeOne(this);
 	}
 
@@ -40,7 +41,7 @@ public class Fingerprint extends Biometric{
 	 * @param degrees the amount of rotation in degrees
 	 */
 	public Fingerprint rotate(double degrees){
-		return rotate(degrees, 0, 0);
+		return rotate(degrees, 0L, 0L);
 	}
 	
 	/**
@@ -51,7 +52,7 @@ public class Fingerprint extends Biometric{
 	 * @param centerX
 	 * @param centerY
 	 */
-	public Fingerprint rotate(double degrees, int centerX, int centerY){
+	public Fingerprint rotate(double degrees, Long centerX, Long centerY){
 		
 		Fingerprint toRotate = new Fingerprint();
 		
@@ -67,8 +68,9 @@ public class Fingerprint extends Biometric{
 					+ centerY));
 
 			rotatedMinutia.setTheta(minutia.getTheta() + Math.round(degrees)); 
-			
+
 			rotatedMinutia.setConfidence(minutia.getConfidence());
+			rotatedMinutia.setIndex(minutia.getIndex());
 			
 			toRotate.minutiae.add(rotatedMinutia);
 			
@@ -83,7 +85,7 @@ public class Fingerprint extends Biometric{
 	 * @param dx
 	 * @param dy
 	 */
-	public Fingerprint translate(int dx, int dy){
+	public Fingerprint translate(Long dx, Long dy){
 
 		Fingerprint toTranslate = new Fingerprint();
 		
@@ -95,6 +97,7 @@ public class Fingerprint extends Biometric{
 			translatedMinutia.setY(minutia.getY() + dy);
 			translatedMinutia.setTheta(minutia.getTheta());
 			translatedMinutia.setConfidence(minutia.getConfidence());
+			translatedMinutia.setIndex(minutia.getIndex());
 			
 			toTranslate.minutiae.add(translatedMinutia);
 		}

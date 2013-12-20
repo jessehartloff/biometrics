@@ -6,13 +6,13 @@ public class TriangleSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public MethodVariable theta0;
-	public MethodVariable x1;
-	public MethodVariable y1;
-	public MethodVariable theta1;
-	public MethodVariable x2;
-	public MethodVariable y2;
-	public MethodVariable theta2;
+	public MethodVariableSettings theta0;
+	public MethodVariableSettings x1;
+	public MethodVariableSettings y1;
+	public MethodVariableSettings theta1;
+	public MethodVariableSettings x2;
+	public MethodVariableSettings y2;
+	public MethodVariableSettings theta2;
 	
 	//public ArrayList<MethodVariable> variables;
 	
@@ -21,17 +21,22 @@ public class TriangleSettings implements Serializable{
 	private Double rotationStop;
 	
 	private Double thresholdForTriplets;
+	
+	private Long minimumPointsForTripletOfTriangles;
+
+	private Long kClosestMinutia;
+	private Long kClosestTriangles;
 
 	private static TriangleSettings instance;
 	
 	private TriangleSettings(){
-		this.theta0 = new MethodVariable();
-		this.x1 = new MethodVariable();
-		this.y1 = new MethodVariable();
-		this.theta1 = new MethodVariable();
-		this.x2 = new MethodVariable();
-		this.y2 = new MethodVariable();
-		this.theta2 = new MethodVariable();
+		this.theta0 = new MethodVariableSettings();
+		this.x1 = new MethodVariableSettings();
+		this.y1 = new MethodVariableSettings();
+		this.theta1 = new MethodVariableSettings();
+		this.x2 = new MethodVariableSettings();
+		this.y2 = new MethodVariableSettings();
+		this.theta2 = new MethodVariableSettings();
 		//this.variables = new ArrayList<MethodVariable>();
 	}
 	
@@ -76,5 +81,31 @@ public class TriangleSettings implements Serializable{
 		this.thresholdForTriplets = thresholdForTriplets;
 	}
 
+	public Long getMinimumPointsForTripletOfTriangles() {
+		return minimumPointsForTripletOfTriangles;
+	}
+
+	public void setMinimumPointsForTripletOfTriangles(
+			Long minimumPointsForTripletOfTriangles) {
+		this.minimumPointsForTripletOfTriangles = minimumPointsForTripletOfTriangles;
+	}
+
+	public Long getkClosestMinutia() {
+		return kClosestMinutia;
+	}
+
+	public void setkClosestMinutia(Long kClosestMinutia) {
+		this.kClosestMinutia = kClosestMinutia;
+	}
+
+	public Long getkClosestTriangles() {
+		return kClosestTriangles;
+	}
+
+	public void setkClosestTriangles(Long kClosestTriangles) {
+		this.kClosestTriangles = kClosestTriangles;
+	}
+
+	
 	
 }

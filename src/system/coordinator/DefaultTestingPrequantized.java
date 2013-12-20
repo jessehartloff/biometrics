@@ -11,6 +11,9 @@ import system.hasher.Hasher;
 
 public class DefaultTestingPrequantized extends DefaultTesting{
 
+	{}// TODO -database
+	// database stuff might not belong here, but I had to put the todo somewhere.
+	
 	public DefaultTestingPrequantized(Hasher hasher, Users users,
 			TestGenerator testGenerator) {
 		super(hasher, users, testGenerator);
@@ -31,6 +34,8 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 				user.prequantizedEnrolledTemplates.add(hasher.makeEnrollTemplate(user.readings.get(i)));
 				user.prequantizedTestTemplates.add(hasher.makeTestTemplates(user.readings.get(i)));
 				completed++;
+				progress = (completed.doubleValue()/total.doubleValue())*100.0;
+				System.out.format("prequantizing: %5.2f%%%n", progress);
 			}
 			progress = (completed.doubleValue()/total.doubleValue())*100.0;
 			System.out.format("prequantizing: %5.2f%%%n", progress);

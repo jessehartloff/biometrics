@@ -53,7 +53,6 @@ public class Minutia implements Comparable<Minutia>{
 	}
 	
 	public Double distanceTo(Minutia that){
-		
 		Double distance;
 		Long dx = this.x - that.x;
 		Long dy = this.y - that.y;

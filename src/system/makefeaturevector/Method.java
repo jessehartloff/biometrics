@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import system.allcommonclasses.Template;
+import system.makefeaturevector.feature.Feature;
+import system.makefeaturevector.fingerprintmethods.MinutiaeMethod.InnerMinutia;
 import system.vectordistance.Distance;
 
 
@@ -45,8 +47,24 @@ public abstract class Method{
 	 * @param templatePoint2
 	 * @return a distance determined by the method and its distance function
 	 */
-	public abstract Double distance(BigInteger templatePoint1, BigInteger templatePoint2);
+	public Double distance(BigInteger templatePoint1, BigInteger templatePoint2) {
+		Feature f1 = this.getBlankFeatureForTotalBits();
+		Feature f2 = this.getBlankFeatureForTotalBits();
+		f1.fromBigInt(templatePoint1);
+		f2.fromBigInt(templatePoint2);
+		return f1.distanceFrom(f2);
+	}
 	
+
+	public Long getTotalBits() {
+		Feature feature = this.getBlankFeatureForBinning();
+		return feature.getTotalBits();
+	}
+
+	protected abstract Feature getBlankFeatureForBinning();
 	
+	protected Feature getBlankFeatureForTotalBits(){
+		return this.getBlankFeatureForBinning();
+	}
 	
 }

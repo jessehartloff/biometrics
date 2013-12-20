@@ -3,9 +3,11 @@ package system.makefeaturevector.fingerprintmethods;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
+import system.makefeaturevector.feature.Feature;
 
 /**
  * 
@@ -14,12 +16,21 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class TriplesOfTriangles extends Triangles {
 
-	protected class TriangleTriplet{
+	protected class TriangleTriplet extends Feature{
 		Triangle t0;
 		Triangle t1;
 		Triangle t2;
 		
 		ArrayList<Triangle> ts;
+		
+		public TriangleTriplet(){
+			
+		}
+		
+		@Override
+		public Long getTotalBits(){
+			return t0.getTotalBits() + t1.getTotalBits() + t2.getTotalBits();
+		}
 		
 		protected void order(){
 			ArrayList<Triangle> threeTriangles = new ArrayList<Triangle>();
@@ -30,10 +41,10 @@ public class TriplesOfTriangles extends Triangles {
 			t0 = threeTriangles.get(0);
 			t1 = threeTriangles.get(1);
 			t2 = threeTriangles.get(2);
-			
 		}
 		
-		protected BigInteger toBigInt(){
+		@Override
+		public BigInteger toBigInt(){
 			Integer triangleBits = settings.theta0.getBits() + 
 					settings.x1.getBits() +
 					settings.y1.getBits() +
@@ -53,7 +64,8 @@ public class TriplesOfTriangles extends Triangles {
 			return toReturn;
 		}
 		
-		protected void fromBigInt(BigInteger bigInt){
+		@Override
+		public void fromBigInt(BigInteger bigInt){
 			Integer triangleBits = settings.theta0.getBits() + 
 					settings.x1.getBits() +
 					settings.y1.getBits() +
@@ -85,62 +97,79 @@ public class TriplesOfTriangles extends Triangles {
 	public TriplesOfTriangles() {
 	}
 	
-	/**
-	 * The getInstance methods are the only way to create FingerprintMethod objects. This ensures that
-	 * each run of the system will only have only one FingerprintMethod that is shared by 
-	 * every object that needs one. This prevents cases where two readings are being
-	 * compared, but were quantized using different methods.
-	 * 
-	 * If an instance already exists, a check is made to ensure that the existing method matches
-	 * the method asked for.
-	 *  
-	 * @return An instance of a FingerprintMethod
-	 */
-//	public static FingerprintMethod getInstance(){
-//		if(singleFingerprintMethod == null){
-//			singleFingerprintMethod = new TriplesOfTriangles();
-//		}
-//		else{
-//			FingerprintMethod.checkClass("TriplesOfTriangles");
-//		}
-//		return singleFingerprintMethod;
-//	}
-	
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
 		return triplesOfTrianglesQuantizeOne(fingerprint);
 	}
+
 	
 	public Template triplesOfTrianglesQuantizeOne(Fingerprint fingerprint) {
 		Template template = new Template();
 		ArrayList<Triangle> triangles = super.fingerprintToTriangles(fingerprint);
-		
+
+//		System.out.println("gre: " + triangles.get(0).minutiaIndecies);
+		ArrayList<Triangle> triangleCopy = new ArrayList<Triangle>();
+			
+		for(Triangle triangle : triangles){
+			triangleCopy.add(triangle);
+		}
+			
+		for(Triangle triangle : triangles){
+			Collections.sort(triangleCopy, triangle.getComparator());
+				
+			int startingIndex;
+			for(startingIndex=0; triangleCopy.get(startingIndex).distanceBetweenCenters(triangle) < 0.0001; startingIndex++);
+
+//			System.out.println("tri: " + triangle.minutiaIndecies);
+			
+			ArrayList<Triangle> trianglesToTry = new ArrayList<Triangle>();
+			trianglesToTry.add(triangle);
+			for(int i=0; i<settings.getkClosestTriangles(); i++){
+				trianglesToTry.add(triangleCopy.get(startingIndex+i));
+			}
+			
+			this.tryToAddAllPossibleTriplets(template, trianglesToTry);
+	
+			// fours:    0.061
+			// ten-four: 0.055
+			// tens:     0.046  DB2: 0.032
+			
+			}
+			
+		return template;
+	}
+
+	
+	private void tryToAddTriplet(Template template, Triangle t0, Triangle t1, Triangle t2){
+		HashSet<Long> indecies = new HashSet<Long>();
+		indecies.addAll(t0.minutiaIndecies);
+		indecies.addAll(t1.minutiaIndecies);
+		indecies.addAll(t2.minutiaIndecies);
+//		System.out.println("number of points in triplet: " + indecies.size());
+//		System.out.println("all: " + indecies);
+//		System.out.println("t0: " + t0.minutiaIndecies);
+//		System.out.println("t1: " + t1.minutiaIndecies);
+		if(indecies.size() >= settings.getMinimumPointsForTripletOfTriangles()){
+			TriangleTriplet triplet = new TriangleTriplet();
+			triplet.t0 = t0;
+			triplet.t1 = t1;
+			triplet.t2 = t2;
+			triplet.order();
+			template.hashes.add(triplet.toBigInt());
+		}
+	}
+	
+	private void tryToAddAllPossibleTriplets(Template template, ArrayList<Triangle> triangles){
 		int n = triangles.size();
 		for(int i=0; i<n; i++){
 			for(int j=i+1; j<n; j++){
 				for(int k=j+1; k<n; k++){
-					Triangle triangle0 = triangles.get(i);
-					Triangle triangle1 = triangles.get(j);
-					Triangle triangle2 = triangles.get(k);
-					Double distance0 = triangle0.distanceBetweenCenters(triangle1);
-					Double distance1 = triangle0.distanceBetweenCenters(triangle2);
-					Double distance2 = triangle1.distanceBetweenCenters(triangle2);
-					Double threshold = settings.getThresholdForTriplets();
-					if(distance0 < threshold && distance1 < threshold && distance2 < threshold){// TODO -better conditions for making a triplet?
-						TriangleTriplet triplet = new TriangleTriplet();
-						triplet.t0 = triangles.get(i);
-						triplet.t1 = triangles.get(j);
-						triplet.t2 = triangles.get(k);
-						triplet.order();
-						template.hashes.add(triplet.toBigInt());
-					}
+					this.tryToAddTriplet(template, triangles.get(i), triangles.get(j), triangles.get(k));
 				}
 			}
 		}
-		return template;
 	}
-
 	
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
@@ -149,7 +178,7 @@ public class TriplesOfTriangles extends Triangles {
 
 	public ArrayList<Template> triplesOfTrianglesQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		
+
 		for(double rotation=settings.getRotationStart(); 
 				rotation<settings.getRotationStop(); 
 				rotation+=settings.getRotationStep())
@@ -162,11 +191,18 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	@Override
-	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO +triple of triangles distance
-		return null;
+	protected ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
+		return new ArrayList<Feature>(this.fingerprintToTriangles(fingerprint));
 	}
 	
 	
+	@Override
+	protected Feature getBlankFeatureForBinning(){
+		return new Triangle();
+	}
 	
+	@Override
+	protected Feature getBlankFeatureForTotalBits(){
+		return new TriangleTriplet();
+	}
 }

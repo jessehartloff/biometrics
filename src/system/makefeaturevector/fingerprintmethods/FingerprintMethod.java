@@ -5,16 +5,12 @@ import java.util.ArrayList;
 import system.allcommonclasses.*;
 import system.allcommonclasses.modalities.*;
 import system.makefeaturevector.Method;
+import system.makefeaturevector.feature.Feature;
+import system.makefeaturevector.feature.Variable;
 
 public abstract class FingerprintMethod extends Method{
 
 	
-
-	
-	//protected FingerprintMethod() {
-	//}
-
-
 	/**
 	 * Converts a fingerprint into a Template containing hashable data
 	 * 
@@ -32,32 +28,40 @@ public abstract class FingerprintMethod extends Method{
 	 */
 	public abstract ArrayList<Template> quantizeAll(Fingerprint fingerprint);
 	
-
+	
 	/**
-	 * Class type check for singleton. There can only be one FingerprintMethod, so this method
-	 * is used to check if the method asked for is the one returned.
+	 * Finds the bin cutoffs that fills them uniformly
 	 * 
-	 * Example: An instance of Paths is created, then an instance of Triangles is asked for.
-	 * Since there can only be one, Paths is returned when Triangles is expected.
-	 * 
-	 * This method is called to check for these cases. It is static so the static subclass methods 
-	 * can use it.
-	 * 
-	 * @param expectedClass Sting representing the expected class without package identifiers. ("Paths")
+	 * @param fingerprints
 	 */
-/*	protected static void checkClass(String expectedClass){
-		String s = singleFingerprintMethod.getClass().toString();
-		if(s.substring(s.lastIndexOf(".")+1).compareTo(expectedClass) != 0){
-			{}// make this warning more noticeable. Maybe crash the whole program.
-			System.out.println("Not what you were expecting. You got: " + 
-					singleFingerprintMethod.getClass().toString());
+	public void doAllTheBinning(ArrayList<Fingerprint> fingerprints){
+		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
+		Feature blankFeature = this.getBlankFeatureForBinning();
+		for(Variable var : blankFeature.variables.values()){
+			allPrequantizedValues.add(new ArrayList<Long>());
+		}
+		
+		for(Fingerprint fingerprint : fingerprints){
+			ArrayList<Feature> features = this.fingerprintToFeatures(fingerprint);
+			for(Feature feature : features){
+				int i=0;
+				for(Variable var : feature.variables.values()){
+					allPrequantizedValues.get(i).add(var.getPrequantizedValue());
+					i++;
+				}
+			}
+		}
+		
+		int i=0;
+		for(Variable var : blankFeature.variables.values()){
+			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
+			i++;
 		}
 	}
-*/
+	
+	
+	protected abstract ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint);
 
-	public abstract void doAllTheBinning(ArrayList<Fingerprint> fingerprints);
 
-
-	public abstract Long getTotalBits();
 	
 }

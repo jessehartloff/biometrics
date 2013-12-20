@@ -22,7 +22,7 @@ public class EvaluatePerformance {
 
 		Double min = Math.min(gens.get(0), imps.get(0));
 		Double max = Math.min(gens.get(gens.size()-1), imps.get(imps.size()-1));
-		Double stepSize = 0.4;
+		Double stepSize = 0.9;
 		
 		ArrayList<FARFRR> rates = new ArrayList<FARFRR>();
 		

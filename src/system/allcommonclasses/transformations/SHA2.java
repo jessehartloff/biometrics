@@ -7,7 +7,7 @@ public class SHA2 extends Transformation {
 	@Override
 	public BigInteger transform(BigInteger bigInt) {
 		{}// TODO -SHA256  java.security.MessageDigest
-		return null;
+		return bigInt;
 	}
 
 }

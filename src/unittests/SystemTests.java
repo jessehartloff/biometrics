@@ -12,7 +12,7 @@ import java.util.Collections;
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.GlobalSettings;
-import system.allcommonclasses.settings.MethodVariable;
+import system.allcommonclasses.settings.MethodVariableSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.Functions;
 import system.hasher.Hasher;
@@ -22,7 +22,7 @@ import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
 
 public class SystemTests {
 
-	{}// TODO tons of unit tests
+	{}// TODO ongoing-tons of unit tests
 
 	//do this test with a serialized testSettings
 //	Double score1 = hasher.compareTemplateWithBiometric(enrolledTemplate, test.test);
@@ -52,13 +52,15 @@ public class SystemTests {
 		catch (Exception e) {e.printStackTrace();}
 		
 		Triangle expectedTriangle = triangleMethod.new Triangle();
-		expectedTriangle.setPrequantizedTheta0(2L);
-		expectedTriangle.setPrequantizedX1(0L);
-		expectedTriangle.setPrequantizedY1(116L);
-		expectedTriangle.setPrequantizedTheta1(1L);
-		expectedTriangle.setPrequantizedX2(50L);
-		expectedTriangle.setPrequantizedY2(-65L);
-		expectedTriangle.setPrequantizedTheta2(0L);
+
+		expectedTriangle.variables.get("theta0").setPrequantizedValue(2L);
+		expectedTriangle.variables.get("x1").setPrequantizedValue(0L);
+		expectedTriangle.variables.get("y1").setPrequantizedValue(116L);
+		expectedTriangle.variables.get("theta1").setPrequantizedValue(1L);
+		expectedTriangle.variables.get("x2").setPrequantizedValue(50L);
+		expectedTriangle.variables.get("y2").setPrequantizedValue(-65L);
+		expectedTriangle.variables.get("theta2").setPrequantizedValue(0L);
+		
 		expectedTriangle.setCenterX(68.6666666667);
 		expectedTriangle.setCenterY(7.0);
 		
@@ -141,15 +143,15 @@ public class SystemTests {
 		settings.triangleSettings.y2.setBins(7);
 		settings.triangleSettings.theta2.setBins(16);
 		
-		Triangle t = triangleMethod.new Triangle(settings.triangleSettings);
+		Triangle t = triangleMethod.new Triangle();
 
-		t.setTheta0(2L);
-		t.setX1(7L);
-		t.setY1(1L);
-		t.setTheta1(1L);
-		t.setX2(0L);
-		t.setY2(1L);
-		t.setTheta2(10L);
+		t.variables.get("theta0").setQuantizedValue(2L);
+		t.variables.get("x1").setQuantizedValue(7L);
+		t.variables.get("y1").setQuantizedValue(1L);
+		t.variables.get("theta1").setQuantizedValue(1L);
+		t.variables.get("x2").setQuantizedValue(0L);
+		t.variables.get("y2").setQuantizedValue(1L);
+		t.variables.get("theta2").setQuantizedValue(10L);
 		
 		BigInteger expected = BigInteger.valueOf(1513498);
 		BigInteger computed = t.toBigInt();
@@ -172,16 +174,16 @@ public class SystemTests {
 		settings.triangleSettings.y2.setBins(7);
 		settings.triangleSettings.theta2.setBins(16);
 		
-		Triangle computed = triangleMethod.new Triangle(settings.triangleSettings);
-		Triangle expected = triangleMethod.new Triangle(settings.triangleSettings);
-		
-		expected.setTheta0(2L);
-		expected.setX1(7L);
-		expected.setY1(1L);
-		expected.setTheta1(1L);
-		expected.setX2(0L);
-		expected.setY2(1L);
-		expected.setTheta2(10L);
+		Triangle computed = triangleMethod.new Triangle();
+		Triangle expected = triangleMethod.new Triangle();
+
+		expected.variables.get("theta0").setQuantizedValue(2L);
+		expected.variables.get("x1").setQuantizedValue(7L);
+		expected.variables.get("y1").setQuantizedValue(1L);
+		expected.variables.get("theta1").setQuantizedValue(1L);
+		expected.variables.get("x2").setQuantizedValue(0L);
+		expected.variables.get("y2").setQuantizedValue(1L);
+		expected.variables.get("theta2").setQuantizedValue(10L);
 		
 		BigInteger bigInt = BigInteger.valueOf(1513498);
 		computed.fromBigInt(bigInt);
@@ -193,7 +195,7 @@ public class SystemTests {
 	@org.junit.Test
 	public void testComputeBinBoundaries() {
 		
-		MethodVariable var = new MethodVariable();
+		MethodVariableSettings var = new MethodVariableSettings();
 		var.setBins(4);
 		
 		ArrayList<Long> prequantizedValue = new ArrayList<Long>();
@@ -224,7 +226,7 @@ public class SystemTests {
 	@org.junit.Test
 	public void testBinPlacement() {
 		
-		MethodVariable var = new MethodVariable();
+		MethodVariableSettings var = new MethodVariableSettings();
 		var.setBins(4);
 		
 		ArrayList<Long> prequantizedValue = new ArrayList<Long>();
@@ -320,7 +322,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(505, 508, 359));
 		expected.minutiae.add(new Minutia(5, 8, 0));
 		
-		Fingerprint computed = test.translate(5, 8);
+		Fingerprint computed = test.translate(5L, 8L);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -344,7 +346,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(500, 500, 359));
 		expected.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint computed = test.translate(0, 0);
+		Fingerprint computed = test.translate(0L, 0L);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -392,7 +394,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(735, -354, 99));
 		expected.minutiae.add(new Minutia(155, 52, 100));
 		
-		Fingerprint computed = test.rotate(100.0, 56, 91);
+		Fingerprint computed = test.rotate(100.0, 56L, 91L);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -416,7 +418,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(-561, 631, 259));
 		expected.minutiae.add(new Minutia(-155, 52, 260));
 		
-		Fingerprint computed = test.rotate(-100.0, -56, 91);
+		Fingerprint computed = test.rotate(-100.0, -56L, 91L);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));
@@ -440,7 +442,7 @@ public class SystemTests {
 		expected.minutiae.add(new Minutia(500, 500, 359));
 		expected.minutiae.add(new Minutia(0, 0, 0));
 		
-		Fingerprint computed = test.rotate(0.0, 50, 34);
+		Fingerprint computed = test.rotate(0.0, 50L, 34L);
 		
 		assertTrue("expected: " + expected.toString() + "\ncomputed: " + computed.toString(), 
 				computed.equals(expected));

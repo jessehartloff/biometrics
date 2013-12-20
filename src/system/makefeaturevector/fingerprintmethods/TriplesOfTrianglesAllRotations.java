@@ -2,6 +2,7 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 
@@ -16,27 +17,6 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	public TriplesOfTrianglesAllRotations() {
 	}
 	
-	/**
-	 * The getInstance methods are the only way to create FingerprintMethod objects. This ensures that
-	 * each run of the system will only have only one FingerprintMethod that is shared by 
-	 * every object that needs one. This prevents cases where two readings are being
-	 * compared, but were quantized using different methods.
-	 * 
-	 * If an instance already exists, a check is made to ensure that the existing method matches
-	 * the method asked for.
-	 *  
-	 * @return An instance of a FingerprintMethod
-	 */
-//	public static FingerprintMethod getInstance(){
-//		if(singleFingerprintMethod == null){
-//			singleFingerprintMethod = new TriplesOfTrianglesAllRotations();
-//		}
-//		else{
-//			FingerprintMethod.checkClass("TriplesOfTrianglesAllRotations");
-//		}
-//		return singleFingerprintMethod;
-//	}
-	
 
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
@@ -46,9 +26,12 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	public Template triplesOfTrianglesAllRotationsQuantizeOne(Fingerprint fingerprint) {
 		Template toReturn = new Template();
 		ArrayList<Template> manyTemplates = super.triplesOfTrianglesQuantizeAll(fingerprint);
+//		HashSet<BigInteger> manyTemplates2 = new HashSet<BigInteger>();
+		
 		for(Template template : manyTemplates){
 			for(BigInteger bigInt : template.hashes){
 				toReturn.hashes.add(bigInt);
+//				manyTemplates2.add(bigInt);
 			}
 		}
 		return toReturn;
@@ -65,10 +48,5 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 		return templates;
 	}
 
-	@Override
-	public Double distance(BigInteger point1, BigInteger point2) {
-		// TODO +triple of triangles all rotations distance
-		return null;
-	}
 	
 }

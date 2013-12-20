@@ -6,9 +6,9 @@ public class MinutiaeSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public MethodVariable x;
-	public MethodVariable y;
-	public MethodVariable theta;
+	public MethodVariableSettings x;
+	public MethodVariableSettings y;
+	public MethodVariableSettings theta;
 	
 	private Double rotationStep;
 	private Double rotationStart;
@@ -25,9 +25,9 @@ public class MinutiaeSettings implements Serializable{
 	private static MinutiaeSettings instance;
 	
 	private MinutiaeSettings(){
-		this.x = new MethodVariable();
-		this.y = new MethodVariable();
-		this.theta = new MethodVariable();
+		this.x = new MethodVariableSettings();
+		this.y = new MethodVariableSettings();
+		this.theta = new MethodVariableSettings();
 		}
 	
 	public static MinutiaeSettings getInstance(){

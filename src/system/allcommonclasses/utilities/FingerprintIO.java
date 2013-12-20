@@ -28,6 +28,8 @@ public class FingerprintIO {
 			dis.readLine();
 			dis.readLine();
 			
+			Long index = 0L;
+			
 			while (dis.available() != 0) {
 				String minutiaText = dis.readLine();
 				Minutia minutia = new Minutia();
@@ -38,6 +40,8 @@ public class FingerprintIO {
 				minutia.setX(Long.valueOf(parseIt[0]));
 				minutia.setY(Long.valueOf(parseIt[1]));
 				minutia.setTheta(Long.valueOf(parseIt[2]));
+				minutia.setIndex(index);
+				index++;
 				
 				fingerprint.minutiae.add(minutia);
 			}
@@ -74,6 +78,7 @@ public class FingerprintIO {
 			//System.out.println(user.readings);
 		}
 		GlobalSettings.fingerprintMethod.doAllTheBinning(allFingerprints);
+		// bad bad bad TODO FIX this before iris and face go up
 		
 		return users;
 	}

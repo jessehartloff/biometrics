@@ -22,7 +22,7 @@ import system.makefeaturevector.fingerprintmethods.*;
  */
 public class Processor {
 
-	{}// TODO Processor. This one will be a bit of a mess. Could benefit from helper classes to divide an conquer.
+	{}// TODO -Processor. This one will be a bit of a mess. Could benefit from helper classes to divide an conquer.
 	
 	/**
 	 * Does things
@@ -32,11 +32,11 @@ public class Processor {
 	 */
 	public Results go(Settings settings){
 		Results results = new Results();
-		{}// TODO binning progress and make binning better
+//		GlobalSettings.fingerprintMethod = new MinutiaeMethod();
 //		GlobalSettings.fingerprintMethod = new PathsMethod();
-		GlobalSettings.fingerprintMethod = new Triangles();
+//		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
-//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
+		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 		settings.loadSettings();
 
 		Users users = FingerprintIO.readFVC();
@@ -46,15 +46,15 @@ public class Processor {
 //		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
 		
 		TestGenerator testMaker = new GenerateFVCStyleTests();
-		{}// TODO make hasher
-		{}// TODO make method
+		{}// TODO -make hasher
+		{}// TODO -make method
 		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 		
 //		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints);
-		{}// TODO make coordinator(hasher, users)
+		{}// TODO -make coordinator(hasher, users)
 		RawScores scores = new RawScores();
-		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
-//		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
+//		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
+		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);

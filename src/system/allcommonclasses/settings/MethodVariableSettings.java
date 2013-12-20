@@ -6,7 +6,7 @@ import java.util.Collections;
 
 import system.allcommonclasses.utilities.Functions;
 
-public class MethodVariable implements Serializable{
+public class MethodVariableSettings implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -14,14 +14,8 @@ public class MethodVariable implements Serializable{
 	private Integer bits;
 	private ArrayList<Long> binBoundaries;
 	
-	public MethodVariable(){
+	public MethodVariableSettings(){
 		this.binBoundaries = new ArrayList<Long>();
-		for(Long i=0L; i<1000; i++){
-			this.binBoundaries.add(i); // TODO TODO TODO this code sucks					  
-			// This has to be done better. Currently it initializes to a fixed number of
-			// uniform bins 
-		}
-		this.setBins(1001);
 	}
 	
 	public Long findBin(Long prequantizedValue) {

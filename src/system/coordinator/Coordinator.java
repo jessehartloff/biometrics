@@ -35,17 +35,6 @@ public abstract class Coordinator {
 	public abstract RawScores run();
 
 	
-//	protected void doTheFingerprintBinning(){
-//		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
-//		for(User user : users.users){
-//			for(Biometric b : user.readings){
-////				System.out.println(b.quantizeOne().hashes);
-//				templates.add(b.quantizeOne());
-//			}
-//		}
-//		GlobalSettings.fingerprintMethod.doAllTheBinning(fingerprints); // bad bad bad TODO fix this before iris and face go up
-//	}
-	
-	{}// TODO could have some methods to add more users or replace the existing users
+	{}// TODO -could have some methods to add more users or replace the existing users
 	
 }
