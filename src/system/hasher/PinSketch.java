@@ -12,7 +12,7 @@ import system.allcommonclasses.modalities.Biometric;
  */
 public class PinSketch extends Hasher {
 	
-	{}// TODO -PinSketch
+	{}// TODO -PinSketch?
 	
 	@Override
 	public Template makeEnrollTemplate(Biometric biometric) {

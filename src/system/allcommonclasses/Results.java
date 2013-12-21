@@ -12,6 +12,8 @@ import system.base.RatesPoint;
  */
 public class Results {
 
+	// combine RawScores with this?
+	
 	private Double eer;
 	private ArrayList<RatesPoint> rates;
 	//indexingResults

@@ -21,8 +21,6 @@ import system.makefeaturevector.fingerprintmethods.*;
  *
  */
 public class Processor {
-
-	{}// TODO -Processor. This one will be a bit of a mess. Could benefit from helper classes to divide an conquer.
 	
 	/**
 	 * Does things
@@ -31,10 +29,15 @@ public class Processor {
 	 * @return
 	 */
 	public Results go(Settings settings){
+		
 		settings.loadSettings();
 		GlobalSettings globalSettings = GlobalSettings.getInstance();
 		
 		Results results = new Results();
+
+		{}// TODO -Processor. Needs to create all this using the settings
+		  //      not commenting/uncommenting code
+		
 //		GlobalSettings.fingerprintMethod = new MinutiaeMethod();
 //		GlobalSettings.fingerprintMethod = new PathsMethod();
 		GlobalSettings.fingerprintMethod = new Triangles();
@@ -42,21 +45,23 @@ public class Processor {
 //		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 //		GobalSettings.fingerprintMethod = new Ngon(n);
 
-		Users users = UsersIO.getUsers(globalSettings.getDataset());
-		users.computeBins();
 		
 		Hasher hasher = new StraightHasher();
 //		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
 		
 		TestGenerator testMaker = new GenerateFVCStyleTests();
-		{}// TODO -make hasher
-		{}// TODO -make method
+		
 		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 		
-		{}// TODO -make coordinator(hasher, users)
 		RawScores scores = new RawScores();
+		
+		
+		// this has to happen after the methods are set for binning to work
+		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
+		
 //		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
 		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
+		
 		scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);
@@ -72,10 +77,6 @@ public class Processor {
 		
 		return results;
 	}
-
 	
-	
-
-
 	
 }

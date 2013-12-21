@@ -165,6 +165,7 @@ public class PathsMethod extends FingerprintMethod {
 		return p.getTotalBits();
 	}
 
+	
 	@Override
 	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){
 		return new ArrayList<Feature>(this.fingerprintToPaths(fingerprint));

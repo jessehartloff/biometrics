@@ -20,6 +20,7 @@ public class UsersIO {
 			exp.printStackTrace();
 		}
 		
+		readUsers.computeBins();
 		return readUsers;
 	}
 

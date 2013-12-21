@@ -75,5 +75,12 @@ public class Main {
 
 
 	}
-	
+	//TODO ?remember bin positioning via Sergey's idea
+	//TODO ?lax matching. could do in conjunction with Sergey's during enrollment. If close to a bin boundary, place in both
+	//TODO ?soft-decoding. May be too slow, but can get numbers1
+	//TODO ?CRC
+	//TODO ?PCA
+	//TODO ?minutia extraction
+	//TODO ?smarter binning (nearest neighbor-type method)
+	//TODO ?invariant features based on triangles
 }

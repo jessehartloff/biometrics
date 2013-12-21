@@ -33,8 +33,6 @@ public abstract class Coordinator {
 	 * @return The relevant scores from the tests. Could be FAR/FRR, rankings, histogram, etc.
 	 */
 	public abstract RawScores run();
-
 	
-	{}// TODO -could have some methods to add more users or replace the existing users
 	
 }
