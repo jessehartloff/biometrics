@@ -48,6 +48,7 @@ public class DefaultTesting extends Coordinator {
 		Integer numberOfTests = tests.tests.size();
 		Integer testsRan = 0;
 		// Run the tests
+		// TODO Multithreading
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
 			testsRan++;

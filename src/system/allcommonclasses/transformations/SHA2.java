@@ -21,7 +21,6 @@ public class SHA2 extends Transformation {
 				System.out.println("SHA2.java: Exception thrown when instantiating MessageDigest; NoSuchAlgorithmException");
 				return bigInt;
 			}
-		{}// TODO -Verify SHA2  java.security.MessageDigest
 		return hashedBigInt;
 	}
 
