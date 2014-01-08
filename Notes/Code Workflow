@@ -1,0 +1,55 @@
+___Jesse___
+
+-iris
+-distance
+-Indexing
+-face w/ Rohit
+-shortcut soft-decoding w/ Tom?
+
+
+___Matt___
+
+-nGon
+-invariant features based on triangles w/ Tom and Jim
+
+
+___Tom___
+
+-Histogram w/ Jim
+-soft-decoding w/ Jesse
+-MultiThreading
+-invariant features based on triangles w/ Matt and Jim
+
+
+___Jim___
+
+-SQL w/ Jen
+-Histogram w/ Tom
+-invariant features based on triangles w/ Tom and Matt
+
+
+___Jen___
+
+-Permutation
+-SQL w/ Jim
+
+
+
+---Unassigned---
+-Processor 
+-GUI
+-!Multi server! - to be split up
+
+
+---Potential---
+-new minutia extraction
+-PCA
+
+
+---Inactive---
+-Lax Matching
+-Smarter binning - could replace lax matching by adding things to both bins if it’s near a boundary
+-Remember bin positioning via Sergey's idea
+-PinSketch
+-Fuzzy vault
+-CRC
