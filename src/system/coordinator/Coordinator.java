@@ -13,8 +13,8 @@ import system.hasher.*;
  */
 public abstract class Coordinator {
 	
-	Hasher hasher;
-	Users users;
+	public Hasher hasher;
+	public Users users;
 	
 	/**
 	 * Coordinator needs to know how to hash, and who's using the system.

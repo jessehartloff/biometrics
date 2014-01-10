@@ -13,16 +13,16 @@ public class RawScores {
 	public ArrayList<Double> genuineScores;
 	public ArrayList<Double> imposterScores;
 
-	public ArrayList<Integer> indexRankings;
+	public ArrayList<Long> indexRankings;
 	
-	public ArrayList<Integer> histogram;
+	public ArrayList<Long> histogram;
 	
 	public RawScores(){
 		genuineScores = new ArrayList<Double>();
 		imposterScores = new ArrayList<Double>();
+
+		indexRankings = new ArrayList<Long>();
 		
-		indexRankings = new ArrayList<Integer>();
-		
-		histogram = new ArrayList<Integer>();
+		histogram = new ArrayList<Long>();
 	}
 }

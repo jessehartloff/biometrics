@@ -45,8 +45,8 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 
 	@Override
 	protected Double runTest(Test test){
-		Template enrolledTemplate = users.users.get(test.enrolledUserID).prequantizedEnrolledTemplates.get(test.enrolledReadingNumber);
-		ArrayList<Template> testTemplates = users.users.get(test.testUserID).prequantizedTestTemplates.get(test.testReadingNumber);
+		Template enrolledTemplate = users.users.get(test.enrolledUserID.intValue()).prequantizedEnrolledTemplates.get(test.enrolledReadingNumber.intValue());
+		ArrayList<Template> testTemplates = users.users.get(test.testUserID.intValue()).prequantizedTestTemplates.get(test.testReadingNumber.intValue());
 		
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
 		

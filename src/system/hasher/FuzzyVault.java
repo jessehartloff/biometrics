@@ -2,7 +2,9 @@ package system.hasher;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+
 import system.allcommonclasses.Template;
+import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.modalities.Biometric;
 import system.allcommonclasses.transformations.Transformation;
 
@@ -34,9 +36,6 @@ public class FuzzyVault extends Hasher implements Indexable {
 	private Template makeVault(Template template){
 		
 		ArrayList<FuzzyVaultPoint> vaultPoints = new ArrayList<FuzzyVaultPoint>();
-		
-
-		
 		
 		{}// TODO =fv-make secret polynomial
 		
@@ -139,6 +138,18 @@ public class FuzzyVault extends Hasher implements Indexable {
 	 */
 	private FuzzyVaultPoint bigIntToPoint(BigInteger bigInt){
 		{}// TODO =fv-bigIntToPoint. will use fieldSize
+		return null;
+	}
+
+	@Override
+	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
+		// TODO =fv-indexing
+		
+	}
+
+	@Override
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure) {
+		// TODO =fv-indexing
 		return null;
 	}
 	

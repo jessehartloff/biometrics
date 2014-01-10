@@ -1,5 +1,8 @@
 package system.hasher;
 
+import system.allcommonclasses.indexingstructure.IndexingStructure;
+import system.allcommonclasses.modalities.Biometric;
+
 /**
  * 
  * Outlines the methods needed for indexing. To be implemented by any Hasher that can be indexed. 
@@ -7,21 +10,9 @@ package system.hasher;
  */
 public interface Indexable {
 
-	
 	// TODO +Indexing
 	
-	// function: add to indexing structure
-	// function: remove from indexing structure? maybe needed in the future.
-	// function: test a template against the indexing structure (probably return its rank)
-	// function: test a biometric against the indexing structure (probably return its rank)
-	
-	
-	// ??? not sure if following will be needed. Maybe just make test template for 
-	// faster testing (pre-compute)... I don't think precomputing makes sense here
-	// the enrolled are naturally precomputed and the test templates are only used once each.
-	//
-	// function: make enroll template
-	// function: make test template
-	// function: compare a test and enrolled template
+	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure);
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure);
 		
 }

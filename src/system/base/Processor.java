@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.indexingstructure.IndexingStructure;
+import system.allcommonclasses.indexingstructure.RAMStructure;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
@@ -49,6 +51,8 @@ public class Processor {
 		Hasher hasher = new StraightHasher();
 //		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
 		
+		Indexable hasherAgain = new ShortcutFuzzyVault();
+		
 		TestGenerator testMaker = new GenerateFVCStyleTests();
 		
 		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
@@ -62,7 +66,11 @@ public class Processor {
 //		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
 		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
 		
+		IndexingStructure indexingStructure = new RAMStructure();
+		Coordinator indexingCoordinator = new IndexTesting(hasher, users, hasherAgain, indexingStructure);
+		
 		scores = coordinator.run();
+//		scores = indexingCoordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);
 
@@ -73,6 +81,7 @@ public class Processor {
 		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
 		System.out.println("EER:\n" + results.getEer());
 		System.out.println("rates:\n" + results.getRates());
+		System.out.println("indexing:\n" + scores.indexRankings);
 
 		
 		return results;

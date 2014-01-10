@@ -17,17 +17,17 @@ public class GenerateFVCStyleTests extends TestGenerator{
 		
 		for(User user : users.users){
 			int m = user.readings.size();
-			for(int i=0; i<m; i++){
-				for(int j=i+1; j<m; j++){
+			for(Integer i=0; i<m; i++){
+				for(Integer j=i+1; j<m; j++){
 					Test testToAdd = new Test();
 					testToAdd.enroll = user.readings.get(i);
 					testToAdd.test = user.readings.get(j);
 					testToAdd.genuine = true;
 					
-					testToAdd.enrolledUserID = user.id;
-					testToAdd.enrolledReadingNumber = i;
-					testToAdd.testUserID = user.id;
-					testToAdd.testReadingNumber = j;
+					testToAdd.enrolledUserID = new Long(user.id);
+					testToAdd.enrolledReadingNumber = i.longValue();
+					testToAdd.testUserID = new Long(user.id);
+					testToAdd.testReadingNumber = j.longValue();
 					
 					tests.tests.add(testToAdd);
 				}
@@ -43,10 +43,10 @@ public class GenerateFVCStyleTests extends TestGenerator{
 				testToAdd.test = users.users.get(j).readings.get(0);
 				testToAdd.genuine = false;
 				
-				testToAdd.enrolledUserID = users.users.get(i).id;
-				testToAdd.enrolledReadingNumber = 0;
-				testToAdd.testUserID = users.users.get(j).id;
-				testToAdd.testReadingNumber = 0;
+				testToAdd.enrolledUserID = new Long(users.users.get(i).id);
+				testToAdd.enrolledReadingNumber = 0L;
+				testToAdd.testUserID = new Long(users.users.get(j).id);
+				testToAdd.testReadingNumber = 0L;
 				
 				tests.tests.add(testToAdd);
 			}

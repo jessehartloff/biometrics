@@ -9,11 +9,11 @@ import system.allcommonclasses.modalities.Biometric;
  */
 public class Test {
 
-	public Integer enrolledUserID;
-	public Integer enrolledReadingNumber;
+	public Long enrolledUserID;
+	public Long enrolledReadingNumber;
 	
-	public Integer testUserID;
-	public Integer testReadingNumber;
+	public Long testUserID;
+	public Long testReadingNumber;
 	
 	public Biometric enroll;
 	public Biometric test;
