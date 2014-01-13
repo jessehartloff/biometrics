@@ -6,7 +6,7 @@ public class Permutation extends Transformation{
 
 	@Override
 	public BigInteger transform(BigInteger bigInt) {
-		{}// TODO -Permutation
+		{}// TODO Jen-Permutation
 		return bigInt;
 	}
 

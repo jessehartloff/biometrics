@@ -2,7 +2,6 @@ package unittests;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Collections;
 
 import system.allcommonclasses.Template;
 import system.allcommonclasses.modalities.*;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.MethodVariableSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.transformations.*;

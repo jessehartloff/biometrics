@@ -10,8 +10,8 @@ import java.math.BigInteger;
 public class NoChange extends Transformation {
 
 	@Override
-	public BigInteger transform(BigInteger template) {
-		return template;
+	public BigInteger transform(BigInteger bigInt) {
+		return bigInt;
 	}
 
 }

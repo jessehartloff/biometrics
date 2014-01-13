@@ -45,7 +45,7 @@ public class Processor {
 		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
-//		GobalSettings.fingerprintMethod = new Ngon(n);
+//		GlobalSettings.fingerprintMethod = new Ngon(n);
 
 		
 		Hasher hasher = new StraightHasher();

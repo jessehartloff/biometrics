@@ -9,8 +9,6 @@ import system.allcommonclasses.modalities.Biometric;
  *
  */
 public interface Indexable {
-
-	// TODO +Indexing
 	
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure);
 	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure);

@@ -2,7 +2,6 @@ ___Jesse___
 
 -iris
 -distance
--Indexing
 -face w/ Rohit
 -shortcut soft-decoding w/ Tom?
 
@@ -15,8 +14,7 @@ ___Matt___
 
 ___Tom___
 
--Histogram w/ Jim
--soft-decoding w/ Jesse
+-shortcut soft-decoding w/ Jesse
 -MultiThreading
 -invariant features based on triangles w/ Matt and Jim
 
@@ -24,7 +22,7 @@ ___Tom___
 ___Jim___
 
 -SQL w/ Jen
--Histogram w/ Tom
+-Histogram
 -invariant features based on triangles w/ Tom and Matt
 
 
@@ -32,6 +30,7 @@ ___Jen___
 
 -Permutation
 -SQL w/ Jim
+-Server connections
 
 
 
