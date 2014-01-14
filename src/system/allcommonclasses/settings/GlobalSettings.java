@@ -2,12 +2,12 @@ package system.allcommonclasses.settings;
 
 import java.io.Serializable;
 
-import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 
 public class GlobalSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	//settings
 	private String fingerprintMethodString;
 	private String irisMethod;
 	private String faceMethod;
@@ -15,16 +15,10 @@ public class GlobalSettings implements Serializable{
 	private String hasher;
 	private String distanceFunction;
 	private String dataset;
+	//
 	
-	public static FingerprintMethod fingerprintMethod; 
-	//public static IrisMethod singleIrisMethod;
-	//public static FaceMethod singleFaceMethod;
-	
-	
+	//singleton
 	private static GlobalSettings instance;
-
-	private static String directoryPathForFVC;
-	
 	private GlobalSettings(){}
 	public static GlobalSettings getInstance(){
 		if(instance == null){
@@ -37,8 +31,6 @@ public class GlobalSettings implements Serializable{
 	//getters and setters
 	
 	public String getFingerprintMethodString() {return fingerprintMethodString;}
-	public static String getDirectoryPathForFVC() {return directoryPathForFVC;}
-	public static void setDirectoryPathForFVC(String directoryPathForFVC) {GlobalSettings.directoryPathForFVC = directoryPathForFVC;}
 	public void setFingerprintMethodString(String fingerprintMethodString) {this.fingerprintMethodString = fingerprintMethodString;}
 	public String getIrisMethod() {return irisMethod;}
 	public void setIrisMethod(String irisMethod) {this.irisMethod = irisMethod;}

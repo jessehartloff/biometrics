@@ -2,9 +2,10 @@ package system.allcommonclasses.modalities;
 
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.settings.GlobalSettings;
 import system.makefeaturevector.feature.Feature;
+import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 
 /**
  * A fingerprint.
@@ -15,6 +16,8 @@ public class Fingerprint extends Biometric{
 	private static final long serialVersionUID = 1L;
 	
 	public ArrayList<Minutia> minutiae;
+
+	private static FingerprintMethod fingerprintMethod; 
 	
 	/**
 	 * When creating a fingerprint, it's quantization method must be specified.
@@ -28,19 +31,19 @@ public class Fingerprint extends Biometric{
 	@Override
 	public Template quantizeOne(){
 //		System.out.println("this: " + this.minutiae.get(0).getIndex());
-		return GlobalSettings.fingerprintMethod.quantizeOne(this);
+		return Fingerprint.fingerprintMethod.quantizeOne(this);
 	}
 
 	
 	@Override
 	public ArrayList<Template> quantizeAll(){
-		return GlobalSettings.fingerprintMethod.quantizeAll(this);
+		return Fingerprint.fingerprintMethod.quantizeAll(this);
 	}
 	
 
 	@Override
 	public ArrayList<Feature> toFeatures() {
-		return GlobalSettings.fingerprintMethod.fingerprintToFeatures(this);
+		return Fingerprint.fingerprintMethod.fingerprintToFeatures(this);
 	}
 
 	
@@ -148,6 +151,16 @@ public class Fingerprint extends Biometric{
 	@Override
 	public String toString(){
 		return this.minutiae.toString();
+	}
+
+	
+	public static FingerprintMethod getFingerprintMethod() {
+		return fingerprintMethod;
+	}
+
+	public static void setFingerprintMethod(FingerprintMethod fingerprintMethod) {
+		Fingerprint.fingerprintMethod = fingerprintMethod;
+		Biometric.method = fingerprintMethod;
 	}
 
 	

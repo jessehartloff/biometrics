@@ -6,6 +6,7 @@ public class PathSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	//settings
 	public MethodVariableSettings d0;
 	public MethodVariableSettings d1;
 	public MethodVariableSettings d2;
@@ -19,7 +20,9 @@ public class PathSettings implements Serializable{
 	public MethodVariableSettings phi3;
 	
 	private Long kClosestMinutia;
+	//
 	
+	//singleton
 	private static PathSettings instance;
 	private PathSettings(){
 		d0 = new MethodVariableSettings();
@@ -34,7 +37,6 @@ public class PathSettings implements Serializable{
 		phi2 = new MethodVariableSettings();
 		phi3 = new MethodVariableSettings();
 	}
-	
 	public static PathSettings getInstance(){
 		if(instance == null){
 			instance = new PathSettings();
@@ -42,6 +44,7 @@ public class PathSettings implements Serializable{
 		return instance;
 	}
 
+	//getters and setters
 	public Long getkClosestMinutia() {
 		return kClosestMinutia;
 	}

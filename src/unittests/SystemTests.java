@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.MethodVariableSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.transformations.*;
-import system.allcommonclasses.utilities.Functions;
 import system.hasher.Hasher;
 import system.hasher.StraightHasher;
 import system.makefeaturevector.fingerprintmethods.*;
@@ -310,9 +309,10 @@ public class SystemTests {
 		ArrayList<Integer> expectedBits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
 		ArrayList<Integer> computedBits = new ArrayList<Integer>(); 
 		int n=bins.size();
+		MethodVariableSettings forTheFunction = new MethodVariableSettings();
 		for(int i=0; i<n; i++){
-			result = result && Functions.binsToBits(bins.get(i)) == expectedBits.get(i);
-			computedBits.add(Functions.binsToBits(bins.get(i)));
+			result = result && forTheFunction.binsToBits(bins.get(i)) == expectedBits.get(i);
+			computedBits.add(forTheFunction.binsToBits(bins.get(i)));
 		}
 		assertTrue("\nexpected: " + expectedBits + "\ncomputed: " + computedBits, result);
 	}

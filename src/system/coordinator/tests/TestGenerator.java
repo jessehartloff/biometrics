@@ -1,7 +1,7 @@
 package system.coordinator.tests;
 
 
-import system.allcommonclasses.Users;
+import system.allcommonclasses.commonstructures.Users;
 
 /**
  * 

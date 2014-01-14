@@ -6,6 +6,7 @@ public class TriangleSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	//settings
 	public MethodVariableSettings theta0;
 	public MethodVariableSettings x1;
 	public MethodVariableSettings y1;
@@ -14,8 +15,7 @@ public class TriangleSettings implements Serializable{
 	public MethodVariableSettings y2;
 	public MethodVariableSettings theta2;
 	
-	//public ArrayList<MethodVariable> variables;
-	
+	//public ArrayList<MethodVariable> variables;? maybe something like this
 	private Double rotationStep;
 	private Double rotationStart;
 	private Double rotationStop;
@@ -26,9 +26,11 @@ public class TriangleSettings implements Serializable{
 
 	private Long kClosestMinutia;
 	private Long kClosestTriangles;
+	//
 
-	private static TriangleSettings instance;
 	
+	//singleton
+	private static TriangleSettings instance;
 	private TriangleSettings(){
 		this.theta0 = new MethodVariableSettings();
 		this.x1 = new MethodVariableSettings();
@@ -39,7 +41,6 @@ public class TriangleSettings implements Serializable{
 		this.theta2 = new MethodVariableSettings();
 		//this.variables = new ArrayList<MethodVariable>();
 	}
-	
 	public static TriangleSettings getInstance(){
 		if(instance == null){
 			instance = new TriangleSettings();

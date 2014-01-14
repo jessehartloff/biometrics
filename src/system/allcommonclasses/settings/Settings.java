@@ -15,10 +15,10 @@ public class Settings implements Serializable {
 	public static final long serialVersionUID = 1L;
 	
 	public Settings(){
-		saveSettings();
+		syncWithSettingsClasses();
 	}
 	
-	public void saveSettings(){
+	public void syncWithSettingsClasses(){
 		globalSettings = GlobalSettings.getInstance();
 		minutiaeSettings = MinutiaeSettings.getInstance();
 		pathSettings = PathSettings.getInstance();
@@ -28,7 +28,7 @@ public class Settings implements Serializable {
 		nGonSettings = NgonSettings.getInstance();
 	}
 	
-	public void loadSettings(){
+	public void loadToSettingsClasses(){
 		GlobalSettings g = GlobalSettings.getInstance();
 		g = this.globalSettings;
 		

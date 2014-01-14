@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.*;
 import system.makefeaturevector.feature.Feature;

@@ -3,8 +3,10 @@ package system.allcommonclasses.modalities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
+import system.makefeaturevector.Method;
 import system.makefeaturevector.feature.Feature;
+import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
 
 /**
  * 
@@ -15,7 +17,8 @@ public abstract class Biometric implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-
+	public static Method method; 
+	
 	/**
 	 * converts this biometric into hashable data
 	 * 

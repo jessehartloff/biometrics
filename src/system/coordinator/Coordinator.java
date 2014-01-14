@@ -2,6 +2,8 @@ package system.coordinator;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.GlobalSettings;

@@ -3,6 +3,7 @@ package system.makefeaturevector.fingerprintmethods;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.makefeaturevector.Method;
 import system.makefeaturevector.feature.Feature;

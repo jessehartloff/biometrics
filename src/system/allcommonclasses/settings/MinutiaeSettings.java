@@ -6,6 +6,7 @@ public class MinutiaeSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	//settings
 	public MethodVariableSettings x;
 	public MethodVariableSettings y;
 	public MethodVariableSettings theta;
@@ -21,15 +22,15 @@ public class MinutiaeSettings implements Serializable{
 	private Long yStep;
 	private Long yStart;
 	private Long yStop;
+	//
 	
+	//singleton
 	private static MinutiaeSettings instance;
-	
 	private MinutiaeSettings(){
 		this.x = new MethodVariableSettings();
 		this.y = new MethodVariableSettings();
 		this.theta = new MethodVariableSettings();
 		}
-	
 	public static MinutiaeSettings getInstance(){
 		if(instance == null){
 			instance = new MinutiaeSettings();
@@ -37,6 +38,7 @@ public class MinutiaeSettings implements Serializable{
 		return instance;
 	}
 
+	
 	//getters and setters
 	public Double getRotationStep() {
 		return rotationStep;

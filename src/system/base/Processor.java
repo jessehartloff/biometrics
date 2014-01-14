@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Results;
+import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.RAMStructure;
 import system.allcommonclasses.modalities.Fingerprint;
@@ -32,7 +35,7 @@ public class Processor {
 	 */
 	public Results go(Settings settings){
 		
-		settings.loadSettings();
+		settings.loadToSettingsClasses();
 		GlobalSettings globalSettings = GlobalSettings.getInstance();
 		
 		Results results = new Results();
@@ -40,12 +43,19 @@ public class Processor {
 		{}// TODO -Processor. Needs to create all this using the settings
 		  //      not commenting/uncommenting code
 		
+		String fingerMethodString = globalSettings.getFingerprintMethodString();
+		globalSettings.getCoordinator();
+		globalSettings.getHasher();
+		
+		
 //		GlobalSettings.fingerprintMethod = new MinutiaeMethod();
 //		GlobalSettings.fingerprintMethod = new PathsMethod();
-		GlobalSettings.fingerprintMethod = new Triangles();
+//		GlobalSettings.fingerprintMethod = new Triangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
 //		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
 //		GlobalSettings.fingerprintMethod = new Ngon(n);
+		
+		Fingerprint.setFingerprintMethod(new Triangles());
 
 		
 		Hasher hasher = new StraightHasher();

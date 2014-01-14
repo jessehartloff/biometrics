@@ -2,9 +2,9 @@ package system.coordinator;
 
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
-import system.allcommonclasses.User;
-import system.allcommonclasses.Users;
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.User;
+import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.tests.Test;
 import system.coordinator.tests.TestGenerator;
 import system.hasher.Hasher;

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.TriangleSettings;
 import system.makefeaturevector.feature.*;

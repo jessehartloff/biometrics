@@ -4,15 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import system.allcommonclasses.utilities.Functions;
 
 public class MethodVariableSettings implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	//settings
 	private Integer bins;
 	private Integer bits;
 	private ArrayList<Long> binBoundaries;
+	//
+	
 	
 	public MethodVariableSettings(){
 		this.binBoundaries = new ArrayList<Long>();
@@ -28,14 +30,19 @@ public class MethodVariableSettings implements Serializable{
 		return n.longValue();
 	}
 	
+	public Integer binsToBits(Integer bins){
+		Double d = Math.ceil(Math.log10(bins)/Math.log10(2));
+		return d.intValue();
+	}
 	
+	//getters and setters
 	public Integer getBins() {
 		return bins;
 	}
 	
 	public void setBins(Integer bins) {
 		this.bins = bins;
-		this.bits = Functions.binsToBits(bins);
+		this.bits = this.binsToBits(bins);
 	}
 	
 	public Integer getBits() {

@@ -1,4 +1,4 @@
-package system.allcommonclasses;
+package system.allcommonclasses.commonstructures;
 
 import java.io.Serializable;
 import java.math.BigInteger;

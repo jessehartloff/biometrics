@@ -1,14 +1,17 @@
 package system.allcommonclasses.settings;
 
+import system.allcommonclasses.modalities.Biometric;
+
 public class FuzzyVaultSettings {
 
+	//settings
 	private Long numberOfChaffPoints;
-	private Long numberOfBitsForTheField;
+	//
 	
+	
+	//singleton
 	private static FuzzyVaultSettings instance;
-	
 	private FuzzyVaultSettings(){}
-	
 	public static FuzzyVaultSettings getInstance(){
 		if(instance == null){
 			instance = new FuzzyVaultSettings();
@@ -17,7 +20,7 @@ public class FuzzyVaultSettings {
 	}
 
 	
-	
+	//getters and setters
 	public Long getNumberOfChaffPoints() {
 		return numberOfChaffPoints;
 	}
@@ -27,12 +30,9 @@ public class FuzzyVaultSettings {
 	}
 
 	public Long getNumberOfBitsForTheField() {
-		return GlobalSettings.fingerprintMethod.getTotalBits();
+		return Biometric.method.getTotalBits(); 
 	}
 
-	public void setNumberOfBitsForTheField(Long numberOfBitsForTheField) {
-		this.numberOfBitsForTheField = numberOfBitsForTheField;
-	}
 	
 	
 	

@@ -3,6 +3,9 @@ package system.coordinator;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.tests.*;
 import system.hasher.Hasher;
 

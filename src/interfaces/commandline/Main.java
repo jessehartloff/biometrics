@@ -14,9 +14,9 @@ public class Main {
 		Settings settings = new Settings();
 		
 		
-//		settings.globalSettings.setFingerprintMethodString("triangles");
-//		settings.globalSettings.setCoordinator("defaulttesting");
-//		settings.globalSettings.setHasher("straighthasher");
+		settings.globalSettings.setFingerprintMethodString("triangles");
+		settings.globalSettings.setCoordinator("defaulttesting");
+		settings.globalSettings.setHasher("straighthasher");
 
 		settings.globalSettings.setDataset("FVC2002-DB1");
 		

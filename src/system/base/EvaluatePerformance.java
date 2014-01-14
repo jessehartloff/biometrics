@@ -3,8 +3,8 @@ package system.base;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import system.allcommonclasses.RawScores;
-import system.allcommonclasses.Results;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Results;
 
 public class EvaluatePerformance {
 

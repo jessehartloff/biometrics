@@ -1,7 +1,7 @@
 package system.coordinator;
 
-import system.allcommonclasses.RawScores;
-import system.allcommonclasses.Users;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
 public class Histogram extends Coordinator{

@@ -1,6 +1,6 @@
 ___Jesse___
 
--iris
+-iris w/ Matt
 -distance
 -face w/ Rohit
 -shortcut soft-decoding w/ Tom?
@@ -9,6 +9,7 @@ ___Jesse___
 ___Matt___
 
 -nGon
+-iris w/ Jesse
 -invariant features based on triangles w/ Tom and Jim
 
 
@@ -17,10 +18,12 @@ ___Tom___
 -shortcut soft-decoding w/ Jesse
 -MultiThreading
 -invariant features based on triangles w/ Matt and Jim
+-general rotations
 
 
 ___Jim___
 
+-Processor
 -SQL w/ Jen
 -Histogram
 -invariant features based on triangles w/ Tom and Matt
@@ -35,7 +38,6 @@ ___Jen___
 
 
 ---Unassigned---
--Processor 
 -GUI
 -!Multi server! - to be split up
 

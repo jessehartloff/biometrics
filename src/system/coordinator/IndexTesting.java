@@ -1,9 +1,9 @@
 package system.coordinator;
 
-import system.allcommonclasses.RawScores;
-import system.allcommonclasses.Template;
-import system.allcommonclasses.User;
-import system.allcommonclasses.Users;
+import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.User;
+import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.hasher.Hasher;
 import system.hasher.Indexable;

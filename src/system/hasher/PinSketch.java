@@ -2,7 +2,7 @@ package system.hasher;
 
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Biometric;
 
 /**

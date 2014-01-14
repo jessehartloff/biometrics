@@ -1,4 +1,4 @@
-package system.allcommonclasses;
+package system.allcommonclasses.commonstructures;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class Users implements Serializable{
 	public void computeBins() {
 		
 		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
-		Feature blankFeature = GlobalSettings.fingerprintMethod.getBlankFeatureForBinning();
+		Feature blankFeature = Biometric.method.getBlankFeatureForBinning(); // TODO bad
 		for(Variable var : blankFeature.variables.values()){
 			allPrequantizedValues.add(new ArrayList<Long>());
 		}

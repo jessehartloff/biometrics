@@ -2,7 +2,7 @@ package system.makefeaturevector.fingerprintmethods;
 
 import java.util.ArrayList;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.settings.NgonSettings;
 import system.makefeaturevector.feature.Feature;

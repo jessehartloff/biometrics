@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.transformations.Transformation;
 

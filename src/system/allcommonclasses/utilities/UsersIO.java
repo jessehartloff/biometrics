@@ -3,7 +3,7 @@ package system.allcommonclasses.utilities;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-import system.allcommonclasses.Users;
+import system.allcommonclasses.commonstructures.Users;
 
 public class UsersIO {
 

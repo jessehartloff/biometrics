@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
-import system.allcommonclasses.Template;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.indexingstructure.IndexingPoint;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.modalities.Biometric;
