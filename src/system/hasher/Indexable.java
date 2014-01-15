@@ -9,7 +9,7 @@ import system.allcommonclasses.modalities.Biometric;
  *
  */
 public interface Indexable {
-	
+	// TODO should this extend hasher?
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure);
 	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure);
 		

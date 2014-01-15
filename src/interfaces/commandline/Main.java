@@ -11,10 +11,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		FingerprintIO.readAllFVC();
+		FingerprintIO.readAllFVC();
 	
 		Settings settings = new Settings();
-		
 		
 		settings.globalSettings.setFingerprintMethodString("triangles");
 		settings.globalSettings.setCoordinator("defaulttesting");
@@ -74,7 +73,7 @@ public class Main {
 		settings.nGonSettings.setN(3L);
 		
 		Processor p = new Processor();
-		p.go(settings);
+//		p.go(settings);
 
 
 	}

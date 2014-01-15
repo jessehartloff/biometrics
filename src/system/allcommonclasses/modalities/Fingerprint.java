@@ -68,7 +68,6 @@ public class Fingerprint extends Biometric{
 	public Fingerprint rotate(double degrees, Long centerX, Long centerY){
 		
 		Fingerprint toRotate = new Fingerprint();
-		
 		for(Minutia minutia : this.minutiae){
 			Minutia rotatedMinutia = new Minutia();
 			

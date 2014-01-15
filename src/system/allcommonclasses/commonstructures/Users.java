@@ -28,7 +28,7 @@ public class Users implements Serializable{
 	public void computeBins() {
 		
 		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
-		Feature blankFeature = Biometric.method.getBlankFeatureForBinning(); // TODO bad
+		Feature blankFeature = Biometric.method.getBlankFeatureForBinning(); 
 		for(Variable var : blankFeature.variables.values()){
 			allPrequantizedValues.add(new ArrayList<Long>());
 		}

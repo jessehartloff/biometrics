@@ -70,8 +70,10 @@ public class Processor {
 		RawScores scores = new RawScores();
 		
 		
-		// this has to happen after the methods are set for binning to work
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
+		
+		// this has to happen after the methods are set for binning to work
+		users.computeBins();
 		
 //		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
 		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);

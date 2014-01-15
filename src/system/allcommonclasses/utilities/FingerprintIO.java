@@ -27,7 +27,7 @@ public class FingerprintIO {
 			for(int db=1; db<=4; db++){
 				users = readFVC(year, db);
 				try{
-					FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "-DB" + db + ".ser");
+					FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "DB" + db + ".ser");
 					ObjectOutputStream out = new ObjectOutputStream(fileOut);
 					out.writeObject(users);
 					out.close();
