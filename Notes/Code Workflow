@@ -23,7 +23,6 @@ ___Tom___
 
 ___Jim___
 
--Processor
 -SQL w/ Jen
 -Histogram
 -invariant features based on triangles w/ Tom and Matt
@@ -49,7 +48,7 @@ ___Jen___
 
 ---Inactive---
 -Lax Matching
--Smarter binning - could replace lax matching by adding things to both bins if itÕs near a boundary
+-Smarter binning - could replace lax matching by adding things to both bins if itï¿½s near a boundary
 -Remember bin positioning via Sergey's idea
 -PinSketch
 -Fuzzy vault

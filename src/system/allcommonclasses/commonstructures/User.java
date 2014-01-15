@@ -24,7 +24,7 @@ public class User implements Comparable<User>, Serializable{
 	public User(){
 		prequantizedEnrolledTemplates = new ArrayList<Template>();
 		prequantizedTestTemplates = new ArrayList<ArrayList<Template>>();
-	}
+	}	
 	
 	// Allows sorting by ID
 	@Override

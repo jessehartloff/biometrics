@@ -15,6 +15,7 @@ public class GlobalSettings implements Serializable{
 	private String hasher;
 	private String distanceFunction;
 	private String dataset;
+	private String testGenerator;
 	//
 	
 	//singleton
@@ -46,5 +47,7 @@ public class GlobalSettings implements Serializable{
 	public void setDistanceFunction(String distanceFunction) {this.distanceFunction = distanceFunction;}
 	public String getDataset() {return dataset;}
 	public void setDataset(String dataset) {this.dataset = dataset;}
+	public String getTestGenerator() {return testGenerator;}
+	public void setTestGenerator(String testGenerator) {this.testGenerator = testGenerator;} 
 
 }

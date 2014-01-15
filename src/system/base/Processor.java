@@ -3,6 +3,7 @@ package system.base;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import system.Enumerators.*;
 import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
@@ -33,6 +34,7 @@ public class Processor {
 	 * @param parameters
 	 * @return
 	 */
+
 	public Results go(Settings settings){
 		
 		settings.loadToSettingsClasses();
@@ -40,45 +42,86 @@ public class Processor {
 		
 		Results results = new Results();
 
-		{}// TODO -Processor. Needs to create all this using the settings
-		  //      not commenting/uncommenting code
+		FingerPrintEnumerator fpe = FingerPrintEnumerator.valueOf(globalSettings.getFingerprintMethodString());
+		switch(fpe){
+			case MINUTIAEMETHOD:
+				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
+				break;
+			case PATHSMETHOD:
+				Fingerprint.setFingerprintMethod(new PathsMethod());
+				break;
+			case TRIANGLES:
+				Fingerprint.setFingerprintMethod(new Triangles());
+				break;
+			case TRIPLESOFTRIANGLES:
+				Fingerprint.setFingerprintMethod(new TriplesOfTriangles());
+				break;
+			case TRIPLESOFTRIANGLESALLROTATIONS:
+				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
+				break;
+			case NGON:
+				Fingerprint.setFingerprintMethod(new Ngon());//need to add numerical argument here...Matt M
+				break;
+			default:
+				System.out.println("Hey, you didn't choose a fingerprint method");
+				break;
+		}
 		
-		String fingerMethodString = globalSettings.getFingerprintMethodString();
-		globalSettings.getCoordinator();
-		globalSettings.getHasher();
+		Hasher hasher;
+		HasherEnumerator he = HasherEnumerator.valueOf(globalSettings.getHasher());
+		switch(he){
+			case STRAIGHTHASHER:
+				hasher = new StraightHasher();
+				break;
+			case SHORTCUTFUZZYVAULT:
+				hasher = new ShortcutFuzzyVault();// FV and SH don't get exactly the same EER with no chaff points
+				break;
+			default:
+				System.out.println("You didn't provide an appropriate hasher");
+				hasher = new StraightHasher();
+				break;
+		}
 		
-		
-//		GlobalSettings.fingerprintMethod = new MinutiaeMethod();
-//		GlobalSettings.fingerprintMethod = new PathsMethod();
-//		GlobalSettings.fingerprintMethod = new Triangles();
-//		GlobalSettings.fingerprintMethod = new TriplesOfTriangles();
-//		GlobalSettings.fingerprintMethod = new TriplesOfTrianglesAllRotations();
-//		GlobalSettings.fingerprintMethod = new Ngon(n);
-		
-		Fingerprint.setFingerprintMethod(new Triangles());
-
-		
-		Hasher hasher = new StraightHasher();
-//		Hasher hasher = new ShortcutFuzzyVault(); {}// FV and SH don't get exactly the same EER with no chaff points
-		
-		Indexable hasherAgain = new ShortcutFuzzyVault();
-		
-		TestGenerator testMaker = new GenerateFVCStyleTests();
-		
-		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
-		
-		RawScores scores = new RawScores();
-		
+		TestGenerator testMaker;
+		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(globalSettings.getTestGenerator());
+		switch(tge){
+			case GENERATEFVCSTYLETESTS:
+				testMaker = new GenerateFVCStyleTests();
+				break;
+			default:
+				System.out.println("You did not provide an appropriate test generator");
+				testMaker = new GenerateFVCStyleTests();
+				break;
+		}
 		
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
 		
-		// this has to happen after the methods are set for binning to work
+		Coordinator coordinator;
+		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(globalSettings.getCoordinator());
+		switch(ce){
+			case DEFAULTTESTING:
+				coordinator = new DefaultTesting(hasher,users,testMaker);
+				break;
+			case DEFAULTTESTINGPREQUANTIZED:
+				coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
+				break;
+			default:
+				System.out.println("You did not provide an appropriate coordinator");
+				coordinator = new DefaultTesting(hasher,users,testMaker);
+				break;
+		}
+		
+		Indexable hasherAgain = new ShortcutFuzzyVault();
+				
+		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+		
+		RawScores scores = new RawScores();
+				
+		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
 		users.computeBins();
-		
-//		Coordinator coordinator = new DefaultTesting(hasher, users, testMaker);
-		Coordinator coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
-		
+				
 		IndexingStructure indexingStructure = new RAMStructure();
+		
 		Coordinator indexingCoordinator = new IndexTesting(hasher, users, hasherAgain, indexingStructure);
 		
 		scores = coordinator.run();

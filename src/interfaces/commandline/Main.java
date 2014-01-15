@@ -10,16 +10,15 @@ public class Main {
 
 
 	public static void main(String[] args) {
-
-		FingerprintIO.readAllFVC();
 	
 		Settings settings = new Settings();
 		
-		settings.globalSettings.setFingerprintMethodString("triangles");
-		settings.globalSettings.setCoordinator("defaulttesting");
-		settings.globalSettings.setHasher("straighthasher");
-
-		settings.globalSettings.setDataset("FVC2002-DB1");
+		
+		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
+		settings.globalSettings.setCoordinator("DEFAULTTESTING");
+		settings.globalSettings.setHasher("STRAIGHTHASHER");
+		settings.globalSettings.setDataset("FVC2002DB1");
+		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);
@@ -73,7 +72,7 @@ public class Main {
 		settings.nGonSettings.setN(3L);
 		
 		Processor p = new Processor();
-//		p.go(settings);
+		p.go(settings);
 
 
 	}
