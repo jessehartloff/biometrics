@@ -14,12 +14,12 @@ public class User implements Comparable<User>, Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public Integer id;
+	public Long id;
 
 	public ArrayList<? extends Biometric> readings;
 
-	public ArrayList<Template> prequantizedEnrolledTemplates;
-	public ArrayList<ArrayList<Template>> prequantizedTestTemplates;
+	public transient ArrayList<Template> prequantizedEnrolledTemplates;
+	public transient ArrayList<ArrayList<Template>> prequantizedTestTemplates;
 
 	public User(){
 		prequantizedEnrolledTemplates = new ArrayList<Template>();
@@ -29,7 +29,7 @@ public class User implements Comparable<User>, Serializable{
 	// Allows sorting by ID
 	@Override
 	public int compareTo(User compareUser) {
-		return this.id - compareUser.id;
+		return this.id.compareTo(compareUser.id);
 	}
 	
 }

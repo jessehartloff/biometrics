@@ -2,7 +2,10 @@ package system.allcommonclasses.utilities;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 
 public class UsersIO {
@@ -16,26 +19,21 @@ public class UsersIO {
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			readUsers = (Users) in.readObject();
 			in.close();fileIn.close();
+			
+			for(User user : readUsers.users){
+				user.prequantizedEnrolledTemplates = new ArrayList<Template>();
+				user.prequantizedTestTemplates = new ArrayList<ArrayList<Template>>();
+			}
+			
 		}catch(Exception exp){
 			exp.printStackTrace();
 		}
+
 		
 		readUsers.computeBins();
 		return readUsers;
 	}
 
-	// this was used to serialize the FVC datasets. No one should ever have to use this again.
-//	Users users = FingerprintIO.readFVC(2006, 4);
-//	
-//	try{
-//	FileOutputStream fileOut = new FileOutputStream("FVC/2006-DB4.ser");
-//	ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//	out.writeObject(users);
-//	out.close();
-//	fileOut.close();
-//	System.out.println("Done");
-//}catch(IOException exp){
-//	exp.printStackTrace();
-//}
+	
 	
 }

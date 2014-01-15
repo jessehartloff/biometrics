@@ -1,6 +1,7 @@
 package interfaces.commandline;
 
 import system.allcommonclasses.settings.Settings;
+import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
@@ -10,6 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
+//		FingerprintIO.readAllFVC();
 	
 		Settings settings = new Settings();
 		
