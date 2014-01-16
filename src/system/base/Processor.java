@@ -96,6 +96,9 @@ public class Processor {
 		
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
 		
+		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
+		users.computeBins();
+		
 		Coordinator coordinator;
 		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(globalSettings.getCoordinator());
 		switch(ce){
@@ -117,8 +120,7 @@ public class Processor {
 		
 		RawScores scores = new RawScores();
 				
-		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
-		users.computeBins();
+		
 				
 		IndexingStructure indexingStructure = new RAMStructure();
 		

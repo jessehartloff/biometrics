@@ -1,7 +1,6 @@
 package interfaces.commandline;
 
 import system.allcommonclasses.settings.Settings;
-import system.allcommonclasses.utilities.FingerprintIO;
 import system.base.Processor;
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
@@ -10,15 +9,17 @@ public class Main {
 
 
 	public static void main(String[] args) {
+
 	
 		Settings settings = new Settings();
 		
 		
 		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
-		settings.globalSettings.setCoordinator("DEFAULTTESTING");
+		settings.globalSettings.setCoordinator("DEFAULTTESTINGPREQUANTIZED");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setDataset("FVC2002DB1");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
+
 		
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);

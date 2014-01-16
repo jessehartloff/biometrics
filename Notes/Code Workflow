@@ -3,21 +3,21 @@ ___Jesse___
 -iris w/ Matt
 -distance
 -face w/ Rohit
--shortcut soft-decoding w/ Tom?
+-shortcut soft-decoding w/ Tom
 
 
 ___Matt___
 
--nGon
+-n-gon
 -iris w/ Jesse
--invariant features based on triangles w/ Tom and Jim
+-invariant features based on n-gons w/ Tom and Jim
 
 
 ___Tom___
 
 -shortcut soft-decoding w/ Jesse
 -MultiThreading
--invariant features based on triangles w/ Matt and Jim
+-invariant features based on n-gons w/ Matt and Jim
 -general rotations
 
 
@@ -25,7 +25,7 @@ ___Jim___
 
 -SQL w/ Jen
 -Histogram
--invariant features based on triangles w/ Tom and Matt
+-invariant features based on n-gons w/ Tom and Matt
 
 
 ___Jen___
@@ -48,7 +48,7 @@ ___Jen___
 
 ---Inactive---
 -Lax Matching
--Smarter binning - could replace lax matching by adding things to both bins if it�s near a boundary
+-Smarter binning - could replace lax matching by adding things to both bins if it's near a boundary
 -Remember bin positioning via Sergey's idea
 -PinSketch
 -Fuzzy vault
