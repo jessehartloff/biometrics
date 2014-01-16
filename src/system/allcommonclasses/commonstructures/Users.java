@@ -67,7 +67,24 @@ public class Users implements Serializable{
 			j++;
 		}
 		
+		
+		for(User user : this.users){
+			for(Biometric bio : user.readings){
+				ArrayList<Feature> features = bio.toFeatures();
+				for(Feature feature : features){
+					feature.toBigInt(); // add this to a histogram
+					
+				}
+			}
+		}
+		
 		// TODO Jim do this
+		
+		int k=0;
+		for(String variableName : blankFeature.variables.keySet()){
+			allQuantizedValues.get(k); // and do stuff with it
+			k++;
+		}
 		
 	}
 	
