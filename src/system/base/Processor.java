@@ -74,7 +74,7 @@ public class Processor {
 		return results;
 	}
 	
-	public void printResults(RawScores scores, Results results){
+	private void printResults(RawScores scores, Results results){
 		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
 		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
 		System.out.println("EER:\n" + results.getEer());
@@ -82,7 +82,7 @@ public class Processor {
 		System.out.println("indexing:\n" + scores.indexRankings);
 	}
 	
-	public void setFingerprintMethod(String fingerprintMethodString){
+	private void setFingerprintMethod(String fingerprintMethodString){
 		FingerPrintEnumerator fpe = FingerPrintEnumerator.valueOf(fingerprintMethodString);
 		switch(fpe){
 			case MINUTIAEMETHOD:
@@ -110,7 +110,7 @@ public class Processor {
 		}
 	}
 		
-	public Hasher setHasher(String hasherString){
+	private Hasher setHasher(String hasherString){
 		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
 		Hasher hasher;
 		switch(he){
@@ -128,7 +128,7 @@ public class Processor {
 		return hasher;
 	}
 	
-	public TestGenerator setTestGenerator(String testGeneratorString){
+	private TestGenerator setTestGenerator(String testGeneratorString){
 		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(testGeneratorString);
 		TestGenerator testMaker;
 		switch(tge){
@@ -143,7 +143,7 @@ public class Processor {
 		return testMaker;
 	}
 
-	public Coordinator setCoordinator(String coordinatorString, Hasher hasher, Users users, TestGenerator testMaker){
+	private Coordinator setCoordinator(String coordinatorString, Hasher hasher, Users users, TestGenerator testMaker){
 		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(coordinatorString);
 		Coordinator coordinator;
 		switch(ce){
