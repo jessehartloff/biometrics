@@ -29,20 +29,61 @@ import system.makefeaturevector.fingerprintmethods.*;
 public class Processor {
 	
 	/**
-	 * Does things
-	 * 
+	 * Actually runs the "real part" of the program.
+	 * Processes the choices of the user as set in "Main.java" using enumerators, and runs the appropriate tests.
 	 * @param parameters
 	 * @return
 	 */
-
 	public Results go(Settings settings){
-		
 		settings.loadToSettingsClasses();
 		GlobalSettings globalSettings = GlobalSettings.getInstance();
 		
 		Results results = new Results();
+		
+		setFingerprintMethod(globalSettings.getFingerprintMethodString());
+		
+		Hasher hasher = setHasher(globalSettings.getHasher());
+		
+		TestGenerator testMaker = setTestGenerator(globalSettings.getTestGenerator());
+		
+		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
+		
+		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
+		users.computeBins();
+		
+		Coordinator coordinator = setCoordinator(globalSettings.getCoordinator(), hasher, users, testMaker);
+		
+		Indexable hasherAgain = new ShortcutFuzzyVault();
+		
+		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+		
+		RawScores scores = new RawScores();
+				
+		IndexingStructure indexingStructure = new RAMStructure();
+		
+		Coordinator indexingCoordinator = new IndexTesting(hasher, users, hasherAgain, indexingStructure);
+		
+		scores = coordinator.run();
+//		scores = indexingCoordinator.run();
+		
+		results = EvaluatePerformance.computeEER(scores);
 
-		FingerPrintEnumerator fpe = FingerPrintEnumerator.valueOf(globalSettings.getFingerprintMethodString());
+		Collections.sort(scores.genuineScores);
+		Collections.sort(scores.imposterScores);
+		printResults(scores, results);
+		return results;
+	}
+	
+	public void printResults(RawScores scores, Results results){
+		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
+		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
+		System.out.println("EER:\n" + results.getEer());
+		System.out.println("rates:\n" + results.getRates());
+		System.out.println("indexing:\n" + scores.indexRankings);
+	}
+	
+	public void setFingerprintMethod(String fingerprintMethodString){
+		FingerPrintEnumerator fpe = FingerPrintEnumerator.valueOf(fingerprintMethodString);
 		switch(fpe){
 			case MINUTIAEMETHOD:
 				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
@@ -64,11 +105,14 @@ public class Processor {
 				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
+				Fingerprint.setFingerprintMethod(new Triangles());
 				break;
 		}
+	}
 		
+	public Hasher setHasher(String hasherString){
+		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
 		Hasher hasher;
-		HasherEnumerator he = HasherEnumerator.valueOf(globalSettings.getHasher());
 		switch(he){
 			case STRAIGHTHASHER:
 				hasher = new StraightHasher();
@@ -81,9 +125,12 @@ public class Processor {
 				hasher = new StraightHasher();
 				break;
 		}
-		
+		return hasher;
+	}
+	
+	public TestGenerator setTestGenerator(String testGeneratorString){
+		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(testGeneratorString);
 		TestGenerator testMaker;
-		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(globalSettings.getTestGenerator());
 		switch(tge){
 			case GENERATEFVCSTYLETESTS:
 				testMaker = new GenerateFVCStyleTests();
@@ -93,14 +140,12 @@ public class Processor {
 				testMaker = new GenerateFVCStyleTests();
 				break;
 		}
-		
-		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
-		
-		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
-		users.computeBins();
-		
+		return testMaker;
+	}
+
+	public Coordinator setCoordinator(String coordinatorString, Hasher hasher, Users users, TestGenerator testMaker){
+		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(coordinatorString);
 		Coordinator coordinator;
-		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(globalSettings.getCoordinator());
 		switch(ce){
 			case DEFAULTTESTING:
 				coordinator = new DefaultTesting(hasher,users,testMaker);
@@ -113,36 +158,6 @@ public class Processor {
 				coordinator = new DefaultTesting(hasher,users,testMaker);
 				break;
 		}
-		
-		Indexable hasherAgain = new ShortcutFuzzyVault();
-				
-		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
-		
-		RawScores scores = new RawScores();
-				
-		
-				
-		IndexingStructure indexingStructure = new RAMStructure();
-		
-		Coordinator indexingCoordinator = new IndexTesting(hasher, users, hasherAgain, indexingStructure);
-		
-		scores = coordinator.run();
-//		scores = indexingCoordinator.run();
-		
-		results = EvaluatePerformance.computeEER(scores);
-
-		Collections.sort(scores.genuineScores);
-		Collections.sort(scores.imposterScores);
-		
-		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
-		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
-		System.out.println("EER:\n" + results.getEer());
-		System.out.println("rates:\n" + results.getRates());
-		System.out.println("indexing:\n" + scores.indexRankings);
-
-		
-		return results;
-	}
-	
-	
+		return coordinator;
+	}	
 }
