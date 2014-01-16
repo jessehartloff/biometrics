@@ -72,8 +72,8 @@ public class Main {
 		
 		settings.nGonSettings.setN(3L);
 		
-		Processor p = new Processor();
-		p.go(settings);
+		Processor processor = new Processor();
+		processor.go(settings);
 
 
 	}
