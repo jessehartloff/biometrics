@@ -52,6 +52,23 @@ public class Users implements Serializable{
 			i++;
 		}
 		
+		
+		//Histogram
+		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();
+		for(Variable var : blankFeature.variables.values()){
+			allQuantizedValues.add(new ArrayList<Long>());
+		}
+		
+		int j=0;
+		for(Variable var : blankFeature.variables.values()){
+			for(Long prequantizedValue : allPrequantizedValues.get(j)){
+				allQuantizedValues.get(j).add(var.variableSettings.findBin(prequantizedValue));
+			}
+			j++;
+		}
+		
+		// TODO Jim do this
+		
 	}
 	
 	
