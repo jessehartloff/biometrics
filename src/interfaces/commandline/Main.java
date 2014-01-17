@@ -14,7 +14,7 @@ public class Main {
 		Settings settings = new Settings();
 		
 		
-		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
+		settings.globalSettings.setFingerprintMethodString("NGONS");
 		settings.globalSettings.setCoordinator("DEFAULTTESTINGPREQUANTIZED");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setDataset("FVC2002DB1");
@@ -71,6 +71,12 @@ public class Main {
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
 		settings.nGonSettings.setN(3L);
+		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);
+		settings.nGonSettings.setkClosestMinutia(3L);
+		settings.nGonSettings.setRotationStart(-50.0);
+		settings.nGonSettings.setRotationStop(50.0);
+		settings.nGonSettings.setRotationStep(5.0);
+
 		
 		Processor processor = new Processor();
 		processor.go(settings);

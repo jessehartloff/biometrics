@@ -1,4 +1,4 @@
-package system.allcommonclasses.settings;
+ package system.allcommonclasses.settings;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class MethodVariableSettings implements Serializable{
 	}
 	
 	public Long findBin(Long prequantizedValue) {
-		Integer n = this.binBoundaries.size();
+		Integer n = this.binBoundaries.size();	
 		for(Integer i=0; i<n; i++){
 			if(prequantizedValue < this.binBoundaries.get(i)){
 				return i.longValue();

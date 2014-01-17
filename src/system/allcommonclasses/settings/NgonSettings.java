@@ -9,8 +9,8 @@ public class NgonSettings implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	
-	public LinkedHashMap<Long, ArrayList<MethodVariableSettings> > ngonVariableMap; //Make immutable?
-	public Long N;
+	private LinkedHashMap<String, MethodVariableSettings> ngonVariableMap; //Make immutable?
+	private Long N;
 	
 	private Double rotationStep;
 	private Double rotationStart;
@@ -21,8 +21,7 @@ public class NgonSettings implements Serializable{
 	private static NgonSettings instance;
 	
 	private NgonSettings(){
-		ngonVariableMap = new LinkedHashMap<Long, ArrayList<MethodVariableSettings> >();
-		
+		ngonVariableMap = new LinkedHashMap<String, MethodVariableSettings >();
 	}
 	
 	public static NgonSettings getInstance(){
@@ -35,13 +34,22 @@ public class NgonSettings implements Serializable{
 
 	public void setN(Long n) {
 		this.N = n;
-		for(Long i = 0L; i < n; i++){
-			ArrayList<MethodVariableSettings> ithVariableList = new ArrayList<MethodVariableSettings>();
-			for(int j = 0; j < 3; j++)
-				ithVariableList.add(new MethodVariableSettings());
-			ngonVariableMap.put(i, ithVariableList);
+		ngonVariableMap.put("theta0", new MethodVariableSettings());
+		for(Long i = 1L; i < n; i++){
+			ngonVariableMap.put("x" + i.toString(), new MethodVariableSettings());
+			ngonVariableMap.put("y" + i.toString(), new MethodVariableSettings());
+			ngonVariableMap.put("theta" + i.toString(), new MethodVariableSettings());
 		}
 	}
+	
+	public MethodVariableSettings getMinutiaComponentVariable(String component, Long i){
+		return ngonVariableMap.get(component+i.toString());
+	}
+	
+	public void setMiuntiaComponentVariable(String component,Long i, MethodVariableSettings setting){
+		ngonVariableMap.put(component + i.toString(), setting);
+	}
+	
 	
 	public Long getN(){
 		return N;
@@ -77,6 +85,17 @@ public class NgonSettings implements Serializable{
 
 	public void setkClosestMinutia(Long kClosestMinutia) {
 		this.kClosestMinutia = kClosestMinutia;
+	}
+
+	public void setAllNumberOfBins(Long xBinNumber, Long yBinNumber, Long thetaBinNumber) {
+		ngonVariableMap.get("theta0").setBins(thetaBinNumber.intValue());
+		for(Long i = 1L; i < this.getN(); i++){
+			ngonVariableMap.get("x"+i.toString()).setBins(xBinNumber.intValue());
+			ngonVariableMap.get("y"+i.toString()).setBins(yBinNumber.intValue());
+			ngonVariableMap.get("theta"+i.toString()).setBins(thetaBinNumber.intValue());
+
+		}
+		
 	}
 
 

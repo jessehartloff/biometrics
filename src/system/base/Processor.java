@@ -46,7 +46,7 @@ public class Processor {
 		TestGenerator testMaker = setTestGenerator(globalSettings.getTestGenerator());
 		
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
-		
+
 		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
 		users.computeBins();
 		
@@ -99,8 +99,9 @@ public class Processor {
 			case TRIPLESOFTRIANGLESALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
 				break;
-			case NGON:
+			case NGONS:
 				Fingerprint.setFingerprintMethod(new Ngons());//need to add numerical argument here...Matt M
+
 				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
