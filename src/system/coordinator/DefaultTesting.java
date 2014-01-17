@@ -42,8 +42,8 @@ public class DefaultTesting extends Coordinator {
 	public RawScores run() {
 		
 		RawScores scores = new RawScores();
-		
-//		super.doTheFingerprintBinning();
+		// TODO RawScores scores = this.nextCoordinator.run()
+		//      check if scores.genuineScores and scores.imposterScores are empty
 		
 		// Generate the tests
 		this.generateTests();

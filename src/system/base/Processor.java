@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import system.Enumerators.*;
-import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
@@ -101,7 +100,7 @@ public class Processor {
 				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
 				break;
 			case NGON:
-				Fingerprint.setFingerprintMethod(new Ngon());//need to add numerical argument here...Matt M
+				Fingerprint.setFingerprintMethod(new Ngons());//need to add numerical argument here...Matt M
 				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");

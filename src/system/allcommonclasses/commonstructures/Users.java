@@ -77,7 +77,7 @@ public class Users implements Serializable{
 			}
 		}
 		
-		// TODO Jim - do this
+		// TODO Jim - move histogram stuff
 		
 		int k=0;
 		for(String variableName : blankFeature.variables.keySet()){

@@ -1,7 +1,6 @@
 package system.coordinator;
 
 import system.allcommonclasses.commonstructures.RawScores;
-import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
@@ -23,6 +22,8 @@ public class IndexTesting extends Coordinator {
 	public RawScores run() {
 		
 		RawScores scores = new RawScores();
+		// TODO RawScores scores = this.nextCoordinator.run()
+		//      check if indexing scores are empty
 		
 		int total = this.users.users.size();
 		int soFar = 0;

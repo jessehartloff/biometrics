@@ -18,6 +18,8 @@ public abstract class Coordinator {
 	public Hasher hasher;
 	public Users users;
 	
+	protected Coordinator nextCoordinator;
+	
 	/**
 	 * Coordinator needs to know how to hash, and who's using the system.
 	 * 

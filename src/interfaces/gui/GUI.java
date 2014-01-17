@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class GUI {
 
-	{}// TODO -GUI
+	{}// TODO Unassigned - GUI
 	
 	JFrame frame;
 	

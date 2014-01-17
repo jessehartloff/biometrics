@@ -15,7 +15,7 @@ public class RawScores {
 
 	public ArrayList<Long> indexRankings;
 	
-	public ArrayList<Long> histogram;
+	public ArrayList<Long> histogram; // TODO histogram stuff
 	
 	public RawScores(){
 		genuineScores = new ArrayList<Double>();

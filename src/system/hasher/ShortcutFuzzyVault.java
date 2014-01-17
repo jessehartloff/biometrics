@@ -137,7 +137,7 @@ public class ShortcutFuzzyVault extends Hasher implements Indexable{
 			}
 		}
 		else{
-			rank = 100L; // TODO need to remember how many users in the list or do something else here
+			rank = 100L; // TODO Jesse - need to remember how many users in the list or do something else here
 			
 		}
 		
