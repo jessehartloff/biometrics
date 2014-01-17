@@ -22,7 +22,7 @@ public class Ngons extends FingerprintMethod{
 	protected NgonSettings settings;
 	public Long N;
 
-	// TODO ngons with all rotations
+	// TODO Matt - ngons with all rotations
 	// k-plets of n-gons
 	
 	public class Ngon extends Feature implements Comparable<Ngon>{
