@@ -18,7 +18,7 @@ import system.allcommonclasses.settings.FuzzyVaultSettings;
  * scheme. This should only be used to test matching scores.
  *
  */
-public class ShortcutFuzzyVault extends Hasher implements Indexable{
+public class ShortcutFuzzyVault extends Hasher{
 
 	FuzzyVaultSettings settings;
 	IndexingStructure indexingStructure;

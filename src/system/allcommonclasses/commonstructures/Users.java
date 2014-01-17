@@ -53,38 +53,6 @@ public class Users implements Serializable{
 		}
 		
 		
-		//Histogram
-		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();
-		for(Variable var : blankFeature.variables.values()){
-			allQuantizedValues.add(new ArrayList<Long>());
-		}
-		
-		int j=0;
-		for(Variable var : blankFeature.variables.values()){
-			for(Long prequantizedValue : allPrequantizedValues.get(j)){
-				allQuantizedValues.get(j).add(var.variableSettings.findBin(prequantizedValue));
-			}
-			j++;
-		}
-		
-		for(User user : this.users){
-			for(Biometric bio : user.readings){
-				ArrayList<Feature> features = bio.toFeatures();
-				for(Feature feature : features){
-					feature.toBigInt(); // add this to a histogram
-					
-				}
-			}
-		}
-		
-		// TODO Jim - move histogram stuff
-		
-		int k=0;
-		for(String variableName : blankFeature.variables.keySet()){
-			allQuantizedValues.get(k); // and do stuff with it
-			k++;
-		}
-		
 	}
 	
 	

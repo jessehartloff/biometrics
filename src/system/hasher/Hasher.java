@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.transformations.Transformation;
 
@@ -77,4 +78,11 @@ public abstract class Hasher {
 		return score;
 	}
 	
+	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure){
+		
+	}
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure){
+		return Long.MAX_VALUE;
+	}
+
 }

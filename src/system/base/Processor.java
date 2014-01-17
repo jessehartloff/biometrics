@@ -52,18 +52,11 @@ public class Processor {
 		
 		Coordinator coordinator = setCoordinator(globalSettings.getCoordinator(), hasher, users, testMaker);
 		
-		Indexable hasherAgain = new ShortcutFuzzyVault();
-		
 		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
-		
-		RawScores scores = new RawScores();
 				
-		IndexingStructure indexingStructure = new RAMStructure();
+		IndexingStructure indexingStructure = new RAMStructure(); // TODO Jim - IndexingStructureFactory in allcommonclasses/indexingstructure
 		
-		Coordinator indexingCoordinator = new IndexTesting(hasher, users, hasherAgain, indexingStructure);
-		
-		scores = coordinator.run();
-//		scores = indexingCoordinator.run();
+		RawScores scores = coordinator.run();
 		
 		results = EvaluatePerformance.computeEER(scores);
 

@@ -1,6 +1,7 @@
 package system.allcommonclasses.commonstructures;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * 
@@ -15,14 +16,14 @@ public class RawScores {
 
 	public ArrayList<Long> indexRankings;
 	
-	public ArrayList<Long> histogram; // TODO histogram stuff
+	public ArrayList<Long> fieldHistogram;
+	public LinkedHashMap<String, ArrayList<Long>> variableHistograms;
 	
 	public RawScores(){
 		genuineScores = new ArrayList<Double>();
 		imposterScores = new ArrayList<Double>();
-
 		indexRankings = new ArrayList<Long>();
-		
-		histogram = new ArrayList<Long>();
+		fieldHistogram = new ArrayList<Long>();
+		variableHistograms = new LinkedHashMap<String, ArrayList<Long>>();
 	}
 }

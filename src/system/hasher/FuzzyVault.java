@@ -12,7 +12,7 @@ import system.allcommonclasses.transformations.Transformation;
  * Implements fuzzy vault.
  *
  */
-public class FuzzyVault extends Hasher implements Indexable {
+public class FuzzyVault extends Hasher{
 
 	private class FuzzyVaultPoint {
 		
