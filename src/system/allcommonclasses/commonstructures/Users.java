@@ -67,7 +67,6 @@ public class Users implements Serializable{
 			j++;
 		}
 		
-		
 		for(User user : this.users){
 			for(Biometric bio : user.readings){
 				ArrayList<Feature> features = bio.toFeatures();
@@ -78,7 +77,7 @@ public class Users implements Serializable{
 			}
 		}
 		
-		// TODO Jim do this
+		// TODO Jim - do this
 		
 		int k=0;
 		for(String variableName : blankFeature.variables.keySet()){

@@ -3,7 +3,8 @@ package system.vectordistance;
 import java.util.ArrayList;
 
 public abstract class Distance<T extends Comparable<T>> {
-	// TODO +d-fix distance functionality. Can't use comparable. 
+	// TODO Jesse - distance functions
+	// Can't use comparable. 
 	int arraySize;
 	
 	public abstract Double distance(ArrayList<T> v1, ArrayList<T> v2);

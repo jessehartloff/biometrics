@@ -35,7 +35,6 @@ public class FuzzyVault extends Hasher implements Indexable {
 	 */
 	private Template makeVault(Template template){
 		
-		{} // TODO +fuzzy vault
 		ArrayList<FuzzyVaultPoint> vaultPoints = new ArrayList<FuzzyVaultPoint>();
 		
 		{}// todo =fv-make secret polynomial

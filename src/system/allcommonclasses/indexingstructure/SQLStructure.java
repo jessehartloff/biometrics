@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class SQLStructure extends IndexingStructure{
 
-	{}// TODO -SQL indexing
+	{}// TODO Jen/Jim - SQL indexing
 	
 	@Override
 	public void add(BigInteger bin, IndexingPoint pointToAdd) {

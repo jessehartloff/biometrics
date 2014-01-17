@@ -14,26 +14,13 @@ import system.vectordistance.Distance;
  */
 public abstract class Method{
 
-
-
-	//Distance distanceFunction; 
-	{}// TODO +d-distance function
 	
 	/**
 	 * This constructor defaults to ExactDistance for the distance function.
 	 */
 	protected Method(){
-	//	this.distanceFunction = new ExactDistance();
 	}	
-	
-	/**
-	 * Used to define a specific distance function.
-	 * 
-	 * @param distanceFunction
-	 */
-	protected Method(Distance<?> distanceFunction){ {}// TODO +d-move distance to a setter method?
-	//	this.distanceFunction = distanceFunction;
-	}
+
 	
 	
 	/**
