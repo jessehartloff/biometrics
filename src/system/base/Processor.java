@@ -39,15 +39,9 @@ public class Processor {
 		
 		Results results = new Results();
 		
-		setFingerprintMethod(globalSettings.getFingerprintMethodString());
-		
-//		Hasher hasher = setHasher(globalSettings.getHasher());
-		
+		FingerprintMethodFactory.makeFingerprintMethod();
 		Hasher hasher = HasherFactory.makeHasher();
-				//new HasherFactory(globalSettings.getHasher()).returnMadeHasher();
-
-		TestGenerator testMaker = setTestGenerator(globalSettings.getTestGenerator());
-
+		TestGenerator testMaker = TestGeneratorFactory.makeTestGenerator();
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
 
 		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
@@ -75,67 +69,6 @@ public class Processor {
 		System.out.println("EER:\n" + results.getEer());
 		System.out.println("rates:\n" + results.getRates());
 		System.out.println("indexing:\n" + scores.indexRankings);
-	}
-	
-	private void setFingerprintMethod(String fingerprintMethodString){
-		FingerPrintEnumerator fpe = FingerPrintEnumerator.valueOf(fingerprintMethodString);
-		switch(fpe){
-			case MINUTIAEMETHOD:
-				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
-				break;
-			case PATHSMETHOD:
-				Fingerprint.setFingerprintMethod(new PathsMethod());
-				break;
-			case TRIANGLES:
-				Fingerprint.setFingerprintMethod(new Triangles());
-				break;
-			case TRIPLESOFTRIANGLES:
-				Fingerprint.setFingerprintMethod(new TriplesOfTriangles());
-				break;
-			case TRIPLESOFTRIANGLESALLROTATIONS:
-				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
-				break;
-			case NGONS:
-				Fingerprint.setFingerprintMethod(new Ngons());
-				break;
-			default:
-				System.out.println("Hey, you didn't choose a fingerprint method");
-				Fingerprint.setFingerprintMethod(new Triangles());
-				break;
-		}
-	}
-//		
-//	private Hasher setHasher(String hasherString){
-//		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
-//		Hasher hasher;
-//		switch(he){
-//			case STRAIGHTHASHER:
-//				hasher = new StraightHasher();
-//				break;
-//			case SHORTCUTFUZZYVAULT:
-//				hasher = new ShortcutFuzzyVault();// FV and SH don't get exactly the same EER with no chaff points
-//				break;
-//			default:
-//				System.out.println("You didn't provide an appropriate hasher");
-//				hasher = new StraightHasher();
-//				break;
-//		}
-//		return hasher;
-//	}
-	
-	private TestGenerator setTestGenerator(String testGeneratorString){
-		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(testGeneratorString);
-		TestGenerator testMaker;
-		switch(tge){
-			case GENERATEFVCSTYLETESTS:
-				testMaker = new GenerateFVCStyleTests();
-				break;
-			default:
-				System.out.println("You did not provide an appropriate test generator");
-				testMaker = new GenerateFVCStyleTests();
-				break;
-		}
-		return testMaker;
 	}
 
 	private Coordinator setCoordinator(String coordinatorString, Hasher hasher, Users users, TestGenerator testMaker){
