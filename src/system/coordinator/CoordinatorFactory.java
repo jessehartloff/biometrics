@@ -12,7 +12,12 @@ public class CoordinatorFactory {
 	// Separate enumerator for each type of coordinator? add NONE to all coordinator enumerators? 
 	
 	
-	public class BaseCoordinator extends Coordinator{
+	
+	
+	
+	
+	
+	private class BaseCoordinator extends Coordinator{
 
 		public BaseCoordinator(Hasher hasher, Users users) {
 			super(hasher, users);

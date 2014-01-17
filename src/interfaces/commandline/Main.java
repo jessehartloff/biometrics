@@ -35,7 +35,7 @@ public class Main {
 
 		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(4L);
 		settings.triangleSettings.setThresholdForTriplets(100.0);
-		settings.triangleSettings.setkClosestMinutia(3L);
+		settings.triangleSettings.setkClosestMinutia(6L);
 		settings.triangleSettings.setkClosestTriangles(3L);
 
 		settings.pathSettings.d0.setBins(4);
@@ -71,8 +71,8 @@ public class Main {
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
 		settings.nGonSettings.setN(3L);
-		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);
-		settings.nGonSettings.setkClosestMinutia(3L);
+		settings.nGonSettings.setAllNumberOfBins(7L,7L,5L);
+		settings.nGonSettings.setkClosestMinutia(6L);
 		settings.nGonSettings.setRotationStart(-50.0);
 		settings.nGonSettings.setRotationStop(50.0);
 		settings.nGonSettings.setRotationStep(5.0);
