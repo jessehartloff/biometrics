@@ -1,29 +1,21 @@
 package system.hasher;
 
+import system.allcommonclasses.settings.GlobalSettings;
+
 public class HasherFactory{
-	public Hasher hasher;
-	public HasherFactory(String hasherString){
-		this.makeHasher(hasherString);
-	}
-	public Hasher makeHasher(String hasherString) {
-		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
-		switch(he){
+	
+	public static Hasher makeHasher() {
+		switch(HasherEnumerator.valueOf(GlobalSettings.getInstance().getHasher())){
 			case STRAIGHTHASHER:
-				this.hasher = new StraightHasher();
-				break;
+				return new StraightHasher();
 			case SHORTCUTFUZZYVAULT:
-				this.hasher = new ShortcutFuzzyVault();// FV and SH don't get exactly the same EER with no chaff points
-				break;
+				return new ShortcutFuzzyVault();
 			default:
 				System.out.println("You didn't provide an appropriate hasher");
-				this.hasher = new StraightHasher();
-				break;
+				return new StraightHasher();
 		}		
-		return this.hasher;
 	}
-	public Hasher returnMadeHasher(){
-		return this.hasher;
-	}
+	
 	private enum HasherEnumerator{
 		STRAIGHTHASHER, SHORTCUTFUZZYVAULT;
 	}

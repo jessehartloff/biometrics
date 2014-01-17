@@ -43,7 +43,8 @@ public class Processor {
 		
 //		Hasher hasher = setHasher(globalSettings.getHasher());
 		
-		Hasher hasher = new HasherFactory(globalSettings.getHasher()).returnMadeHasher();
+		Hasher hasher = HasherFactory.makeHasher();
+				//new HasherFactory(globalSettings.getHasher()).returnMadeHasher();
 
 		TestGenerator testMaker = setTestGenerator(globalSettings.getTestGenerator());
 
