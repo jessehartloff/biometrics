@@ -96,7 +96,7 @@ public class ShortcutFuzzyVault extends Hasher{
 
 	
 	@Override
-	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure) {
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
 		
 		Template template = testBiometric.quantizeOne();
 		for(BigInteger bigInt : template.hashes){
@@ -137,7 +137,7 @@ public class ShortcutFuzzyVault extends Hasher{
 			}
 		}
 		else{
-			rank = 100L; // TODO Jesse - need to remember how many users in the list or do something else here
+			rank = numberEnrolled;
 			
 		}
 		

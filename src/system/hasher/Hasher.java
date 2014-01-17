@@ -81,7 +81,7 @@ public abstract class Hasher {
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure){
 		
 	}
-	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure){
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled){
 		return Long.MAX_VALUE;
 	}
 

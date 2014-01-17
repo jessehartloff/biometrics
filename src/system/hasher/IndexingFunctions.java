@@ -14,7 +14,7 @@ public class IndexingFunctions {
 
 	
 
-	public Long findIndexingRank(Template template, Long testID, IndexingStructure indexingStructure) {
+	public Long findIndexingRank(Template template, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
 	
 		Long rank = 0L;
 		
@@ -50,7 +50,7 @@ public class IndexingFunctions {
 			}
 		}
 		else{
-			rank = 100L; // TODO Jesse - need to remember how many users in the list or do something else here
+			rank = numberEnrolled; 
 			
 		}
 		

@@ -60,6 +60,6 @@ public class StraightHasher extends Hasher {
 	}
 
 
-	
+	// TODO Jesse - Indexing
 	
 }

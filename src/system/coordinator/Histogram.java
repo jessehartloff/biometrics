@@ -46,7 +46,8 @@ public class Histogram extends Coordinator{
 			}
 		}
 		
-		// TODO Jim - move histogram stuff
+		// TODO Jim - Histogram
+		// this code was copy/pasted from Users so it doesn't make sense here yet
 		
 		int k=0;
 		for(String variableName : blankFeature.variables.keySet()){
