@@ -45,14 +45,11 @@ public class Users implements Serializable{
 				}
 			}
 		}
-
 		int i=0;
 		for(Variable var : blankFeature.variables.values()){
 			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
 			i++;
 		}
-		
-		
 	}
 	
 	

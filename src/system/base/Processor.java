@@ -41,10 +41,12 @@ public class Processor {
 		
 		setFingerprintMethod(globalSettings.getFingerprintMethodString());
 		
-		Hasher hasher = setHasher(globalSettings.getHasher());
+//		Hasher hasher = setHasher(globalSettings.getHasher());
 		
+		Hasher hasher = new HasherFactory(globalSettings.getHasher()).returnMadeHasher();
+
 		TestGenerator testMaker = setTestGenerator(globalSettings.getTestGenerator());
-		
+
 		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
 
 		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
@@ -93,8 +95,7 @@ public class Processor {
 				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
 				break;
 			case NGONS:
-				Fingerprint.setFingerprintMethod(new Ngons());//need to add numerical argument here...Matt M
-
+				Fingerprint.setFingerprintMethod(new Ngons());
 				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
@@ -102,24 +103,24 @@ public class Processor {
 				break;
 		}
 	}
-		
-	private Hasher setHasher(String hasherString){
-		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
-		Hasher hasher;
-		switch(he){
-			case STRAIGHTHASHER:
-				hasher = new StraightHasher();
-				break;
-			case SHORTCUTFUZZYVAULT:
-				hasher = new ShortcutFuzzyVault();// FV and SH don't get exactly the same EER with no chaff points
-				break;
-			default:
-				System.out.println("You didn't provide an appropriate hasher");
-				hasher = new StraightHasher();
-				break;
-		}
-		return hasher;
-	}
+//		
+//	private Hasher setHasher(String hasherString){
+//		HasherEnumerator he = HasherEnumerator.valueOf(hasherString);
+//		Hasher hasher;
+//		switch(he){
+//			case STRAIGHTHASHER:
+//				hasher = new StraightHasher();
+//				break;
+//			case SHORTCUTFUZZYVAULT:
+//				hasher = new ShortcutFuzzyVault();// FV and SH don't get exactly the same EER with no chaff points
+//				break;
+//			default:
+//				System.out.println("You didn't provide an appropriate hasher");
+//				hasher = new StraightHasher();
+//				break;
+//		}
+//		return hasher;
+//	}
 	
 	private TestGenerator setTestGenerator(String testGeneratorString){
 		TestGeneratorEnumerator tge = TestGeneratorEnumerator.valueOf(testGeneratorString);
