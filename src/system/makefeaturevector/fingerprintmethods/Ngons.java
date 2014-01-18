@@ -155,10 +155,7 @@ public class Ngons extends FingerprintMethod{
 		}
 		return ngons;
 	}	
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
+
 	
 	public Ngon makeNgon(ArrayList<Minutia> minutiaList){
 		Ngon ngonToReturn = new Ngon();
@@ -187,11 +184,7 @@ public class Ngons extends FingerprintMethod{
 	private ArrayList<Ngon> makeAllPossibleNgons(ArrayList<Minutia> minutiae) {
 		return recursiveNgonBuilder(minutiae, new ArrayList<Minutia>());
 	}
-	
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
-	//CHANGE ME TO PRIVATE IN ORDER TO SPITE JESSE
+
 
 	public ArrayList<Ngon> recursiveNgonBuilder(ArrayList<Minutia> minutiae, ArrayList<Minutia> currentNgon){
 		if(currentNgon.size() == settings.getN()){

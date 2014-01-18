@@ -70,9 +70,9 @@ public class Main {
 		
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
-		settings.nGonSettings.setN(5L);
-		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);
-		settings.nGonSettings.setkClosestMinutia(6L);
+		settings.nGonSettings.setN(3L); //5
+		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);//5,5,5 //err of 736
+		settings.nGonSettings.setkClosestMinutia(3L); //7
 
 		settings.nGonSettings.setRotationStart(-50.0);
 		settings.nGonSettings.setRotationStop(50.0);
