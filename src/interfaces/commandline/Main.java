@@ -14,11 +14,14 @@ public class Main {
 		Settings settings = new Settings();
 		
 		
-		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
-		settings.globalSettings.setCoordinator("DEFAULTTESTINGPREQUANTIZED");
+		settings.globalSettings.setFingerprintMethodString("TRIPLESOFTRIANGLESALLROTATIONS");
+		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
+		settings.globalSettings.setIndexingCoordinator("NONE");
+		settings.globalSettings.setHistogramCoordinator("NONE");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
-		settings.globalSettings.setDataset("FVC2002DB1");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
+		settings.globalSettings.setIndexingStructure("RAM");
+		settings.globalSettings.setDataset("FVC2002DB1");
 
 		
 		settings.triangleSettings.theta0.setBins(8);
@@ -33,9 +36,9 @@ public class Main {
 		settings.triangleSettings.setRotationStop(50.0);
 		settings.triangleSettings.setRotationStep(5.0);
 
-		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(4L);
+		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(7L);
 		settings.triangleSettings.setThresholdForTriplets(100.0);
-		settings.triangleSettings.setkClosestMinutia(6L);
+		settings.triangleSettings.setkClosestMinutia(3L);
 		settings.triangleSettings.setkClosestTriangles(3L);
 
 		settings.pathSettings.d0.setBins(4);

@@ -35,31 +35,21 @@ public class Processor {
 	 */
 	public Results go(Settings settings){
 		settings.loadToSettingsClasses();
-		GlobalSettings globalSettings = GlobalSettings.getInstance();
-		
-		Results results = new Results();
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
-		Hasher hasher = HasherFactory.makeHasher();
-		TestGenerator testMaker = TestGeneratorFactory.makeTestGenerator();
-		Users users = UsersIO.getUsers(globalSettings.getDataset()); 
+		RawScores scores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
+		
+		Results results = computeResults(scores);
 
-		// this line, "users.computeBins()" has to happen after the methods are set for binning to work
-		users.computeBins();
-		
-		Coordinator coordinator = setCoordinator(globalSettings.getCoordinator(), hasher, users, testMaker);
-		
-		ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
-				
-		IndexingStructure indexingStructure = new RAMStructure(); // TODO Jim - IndexingStructureFactory in allcommonclasses/indexingstructure
-		
-		RawScores scores = coordinator.run();
-		
-		results = EvaluatePerformance.computeEER(scores);
-
-		Collections.sort(scores.genuineScores);
-		Collections.sort(scores.imposterScores);
 		printResults(scores, results);
+		return results;
+	}
+	
+	
+	private Results computeResults(RawScores rawScores){
+		Results results = EvaluatePerformance.computeEER(rawScores);
+		Collections.sort(rawScores.genuineScores);
+		Collections.sort(rawScores.imposterScores);
 		return results;
 	}
 	
@@ -71,21 +61,5 @@ public class Processor {
 		System.out.println("indexing:\n" + scores.indexRankings);
 	}
 
-	private Coordinator setCoordinator(String coordinatorString, Hasher hasher, Users users, TestGenerator testMaker){
-		CoordinatorEnumerator ce = CoordinatorEnumerator.valueOf(coordinatorString);
-		Coordinator coordinator;
-		switch(ce){
-			case DEFAULTTESTING:
-				coordinator = new DefaultTesting(hasher,users,testMaker);
-				break;
-			case DEFAULTTESTINGPREQUANTIZED:
-				coordinator = new DefaultTestingPrequantized(hasher, users, testMaker);
-				break;
-			default:
-				System.out.println("You did not provide an appropriate coordinator");
-				coordinator = new DefaultTesting(hasher,users,testMaker);
-				break;
-		}
-		return coordinator;
-	}	
+	
 }

@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
+import system.allcommonclasses.settings.GlobalSettings;
 
 public class UsersIO {
 
-	public static Users getUsers(String dataset) {
+	public static Users getUsers() {
+		String dataset = GlobalSettings.getInstance().getDataset();
+		
 		Users readUsers = null;
 		
 		try{
@@ -29,6 +32,7 @@ public class UsersIO {
 			exp.printStackTrace();
 		}
 
+		readUsers.computeBins();
 		return readUsers;
 	}
 
