@@ -23,7 +23,6 @@ public class Users implements Serializable{
 		this.users = new ArrayList<User>();
 	}
 	
-	
 	// assumes all the users have the same type of biometric
 	public void computeBins() {
 		

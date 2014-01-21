@@ -3,7 +3,6 @@ package system.base;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import system.Enumerators.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
@@ -38,9 +37,8 @@ public class Processor {
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
 		RawScores scores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
-		
 		Results results = computeResults(scores);
-
+//		Results results = new Results();
 		printResults(scores, results);
 		return results;
 	}
@@ -59,6 +57,7 @@ public class Processor {
 		System.out.println("EER:\n" + results.getEer());
 		System.out.println("rates:\n" + results.getRates());
 		System.out.println("indexing:\n" + scores.indexRankings);
+		System.out.println("field histogram:\n" + scores.fieldHistogram);
 	}
 
 	

@@ -13,31 +13,30 @@ public class Main {
 	
 		Settings settings = new Settings();
 		
-		
 		settings.globalSettings.setFingerprintMethodString("NGONS");
 		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
 		settings.globalSettings.setIndexingCoordinator("NONE");
-		settings.globalSettings.setHistogramCoordinator("NONE");
+		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
 		settings.globalSettings.setDataset("FVC2002DB1");
 
 		
-		settings.triangleSettings.theta0.setBins(8);
-		settings.triangleSettings.x1.setBins(8);
-		settings.triangleSettings.y1.setBins(8);
-		settings.triangleSettings.theta1.setBins(8);
-		settings.triangleSettings.x2.setBins(8);
-		settings.triangleSettings.y2.setBins(8);
-		settings.triangleSettings.theta2.setBins(8);
+		settings.triangleSettings.theta0.setBins(4);
+		settings.triangleSettings.x1.setBins(4);
+		settings.triangleSettings.y1.setBins(4);
+		settings.triangleSettings.theta1.setBins(4);
+		settings.triangleSettings.x2.setBins(4);
+		settings.triangleSettings.y2.setBins(4);
+		settings.triangleSettings.theta2.setBins(4);
 
-		settings.triangleSettings.setRotationStart(-50.0);
-		settings.triangleSettings.setRotationStop(50.0);
+		settings.triangleSettings.setRotationStart(-10.0);
+		settings.triangleSettings.setRotationStop(10.0);
 		settings.triangleSettings.setRotationStep(5.0);
 
-		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(7L);
-		settings.triangleSettings.setThresholdForTriplets(100.0);
+		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(4L);
+		settings.triangleSettings.setThresholdForTriplets(25.0);
 		settings.triangleSettings.setkClosestMinutia(3L);
 		settings.triangleSettings.setkClosestTriangles(3L);
 

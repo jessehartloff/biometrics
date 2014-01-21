@@ -8,7 +8,7 @@ import java.util.Collections;
 public class MethodVariableSettings implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	//settings
 	private Integer bins;
 	private Integer bits;

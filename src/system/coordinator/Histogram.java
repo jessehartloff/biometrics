@@ -1,6 +1,7 @@
 package system.coordinator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.User;
@@ -19,40 +20,25 @@ public class Histogram extends Coordinator{
 	@Override
 	public RawScores run() {
 		RawScores scores = this.nextCoordinator.run();
-		// TODO check if histogram is empty
-		
 		
 		//Histogram
 		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();
-		for(Variable var : blankFeature.variables.values()){
+		Feature blankFeature = Biometric.method.getBlankFeatureForBinning();
+		for(String var : blankFeature.variables.keySet()){
 			allQuantizedValues.add(new ArrayList<Long>());
+			scores.variableHistograms.put(var, new ArrayList<Long>());
 		}
-		
-		int j=0;
-		for(Variable var : blankFeature.variables.values()){
-			for(Long prequantizedValue : allPrequantizedValues.get(j)){
-				allQuantizedValues.get(j).add(var.variableSettings.findBin(prequantizedValue));
-			}
-			j++;
-		}
-		
-		for(User user : this.users){
+
+		for(User user : this.users.users){
 			for(Biometric bio : user.readings){
 				ArrayList<Feature> features = bio.toFeatures();
 				for(Feature feature : features){
-					feature.toBigInt(); // add this to a histogram
-					
+					scores.fieldHistogram.add(feature.toBigInt());
+					for(String var : feature.variables.keySet()){
+						scores.variableHistograms.get(var).add(feature.variables.get(var).getQuantizedValue());
+					}
 				}
 			}
-		}
-		
-		// TODO Jim - Histogram
-		// this code was copy/pasted from Users so it doesn't make sense here yet
-		
-		int k=0;
-		for(String variableName : blankFeature.variables.keySet()){
-			allQuantizedValues.get(k); // and do stuff with it
-			k++;
 		}
 		
 		return scores;

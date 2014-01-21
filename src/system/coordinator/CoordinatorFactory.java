@@ -90,7 +90,6 @@ public class CoordinatorFactory {
 
 		@Override
 		public RawScores run() {
-			System.out.println("made it here");
 			return new RawScores();
 		}
 
