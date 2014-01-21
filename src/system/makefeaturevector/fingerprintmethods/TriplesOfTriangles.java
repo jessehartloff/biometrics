@@ -114,33 +114,33 @@ public class TriplesOfTriangles extends Triangles {
 		for(Triangle triangle : triangles){
 			triangleCopy.add(triangle);
 		}
-			
+
 		for(Triangle triangle : triangles){
 			Collections.sort(triangleCopy, triangle.getComparator());
-				
+
 			int startingIndex;
 			for(startingIndex=0; triangleCopy.get(startingIndex).distanceBetweenCenters(triangle) < 0.0001; startingIndex++);
 
-//			System.out.println("tri: " + triangle.minutiaIndecies);
-			
+			//			System.out.println("tri: " + triangle.minutiaIndecies);
+
 			ArrayList<Triangle> trianglesToTry = new ArrayList<Triangle>();
 			trianglesToTry.add(triangle);
 			for(int i=0; i<settings.getkClosestTriangles(); i++){
 				trianglesToTry.add(triangleCopy.get(startingIndex+i));
 			}
-			
+
 			this.tryToAddAllPossibleTriplets(template, trianglesToTry);
-	
+
 			// fours:    0.061
 			// ten-four: 0.055
 			// tens:     0.046  DB2: 0.032
-			
-			}
-			
+
+		}
+
 		return template;
 	}
 
-	
+
 	private void tryToAddTriplet(Template template, Triangle t0, Triangle t1, Triangle t2){
 		HashSet<Long> indecies = new HashSet<Long>();
 		indecies.addAll(t0.minutiaIndecies);

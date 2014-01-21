@@ -127,14 +127,15 @@ public class Ngons extends FingerprintMethod{
 	
 	public ArrayList<Template> ngonsQuantizeAll(Fingerprint fingerprint){
 		ArrayList<Template> templates = new ArrayList<Template>();
-		for(double rotation=settings.getRotationStart(); rotation < settings.getRotationStop(); rotation += settings.getRotationStep()){
+		for(double rotation=settings.getRotationStart(); 
+				rotation < settings.getRotationStop(); rotation += settings.getRotationStep()){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.ngonsQuantizeOne(rotatedPrint));
 		}
 		return templates;
 	}
 
-	private ArrayList<Ngon> fingerprintToNgons(Fingerprint fingerprint) {
+	public ArrayList<Ngon> fingerprintToNgons(Fingerprint fingerprint) {
 		ArrayList<Ngon> ngons = new ArrayList<Ngon>();
 		ArrayList<Minutia> minutiaeCopy = new ArrayList<Minutia>();
 		

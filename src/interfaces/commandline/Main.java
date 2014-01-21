@@ -14,7 +14,7 @@ public class Main {
 		Settings settings = new Settings();
 		
 		
-		settings.globalSettings.setFingerprintMethodString("TRIPLESOFTRIANGLESALLROTATIONS");
+		settings.globalSettings.setFingerprintMethodString("NGONS");
 		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
 		settings.globalSettings.setIndexingCoordinator("NONE");
 		settings.globalSettings.setHistogramCoordinator("NONE");
