@@ -13,8 +13,11 @@ public class Main {
 	
 		Settings settings = new Settings();
 		
+	
 		settings.globalSettings.setFingerprintMethodString("NGONS");
 		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
+//		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
+
 		settings.globalSettings.setIndexingCoordinator("NONE");
 		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");

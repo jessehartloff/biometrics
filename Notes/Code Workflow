@@ -4,12 +4,11 @@ ___Jesse___
 -distance
 -face w/ Rohit
 -shortcut soft-decoding w/ Tom
--make indexing cleaner
+-GUI
 
 
 ___Matt___
 
--n-gon
 -iris w/ Jesse
 -invariant features based on n-gons w/ Tom and Jim
 
@@ -20,6 +19,7 @@ ___Tom___
 -MultiThreading
 -invariant features based on n-gons w/ Matt and Jim
 -general rotations
+-GUI plots
 
 
 ___Jim___
@@ -38,13 +38,12 @@ ___Jen___
 
 
 ---Unassigned---
--GUI
 -!Multi server! - to be split up
 
 
 ---Potential---
--new minutia extraction
--PCA
+-new minutia extraction and matching (NIST MINDTCT and Bozorth3)
+-AI technology (Machine learning/pattern recognition/science)
 
 
 ---Inactive---
@@ -54,3 +53,4 @@ ___Jen___
 -PinSketch
 -Fuzzy vault
 -CRC
+

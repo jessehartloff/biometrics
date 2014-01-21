@@ -12,6 +12,7 @@ import java.util.HashSet;
  */
 public class Template implements Serializable{
 
+	// TODO make templates type protected at runtime?
 	
 	private static final long serialVersionUID = 6938186447187369796L;
 

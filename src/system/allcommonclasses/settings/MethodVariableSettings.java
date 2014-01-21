@@ -53,9 +53,9 @@ public class MethodVariableSettings implements Serializable{
 		return binBoundaries;
 	}
 
-	public void setBinBoundaries(ArrayList<Long> binBoundaries) {
-		this.binBoundaries = binBoundaries;
-	}
+//	public void setBinBoundaries(ArrayList<Long> binBoundaries) {
+//		this.binBoundaries = binBoundaries;
+//	}
 
 	public void computeBinBoundaries(ArrayList<Long> prequantizedValues){
 		this.binBoundaries.clear();

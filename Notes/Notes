@@ -9,3 +9,5 @@ Thoughts on a Multi-modal approach
 Adjust iris for high matching weight while face and fingerprint mostly pad the security numbers.
 -Convert vectors to sets by tagging each piece. Tag doesn’t add security. Tagging all the way 
 down to individual bits leads to a system where the set intersection is the (n - the) hamming distance of the original vector.
+
+

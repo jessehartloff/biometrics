@@ -78,6 +78,5 @@ public class NgonsAllRotations extends Ngons{
 	public Feature getBlankFeatureForTotalBits(){
 		return new Ngon();
 	}
-	
 
 }

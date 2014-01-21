@@ -19,7 +19,6 @@ public class Variable {
 	public void setPrequantizedValue(Long prequantizedValue) {
 		this.prequantizedValue = prequantizedValue;
 		this.setQuantizedValue(variableSettings.findBin(prequantizedValue));
-
 	}
 
 	public Long getQuantizedValue() {

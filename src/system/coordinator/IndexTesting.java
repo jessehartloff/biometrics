@@ -20,7 +20,6 @@ public class IndexTesting extends Coordinator {
 		
 		//RawScores scores = new RawScores();
 		RawScores scores = this.nextCoordinator.run();
-		// TODO check if indexing scores are empty
 		
 		int total = this.users.users.size();
 		

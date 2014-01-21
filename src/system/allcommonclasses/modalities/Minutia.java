@@ -150,7 +150,7 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 		this.index = index;
 	}
 	
-	
+	// m1 is the center point
 	public static Double computeInsideAngle(Minutia m0, Minutia m1, Minutia m2){
 		// variables names follow the law of cosines equation
 		Double a = m0.distanceTo(m1);

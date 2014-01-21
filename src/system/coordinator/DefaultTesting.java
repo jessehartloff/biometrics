@@ -42,7 +42,6 @@ public class DefaultTesting extends Coordinator {
 	public RawScores run() {
 		
 		RawScores scores = this.nextCoordinator.run();
-		// TODO check if scores.genuineScores and scores.imposterScores are empty
 		
 		// Generate the tests
 		this.generateTests();

@@ -20,6 +20,7 @@ public class Histogram extends Coordinator{
 	@Override
 	public RawScores run() {
 		RawScores scores = this.nextCoordinator.run();
+
 		
 		//Histogram
 		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();

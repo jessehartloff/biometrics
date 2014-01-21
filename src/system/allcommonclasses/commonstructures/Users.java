@@ -49,6 +49,8 @@ public class Users implements Serializable{
 			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
 			i++;
 		}
+		
+		
 	}
 	
 	
