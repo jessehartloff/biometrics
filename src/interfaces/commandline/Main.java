@@ -15,8 +15,9 @@ public class Main {
 		
 	
 		settings.globalSettings.setFingerprintMethodString("NGONSALLROTATIONS");
-//		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
-		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
+		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
+		//settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
+
 
 		settings.globalSettings.setIndexingCoordinator("NONE");
 		settings.globalSettings.setHistogramCoordinator("NONE");
@@ -79,6 +80,7 @@ public class Main {
 		settings.nGonSettings.setN(3L); //5
 		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);//5,5,5 //err of 736
 		settings.nGonSettings.setkClosestMinutia(3L); //7
+
 
 
 		settings.nGonSettings.setRotationStart(-50.0);
