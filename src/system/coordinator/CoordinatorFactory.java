@@ -49,7 +49,7 @@ public class CoordinatorFactory {
 		
 		switch(histogramCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getHistogramCoordinator())){
 			case HISTOGRAM:
-				firstCoordinator = addToFront(new Histogram(hasher, users), firstCoordinator);
+				firstCoordinator = addToFront(new HistogramCoordinator(hasher, users), firstCoordinator);
 				break;		
 			case NONE:
 				break;				

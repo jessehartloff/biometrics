@@ -1,6 +1,9 @@
 package system.allcommonclasses.commonstructures;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import system.base.RatesPoint;
 
@@ -16,9 +19,12 @@ public class Results {
 	
 	private Double eer;
 	private ArrayList<RatesPoint> rates;
-	//indexingResults
+	private Histogram fieldHistogram;
+	private ArrayList<Histogram> variableHistograms;
+	private ArrayList<Long> indexingResults;
 	
 	// TODO Jim - histograms
+	
 	
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
@@ -35,5 +41,42 @@ public class Results {
 	public void setEer(Double eer) {
 		this.eer = eer;
 	}
+	
+	
+	
+	public Histogram getFieldHistogram() {
+		return fieldHistogram;
+	}
+
+	public void setFieldHistogram(Histogram fieldHistogram) {
+		this.fieldHistogram = fieldHistogram;
+	}
+
+	public ArrayList<Histogram> getVariableHistograms() {
+		return variableHistograms;
+	}
+
+	public void setVariableHistograms(ArrayList<Histogram> variableHistograms) {
+		this.variableHistograms = variableHistograms;
+	}
+
+
+	public ArrayList<Long> getIndexingResults() {
+		return indexingResults;
+	}
+
+	public void setIndexingResults(ArrayList<Long> indexingResults) {
+		this.indexingResults = indexingResults;
+	}
+
+	@Override
+	public String toString(){
+		String toReturn = "\nResults:\n"+
+				"EER:" + this.getEer() + "\n" + 
+				"rates:" + this.getRates() + "\n";
+		
+		return toReturn;
+	}
+	
 	
 }

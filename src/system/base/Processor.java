@@ -1,20 +1,11 @@
 package system.base;
 
-import java.util.ArrayList;
-import java.util.Collections;
 
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
-import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.indexingstructure.IndexingStructure;
-import system.allcommonclasses.indexingstructure.RAMStructure;
-import system.allcommonclasses.modalities.Fingerprint;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.UsersIO;
 import system.coordinator.*;
-import system.coordinator.tests.*;
-import system.hasher.*;
 import system.makefeaturevector.fingerprintmethods.*;
 
 /**
@@ -36,30 +27,14 @@ public class Processor {
 		settings.loadToSettingsClasses();
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
-		RawScores scores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
-		Results results = computeResults(scores);
-//		Results results = new Results();
-		printResults(scores, results);
+		RawScores rawScores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
+		
+		Results results = EvaluatePerformance.processResults(rawScores);
+		
+		System.out.print(rawScores);
+		System.out.println(results);
+		
 		return results;
 	}
-	
-	
-	private Results computeResults(RawScores rawScores){
-		Results results = EvaluatePerformance.computeEER(rawScores);
-		Collections.sort(rawScores.genuineScores);
-		Collections.sort(rawScores.imposterScores);
-		// TODO Jim - build histogram
-		return results;
-	}
-	
-	private void printResults(RawScores scores, Results results){
-		System.out.println("\nGenuines:\n" + scores.genuineScores + "\n");
-		System.out.println("Imposters:\n" + scores.imposterScores + "\n");
-		System.out.println("EER:\n" + results.getEer());
-		System.out.println("rates:\n" + results.getRates());
-		System.out.println("indexing:\n" + scores.indexRankings);
-		System.out.println("field histogram:\n" + scores.fieldHistogramValues);
-	}
-
 	
 }

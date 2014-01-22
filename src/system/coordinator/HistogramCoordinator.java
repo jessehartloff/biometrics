@@ -11,9 +11,9 @@ import system.hasher.Hasher;
 import system.makefeaturevector.feature.Feature;
 import system.makefeaturevector.feature.Variable;
 
-public class Histogram extends Coordinator{
+public class HistogramCoordinator extends Coordinator{
 
-	public Histogram(Hasher hasher, Users users) {
+	public HistogramCoordinator(Hasher hasher, Users users) {
 		super(hasher, users);
 	}
 

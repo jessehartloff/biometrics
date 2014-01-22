@@ -27,4 +27,17 @@ public class RawScores {
 		fieldHistogramValues = new ArrayList<BigInteger>();
 		variableHistogramValues = new LinkedHashMap<String, ArrayList<Long>>();
 	}
+	
+	@Override
+	public String toString(){
+		String toReturn = "\nRawScores:\n"+
+				"Genuines: " + this.genuineScores + "\n" + 
+				"Imposters:" + this.imposterScores + "\n" + 
+				"indexing:" + this.indexRankings + "\n" + 
+				"field histogram:" + this.fieldHistogramValues + "\n";
+		
+		return toReturn;
+	}
+	
+
 }
