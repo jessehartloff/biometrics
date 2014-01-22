@@ -1,5 +1,6 @@
 package system.makefeaturevector.fingerprintmethods;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,32 +18,17 @@ public class NgonsAllRotations extends Ngons{
 		return this.ngonsAllRotationsQuantizeOne(fingerprint);
 	}
 	
-	private Template ngonsAllRotationsQuantizeOne(Fingerprint fingerprint) {
+	private  Template ngonsAllRotationsQuantizeOne(Fingerprint fingerprint) {
 		Template template = new Template();
 		ArrayList<Ngon> ngons = super.fingerprintToNgons(fingerprint);
-		ArrayList<Ngon> ngonCopy = new ArrayList<Ngon>();
-		
-		ngonCopy.addAll(ngons);
-		
-		for(Ngon ngon : ngons){
-			Collections.sort(ngonCopy, ngon.getComparator());
-			
-			int startingIndex;
-			for(startingIndex = 0;
-					ngonCopy.get(startingIndex).distanceBetweenCenters(ngon) < 0.0001;
-					startingIndex++);
-			ArrayList<Ngon> ngonsToTry = new ArrayList<Ngon>();
-			ngonsToTry.add(ngon);
-			
-			for(int i = 0; i < settings.getkClosestMinutia(); i++){
-				ngonsToTry.add(ngonCopy.get(startingIndex+i));
+		ArrayList<Template> rotatedTemplates = super.ngonsQuantizeAll(fingerprint);
+		for(Template temp : rotatedTemplates){
+			for(BigInteger bigInt : temp.hashes){
+				template.hashes.add(bigInt);
 			}
-			
-			template.hashes.add(ngon.toBigInt());
 		}
 		
-		
-		return template; //<------
+		return template;
 	}
 	
 	@Override
@@ -51,14 +37,9 @@ public class NgonsAllRotations extends Ngons{
 	}
 	
 	private ArrayList<Template> ngonsAllRotationsQuantizeAll(Fingerprint fingerprint) {
-		ArrayList<Template> templates = new ArrayList<Template>();
-		for(double rotation = settings.getRotationStart();
-				rotation < settings.getRotationStop(); 
-				rotation += settings.getRotationStep()){
-			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
-			templates.add(this.ngonsQuantizeOne(rotatedPrint));
-		}
-		return templates;
+		ArrayList<Template> template = new ArrayList<Template>();
+		template.add(this.ngonsAllRotationsQuantizeOne(fingerprint));
+		return template;
 	}
 	
 	
