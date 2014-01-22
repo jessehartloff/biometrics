@@ -14,12 +14,12 @@ public class Main {
 		Settings settings = new Settings();
 		
 	
-		settings.globalSettings.setFingerprintMethodString("NGONS");
+		settings.globalSettings.setFingerprintMethodString("NGONSALLROTATIONS");
 		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
 //		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
 		settings.globalSettings.setIndexingCoordinator("NONE");
-		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
+		settings.globalSettings.setHistogramCoordinator("NONE");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
@@ -75,9 +75,9 @@ public class Main {
 		
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
-		settings.nGonSettings.setN(3L); //5
+		settings.nGonSettings.setN(5L); //5
 		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);//5,5,5 //err of 736
-		settings.nGonSettings.setkClosestMinutia(3L); //7
+		settings.nGonSettings.setkClosestMinutia(7L); //7
 
 		settings.nGonSettings.setRotationStart(-50.0);
 		settings.nGonSettings.setRotationStop(50.0);

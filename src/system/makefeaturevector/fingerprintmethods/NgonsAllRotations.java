@@ -37,12 +37,12 @@ public class NgonsAllRotations extends Ngons{
 			for(int i = 0; i < settings.getkClosestMinutia(); i++){
 				ngonsToTry.add(ngonCopy.get(startingIndex+i));
 			}
-			//ngonsToTry.addAll(arg0);
 			
+			template.hashes.add(ngon.toBigInt());
 		}
 		
 		
-		return null; //<------
+		return template; //<------
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public class NgonsAllRotations extends Ngons{
 				rotation < settings.getRotationStop(); 
 				rotation += settings.getRotationStep()){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
-			templates.add(this.ngonsQuantizeOne(fingerprint));
+			templates.add(this.ngonsQuantizeOne(rotatedPrint));
 		}
 		return templates;
 	}
