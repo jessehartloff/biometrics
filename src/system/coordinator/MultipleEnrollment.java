@@ -10,6 +10,7 @@ import system.hasher.Hasher;
 
 public class MultipleEnrollment extends Coordinator{
 
+	//TODO Jesse - make this faster
 	public MultipleEnrollment(Hasher hasher, Users users) {
 		super(hasher, users);
 	}
