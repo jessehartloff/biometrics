@@ -27,16 +27,16 @@ public class Histogram extends Coordinator{
 		Feature blankFeature = Biometric.method.getBlankFeatureForBinning();
 		for(String var : blankFeature.variables.keySet()){
 			allQuantizedValues.add(new ArrayList<Long>());
-			scores.variableHistograms.put(var, new ArrayList<Long>());
+			scores.variableHistogramValues.put(var, new ArrayList<Long>());
 		}
 
 		for(User user : this.users.users){
 			for(Biometric bio : user.readings){
 				ArrayList<Feature> features = bio.toFeatures();
 				for(Feature feature : features){
-					scores.fieldHistogram.add(feature.toBigInt());
+					scores.fieldHistogramValues.add(feature.toBigInt());
 					for(String var : feature.variables.keySet()){
-						scores.variableHistograms.get(var).add(feature.variables.get(var).getQuantizedValue());
+						scores.variableHistogramValues.get(var).add(feature.variables.get(var).getQuantizedValue());
 					}
 				}
 			}

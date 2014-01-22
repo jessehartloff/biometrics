@@ -18,6 +18,8 @@ public class Results {
 	private ArrayList<RatesPoint> rates;
 	//indexingResults
 	
+	// TODO Jim - histograms
+	
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}

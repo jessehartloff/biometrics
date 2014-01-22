@@ -11,3 +11,4 @@ Adjust iris for high matching weight while face and fingerprint mostly pad the s
 down to individual bits leads to a system where the set intersection is the (n - the) hamming distance of the original vector.
 
 
+Minutia Cylindrical Code (MCC)

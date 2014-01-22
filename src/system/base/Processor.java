@@ -48,6 +48,7 @@ public class Processor {
 		Results results = EvaluatePerformance.computeEER(rawScores);
 		Collections.sort(rawScores.genuineScores);
 		Collections.sort(rawScores.imposterScores);
+		// TODO Jim - build histogram
 		return results;
 	}
 	
@@ -57,7 +58,7 @@ public class Processor {
 		System.out.println("EER:\n" + results.getEer());
 		System.out.println("rates:\n" + results.getRates());
 		System.out.println("indexing:\n" + scores.indexRankings);
-		System.out.println("field histogram:\n" + scores.fieldHistogram);
+		System.out.println("field histogram:\n" + scores.fieldHistogramValues);
 	}
 
 	

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class GUI {
 
-	{}// TODO Jesse - GUI
+	{}// TODO Jesse/Matt - GUI
 	
 
 	
@@ -16,8 +16,11 @@ public class GUI {
 		int height = new Long(Math.round(width/1.618)).intValue();
         frame.setSize(width, height);
         
+        JMenuItem menuItem = new JMenuItem();
+//        menuItem.
+        
         JMenu menu = new JMenu();
-//      menu.
+        menu.add(menuItem);
         
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(menu);

@@ -17,14 +17,14 @@ public class RawScores {
 
 	public ArrayList<Long> indexRankings;
 	
-	public ArrayList<BigInteger> fieldHistogram;
-	public LinkedHashMap<String, ArrayList<Long>> variableHistograms;
+	public ArrayList<BigInteger> fieldHistogramValues;
+	public LinkedHashMap<String, ArrayList<Long>> variableHistogramValues;
 	
 	public RawScores(){
 		genuineScores = new ArrayList<Double>();
 		imposterScores = new ArrayList<Double>();
 		indexRankings = new ArrayList<Long>();
-		fieldHistogram = new ArrayList<BigInteger>();
-		variableHistograms = new LinkedHashMap<String, ArrayList<Long>>();
+		fieldHistogramValues = new ArrayList<BigInteger>();
+		variableHistogramValues = new LinkedHashMap<String, ArrayList<Long>>();
 	}
 }
