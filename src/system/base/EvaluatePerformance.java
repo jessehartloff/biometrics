@@ -1,5 +1,6 @@
 package system.base;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -33,18 +34,35 @@ public class EvaluatePerformance {
 		return null;
 	}
 
-
 	private static ArrayList<Histogram> computeVariableHistograms(RawScores rawScores) {
-		// TODO Jim
-		return null;
+		ArrayList<Histogram> variableHistograms = new ArrayList<Histogram>();
+		for(String var : rawScores.variableHistogramValues.keySet()){
+			Histogram variableHistogram = new Histogram();
+			variableHistogram.setVariableName(var);
+			for(Long longVal : rawScores.variableHistogramValues.get(var)){
+				BigInteger bin = BigInteger.valueOf(longVal);
+				if(variableHistogram.histogram.containsKey(bin)){
+					variableHistogram.histogram.put(bin, variableHistogram.histogram.get(bin) + 1L);
+				} else {
+					variableHistogram.histogram.put(bin, 1L);
+				}
+			}
+			variableHistograms.add(variableHistogram);
+		}
+		return variableHistograms;
 	}
-
 
 	private static Histogram computeFieldHistogram(RawScores rawScores) {
-		// TODO Jim
-		return null;
+		Histogram fieldHistogram = new Histogram();
+		for(BigInteger bigInt : rawScores.fieldHistogramValues){
+			if(fieldHistogram.histogram.containsKey(bigInt)){
+				fieldHistogram.histogram.put(bigInt, fieldHistogram.histogram.get(bigInt) + 1L);
+			} else {
+				fieldHistogram.histogram.put(bigInt, 1L);				
+			}
+		}
+		return fieldHistogram;
 	}
-
 
 	protected static ArrayList<RatesPoint> computeRates(RawScores rawScores) {
 		

@@ -1,6 +1,7 @@
 package system.base;
 
 
+import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.settings.Settings;
@@ -27,13 +28,19 @@ public class Processor {
 		settings.loadToSettingsClasses();
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
+
 		RawScores rawScores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
-		
+/*
+		for(Histogram histo : results.getVariableHistograms()){
+			System.out.print(histo.toString());
+		}		
+		System.out.print(results.getFieldHistogram());//.toString());
+*/
 		System.out.print(rawScores);
 		System.out.println(results);
-		
+	
 		return results;
 	}
 	

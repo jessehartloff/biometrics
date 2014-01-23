@@ -8,6 +8,11 @@ public class Histogram {
 	private String variableName;
 	public HashMap<BigInteger, Long> histogram;
 	
+	public Histogram(){
+		variableName = "";
+		histogram = new HashMap<BigInteger, Long>();
+	}
+	
 	public String getVariableName() {
 		return variableName;
 	}
@@ -16,12 +21,12 @@ public class Histogram {
 		this.variableName = variableName;
 	}
 
-
-
 	@Override
 	public String toString(){
-		String toReturn = ""; // TODO
-		
+		String toReturn = "\nHistogram for " + this.getVariableName() + ": "; // TODO
+		for(BigInteger bigInt : this.histogram.keySet()){
+			toReturn += "[ " + bigInt + " , " + this.histogram.get(bigInt) + " ]" + '\n';	
+		}
 		return toReturn;
 	}
 }

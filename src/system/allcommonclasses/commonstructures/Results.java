@@ -14,18 +14,13 @@ import system.base.RatesPoint;
  *
  */
 public class Results {
-
-	// combine RawScores with this?
 	
 	private Double eer;
 	private ArrayList<RatesPoint> rates;
 	private Histogram fieldHistogram;
 	private ArrayList<Histogram> variableHistograms;
 	private ArrayList<Long> indexingResults;
-	
-	// TODO Jim - histograms
-	
-	
+		
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}

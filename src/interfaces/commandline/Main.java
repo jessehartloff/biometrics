@@ -10,72 +10,69 @@ public class Main {
 
 	public static void main(String[] args) {
 
-
 		Settings settings = new Settings();
-		
-	
-		settings.globalSettings.setFingerprintMethodString("NGONSALLROTATIONS");
-		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
-		//settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
+		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
+		settings.globalSettings.setMatchingCoordinator("NONE");
+//		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
 		settings.globalSettings.setIndexingCoordinator("NONE");
-		settings.globalSettings.setHistogramCoordinator("NONE");
+		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
 		settings.globalSettings.setDataset("FVC2002DB2");
 
 		
-//		settings.triangleSettings.theta0.setBins(4);
-//		settings.triangleSettings.x1.setBins(4);
-//		settings.triangleSettings.y1.setBins(4);
-//		settings.triangleSettings.theta1.setBins(4);
-//		settings.triangleSettings.x2.setBins(4);
-//		settings.triangleSettings.y2.setBins(4);
-//		settings.triangleSettings.theta2.setBins(4);
-//
-//		settings.triangleSettings.setRotationStart(-10.0);
-//		settings.triangleSettings.setRotationStop(10.0);
-//		settings.triangleSettings.setRotationStep(5.0);
-//
-//		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(4L);
-//		settings.triangleSettings.setThresholdForTriplets(25.0);
-//		settings.triangleSettings.setkClosestMinutia(3L);
-//		settings.triangleSettings.setkClosestTriangles(3L);
-//
-//		settings.pathSettings.d0.setBins(4);
-//		settings.pathSettings.d1.setBins(4);
-//		settings.pathSettings.d2.setBins(4);
-//		settings.pathSettings.d3.setBins(4);
-//		settings.pathSettings.phi1.setBins(4);
-//		settings.pathSettings.phi2.setBins(4);
-//		settings.pathSettings.phi3.setBins(4);
-//		settings.pathSettings.sigma0.setBins(4);
-//		settings.pathSettings.sigma1.setBins(4);
-//		settings.pathSettings.sigma2.setBins(4);
-//		settings.pathSettings.sigma3.setBins(4);
-//		
-//		settings.pathSettings.setkClosestMinutia(5L);
-//
-//		settings.minutiaeSettings.x.setBins(8);
-//		settings.minutiaeSettings.y.setBins(8);
-//		settings.minutiaeSettings.theta.setBins(8);
-//
-//		settings.minutiaeSettings.setRotationStart(-50.0);
-//		settings.minutiaeSettings.setRotationStop(50.0);
-//		settings.minutiaeSettings.setRotationStep(10.0);
-//
-//		settings.minutiaeSettings.setxStart(-50L);
-//		settings.minutiaeSettings.setxStop(50L);
-//		settings.minutiaeSettings.setxStep(10L);
-//
-//		settings.minutiaeSettings.setyStart(-50L);
-//		settings.minutiaeSettings.setyStop(50L);
-//		settings.minutiaeSettings.setyStep(10L);
-//		
-//		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
-//		
+		settings.triangleSettings.theta0.setBins(8);
+		settings.triangleSettings.x1.setBins(8);
+		settings.triangleSettings.y1.setBins(8);
+		settings.triangleSettings.theta1.setBins(8);
+		settings.triangleSettings.x2.setBins(8);
+		settings.triangleSettings.y2.setBins(8);
+		settings.triangleSettings.theta2.setBins(8);
+
+		settings.triangleSettings.setRotationStart(-100.0);
+		settings.triangleSettings.setRotationStop(100.0);
+		settings.triangleSettings.setRotationStep(10.0);
+
+		settings.triangleSettings.setMinimumPointsForTripletOfTriangles(4L);
+		settings.triangleSettings.setThresholdForTriplets(25.0);
+		settings.triangleSettings.setkClosestMinutia(3L);
+		settings.triangleSettings.setkClosestTriangles(3L);
+
+		settings.pathSettings.d0.setBins(4);
+		settings.pathSettings.d1.setBins(4);
+		settings.pathSettings.d2.setBins(4);
+		settings.pathSettings.d3.setBins(4);
+		settings.pathSettings.phi1.setBins(4);
+		settings.pathSettings.phi2.setBins(4);
+		settings.pathSettings.phi3.setBins(4);
+		settings.pathSettings.sigma0.setBins(4);
+		settings.pathSettings.sigma1.setBins(4);
+		settings.pathSettings.sigma2.setBins(4);
+		settings.pathSettings.sigma3.setBins(4);
+		
+		settings.pathSettings.setkClosestMinutia(5L);
+
+		settings.minutiaeSettings.x.setBins(8);
+		settings.minutiaeSettings.y.setBins(8);
+		settings.minutiaeSettings.theta.setBins(8);
+
+		settings.minutiaeSettings.setRotationStart(-50.0);
+		settings.minutiaeSettings.setRotationStop(50.0);
+		settings.minutiaeSettings.setRotationStep(10.0);
+
+		settings.minutiaeSettings.setxStart(-50L);
+		settings.minutiaeSettings.setxStop(50L);
+		settings.minutiaeSettings.setxStep(10L);
+
+		settings.minutiaeSettings.setyStart(-50L);
+		settings.minutiaeSettings.setyStop(50L);
+		settings.minutiaeSettings.setyStep(10L);
+		
+		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
+		
 
 		settings.nGonSettings.setN(3L); //5
 		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);//5,5,5 //err of 736

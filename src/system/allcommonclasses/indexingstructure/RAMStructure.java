@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class RAMStructure extends IndexingStructure{
 
 	HashMap<BigInteger, ArrayList<IndexingPoint>> indexingStructure;
@@ -21,7 +20,6 @@ public class RAMStructure extends IndexingStructure{
 			indexingStructure.put(bin, binContents);
 		}
 		binContents.add(pointToAdd);
-		
 	}
 
 	@Override
