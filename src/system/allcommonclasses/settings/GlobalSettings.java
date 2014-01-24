@@ -39,7 +39,6 @@ public class GlobalSettings implements Serializable{
 	//getters and setters
 	public String getFingerprintMethodString() {return fingerprintMethod;}
 	public void setFingerprintMethodString(String fingerprintMethodString) {
-		
 		this.fingerprintMethod = fingerprintMethodString;
 		}
 	public String getIrisMethod() {return irisMethod;}

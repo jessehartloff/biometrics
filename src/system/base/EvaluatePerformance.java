@@ -24,7 +24,6 @@ public class EvaluatePerformance {
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
 		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
 		
-		
 		return results;
 	}
 	
@@ -38,7 +37,7 @@ public class EvaluatePerformance {
 		ArrayList<Histogram> variableHistograms = new ArrayList<Histogram>();
 		for(String var : rawScores.variableHistogramValues.keySet()){
 			Histogram variableHistogram = new Histogram();
-			variableHistogram.setVariableName(var);
+			variableHistogram.setVariableName(var + " histogram");
 			for(Long longVal : rawScores.variableHistogramValues.get(var)){
 				BigInteger bin = BigInteger.valueOf(longVal);
 				if(variableHistogram.histogram.containsKey(bin)){
@@ -54,6 +53,7 @@ public class EvaluatePerformance {
 
 	private static Histogram computeFieldHistogram(RawScores rawScores) {
 		Histogram fieldHistogram = new Histogram();
+		fieldHistogram.setVariableName("Field Histogram");
 		for(BigInteger bigInt : rawScores.fieldHistogramValues){
 			if(fieldHistogram.histogram.containsKey(bigInt)){
 				fieldHistogram.histogram.put(bigInt, fieldHistogram.histogram.get(bigInt) + 1L);

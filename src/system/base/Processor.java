@@ -32,12 +32,7 @@ public class Processor {
 		RawScores rawScores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
-/*
-		for(Histogram histo : results.getVariableHistograms()){
-			System.out.print(histo.toString());
-		}		
-		System.out.print(results.getFieldHistogram());//.toString());
-*/
+
 		System.out.print(rawScores);
 		System.out.println(results);
 	

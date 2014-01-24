@@ -33,9 +33,8 @@ public class RawScores {
 		String toReturn = "\nRawScores:\n"+
 				"Genuines: " + this.genuineScores + "\n" + 
 				"Imposters:" + this.imposterScores + "\n" + 
-				"indexing:" + this.indexRankings + "\n" + 
-				"field histogram:" + this.fieldHistogramValues + "\n";
-		
+				"indexing:" + this.indexRankings + "\n";
+		//we are not printing out raw histogram values here, look instead at Results.java
 		return toReturn;
 	}
 	

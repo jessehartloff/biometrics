@@ -17,7 +17,7 @@ public class Main {
 //		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
 		settings.globalSettings.setIndexingCoordinator("NONE");
-		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
+		settings.globalSettings.setHistogramCoordinator("NONE");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");

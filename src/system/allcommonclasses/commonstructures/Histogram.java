@@ -23,7 +23,7 @@ public class Histogram {
 
 	@Override
 	public String toString(){
-		String toReturn = "\nHistogram for " + this.getVariableName() + ": ";
+		String toReturn = this.getVariableName() + ": \n";
 		for(BigInteger bigInt : this.histogram.keySet()){
 			toReturn += "[ " + bigInt + " , " + this.histogram.get(bigInt) + " ]" + '\n';	
 		}
