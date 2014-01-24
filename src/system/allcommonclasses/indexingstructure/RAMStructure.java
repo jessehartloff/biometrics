@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RAMStructure extends IndexingStructure{
-
+	
 	HashMap<BigInteger, ArrayList<IndexingPoint>> indexingStructure;
 	
 	public RAMStructure(){
