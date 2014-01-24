@@ -15,10 +15,13 @@ import system.allcommonclasses.modalities.Minutia;
 
 
 /**
+ * This file should be run by itself, really only when creating a new serialized dataset
+ * (ie, it shouldn't be used very often)
  * !!! Unless you adding a new FVC dataset, you probably shouldn't be looking at this code !!!
  *
  *
  */
+
 public class FingerprintIO {
 
 	public static void readAllFVC(){
@@ -38,6 +41,43 @@ public class FingerprintIO {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Run this function from the main method at the bottom to generate a training set and a holdout set from all 4 databases of year 2002
+	 * NOTE: As of now you need to change 'year' manually
+	 */
+	public static void generateTrainingAndTestDatabases() {
+		Users trainingUsers = new Users();
+		Users testUsers = new Users();
+		int year = 2002;
+		for(int db=1; db<=4; db++){
+			trainingUsers.users.addAll(readOddFVC(year, db).users); //add these to the existing training users set
+			testUsers.users.addAll(readEvenFVC(year, db).users);	
+		}
+		//output test users
+		try{
+			FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "Testing.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(testUsers);
+			out.close();
+			fileOut.close();
+			System.out.println("Testing Database Output Done");
+		}catch(IOException exp){
+			exp.printStackTrace();
+		}
+		//output training users
+		try{
+			FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "Training.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(trainingUsers);
+			out.close();
+			fileOut.close();
+			System.out.println("Training Database Output Done");
+		}catch(IOException exp){
+			exp.printStackTrace();
+		}
+		
 	}
 	
 	public static Fingerprint fingerprintFromFile(String file){
@@ -92,7 +132,7 @@ public class FingerprintIO {
 			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 			user.readings = fingerprints;
 			
-			String directoryPathForFVC = "/Users/jessehartloff/Documents/";
+			String directoryPathForFVC = "/Users/thomaseffland/Documents/";
 			
 			for(int reading=1; reading<=8; reading++){
 				String file = directoryPathForFVC + "CUBS_FP_DATA/FVC" +year+ "/DB" +db+ "/features/" 
@@ -104,11 +144,75 @@ public class FingerprintIO {
 			//System.out.println("id: " + id);
 			users.users.add(user);
 			//System.out.println(user.readings);
-		}
-		
-		
+		}		
+		return users;
+	}
+	/**
+	 * readEven and readOdd are just slight changes to the plain readFVC 
+	 * (to get only the even or odd users... but you probably guessed that already)
+	 * 
+	 * @param year
+	 * @param db
+	 * @return
+	 */
+	public static Users readOddFVC(int year, int db){
+		Users users = new Users();
+		ArrayList<Fingerprint> allFingerprints = new ArrayList<Fingerprint>();
+		for(int id=1; id<=100; id+=2){
+			User user = new User();
+			user.id = id-1L;
+			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+			user.readings = fingerprints;
+			
+			String directoryPathForFVC = "/Users/thomaseffland/Documents/";
+			
+			for(int reading=1; reading<=8; reading++){
+				String file = directoryPathForFVC + "CUBS_FP_DATA/FVC" +year+ "/DB" +db+ "/features/" 
+						+ id +"_"+ reading + ".fp";
+				fingerprints.add(fingerprintFromFile(file));
+				allFingerprints.add(fingerprintFromFile(file));
+			}
+
+			//System.out.println("id: " + id);
+			users.users.add(user);
+			//System.out.println(user.readings);
+		}		
+		return users;
+	}
+	public static Users readEvenFVC(int year, int db){
+		Users users = new Users();
+		ArrayList<Fingerprint> allFingerprints = new ArrayList<Fingerprint>();
+		for(int id=2; id<=100; id+=2){
+			User user = new User();
+			user.id = id-1L;
+			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+			user.readings = fingerprints;
+			
+			String directoryPathForFVC = "/Users/thomaseffland/Documents/";
+			
+			for(int reading=1; reading<=8; reading++){
+				String file = directoryPathForFVC + "CUBS_FP_DATA/FVC" +year+ "/DB" +db+ "/features/" 
+						+ id +"_"+ reading + ".fp";
+				fingerprints.add(fingerprintFromFile(file));
+				allFingerprints.add(fingerprintFromFile(file));
+			}
+
+			//System.out.println("id: " + id);
+			users.users.add(user);
+			//System.out.println(user.readings);
+		}		
 		return users;
 	}
 	
-	
+	/**
+	 * So this runs separately from 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new FingerprintIO();
+		generateTrainingAndTestDatabases();
+		//readAllFVC();
+	}
 }
+
+

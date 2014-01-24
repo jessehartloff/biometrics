@@ -7,6 +7,7 @@ import java.util.Collections;
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
+import system.allcommonclasses.settings.GlobalSettings;
 
 public class EvaluatePerformance {
 
@@ -14,10 +15,8 @@ public class EvaluatePerformance {
 	protected static Results processResults(RawScores rawScores) {
 		Results results = new Results();
 		
-		
 		results.setRates(EvaluatePerformance.computeRates(rawScores));
-		results.setEer(EvaluatePerformance.computeEER(results.getRates()));
-		
+		results.setEer(EvaluatePerformance.computeEER(results.getRates()));	
 		
 		results.setFieldHistogram(EvaluatePerformance.computeFieldHistogram(rawScores));
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
@@ -74,25 +73,24 @@ public class EvaluatePerformance {
 		ArrayList<Double> gens = rawScores.genuineScores;
 		ArrayList<Double> imps = rawScores.imposterScores;
 		
+		//we want to know min and max scores to compute over
 		Double min = 0.0;
 		Double max = 0.0;
 
 		if(!gens.isEmpty() && !imps.isEmpty()){
 			min = Math.min(gens.get(0), imps.get(0));
-			max = Math.min(gens.get(gens.size()-1), imps.get(imps.size()-1));
-		}
-		else{
-			min = 0.0;
-			max = 0.0;
+			max = Math.max(gens.get(gens.size()-1), imps.get(imps.size()-1));
 		}
 		
-		Double stepSize = 0.9;
+		Double stepSize = GlobalSettings.getInstance().getEerStepSize();
+		Double offset = stepSize/2.0;
 		
 		ArrayList<RatesPoint> rates = new ArrayList<RatesPoint>();
 		
-		for(Double i = min-stepSize; i<=max+stepSize; i+=stepSize){
+		//offset by .5 so we are not checking on double representation of integer score
+		for(Double threshold = min - offset; threshold <= max + offset; threshold += stepSize){
 			RatesPoint point = new RatesPoint();
-			point.threshold=i;
+			point.threshold= threshold;
 			
 			Double falseAccepts = Double.valueOf(imps.size());
 			Double falseRejects = 0.0;

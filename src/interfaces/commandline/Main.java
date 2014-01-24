@@ -21,9 +21,10 @@ public class Main {
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
-		settings.globalSettings.setDataset("FVC2002DB2");
-
+		settings.globalSettings.setDataset("FVC2002Training");
 		
+		settings.globalSettings.setEerStepSize(1.0);
+
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);
 		settings.triangleSettings.y1.setBins(8);

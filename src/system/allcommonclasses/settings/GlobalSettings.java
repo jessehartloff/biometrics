@@ -23,6 +23,7 @@ public class GlobalSettings implements Serializable{
 	private String multiserverIndexingCoordinator; 
 	private String multiserverHistogramCoordinator;
 	private String indexingStructure;
+	private Double eerStepSize;
 	//
 	
 	//singleton
@@ -104,7 +105,12 @@ public class GlobalSettings implements Serializable{
 	public void setIndexingStructure(String indexingStructure) {
 		this.indexingStructure = indexingStructure;
 	}
-
+	public Double getEerStepSize() {
+		return eerStepSize;
+	}
+	public void setEerStepSize(Double eerStepSize) {
+		this.eerStepSize = eerStepSize;
+	}
 
 
 }
