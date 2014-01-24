@@ -87,7 +87,7 @@ public class EvaluatePerformance {
 		
 		ArrayList<RatesPoint> rates = new ArrayList<RatesPoint>();
 		
-		//offset by .5 so we are not checking on double representation of integer score
+		//offset by half the resolution so we don't have to to deal with machine imprecision at the score ticks
 		for(Double threshold = min - offset; threshold <= max + offset; threshold += stepSize){
 			RatesPoint point = new RatesPoint();
 			point.threshold= threshold;
