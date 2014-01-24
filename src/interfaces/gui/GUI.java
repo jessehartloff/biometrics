@@ -22,7 +22,7 @@ import system.allcommonclasses.settings.TriangleSettings;
 
 public class GUI {
 
-	{}// TODO Jesse/Matt - GUI
+	{}// TODO Matt - GUI
 	
 	private Settings settings;
 	

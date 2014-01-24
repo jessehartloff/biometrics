@@ -14,11 +14,10 @@ public class EvaluatePerformance {
 	protected static Results processResults(RawScores rawScores) {
 		Results results = new Results();
 		
-		// TODO Jesse - fix this
-		if(!rawScores.genuineScores.isEmpty() && !rawScores.imposterScores.isEmpty()){
-			results.setRates(EvaluatePerformance.computeRates(rawScores));
-			results.setEer(EvaluatePerformance.computeEER(results.getRates()));
-		}
+		
+		results.setRates(EvaluatePerformance.computeRates(rawScores));
+		results.setEer(EvaluatePerformance.computeEER(results.getRates()));
+		
 		
 		results.setFieldHistogram(EvaluatePerformance.computeFieldHistogram(rawScores));
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
@@ -75,11 +74,18 @@ public class EvaluatePerformance {
 		ArrayList<Double> gens = rawScores.genuineScores;
 		ArrayList<Double> imps = rawScores.imposterScores;
 		
-		Collections.sort(gens);
-		Collections.sort(imps);
+		Double min = 0.0;
+		Double max = 0.0;
 
-		Double min = Math.min(gens.get(0), imps.get(0));
-		Double max = Math.min(gens.get(gens.size()-1), imps.get(imps.size()-1));
+		if(!gens.isEmpty() && !imps.isEmpty()){
+			min = Math.min(gens.get(0), imps.get(0));
+			max = Math.min(gens.get(gens.size()-1), imps.get(imps.size()-1));
+		}
+		else{
+			min = 0.0;
+			max = 0.0;
+		}
+		
 		Double stepSize = 0.9;
 		
 		ArrayList<RatesPoint> rates = new ArrayList<RatesPoint>();
@@ -90,6 +96,7 @@ public class EvaluatePerformance {
 			
 			Double falseAccepts = Double.valueOf(imps.size());
 			Double falseRejects = 0.0;
+			
 			for(Double d : gens){
 				if(d<point.threshold){
 					falseRejects += 1.0;
@@ -105,6 +112,7 @@ public class EvaluatePerformance {
 					break;
 				}
 			}
+			
 			point.far = falseAccepts/Double.valueOf(imps.size());
 			point.frr = falseRejects/Double.valueOf(gens.size());
 			

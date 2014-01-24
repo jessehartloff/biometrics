@@ -1,10 +1,11 @@
 package system.makefeaturevector.fingerprintmethods;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
@@ -12,12 +13,17 @@ import system.allcommonclasses.modalities.Minutia;
 import system.allcommonclasses.settings.NgonSettings;
 import system.makefeaturevector.feature.Feature;
 import system.makefeaturevector.feature.ThetaVariable;
+import system.makefeaturevector.feature.Variable;
 import system.makefeaturevector.feature.XYVariable;
+import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
 
 public class Ngons extends FingerprintMethod{
 
 	protected NgonSettings settings;
 	public Long N;
+
+	// TODO Matt - ngons with all rotations
+	// k-plets of n-gons
 	
 	public class Ngon extends Feature implements Comparable<Ngon>{
 		private NgonSettings ngonSettings;
@@ -62,7 +68,6 @@ public class Ngons extends FingerprintMethod{
 		}
 		
 		public String makeKey(String component, Long i){
-
 			return component+i.toString();
 		}
 		
@@ -122,15 +127,14 @@ public class Ngons extends FingerprintMethod{
 	
 	public ArrayList<Template> ngonsQuantizeAll(Fingerprint fingerprint){
 		ArrayList<Template> templates = new ArrayList<Template>();
-		for(double rotation=settings.getRotationStart(); 
-				rotation < settings.getRotationStop(); rotation += settings.getRotationStep()){
+		for(double rotation=settings.getRotationStart(); rotation < settings.getRotationStop(); rotation += settings.getRotationStep()){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.ngonsQuantizeOne(rotatedPrint));
 		}
 		return templates;
 	}
 
-	public ArrayList<Ngon> fingerprintToNgons(Fingerprint fingerprint) {
+	protected ArrayList<Ngon> fingerprintToNgons(Fingerprint fingerprint) {
 		ArrayList<Ngon> ngons = new ArrayList<Ngon>();
 		ArrayList<Minutia> minutiaeCopy = new ArrayList<Minutia>();
 		
