@@ -8,7 +8,8 @@ import system.base.Processor;
 public class Main {
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
+		
 
 		Settings settings = new Settings();
 
@@ -21,9 +22,13 @@ public class Main {
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
+//<<<<<<< Main.java
+//		settings.globalSettings.setDataset("FVC2002DB3");
+//=======
 		settings.globalSettings.setDataset("FVC2002Training");
 		
 		settings.globalSettings.setEerStepSize(1.0);
+//>>>>>>> 1.48
 
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);
@@ -75,9 +80,9 @@ public class Main {
 		settings.fuzzyVaultSettings.setNumberOfChaffPoints(00L);
 		
 
-		settings.nGonSettings.setN(3L); //5
+		settings.nGonSettings.setN(5L); //5
 		settings.nGonSettings.setAllNumberOfBins(8L,8L,8L);//5,5,5 //err of 736
-		settings.nGonSettings.setkClosestMinutia(3L); //7
+		settings.nGonSettings.setkClosestMinutia(6L); //7
 
 
 
