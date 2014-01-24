@@ -1,0 +1,308 @@
+
+(1) Genuine concerns we can address
+
+As a snapshot of "work in progress," this paper represents a reasonable contribution.
+
+-Stress that our paper presents a work in progress
+
+
+The technique is not compared with the state-of-the art nor with relevant related techniques. 
+
+-We reference other results
+
+
+Looking at Table 1, we see that for the proposed system the BEST FRR is 19%, and the 
+worse is 57%. These numbers clearly show that the proposed approach is unstable for even its lowest 
+security setting.
+
+The experiments are the weakest part of this paper.
+
+A bit more effort is required to bring the error rates down to something acceptable. At this stage, FVC2002 is a 
+fairly well studied data set, with even template protection algorithms achieving error rates that are often orders 
+of magnitude lower than what is reported here.
+
+-New stuff gets better numbers. Only report DB1 and DB2 like every other paper ever.
+
+
+The basic approach of triangle and angles as a fixed representation is not novel yet they do not compare 
+to nor meaningful discuss other protected triangle based approaches. E.g. it does not cite or discuss the 
+most relevant paper: Li, P., Yang, X., Qiao, H., Cao, K., Liu, E., & Tian, J.  "An effective biometric 
+cryptosystem combining fingerprints with error correction codes." Expert Systems with Applications, 
+39(7), 6562-6574, (2012). 
+
+-multiple enrollment etc
+
+With respect to Figure 4, the statement "The sharp drop in the graph is reflective of the very low 
+FRRÕs, which approach 0 quickly as the score increases." is backwards.. it is because of the FRR 
+approaches 1 as the score increases (the FRR approach 0 only when the system accepts all matches without 
+any regard to biometrics).
+
+-Reword/redo it or remove this comment entirely. 
+
+Looking at Table 1, to me it is clear the proposed approach is unusable for any practical, for even its 
+lowest security setting the FAR is too high and the FRR of 20-50% means it is unusable. I find it ironic 
+that the introduction states the answer is affirmative and then goes on to cites prior work by some of the 
+authors and and states quote Another issue with most such secure hash functions is that, even though these 
+schemes have provable security, the security only works at parameter regimes that are not useful in practice.[6] 
+quote Then presents a model where there is NO parameter regime that is useful even with minimal security.
+
+-The EER's we quote are bad for practice, but we can get better now. Our security is valid (assuming we handle the ZeroFAR issue) at any
+ operating point since the security analysis assumes breaking one triplet breaks the fingerprint so we claim 
+ no extra security by adjusting the threshold as is the case in fuzzy vault.
+
+
+The paper discussion discounts/dismisses the existing security analysis of template protection 
+system, then presents an analysis that makes unjustified and obviously flawed assumptions. It is better 
+for the field for papers to have no analysis than to have a misleading/incorrect theory or 
+pointless proofs.
+
+The security analysis of the paper is flawed in multiple ways. It makes assumptions that do not hold 
+for biometrics and hence, is irrelevant. As discussed in the literature (e.g. (Scheirer, Walter J., 
+and Terrance E. Boult. "Bipartite biotokens: Definition, implementation, and analysis." Advances 
+in Biometrics. Springer Berlin Heidelberg, 2009. 775-785. http://link.springer.com/chapter/10.1007/978-3-642-01793-3_79), 
+the FAR for a given operation point is an inherent lower bound for security in any privacy enhanced 
+template system. The only meaningful operating points for security system claiming 30 bits of security 
+FAR < 2^-30, many orders of magnitiude below what is shown. It may also be worth noting that the 
+aforementioned paper by Scheirer et al, says it is an extension of fuzzy vaults and reports better 
+accuracy than [4], thus it should probably should be discuss if the authors rework this paper for publication.
+
+The analysis on end of page 9 and top of 10, has no theoretical justification and provides no lower 
+bound on attack probability using the minutiae distribution. The fact that they have non-zero FAR 
+for all operating points tested shows that the security model presented does not apply to their 
+problem. If their analysis applied, the chance of a hashes single false-match, would be less than 
+1 in a billion. Instead, their experiments show that there are enough matching hashes so that the 
+set-intersection is large enough to get a non-zero false match rate with only 4950 imposter tests.
+
+The conclusion that the only means to get triangles is through exhaustive search of the 
+input bit space, is not a conclusion, it is an assumption in a unrealistic security model analysis. 
+The exhaustive search would have to be on the effective input space. While the authors finally hint at 
+an understanding of this on page 9, where they state Another subtle issue is that, in reality, 
+the distribution of the fingerprint templates is not uniform, and each fingerprint minutiae point has 
+very limited entropy (bits). quote They don't demonstrate an understanding of it as they ignore 
+their own experiments that show their models are wrong. This issues is not subtle, its fundamental in 
+biometrics and it means the formal theorems simply do not apply to their problem. Allowing these 
+irrelevant security analysis to be published would be at best misleading.
+
+The experiments are poorly presented and make invalid claims The algorithm, with very discrete score 
+parameter, misuses the term EER. The Equal error rate has a formal definition and it is NOT what the 
+authors define it as. Instead the authors use the half-total-error rate HTER=(FAR+FRR)/2 at a particular 
+operating point where they system is not secure and call that the EER so they can claim better ERR than 
+prior papers. While I believe the HTER (or TER) at a particular operating point is a viable measure, it 
+has to be at a quote secure quote operating point, which given the size of their testing must be FAR=0. 
+Since the experiment does not report when FAR=0 its hard to say, but for DB1, it looks like a score of 4 
+or 5, where they then have FRR of 40% to 50%. While this TER at zero FAR is not what is described in 
+Scheirer et al quote s 2009 ICB paper, one can estimate it from their tables which report a 97% TAR 
+(hence 3% FAR) at zero FAR for DB1 and DB2. If for some reason one did want to use ERR rates for protected 
+template systems, then the state of the art on FVC2002 DB1 and DB2 are on the order of 1.2% and 2% 
+respectively, or about an order of magnitude better than the HTER reported here.
+
+-Report ZeroFAR. Mention the difference between template security and system security
+
+
+(2) Genuine concerns we can't address
+
+In particular the paper presumes that SHA256 is collision free and then in theorem 4.2 presume the 
+random oracle model means samples are uniformly sampled from the full hash domain. Even given the 
+former assumption on SHA256, the latter assumption of uniformality in the full range is not true, 
+since the inputs are far from dense -- the domain of the hash cannot be larger than the range of 
+the input.
+
+-Need to address this somehow. Maybe compute the entropy of the histogram. We should look at all the various 
+distributions and decide how to deal with this.
+
+
+
+(3) Commenter didn't understand what we said
+
+Sec. 5.2 is possibly flawed; the reported EER for fuzzy vault is 1, which is the worst possible case. I suggest that 
+the implementation be reviewed for correctness, or this analysis be dropped from the paper, since it is simply showing 
+that the fuzzy vault completely fails in this experimental regime, and doesnÕt add anything meaningful.
+
+-We should reword this to be more explicit. Also, an EER of 1 is a perfect system that simply needs to reverse the final decision.
+An EER of 1 would make us famous.
+
+
+(4) Comment not relevant
+
+The paper quotes presentation of its results are unacceptable.
+
+This paper looks at a template protection scheme relying on a secure hash function. In particular, the algorithm 
+makes use of minutiae triangles, which have been analyzed before in the context of such problems. The design of 
+the algorithm combines clustering ideas from matching algorithms with ideas from the provable security of hash 
+functions, and also applies an intermediate translation-invariant but rotation-variant map to the minutia points 
+before applying the hash function. The paper tells us that this latter idea helps improve the tradeoff between 
+matching accuracy and matching efficiency.
+
+This work extends previous work by this group on search for hashes of fingerprints that have a better tradeoff 
+between provable security and achievable practical matching accuracy.
+
+The paper also considers practical concerns related to space complexity for the proposed approach and fuzzy vaults.
+
+
+(5) Undecided
+
+It might also be relevant to compare with the state of the art template protection 
+schemes, e.g. see Yang, B., Busch, C., de Groot, K., Xu, H., & Veldhuis, R. N. (2012). Performance evaluation
+ of fusing protected fingerprint minutiae templates on the decision level. Sensors, 12(5), 5246-5272, 
+ not older papers that are no longer state of the art.
+ 
+ -Gotta read that paper
+ 
+ 
+ At a minimum they should have reported results on FVConGoing quote Secure Template Fingerprint Verification 
+ (see https://biolab.csr.unibo.it/FvcOnGoing) where there are multiple systems properly tested on blind data.
+
+-Maybe we can pull this off... maybe.
+
+
+-----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- Original Copy of Reviews ---
+
+
+
+REVIEWER'S COMMENTS:
+
+- Review of quote Secure fingerprint hashes using subsets of local structures quote
+
+This paper has major flaws and is not unpublishable (in any forum) and it cannot be corrected within a 
+reasonable time frame, if ever.
+
+This paper presents yet another triangle-based quote secure quote template approach. The technique is 
+not compared with the state-of-the art nor with relevant related techniques. The paper quote s security 
+analysis is inherently flawed, and the experimental analysis misuses terminology and uses that to draw 
+invalid conclusions. Looking at Table 1, we see that for the proposed system the BEST FRR is 19%, and the 
+worse is 57%. These numbers clearly show that the proposed approach is unstable for even its lowest quote 
+security quote setting. The paper quote s presentation of its results are unacceptable.
+
+
+The basic approach of triangle and angles as a fixed representation is not novel yet they do not compare 
+to nor meaningful discuss other protected triangle based approaches. E.g. it does not cite or discuss the 
+most relevant paper: Li, P., Yang, X., Qiao, H., Cao, K., Liu, E., & Tian, J. quote An effective biometric 
+cryptosystem combining fingerprints with error correction codes. quote Expert Systems with Applications, 
+39(7), 6562-6574, (2012). It might also be relevant to compare with the state of the art template protection 
+schemes, e.g. see Yang, B., Busch, C., de Groot, K., Xu, H., & Veldhuis, R. N. (2012). Performance evaluation
+ of fusing protected fingerprint minutiae templates on the decision level. Sensors, 12(5), 5246-5272, 
+ not older papers that are no longer state of the art. At a minimum they should have reported results 
+ on FVConGoing quote Secure Template Fingerprint Verification quote 
+ (see https://biolab.csr.unibo.it/FvcOnGoing) where there are multiple systems properly tested on blind data.
+
+The paper quote discussion discounts/dismisses the existing security analysis of template protection 
+system, then presents an analysis that makes unjustified and obviously flawed assumptions. It is better 
+for the field for papers to have no analysis than to have a misleading/incorrect quote theory quote or 
+pointless proofs.
+
+The security analysis of the paper is flawed in multiple ways. It makes assumptions that do not hold 
+for biometrics and hence, is irrelevant. As discussed in the literature (e.g. (Scheirer, Walter J., 
+and Terrance E. Boult. quote Bipartite biotokens: Definition, implementation, and analysis. quote Advances 
+in Biometrics. Springer Berlin Heidelberg, 2009. 775-785. http://link.springer.com/chapter/10.1007/978-3-642-01793-3_79), 
+the FAR for a given operation point is an inherent lower bound for security in any privacy enhanced 
+template system. The only meaningful operating points for security system claiming 30 bits of security 
+FAR < 2^-30, many orders of magnitiude below what is shown. It may also be worth noting that the 
+aforementioned paper by Scheirer et al, says it is an extension of fuzzy vaults and reports better 
+accuracy than [4], thus it should probably should be discuss if the authors rework this paper for publication.
+
+In particular the paper presumes that SHA256 is collision free and then in theorem 4.2 presume the 
+random oracle model means samples are uniformly sampled from the full hash domain. Even given the 
+former assumption on SHA256, the latter assumption of uniformality in the full range is not true, 
+since the inputs are far from dense -- the domain of the hash cannot be larger than the range of 
+the input.
+
+The quote conclusion quote that the only means to get triangles is through exhaustive search of the 
+input bit space, is not a conclusion, it is an assumption in a unrealistic security model analysis. 
+The exhaustive search would have to be on the effective input space. While the authors finally hint at 
+an understanding of this on page 9, where they state quote Another subtle issue is that, in reality, 
+the distribution of the fingerprint templates is not uniform, and each fingerprint minutiae point has 
+very limited entropy (bits). quote They don quote t demonstrate an understanding of it as they ignore 
+their own experiments that show their models are wrong. This issues is not subtle, its fundamental in 
+biometrics and it means the formal theorems simply do not apply to their problem. Allowing these irrelevant 
+quote security analysis quote to be published would be at best misleading.
+
+
+The analysis on end of page 9 and top of 10, has no theoretical justification and provides no lower 
+bound on attack probability using the minutiae distribution. The fact that they have non-zero FAR 
+for all operating points tested shows that the security model presented does not apply to their 
+problem. If their analysis applied, the chance of a hashes single false-match, would be less than 
+1 in a billion. Instead, their experiments show that there are enough matching hashes so that the 
+set-intersection is large enough to get a non-zero false match rate with only 4950 imposter tests.
+
+
+
+The experiments are poorly presented and make invalid claims The algorithm, with very discrete score 
+parameter, misuses the term EER. The Equal error rate has a formal definition and it is NOT what the 
+authors define it as. Instead the authors use the half-total-error rate HTER=(FAR+FRR)/2 at a particular 
+operating point where they system is not secure and call that the EER so they can claim better ERR than 
+prior papers. While I believe the HTER (or TER) at a particular operating point is a viable measure, it 
+has to be at a quote secure quote operating point, which given the size of their testing must be FAR=0. 
+Since the experiment does not report when FAR=0 its hard to say, but for DB1, it looks like a score of 4 
+or 5, where they then have FRR of 40% to 50%. While this TER at zero FAR is not what is described in 
+Scheirer et al quote s 2009 ICB paper, one can estimate it from their tables which report a 97% TAR 
+(hence 3% FAR) at zero FAR for DB1 and DB2. If for some reason one did want to use ERR rates for protected 
+template systems, then the state of the art on FVC2002 DB1 and DB2 are on the order of 1.2% and 2% 
+respectively, or about an order of magnitude better than the HTER reported here.
+
+With respect to Figure 4, the statement quote The sharp drop in the graph is reflective of the very low 
+FRRÕs, which approach 0 quickly as the score increases. quote is backwards.. it is because of the FRR 
+approaches 1 as the score increases (the FRR approach 0 only when the system accepts all matches without 
+any regard to biometrics).
+
+
+
+The paper stated off with the motivating question:
+
+quote Is it possible to design secure hash functions that exploit the geometry of fingerprints for better
+ matching accuracy as well as have provable security for parameter regimes that are needed in practice? quote
+
+
+Looking at Table 1, to me it is clear the proposed approach is unusable for any practical, for even its 
+lowest security setting the FAR is too high and the FRR of 20-50% means it is unusable. I find it ironic 
+that the introduction states the answer is affirmative and then goes on to cites prior work by some of the 
+authors and and states quote Another issue with most such secure hash functions is that, even though these 
+schemes have provable security, the security only works at parameter regimes that are not useful in practice.[6] 
+quote Then presents a model where there is NO parameter regime that is useful even with minimal security.
+
+- This paper looks at a template protection scheme relying on a secure hash function. In particular, the algorithm 
+makes use of minutiae triangles, which have been analyzed before in the context of such problems. The design of 
+the algorithm combines clustering ideas from matching algorithms with ideas from the provable security of hash 
+functions, and also applies an intermediate translation-invariant but rotation-variant map to the minutia points 
+before applying the hash function. The paper tells us that this latter idea helps improve the tradeoff between 
+matching accuracy and matching efficiency.
+
+Positives:
++ This work extends previous work by this group on search for hashes of fingerprints that have a better tradeoff 
+between provable security and achievable practical matching accuracy.
++ As a snapshot of "work in progress," this paper represents a reasonable contribution.
++ The paper also considers practical concerns related to space complexity for the proposed approach and fuzzy vaults.
+
+Negatives:
+- The experiments are the weakest part of this paper.
+
+A bit more effort is required to bring the error rates down to something acceptable. At this stage, FVC2002 is a 
+fairly well studied data set, with even template protection algorithms achieving error rates that are often orders 
+of magnitude lower than what is reported here.
+
+Sec. 5.2 is possibly flawed; the reported EER for fuzzy vault is 1, which is the worst possible case. I suggest that 
+the implementation be reviewed for correctness, or this analysis be dropped from the paper, since it is simply showing 
+that the fuzzy vault completely fails in this experimental regime, and doesnÕt add anything meaningful.
