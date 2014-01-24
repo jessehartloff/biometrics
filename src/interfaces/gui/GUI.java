@@ -163,36 +163,36 @@ public class GUI {
 		}
 		globalSettingsPanel.add(new JLabel("Fingerprint Method:"));
 		globalSettingsPanel.add(fingerprintMethodValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
 		
 		globalSettingsPanel.add(new JLabel("Matching Coordinator:"));
 		globalSettingsPanel.add(matchingCoordinatorValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setMatchingCoordinator", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setMatchingCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Indexing Coordinator:"));
 		globalSettingsPanel.add(indexingCoordinatorValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setIndexingCoordinator", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setIndexingCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Histogram Coordinator:"));
 		globalSettingsPanel.add(histogramCoordinatorValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHistogramCoordinator", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHistogramCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Hasher:"));
 		globalSettingsPanel.add(hasherValuesBox);		
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHasher", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHasher", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Test Generator:"));
 		globalSettingsPanel.add(testGeneratorValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setTestGenerator", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setTestGenerator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Dataset:"));
 		globalSettingsPanel.add(datasetValuesBox);
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setDataset", String.class));
+		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setDataset", String.class));
 
 		
 		JButton next = new JButton("Next");

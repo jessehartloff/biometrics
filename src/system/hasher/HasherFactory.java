@@ -16,7 +16,7 @@ public class HasherFactory{
 		}		
 	}
 	
-	private enum HasherEnumerator{
+	public enum HasherEnumerator{
 		STRAIGHTHASHER, SHORTCUTFUZZYVAULT;
 	}
 }

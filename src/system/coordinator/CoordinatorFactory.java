@@ -19,7 +19,7 @@ public class CoordinatorFactory {
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
 		Coordinator tempCoordinator;
 	
-		switch(matchingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getMatchingCoordinator())){
+		switch(MatchingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getMatchingCoordinator())){
 			case DEFAULTTESTING:
 				firstCoordinator = addToFront(new DefaultTesting(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
 				break;		
@@ -36,7 +36,7 @@ public class CoordinatorFactory {
 				break;
 		}		
 		
-		switch(indexingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getIndexingCoordinator())){
+		switch(IndexingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getIndexingCoordinator())){
 			case INDEXING:
 				firstCoordinator = addToFront(new IndexTesting(hasher, users, IndexingStructureFactory.makeIndexingStructure()), firstCoordinator);
 				break;		
@@ -47,7 +47,7 @@ public class CoordinatorFactory {
 				break;
 		}	
 		
-		switch(histogramCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getHistogramCoordinator())){
+		switch(HistogramCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getHistogramCoordinator())){
 			case HISTOGRAM:
 				firstCoordinator = addToFront(new HistogramCoordinator(hasher, users), firstCoordinator);
 				break;		
@@ -70,15 +70,15 @@ public class CoordinatorFactory {
 		return coordinatorToAdd;
 	}
 	
-	private enum matchingCoordinatorEnumerator{
+	public enum MatchingCoordinatorEnumerator{
 		MULTIPLEENROLLMENT, DEFAULTTESTING, DEFAULTTESTINGPREQUANTIZED, NONE;
 	}
 	
-	private enum indexingCoordinatorEnumerator{
+	public enum IndexingCoordinatorEnumerator{
 		INDEXING, NONE;
 	}
 	
-	private enum histogramCoordinatorEnumerator{
+	public enum HistogramCoordinatorEnumerator{
 		HISTOGRAM, NONE;
 	}
 	
