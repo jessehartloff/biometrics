@@ -1,10 +1,13 @@
 package interfaces.gui;
 
-import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
@@ -12,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import system.allcommonclasses.settings.Settings;
 import system.coordinator.CoordinatorFactory;
@@ -32,104 +36,84 @@ public class GUI {
 	private Settings settings;
 	private JFrame frame;
 	private JPanel outerPanel;
-	private CardLayout cards;
+	private JPanel methodSettingsPanel;
+	//private CardLayout cards;
 	private LinkedHashMap<JComboBox, Method> globalSettingsMap;
-
+	private LinkedHashMap<String,Serializable> methodSettingsMap; //this is beyond janky. We need a generic settings class for all other methodSettings to extend
+	
+	public static void main(String[] args) {
+		new GUI();
+	}
+	
 	public GUI(){
+		settings = new Settings();
+		globalSettingsMap = new LinkedHashMap<JComboBox, Method>();
+		methodSettingsMap = new LinkedHashMap<String, Serializable>();
+		//ask Jesse for design advice on this...
+		methodSettingsMap.put("MINUTIAEMETHOD", settings.minutiaeSettings.getInstance());
+		methodSettingsMap.put("PATHSMETHOD", settings.pathSettings.getInstance());
+		methodSettingsMap.put("TRIANGLES", settings.triangleSettings.getInstance());
+		methodSettingsMap.put("TRIPLESOFTRIANGLES", settings.triangleSettings.getInstance());
+		methodSettingsMap.put("TRIPLESOFTRIANGLESALLROTATIONS", settings.triangleSettings.getInstance());
+		methodSettingsMap.put("NGONS", settings.ngonSettings.getInstance());
+		methodSettingsMap.put("NGONSALLROTATIONS", settings.ngonSettings.getInstance());
+
 		frame = new JFrame("Biometrics");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cards = new CardLayout();
 		outerPanel = new JPanel();
 		frame.add(outerPanel);
-		outerPanel.setLayout(cards);
-		settings = new Settings();
+		outerPanel.setLayout(new GridLayout(2,1));
 		frame.pack();
+
+		methodSettingsPanel = new JPanel();
+
 		JPanel globalSettingsPanel = new JPanel();
 		try {
-			globalSettingsPanel = this.setGlobalSettings();
+			globalSettingsPanel = this.drawGlobalSettingsPanel();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+		
+		JButton run = new JButton("Run");
+
+		run.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Running......");
+				for(int i = 0; i < 1000; i++){
+					System.out.println("Running......");
+				}
+				System.out.println("Just Kidding!");
+
+			}
+		});
+		methodSettingsPanel.add(run);
+		
 		outerPanel.add(globalSettingsPanel, "Global Settings Panel");
-		JPanel methodSettingsPanel = this.setMethodSettings();
 		outerPanel.add(methodSettingsPanel,"Method Settings Panel");
-		
-//		TriangleSettings currentSettings = settings.triangleSettings.getInstance();
-//		HashMap<String, Method> setterMap= new HashMap<String, Method>();
-//		
-//		
-//		ArrayList<Field> fields = new ArrayList<Field>(Arrays.asList(currentSettings.getClass().getFields()));
-//		ArrayList<Method> methods = new ArrayList<Method>(Arrays.asList(currentSettings.getClass().getMethods()));
-//		for(Method method : methods){
-//			System.out.println(method.getName());
-//		}
 
-		//System.out.println(fields);
-//		for (Field f : fields){
-//			System.out.println(f.getName());
-//			JPanel panel = new JPanel();
-//			panel.setLayout(new GridLayout(1,2));
-//			panel.setSize(50, 500);
-//			JLabel label = new JLabel(f.getName());
-//			label.setHorizontalAlignment(SwingConstants.CENTER);
-//			panel.add(label);
-//			JTextField textField = new JTextField();
-//			textField.setText(new Integer(4).toString());
-//			panel.add(textField);
-//			//frame.add(panel);
-//		}
-//		JButton run = new JButton("Go");
-//		run.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				frame.dispose();
-//				Processor processor = new Processor();
-//
-//				//processor.go(settings);
-//
-//			}
-//			
-//		});
-//		
-//		JButton load = new JButton("Run");
-//		load.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				System.out.println("Stop pushing my buttons.");
-//			}
-//			
-//		});
-//		
-//		frame.add(run);
-//		frame.add(load);
-		
-		
-
-//		JLabel label1 = new JLabel("Biometrics!");
-//		JLabel label2 = new JLabel("Biometrics!!");
-//		JLabel label3 = new JLabel("Biometrics!!!");
-//		JLabel label4 = new JLabel("Biometrics!!!!");
-//		JLabel label5 = new JLabel("Biometrics!!!!!");
-
-//		frame.getContentPane().add(label1);
-//		frame.getContentPane().add(label2);
-//		frame.getContentPane().add(label3);
-//		frame.getContentPane().add(label4);
-//		frame.getContentPane().add(label5);
 		frame.pack();
 		frame.setVisible(true);
 	}
 	
-	private JPanel setGlobalSettings() throws SecurityException, NoSuchMethodException{
+	private JPanel drawGlobalSettingsPanel() throws SecurityException, NoSuchMethodException{
 		final JPanel globalSettingsPanel = new JPanel();
 		
 		int amountOfGlobalSettingsElements = 7;
 		globalSettingsPanel.setLayout(new GridLayout(amountOfGlobalSettingsElements+1,2));
 		
 		FingerPrintEnumerator[] fingerprintMethodEnums = FingerprintMethodFactory.FingerPrintEnumerator.values();
-		JComboBox fingerprintMethodValuesBox = new JComboBox(fingerprintMethodEnums);
+		final JComboBox fingerprintMethodValuesBox = new JComboBox(fingerprintMethodEnums);
+		fingerprintMethodValuesBox.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				settings.globalSettings.setFingerprintMethodString(fingerprintMethodValuesBox.getSelectedItem().toString());
+				drawMethodSettingsPanel();
+			}
+			
+		});
 		
 		MatchingCoordinatorEnumerator[] matchingCoordinatorEnums = CoordinatorFactory.MatchingCoordinatorEnumerator.values();
 		JComboBox matchingCoordinatorValuesBox = new JComboBox(matchingCoordinatorEnums);
@@ -158,53 +142,41 @@ public class GUI {
 		hasherValuesBox.setSelectedItem(HasherFactory.HasherEnumerator.valueOf("STRAIGHTHASHER"));
 		testGeneratorValuesBox.setSelectedItem(TestGeneratorFactory.TestGeneratorEnumerator.valueOf("GENERATEFVCSTYLETESTS"));
 		datasetValuesBox.setSelectedItem("FVC2002DB1");
-		for(Method m : settings.globalSettings.getClass().getMethods()){
-			System.out.println(m.getName());
-		}
+
 		globalSettingsPanel.add(new JLabel("Fingerprint Method:"));
 		globalSettingsPanel.add(fingerprintMethodValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
+		System.out.println(settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
+		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
 		
 		globalSettingsPanel.add(new JLabel("Matching Coordinator:"));
 		globalSettingsPanel.add(matchingCoordinatorValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setMatchingCoordinator", String.class));
+		globalSettingsMap.put(matchingCoordinatorValuesBox, settings.globalSettings.getClass().getMethod("setMatchingCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Indexing Coordinator:"));
 		globalSettingsPanel.add(indexingCoordinatorValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setIndexingCoordinator", String.class));
+		globalSettingsMap.put(indexingCoordinatorValuesBox, settings.globalSettings.getClass().getMethod("setIndexingCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Histogram Coordinator:"));
 		globalSettingsPanel.add(histogramCoordinatorValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHistogramCoordinator", String.class));
+		globalSettingsMap.put(histogramCoordinatorValuesBox, settings.globalSettings.getClass().getMethod("setHistogramCoordinator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Hasher:"));
 		globalSettingsPanel.add(hasherValuesBox);		
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setHasher", String.class));
+		globalSettingsMap.put(hasherValuesBox, settings.globalSettings.getClass().getMethod("setHasher", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Test Generator:"));
 		globalSettingsPanel.add(testGeneratorValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setTestGenerator", String.class));
+		globalSettingsMap.put(testGeneratorValuesBox, settings.globalSettings.getClass().getMethod("setTestGenerator", String.class));
 
 		
 		globalSettingsPanel.add(new JLabel("Dataset:"));
 		globalSettingsPanel.add(datasetValuesBox);
-		//globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setDataset", String.class));
+		globalSettingsMap.put(datasetValuesBox, settings.globalSettings.getClass().getMethod("setDataset", String.class));
 
-		
-		JButton next = new JButton("Next");
-		
-		next.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cards.next(outerPanel);
-			}
-		});
-		
 		JButton load = new JButton("Load");
 		load.addActionListener(new ActionListener(){
 
@@ -214,18 +186,27 @@ public class GUI {
 			}
 		});
 		
-		globalSettingsPanel.add(next);
 		globalSettingsPanel.add(load);
 		return globalSettingsPanel;
 	}
 	
-	private JPanel setMethodSettings(){
-		JPanel methodSettingsPanel = new JPanel();
-		return methodSettingsPanel;
+	private void drawMethodSettingsPanel(){
+		methodSettingsPanel = new JPanel();
+		//System.out.println(settings.globalSettings.getFingerprintMethodString());
+		Serializable fingerprintMethod = methodSettingsMap.get(settings.globalSettings.getFingerprintMethodString());
+		//System.out.println(fingerprintMethod);
+		ArrayList<Field> fields = new ArrayList<Field>(Arrays.asList(fingerprintMethod.getClass().getFields()));
+		methodSettingsPanel.setLayout(new GridLayout(fields.size()+1,2));
+		for(Field field : fields){
+			System.out.println(field.getName());
+			methodSettingsPanel.add(new JLabel(field.getName()));
+			methodSettingsPanel.add(new JTextField());
+			//System.out.println(field.getName());
+		}
+		methodSettingsPanel.revalidate();
+		methodSettingsPanel.repaint();
+		outerPanel.revalidate();
+		outerPanel.repaint();	
 	}
-	
-	public static void main(String[] args) {
-		new GUI();
-	}
-	
+
 }

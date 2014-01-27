@@ -9,7 +9,7 @@ public class NgonSettings implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	
-	private LinkedHashMap<String, MethodVariableSettings> ngonVariableMap; //Make immutable?
+	private LinkedHashMap<String, MethodVariableSettings> ngonVariableMap; 
 	private Long N;
 	
 	private Double rotationStep;

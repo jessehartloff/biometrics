@@ -10,7 +10,7 @@ public class Settings implements Serializable {
 	public TriangleSettings triangleSettings;
 	public FuzzyVaultSettings fuzzyVaultSettings;
 	public PinSketchSettings pinSketchSettings;
-	public NgonSettings nGonSettings;
+	public NgonSettings ngonSettings;
 	
 	public static final long serialVersionUID = 1L;
 	
@@ -25,7 +25,7 @@ public class Settings implements Serializable {
 		triangleSettings = TriangleSettings.getInstance();
 		fuzzyVaultSettings = FuzzyVaultSettings.getInstance();
 		pinSketchSettings = PinSketchSettings.getInstance();
-		nGonSettings = NgonSettings.getInstance();
+		ngonSettings = NgonSettings.getInstance();
 	}
 	
 	public void loadToSettingsClasses(){
@@ -48,7 +48,7 @@ public class Settings implements Serializable {
 		ps = this.pinSketchSettings;
 	
 		NgonSettings n = NgonSettings.getInstance();
-		n = this.nGonSettings;
+		n = this.ngonSettings;
 	}
 	
 }
