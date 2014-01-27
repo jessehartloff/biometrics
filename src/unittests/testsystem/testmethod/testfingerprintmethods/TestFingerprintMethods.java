@@ -1,5 +1,4 @@
-package unittests;
-
+package unittests.testsystem.testmethod.testfingerprintmethods;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,10 +6,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	unittests.testinterfaces.TestInterfaces.class,
-	unittests.testsystem.TestSystem.class
+	TestTriangles.class,
+	TestNgons.class
 	})
 
-public class AllTests {
+
+public class TestFingerprintMethods {
 
 }

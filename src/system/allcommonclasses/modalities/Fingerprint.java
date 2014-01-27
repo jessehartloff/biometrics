@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.settings.GlobalSettings;
-import system.makefeaturevector.feature.Feature;
-import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
+import system.method.feature.Feature;
+import system.method.fingerprintmethods.FingerprintMethod;
 
 /**
  * A fingerprint.

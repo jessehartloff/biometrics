@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import system.allcommonclasses.commonstructures.Template;
-import system.makefeaturevector.Method;
-import system.makefeaturevector.feature.Feature;
-import system.makefeaturevector.fingerprintmethods.FingerprintMethod;
+import system.method.Method;
+import system.method.feature.Feature;
+import system.method.fingerprintmethods.FingerprintMethod;
 
 /**
  * 

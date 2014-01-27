@@ -22,12 +22,12 @@ import system.coordinator.CoordinatorFactory;
 import system.coordinator.CoordinatorFactory.HistogramCoordinatorEnumerator;
 import system.coordinator.CoordinatorFactory.IndexingCoordinatorEnumerator;
 import system.coordinator.CoordinatorFactory.MatchingCoordinatorEnumerator;
-import system.coordinator.tests.TestGeneratorFactory;
-import system.coordinator.tests.TestGeneratorFactory.TestGeneratorEnumerator;
+import system.coordinator.testgenerators.TestGeneratorFactory;
+import system.coordinator.testgenerators.TestGeneratorFactory.TestGeneratorEnumerator;
 import system.hasher.HasherFactory;
 import system.hasher.HasherFactory.HasherEnumerator;
-import system.makefeaturevector.fingerprintmethods.FingerprintMethodFactory;
-import system.makefeaturevector.fingerprintmethods.FingerprintMethodFactory.FingerPrintEnumerator;
+import system.method.fingerprintmethods.FingerprintMethodFactory;
+import system.method.fingerprintmethods.FingerprintMethodFactory.FingerPrintEnumerator;
 
 public class GUI {
 
@@ -145,8 +145,8 @@ public class GUI {
 
 		globalSettingsPanel.add(new JLabel("Fingerprint Method:"));
 		globalSettingsPanel.add(fingerprintMethodValuesBox);
-		System.out.println(settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
-		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethodString", String.class));
+		System.out.println(settings.globalSettings.getClass().getMethod("setFingerprintMethod", String.class));
+		globalSettingsMap.put(fingerprintMethodValuesBox, settings.globalSettings.getClass().getMethod("setFingerprintMethod", String.class));
 		
 		globalSettingsPanel.add(new JLabel("Matching Coordinator:"));
 		globalSettingsPanel.add(matchingCoordinatorValuesBox);
@@ -175,7 +175,7 @@ public class GUI {
 		
 		globalSettingsPanel.add(new JLabel("Dataset:"));
 		globalSettingsPanel.add(datasetValuesBox);
-		globalSettingsMap.put(datasetValuesBox, settings.globalSettings.getClass().getMethod("setDataset", String.class));
+		globalSettingsMap.put(datasetValuesBox, settings.globalSettings.getClass().getMethod("setTestingDataset", String.class));
 
 		JButton load = new JButton("Load");
 		load.addActionListener(new ActionListener(){

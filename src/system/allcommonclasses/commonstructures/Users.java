@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.settings.GlobalSettings;
-import system.makefeaturevector.feature.Feature;
-import system.makefeaturevector.feature.Variable;
+import system.method.feature.Feature;
+import system.method.feature.Variable;
 
 /**
  * 

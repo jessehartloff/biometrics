@@ -1,5 +1,4 @@
-package unittests;
-
+package unittests.testsystem.testallcommonclasses.testtransformations;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,10 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	unittests.testinterfaces.TestInterfaces.class,
-	unittests.testsystem.TestSystem.class
+	TestSHA.class
 	})
 
-public class AllTests {
+public class TestTransformations {
 
 }

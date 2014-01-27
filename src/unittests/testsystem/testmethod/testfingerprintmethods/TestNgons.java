@@ -1,4 +1,4 @@
-package unittests.testsystem;
+package unittests.testsystem.testmethod.testfingerprintmethods;
 
 import static org.junit.Assert.assertTrue;
 
@@ -12,8 +12,8 @@ import system.method.feature.Variable;
 import system.method.fingerprintmethods.Ngons;
 import system.method.fingerprintmethods.Ngons.Ngon;
 
+public class TestNgons {
 
-public class FingerprintMethodTests {
 	@Test
 	public void testRecursiveConstructor(){
 		ArrayList<Ngon> ngonList = new ArrayList<Ngon>();
@@ -46,4 +46,5 @@ public class FingerprintMethodTests {
 		assertTrue("",ngonListTest.get(0).variables.values().contains(tempNgon.variables.values()));
 		
 	}
+	
 }

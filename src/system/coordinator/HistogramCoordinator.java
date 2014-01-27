@@ -7,7 +7,7 @@ import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
 import system.hasher.Hasher;
-import system.makefeaturevector.feature.Feature;
+import system.method.feature.Feature;
 
 public class HistogramCoordinator extends Coordinator{
 

@@ -15,8 +15,8 @@ import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.transformations.*;
 import system.hasher.Hasher;
 import system.hasher.StraightHasher;
-import system.makefeaturevector.fingerprintmethods.*;
-import system.makefeaturevector.fingerprintmethods.Triangles.Triangle;
+import system.method.fingerprintmethods.*;
+import system.method.fingerprintmethods.Triangles.Triangle;
 
 public class SystemTests {
 

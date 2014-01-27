@@ -6,7 +6,7 @@ import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
-import system.coordinator.tests.*;
+import system.coordinator.testgenerators.*;
 import system.hasher.Hasher;
 
 /**

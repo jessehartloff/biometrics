@@ -6,7 +6,7 @@ import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.IndexingStructureFactory;
 import system.allcommonclasses.settings.GlobalSettings;
-import system.coordinator.tests.TestGeneratorFactory;
+import system.coordinator.testgenerators.TestGeneratorFactory;
 import system.hasher.Hasher;
 import system.hasher.HasherFactory;
 

@@ -7,7 +7,7 @@ import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.settings.Settings;
 import system.allcommonclasses.utilities.UsersIO;
 import system.coordinator.*;
-import system.makefeaturevector.fingerprintmethods.*;
+import system.method.fingerprintmethods.*;
 
 /**
  * 
