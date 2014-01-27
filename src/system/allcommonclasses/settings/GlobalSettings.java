@@ -13,7 +13,8 @@ public class GlobalSettings implements Serializable{
 	private String faceMethod;
 	private String hasher;
 	private String distanceFunction;
-	private String dataset;
+	private String trainingDataset;
+	private String testingDataset;
 	private String testGenerator;
 	private String matchingCoordinator;
 	private String indexingCoordinator; 
@@ -38,9 +39,9 @@ public class GlobalSettings implements Serializable{
 	
 	
 	//getters and setters
-	public String getFingerprintMethodString() {return fingerprintMethod;}
-	public void setFingerprintMethodString(String fingerprintMethodString) {
-		this.fingerprintMethod = fingerprintMethodString;
+	public String getFingerprintMethod() {return fingerprintMethod;}
+	public void setFingerprintMethod(String fingerprintMethod) {
+		this.fingerprintMethod = fingerprintMethod;
 		}
 	public String getIrisMethod() {return irisMethod;}
 	public void setIrisMethod(String irisMethod) {this.irisMethod = irisMethod;}
@@ -50,8 +51,19 @@ public class GlobalSettings implements Serializable{
 	public void setHasher(String hasher) {this.hasher = hasher;}
 	public String getDistanceFunction() {return distanceFunction;}
 	public void setDistanceFunction(String distanceFunction) {this.distanceFunction = distanceFunction;}
-	public String getDataset() {return dataset;}
-	public void setDataset(String dataset) {this.dataset = dataset;}
+
+	public String getTrainingDataset() {
+		return trainingDataset;
+	}
+	public void setTrainingDataset(String trainingDataset) {
+		this.trainingDataset = trainingDataset;
+	}
+	public String getTestingDataset() {
+		return testingDataset;
+	}
+	public void setTestingDataset(String testingDataset) {
+		this.testingDataset = testingDataset;
+	}
 	public String getTestGenerator() {return testGenerator;}
 	public void setTestGenerator(String testGenerator) {this.testGenerator = testGenerator;}
 	public String getMatchingCoordinator() {

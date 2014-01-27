@@ -13,7 +13,7 @@ public class Main {
 
 		Settings settings = new Settings();
 
-		settings.globalSettings.setFingerprintMethodString("TRIANGLES");
+		settings.globalSettings.setFingerprintMethod("TRIANGLES");
 		settings.globalSettings.setMatchingCoordinator("DEFAULTTESTINGPREQUANTIZED");
 //		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
@@ -22,13 +22,12 @@ public class Main {
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
-//<<<<<<< Main.java
-//		settings.globalSettings.setDataset("FVC2002DB3");
-//=======
-		settings.globalSettings.setDataset("FVC2002Training");
+
+		settings.globalSettings.setTrainingDataset("FVC2002Training");
+		settings.globalSettings.setTestingDataset("FVC2002Testing");
 		
 		settings.globalSettings.setEerStepSize(1.0);
-//>>>>>>> 1.48
+
 
 		settings.triangleSettings.theta0.setBins(8);
 		settings.triangleSettings.x1.setBins(8);

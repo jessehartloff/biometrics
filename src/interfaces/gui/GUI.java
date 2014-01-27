@@ -109,7 +109,7 @@ public class GUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				settings.globalSettings.setFingerprintMethodString(fingerprintMethodValuesBox.getSelectedItem().toString());
+				settings.globalSettings.setFingerprintMethod(fingerprintMethodValuesBox.getSelectedItem().toString());
 				drawMethodSettingsPanel();
 			}
 			
@@ -193,7 +193,7 @@ public class GUI {
 	private void drawMethodSettingsPanel(){
 		methodSettingsPanel = new JPanel();
 		//System.out.println(settings.globalSettings.getFingerprintMethodString());
-		Serializable fingerprintMethod = methodSettingsMap.get(settings.globalSettings.getFingerprintMethodString());
+		Serializable fingerprintMethod = methodSettingsMap.get(settings.globalSettings.getFingerprintMethod());
 		//System.out.println(fingerprintMethod);
 		ArrayList<Field> fields = new ArrayList<Field>(Arrays.asList(fingerprintMethod.getClass().getFields()));
 		methodSettingsPanel.setLayout(new GridLayout(fields.size()+1,2));

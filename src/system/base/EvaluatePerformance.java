@@ -22,6 +22,8 @@ public class EvaluatePerformance {
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
 		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
 		
+		results.rawScores = rawScores;
+		
 		return results;
 	}
 	

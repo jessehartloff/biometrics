@@ -6,7 +6,7 @@ import system.allcommonclasses.settings.GlobalSettings;
 public class FingerprintMethodFactory{
 	
 	public static void makeFingerprintMethod(){
-		switch(FingerPrintEnumerator.valueOf(GlobalSettings.getInstance().getFingerprintMethodString())){
+		switch(FingerPrintEnumerator.valueOf(GlobalSettings.getInstance().getFingerprintMethod())){
 			case MINUTIAEMETHOD:
 				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
 				break;

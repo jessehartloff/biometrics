@@ -17,7 +17,7 @@ public class CoordinatorFactory {
 		Hasher hasher = HasherFactory.makeHasher();
 		
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
-		Coordinator tempCoordinator;
+		
 	
 		switch(MatchingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getMatchingCoordinator())){
 			case DEFAULTTESTING:

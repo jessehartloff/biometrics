@@ -22,8 +22,6 @@ public class Ngons extends FingerprintMethod{
 	protected NgonSettings settings;
 	public Long N;
 
-	// TODO Matt - ngons with all rotations
-	// k-plets of n-gons
 	
 	public class Ngon extends Feature implements Comparable<Ngon>{
 		private NgonSettings ngonSettings;

@@ -29,11 +29,11 @@ public class Processor {
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
 
-		RawScores rawScores = CoordinatorFactory.makeCoordinator(UsersIO.getUsers()).run();
+		RawScores rawScores = CoordinatorFactory.makeCoordinator(UsersIO.getUsersAndTrain()).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
 
-		System.out.print(rawScores);
+		System.out.print(results.rawScores);
 		System.out.println(results);
 	
 		return results;

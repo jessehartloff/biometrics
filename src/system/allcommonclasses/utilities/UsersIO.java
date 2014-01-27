@@ -11,8 +11,17 @@ import system.allcommonclasses.settings.GlobalSettings;
 
 public class UsersIO {
 
-	public static Users getUsers() {
-		String dataset = GlobalSettings.getInstance().getDataset();
+	public static Users getUsersAndTrain(){
+		
+		Users traingingUsers = UsersIO.getUsers(GlobalSettings.getInstance().getTrainingDataset());
+		Users testingUsers = UsersIO.getUsers(GlobalSettings.getInstance().getTestingDataset());
+		
+		traingingUsers.computeBins();
+		return testingUsers;
+	}
+
+	
+	private static Users getUsers(String dataset){
 		
 		Users readUsers = null;
 		
@@ -31,11 +40,10 @@ public class UsersIO {
 		}catch(Exception exp){
 			exp.printStackTrace();
 		}
-
-		readUsers.computeBins();
+		
 		return readUsers;
+		
 	}
-
 	
 	
 }

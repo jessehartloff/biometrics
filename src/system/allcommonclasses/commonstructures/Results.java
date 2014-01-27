@@ -20,6 +20,9 @@ public class Results {
 	private Histogram fieldHistogram;
 	private ArrayList<Histogram> variableHistograms;
 	private ArrayList<Long> indexingResults;
+	
+	public RawScores rawScores;
+	
 		
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
