@@ -19,7 +19,7 @@ import system.method.feature.*;
  */
 public class Triangles extends FingerprintMethod {
 	
-	protected TriangleSettings settings;
+	public TriangleSettings settings;
 	
 	public class Triangle extends Feature implements Comparable<Triangle>{
 
@@ -45,7 +45,7 @@ public class Triangles extends FingerprintMethod {
 		private Double centerX;
 		private Double centerY;
 		
-		protected TriangleSettings innerSettings;
+		public TriangleSettings innerSettings;
 
 		public Triangle(){
 			minutiaIndecies = new HashSet<Long>();

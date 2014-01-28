@@ -19,6 +19,8 @@ public class Users implements Serializable{
 	
 	public ArrayList<User> users;
 	
+	public transient int testerer = 4;
+	
 	public Users(){
 		this.users = new ArrayList<User>();
 	}

@@ -1,11 +1,17 @@
 package system.allcommonclasses.settings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.HashSet;
 
-public class PathSettings implements Serializable{
+import system.allcommonclasses.settings.settingsvariables.LongSettingsVariable;
+import system.allcommonclasses.settings.settingsvariables.SettingsVariable;
+
+public class PathSettings extends SettingsClass implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	//settings
 	public MethodVariableSettings d0;
 	public MethodVariableSettings d1;
@@ -19,12 +25,18 @@ public class PathSettings implements Serializable{
 	public MethodVariableSettings phi2;
 	public MethodVariableSettings phi3;
 	
-	private Long kClosestMinutia;
+	public transient LongSettingsVariable kClosestMinutia;
 	//
+	
+	//loop through the hashset?
+	//get a copy of the hashset?
 	
 	//singleton
 	private static PathSettings instance;
 	private PathSettings(){
+		kClosestMinutia = new LongSettingsVariable();
+		this.settingsVariables.add(kClosestMinutia);
+		
 		d0 = new MethodVariableSettings();
 		d1 = new MethodVariableSettings();
 		d2 = new MethodVariableSettings();
@@ -44,13 +56,13 @@ public class PathSettings implements Serializable{
 		return instance;
 	}
 
-	//getters and setters
-	public Long getkClosestMinutia() {
-		return kClosestMinutia;
-	}
 
-	public void setkClosestMinutia(Long kClosestMinutia) {
-		this.kClosestMinutia = kClosestMinutia;
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+	{
+	    in.defaultReadObject();
+	    // Jesse - play with this
+	    // populate variables from deserialized set
 	}
+	
 	
 }

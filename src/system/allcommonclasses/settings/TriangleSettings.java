@@ -1,11 +1,16 @@
 package system.allcommonclasses.settings;
 
 import java.io.Serializable;
+import java.util.HashSet;
+
+import system.allcommonclasses.settings.settingsvariables.SettingsVariable;
 
 public class TriangleSettings implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	private HashSet<SettingsVariable> allVariables;
+	
 	//settings
 	public MethodVariableSettings theta0;
 	public MethodVariableSettings x1;

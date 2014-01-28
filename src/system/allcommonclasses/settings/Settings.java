@@ -28,7 +28,7 @@ public class Settings implements Serializable {
 		ngonSettings = NgonSettings.getInstance();
 	}
 	
-	public void loadToSettingsClasses(){
+	public void loadToSettingsClasses(){//TODO Jesse - this doesn't work
 		GlobalSettings g = GlobalSettings.getInstance();
 		g = this.globalSettings;
 		

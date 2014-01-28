@@ -18,7 +18,7 @@ public class Main {
 //		settings.globalSettings.setMatchingCoordinator("MULTIPLEENROLLMENT");
 
 		settings.globalSettings.setIndexingCoordinator("NONE");
-		settings.globalSettings.setHistogramCoordinator("HISTOGRAM");
+		settings.globalSettings.setHistogramCoordinator("NONE");
 		settings.globalSettings.setHasher("STRAIGHTHASHER");
 		settings.globalSettings.setTestGenerator("GENERATEFVCSTYLETESTS");
 		settings.globalSettings.setIndexingStructure("RAM");
@@ -58,7 +58,7 @@ public class Main {
 		settings.pathSettings.sigma2.setBins(4);
 		settings.pathSettings.sigma3.setBins(4);
 		
-		settings.pathSettings.setkClosestMinutia(5L);
+		settings.pathSettings.kClosestMinutia.setValue(5);
 
 		settings.minutiaeSettings.x.setBins(8);
 		settings.minutiaeSettings.y.setBins(8);

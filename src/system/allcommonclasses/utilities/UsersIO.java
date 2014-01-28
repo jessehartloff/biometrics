@@ -30,7 +30,8 @@ public class UsersIO {
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			readUsers = (Users) in.readObject();
-			in.close();fileIn.close();
+			in.close();
+			fileIn.close();
 			
 			for(User user : readUsers.users){
 				user.prequantizedEnrolledTemplates = new ArrayList<Template>();
