@@ -1,9 +1,11 @@
 package interfaces.commandline;
 
+
 import settings.AllSettings;
 import system.biometricsystem.BiometricSystem;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.modalities.*;
+
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
@@ -12,6 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {		
 		
+
 //
 //		AllSettings settings = new AllSettings();
 //
@@ -98,5 +101,6 @@ public class Main {
 //		System.out.print(results.rawScores);
 //		System.out.println(results);
 
+>>>>>>> 1.53
 	}
 }
