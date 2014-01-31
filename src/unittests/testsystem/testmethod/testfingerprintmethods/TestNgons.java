@@ -16,7 +16,7 @@ public class TestNgons {
 	public void testRecursiveConstructor(){
 		ArrayList<Ngon> ngonList = new ArrayList<Ngon>();
 		NgonSettings settings = NgonSettings.getInstance();
-		settings.setN(4L);
+		settings.getN().setValue(4L);
 		Ngons ngons = new Ngons();
 		//Method method = Ngons.getClass
 		ArrayList<Minutia> points = new ArrayList<Minutia>();

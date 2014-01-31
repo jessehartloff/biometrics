@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.math.BigInteger;
 
 import settings.AllSettings;
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.Triangles.Triangle;
@@ -57,7 +58,7 @@ public class TestTriangles {
 	
 	@org.junit.Test
 	public void testTrianglesAsBigInts() {
-		AllSettings settings = new AllSettings();
+		TriangleSettings settings = TriangleSettings.getInstance();
 		Triangles triangleMethod = new Triangles();
 		
 //		ArrayList<Long> boundaries = new ArrayList<Long>(Arrays.asList(5L,10L,15L,20L));
@@ -69,13 +70,13 @@ public class TestTriangles {
 //		settings.triangleSettings.y2.setBinBoundaries(boundaries);
 //		settings.triangleSettings.theta2.setBinBoundaries(boundaries);
 		
-		settings.triangleSettings.theta0.setBins(5);
-		settings.triangleSettings.x1.setBins(8);
-		settings.triangleSettings.y1.setBins(9);
-		settings.triangleSettings.theta1.setBins(2);
-		settings.triangleSettings.x2.setBins(14);
-		settings.triangleSettings.y2.setBins(7);
-		settings.triangleSettings.theta2.setBins(16);
+		settings.theta0().setBins(5);
+		settings.x1().setBins(8);
+		settings.y1().setBins(9);
+		settings.theta1().setBins(2);
+		settings.x2().setBins(14);
+		settings.y2().setBins(7);
+		settings.theta2().setBins(16);
 		
 		Triangle t = triangleMethod.new Triangle();
 
@@ -96,16 +97,16 @@ public class TestTriangles {
 	
 	@org.junit.Test
 	public void testBigIntsAsTriangles() {
-		AllSettings settings = new AllSettings();
+		TriangleSettings settings = TriangleSettings.getInstance();
 		Triangles triangleMethod = new Triangles();
 		
-		settings.triangleSettings.theta0.setBins(5);
-		settings.triangleSettings.x1.setBins(8);
-		settings.triangleSettings.y1.setBins(9);
-		settings.triangleSettings.theta1.setBins(2);
-		settings.triangleSettings.x2.setBins(14);
-		settings.triangleSettings.y2.setBins(7);
-		settings.triangleSettings.theta2.setBins(16);
+		settings.theta0().setBins(5);
+		settings.x1().setBins(8);
+		settings.y1().setBins(9);
+		settings.theta1().setBins(2);
+		settings.x2().setBins(14);
+		settings.y2().setBins(7);
+		settings.theta2().setBins(16);
 		
 		Triangle computed = triangleMethod.new Triangle();
 		Triangle expected = triangleMethod.new Triangle();

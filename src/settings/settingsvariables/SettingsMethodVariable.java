@@ -22,6 +22,15 @@ public class SettingsMethodVariable extends SettingsVariable{
 		bits = 5L;
 	}
 	
+	public SettingsMethodVariable(Long numberOfBins){
+		this.settingsVariables.put("bins", new SettingsLong(numberOfBins));
+		binBoundaries = new ArrayList<Long>();
+		bits = this.binsToBits(numberOfBins);
+	}
+	
+	public SettingsMethodVariable(Integer numberOfBins){
+		this(numberOfBins.longValue());
+	}
 	public Long findBin(Long prequantizedValue) {
 		Integer n = this.binBoundaries.size();	
 		for(Integer i=0; i<n; i++){
@@ -67,9 +76,12 @@ public class SettingsMethodVariable extends SettingsVariable{
 		}
 	}
 
+	
+	public ArrayList<Long> getBinBoundaries() {
+		return this.binBoundaries;
+	}
+	
 
-	
-	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
 	    in.defaultReadObject();
@@ -79,6 +91,8 @@ public class SettingsMethodVariable extends SettingsVariable{
 	    // TODO populate variables from deserialized set
 	    // might not need to all the time. maybe just for compute bits
 	}
+
+
 	
 	
 }

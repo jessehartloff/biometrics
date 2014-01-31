@@ -72,7 +72,7 @@ public class TestMethodVariableSettings {
 		result &= var.findBin(601L).equals(3L);
 		result &= var.findBin(1045L).equals(3L);
 		
-		ArrayList<Long> computed = var.getBinBoundaries();
+//		ArrayList<Long> computed = var.getBinBoundaries();
 		
 		assertTrue("This message is not helpful",
 				result);
@@ -87,8 +87,8 @@ public class TestMethodVariableSettings {
 		int n=bins.size();
 		SettingsMethodVariable forTheFunction = new SettingsMethodVariable();
 		for(int i=0; i<n; i++){
-			result = result && forTheFunction.binsToBits(bins.get(i)) == expectedBits.get(i);
-			computedBits.add(forTheFunction.binsToBits(bins.get(i)));
+			result = result && forTheFunction.binsToBits(new Long(bins.get(i))) == new Long(expectedBits.get(i));
+			computedBits.add(forTheFunction.binsToBits(new Long(bins.get(i))).intValue());
 		}
 		assertTrue("\nexpected: " + expectedBits + "\ncomputed: " + computedBits, result);
 	}

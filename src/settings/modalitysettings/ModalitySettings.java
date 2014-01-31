@@ -33,7 +33,7 @@ public class ModalitySettings extends Settings {
 	//Singleton
 	private static ModalitySettings instance;
 	private ModalitySettings() {
-//		this.settingsVariables.put("Modality", FingerprintSettings.getInstance());
+		this.settingsVariables.put("Modality", FingerprintSettings.getInstance());
 	}
 	public static ModalitySettings getInstance(){
 		if(instance == null){
