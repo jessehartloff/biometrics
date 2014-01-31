@@ -3,7 +3,6 @@ package system.allcommonclasses.modalities;
 import java.util.ArrayList;
 
 import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.method.feature.Feature;
 import system.method.fingerprintmethods.FingerprintMethod;
 
@@ -30,7 +29,6 @@ public class Fingerprint extends Biometric{
 	
 	@Override
 	public Template quantizeOne(){
-//		System.out.println("this: " + this.minutiae.get(0).getIndex());
 		return Fingerprint.fingerprintMethod.quantizeOne(this);
 	}
 

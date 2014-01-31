@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import system.base.RatesPoint;
+import system.biometricsystem.RatesPoint;
 
 /**
  * 

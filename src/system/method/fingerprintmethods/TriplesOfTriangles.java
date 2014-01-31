@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.method.feature.Feature;
@@ -45,20 +46,20 @@ public class TriplesOfTriangles extends Triangles {
 		
 		@Override
 		public BigInteger toBigInt(){
-			Integer triangleBits = settings.theta0.getBits() + 
-					settings.x1.getBits() +
-					settings.y1.getBits() +
-					settings.theta1.getBits() +
-					settings.x2.getBits() +
-					settings.y2.getBits() +
-					settings.theta2.getBits();
+			Long triangleBits = settings.theta0().getBits() + 
+					settings.x1().getBits() +
+					settings.y1().getBits() +
+					settings.theta1().getBits() +
+					settings.x2().getBits() +
+					settings.y2().getBits() +
+					settings.theta2().getBits();
 			
 			BigInteger toReturn = t0.toBigInt();
 
-			toReturn = toReturn.shiftLeft(triangleBits);
+			toReturn = toReturn.shiftLeft(triangleBits.intValue());
 			toReturn = toReturn.add(t1.toBigInt());
 			
-			toReturn = toReturn.shiftLeft(triangleBits);
+			toReturn = toReturn.shiftLeft(triangleBits.intValue());
 			toReturn = toReturn.add(t2.toBigInt());
 			
 			return toReturn;
@@ -66,28 +67,28 @@ public class TriplesOfTriangles extends Triangles {
 		
 		@Override
 		public void fromBigInt(BigInteger bigInt){
-			Integer triangleBits = settings.theta0.getBits() + 
-					settings.x1.getBits() +
-					settings.y1.getBits() +
-					settings.theta1.getBits() +
-					settings.x2.getBits() +
-					settings.y2.getBits() +
-					settings.theta2.getBits();
+			Long triangleBits = settings.theta0().getBits() + 
+					settings.x1().getBits() +
+					settings.y1().getBits() +
+					settings.theta1().getBits() +
+					settings.x2().getBits() +
+					settings.y2().getBits() +
+					settings.theta2().getBits();
 
 			BigInteger bigTwo = BigInteger.valueOf(2);
 			
 			Triangle triangle2 = new Triangle();
-			triangle2.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			triangle2.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
 			t2 = triangle2;
-			bigInt = bigInt.shiftRight(triangleBits);
+			bigInt = bigInt.shiftRight(triangleBits.intValue());
 
 			Triangle triangle1 = new Triangle();
-			triangle1.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			triangle1.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
 			t1 = triangle1;
-			bigInt = bigInt.shiftRight(triangleBits);
+			bigInt = bigInt.shiftRight(triangleBits.intValue());
 
 			Triangle triangle0 = new Triangle();
-			triangle0.fromBigInt(bigInt.and(bigTwo.pow(triangleBits).add(BigInteger.valueOf(-1))));
+			triangle0.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
 			t0 = triangle0;
 		}
 	}
@@ -95,6 +96,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	public TriplesOfTriangles() {
+		super();
 	}
 	
 	
@@ -125,7 +127,7 @@ public class TriplesOfTriangles extends Triangles {
 
 			ArrayList<Triangle> trianglesToTry = new ArrayList<Triangle>();
 			trianglesToTry.add(triangle);
-			for(int i=0; i<settings.getkClosestTriangles(); i++){
+			for(int i=0; i<settings.kClosestTriangles().getValue(); i++){
 				trianglesToTry.add(triangleCopy.get(startingIndex+i));
 			}
 
@@ -150,7 +152,7 @@ public class TriplesOfTriangles extends Triangles {
 //		System.out.println("all: " + indecies);
 //		System.out.println("t0: " + t0.minutiaIndecies);
 //		System.out.println("t1: " + t1.minutiaIndecies);
-		if(indecies.size() >= settings.getMinimumPointsForTripletOfTriangles()){
+		if(indecies.size() >= settings.minimumPointsForTripletOfTriangles().getValue()){
 			TriangleTriplet triplet = new TriangleTriplet();
 			triplet.t0 = t0;
 			triplet.t1 = t1;
@@ -179,9 +181,9 @@ public class TriplesOfTriangles extends Triangles {
 	public ArrayList<Template> triplesOfTrianglesQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
 
-		for(double rotation=settings.getRotationStart(); 
-				rotation<settings.getRotationStop(); 
-				rotation+=settings.getRotationStep())
+		for(double rotation=settings.rotationStart().getValue(); 
+				rotation<settings.rotationStop().getValue(); 
+				rotation+=settings.rotationStep().getValue())
 		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.triplesOfTrianglesQuantizeOne(rotatedPrint));

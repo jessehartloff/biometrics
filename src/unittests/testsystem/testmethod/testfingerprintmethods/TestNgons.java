@@ -4,17 +4,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
-
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonSettings;
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.NgonSettings;
 import system.method.feature.Variable;
 import system.method.fingerprintmethods.Ngons;
 import system.method.fingerprintmethods.Ngons.Ngon;
 
 public class TestNgons {
 
-	@Test
+	@org.junit.Test
 	public void testRecursiveConstructor(){
 		ArrayList<Ngon> ngonList = new ArrayList<Ngon>();
 		NgonSettings settings = NgonSettings.getInstance();
@@ -44,6 +42,7 @@ public class TestNgons {
 		System.out.println(tempNgon.variables.values().toString());
 		System.out.println(ngonList.get(0).variables.values());
 		assertTrue("",ngonListTest.get(0).variables.values().contains(tempNgon.variables.values()));
+//		assertTrue("",true);
 		
 	}
 	

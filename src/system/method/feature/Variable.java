@@ -1,14 +1,14 @@
 package system.method.feature;
 
-import system.allcommonclasses.settings.MethodVariableSettings;
+import settings.settingsvariables.SettingsMethodVariable;
 
 public class Variable {
  	
-	public MethodVariableSettings variableSettings;
+	public SettingsMethodVariable variableSettings;
 	protected Long prequantizedValue;
 	protected Long quantizedValue;
 	
-	public Variable(MethodVariableSettings variableSettings){
+	public Variable(SettingsMethodVariable variableSettings){
 		this.variableSettings = variableSettings;
 	}
 

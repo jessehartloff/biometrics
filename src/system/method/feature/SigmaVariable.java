@@ -1,12 +1,12 @@
 package system.method.feature;
 
-import system.allcommonclasses.settings.MethodVariableSettings;
+import settings.settingsvariables.SettingsMethodVariable;
 
 public class SigmaVariable extends Variable{
 
 	// used as the difference between theta's. varies from 0 to 179 degrees
 	
-	public SigmaVariable(MethodVariableSettings variableSettings) {
+	public SigmaVariable(SettingsMethodVariable variableSettings) {
 		super(variableSettings);
 	}
 

@@ -1,11 +1,19 @@
 package system.coordinator;
 
 
+import settings.coordinatorsettings.HistogramCoordinatorSettings;
+import settings.coordinatorsettings.IndexingCoordinatorSettings;
+import settings.coordinatorsettings.MatchingCoordinatorSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.IndexingStructureFactory;
-import system.allcommonclasses.settings.GlobalSettings;
+import system.coordinator.Coordinator;
+import system.coordinator.DefaultTesting;
+import system.coordinator.DefaultTestingPrequantized;
+import system.coordinator.HistogramCoordinator;
+import system.coordinator.IndexTesting;
+import system.coordinator.MultipleEnrollment;
 import system.coordinator.testgenerators.TestGeneratorFactory;
 import system.hasher.Hasher;
 import system.hasher.HasherFactory;
@@ -19,7 +27,7 @@ public class CoordinatorFactory {
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
 		
 	
-		switch(MatchingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getMatchingCoordinator())){
+		switch(MatchingCoordinatorEnumerator.valueOf(MatchingCoordinatorSettings.getMatchingCoordinator())){
 			case DEFAULTTESTING:
 				firstCoordinator = addToFront(new DefaultTesting(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
 				break;		
@@ -36,7 +44,7 @@ public class CoordinatorFactory {
 				break;
 		}		
 		
-		switch(IndexingCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getIndexingCoordinator())){
+		switch(IndexingCoordinatorEnumerator.valueOf(IndexingCoordinatorSettings.getIndexingCoordinator())){
 			case INDEXING:
 				firstCoordinator = addToFront(new IndexTesting(hasher, users, IndexingStructureFactory.makeIndexingStructure()), firstCoordinator);
 				break;		
@@ -47,7 +55,7 @@ public class CoordinatorFactory {
 				break;
 		}	
 		
-		switch(HistogramCoordinatorEnumerator.valueOf(GlobalSettings.getInstance().getHistogramCoordinator())){
+		switch(HistogramCoordinatorEnumerator.valueOf(HistogramCoordinatorSettings.getHistogramCoordinator())){
 			case HISTOGRAM:
 				firstCoordinator = addToFront(new HistogramCoordinator(hasher, users), firstCoordinator);
 				break;		

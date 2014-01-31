@@ -1,11 +1,14 @@
 package system.hasher;
 
-import system.allcommonclasses.settings.GlobalSettings;
+import settings.hashersettings.HasherSettings;
+import system.hasher.Hasher;
+import system.hasher.ShortcutFuzzyVault;
+import system.hasher.StraightHasher;
 
 public class HasherFactory{
 	
 	public static Hasher makeHasher() {
-		switch(HasherEnumerator.valueOf(GlobalSettings.getInstance().getHasher())){
+		switch(HasherEnumerator.valueOf(HasherSettings.getHasher())){
 			case STRAIGHTHASHER:
 				return new StraightHasher();
 			case SHORTCUTFUZZYVAULT:

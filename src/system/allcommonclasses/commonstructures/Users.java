@@ -1,10 +1,11 @@
 package system.allcommonclasses.commonstructures;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import system.allcommonclasses.modalities.*;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.method.feature.Feature;
 import system.method.feature.Variable;
 
@@ -19,7 +20,7 @@ public class Users implements Serializable{
 	
 	public ArrayList<User> users;
 	
-	public transient int testerer = 4;
+//	public transient int testerer = 4;
 	
 	public Users(){
 		this.users = new ArrayList<User>();
@@ -27,7 +28,7 @@ public class Users implements Serializable{
 	
 	// assumes all the users have the same type of biometric
 	public void computeBins() {
-		
+		System.out.println("gg");
 		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
 		Feature blankFeature = Biometric.method.getBlankFeatureForBinning();
 		for(Variable var : blankFeature.variables.values()){
@@ -51,9 +52,10 @@ public class Users implements Serializable{
 			var.variableSettings.computeBinBoundaries(allPrequantizedValues.get(i));
 			i++;
 		}
-		
+
+		System.out.println("gg");
 		
 	}
 	
-	
+		
 }

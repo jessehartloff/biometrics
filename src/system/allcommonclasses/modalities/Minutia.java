@@ -1,5 +1,7 @@
 package system.allcommonclasses.modalities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -159,5 +161,14 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
 		return (inRadians * 180.0)/Math.PI;
 	}
+	
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+	{
+	    in.defaultReadObject();
+
+//	    System.out.println("Read a Minutia Point");
+	}
+	
 	
 }

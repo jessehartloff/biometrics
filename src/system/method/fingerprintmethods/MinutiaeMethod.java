@@ -3,10 +3,10 @@ package system.method.fingerprintmethods;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.MinutiaSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.*;
 import system.method.feature.Feature;
 import system.method.feature.Variable;
 
@@ -18,10 +18,10 @@ import system.method.feature.Variable;
  */
 public class MinutiaeMethod extends FingerprintMethod {
 
-	private MinutiaeSettings settings;
+	private MinutiaSettings settings;
 	
 	public class InnerMinutia extends Feature{
-		private MinutiaeSettings innerSettings;
+		private MinutiaSettings innerSettings;
 		public InnerMinutia(){
 			this.innerSettings = settings;
 			variables.put("x", new Variable(innerSettings.x));
@@ -32,7 +32,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 
 	
 	public MinutiaeMethod() {
-		settings = MinutiaeSettings.getInstance();
+		settings = MinutiaSettings.getInstance();
 	}
 
 

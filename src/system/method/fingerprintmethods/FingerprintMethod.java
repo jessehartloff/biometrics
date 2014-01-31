@@ -10,7 +10,7 @@ import system.method.feature.Feature;
 
 public abstract class FingerprintMethod extends Method{
 
-	
+
 	/**
 	 * Converts a fingerprint into a Template containing hashable data
 	 * 

@@ -7,10 +7,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonSettings;
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonVariablesSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.NgonSettings;
 import system.method.feature.Feature;
 import system.method.feature.ThetaVariable;
 import system.method.feature.Variable;
@@ -20,6 +21,7 @@ import system.method.fingerprintmethods.Triangles.Triangle;
 public class Ngons extends FingerprintMethod{
 
 	protected NgonSettings settings;
+	protected NgonVariablesSettings varSettings;
 	public Long N;
 
 	
@@ -54,14 +56,14 @@ public class Ngons extends FingerprintMethod{
 		public Ngon(){
 			this.setCenterX(0.0);
 			this.setCenterY(0.0);
-			innerN = settings.getN();
+			innerN = settings.getN().getValue();
 			this.ngonSettings = settings;
 			this.minutiaIndices = new HashSet<Long>();
-			variables.put("theta0", new ThetaVariable(settings.getMinutiaComponentVariable("theta", 0L)));
+			variables.put("theta0", new ThetaVariable(varSettings.getMinutiaComponentVariable("theta", 0L)));
 			for(Long i = 1L; i < innerN; i++){
-				variables.put(makeKey("x", i), new XYVariable(settings.getMinutiaComponentVariable("x", i)));
-				variables.put(makeKey("y", i), new XYVariable(settings.getMinutiaComponentVariable("y", i)));
-				variables.put(makeKey("theta", i), new ThetaVariable(settings.getMinutiaComponentVariable("theta", i)));
+				variables.put(makeKey("x", i), new XYVariable(varSettings.getMinutiaComponentVariable("x", i)));
+				variables.put(makeKey("y", i), new XYVariable(varSettings.getMinutiaComponentVariable("y", i)));
+				variables.put(makeKey("theta", i), new ThetaVariable(varSettings.getMinutiaComponentVariable("theta", i)));
 			}
 		}
 		
@@ -98,8 +100,8 @@ public class Ngons extends FingerprintMethod{
 		
 	}
 	public Ngons(){
-		this.settings = NgonSettings.getInstance();
-		this.N = settings.getN();
+		this.settings = NgonSettings.getInstance(); // TODO global settings reach
+		this.N = settings.getN().getValue(); 
 	}
 	
 
@@ -125,7 +127,9 @@ public class Ngons extends FingerprintMethod{
 	
 	public ArrayList<Template> ngonsQuantizeAll(Fingerprint fingerprint){
 		ArrayList<Template> templates = new ArrayList<Template>();
-		for(double rotation=settings.getRotationStart(); rotation < settings.getRotationStop(); rotation += settings.getRotationStep()){
+		for(double rotation=settings.rotationStart().getValue(); 
+				rotation < settings.rotationStop().getValue(); 
+				rotation += settings.rotationStep().getValue()){
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.ngonsQuantizeOne(rotatedPrint));
 		}
@@ -145,7 +149,7 @@ public class Ngons extends FingerprintMethod{
 			for(startingIndex=0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
 			minutiae.add(minutia);
-			for(int i=0; i < settings.getkClosestMinutia(); i++){
+			for(int i=0; i < settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
 			ngons.addAll(this.makeAllPossibleNgons(minutiae));
@@ -165,11 +169,11 @@ public class Ngons extends FingerprintMethod{
 			ngonToReturn.setCenterY(ngonToReturn.getCenterY() + minutia.getY());
 		}
 		
-		ngonToReturn.setCenterX(ngonToReturn.getCenterX() / settings.getN());
-		ngonToReturn.setCenterY(ngonToReturn.getCenterY() / settings.getN());
+		ngonToReturn.setCenterX(ngonToReturn.getCenterX() / settings.getN().getValue());
+		ngonToReturn.setCenterY(ngonToReturn.getCenterY() / settings.getN().getValue());
 		
 		ngonToReturn.variables.get("theta0").setPrequantizedValue(minutiaList.get(0).getTheta());
-		for(Long i = 1L; i < settings.getN(); i++){
+		for(Long i = 1L; i < settings.getN().getValue(); i++){
 			ngonToReturn.variables.get(ngonToReturn.makeKey("x", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getX() - m0.getX());
 			ngonToReturn.variables.get(ngonToReturn.makeKey("y", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getY() - m0.getY());
 			ngonToReturn.variables.get(ngonToReturn.makeKey("theta", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getTheta());		
@@ -185,7 +189,7 @@ public class Ngons extends FingerprintMethod{
 
 
 	public ArrayList<Ngon> recursiveNgonBuilder(ArrayList<Minutia> minutiae, ArrayList<Minutia> currentNgon){
-		if(currentNgon.size() == settings.getN()){
+		if(currentNgon.size() == settings.getN().getValue()){
 			ArrayList<Ngon> baseCaseList = new ArrayList<Ngon>();
 			baseCaseList.add(this.makeNgon(currentNgon));
 			return baseCaseList;

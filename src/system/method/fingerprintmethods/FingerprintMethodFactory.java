@@ -1,12 +1,19 @@
 package system.method.fingerprintmethods;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.FingerprintMethodSettings;
 import system.allcommonclasses.modalities.Fingerprint;
-import system.allcommonclasses.settings.GlobalSettings;
+import system.method.fingerprintmethods.MinutiaeMethod;
+import system.method.fingerprintmethods.Ngons;
+import system.method.fingerprintmethods.NgonsAllRotations;
+import system.method.fingerprintmethods.PathsMethod;
+import system.method.fingerprintmethods.Triangles;
+import system.method.fingerprintmethods.TriplesOfTriangles;
+import system.method.fingerprintmethods.TriplesOfTrianglesAllRotations;
 
 public class FingerprintMethodFactory{
 	
 	public static void makeFingerprintMethod(){
-		switch(FingerPrintEnumerator.valueOf(GlobalSettings.getInstance().getFingerprintMethod())){
+		switch(FingerPrintEnumerator.valueOf(FingerprintMethodSettings.getFingerprintMethod())){
 			case MINUTIAEMETHOD:
 				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
 				break;

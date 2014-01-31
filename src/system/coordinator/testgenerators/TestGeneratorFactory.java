@@ -1,11 +1,12 @@
 package system.coordinator.testgenerators;
 
-import system.allcommonclasses.settings.GlobalSettings;
+import system.coordinator.testgenerators.GenerateFVCStyleTests;
+import system.coordinator.testgenerators.TestGenerator;
 
 public class TestGeneratorFactory{
 	
 	public static TestGenerator makeTestGenerator(){
-		switch(TestGeneratorEnumerator.valueOf(GlobalSettings.getInstance().getTestGenerator())){
+		switch(TestGeneratorEnumerator.valueOf("GENERATEFVCSTYLETESTS")){ //TODO
 			case GENERATEFVCSTYLETESTS:
 				return new GenerateFVCStyleTests();
 			default:

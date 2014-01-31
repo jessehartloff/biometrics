@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import settings.AllSettings;
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.Settings;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.Triangles.Triangle;
 

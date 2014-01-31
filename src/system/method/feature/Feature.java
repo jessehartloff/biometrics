@@ -20,7 +20,7 @@ public abstract class Feature implements MeasurableDistance<Feature> {
 		BigInteger toReturn = BigInteger.valueOf(0);
 		Collection<Variable> vars = variables.values();
 		for(Variable var : vars){
-			toReturn = toReturn.shiftLeft(var.variableSettings.getBits());
+			toReturn = toReturn.shiftLeft(var.variableSettings.getBits().intValue());
 			toReturn = toReturn.add(BigInteger.valueOf(var.getQuantizedValue()));
 		}
 		return toReturn;
@@ -32,8 +32,8 @@ public abstract class Feature implements MeasurableDistance<Feature> {
 		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
 		Collections.reverse(vars);
 		for(Variable var : vars){
-			var.setQuantizedValue(bigInt.and(bigTwo.pow(var.variableSettings.getBits()).add(BigInteger.valueOf(-1))).longValue());
-			bigInt = bigInt.shiftRight(var.variableSettings.getBits());
+			var.setQuantizedValue(bigInt.and(bigTwo.pow(var.variableSettings.getBits().intValue()).add(BigInteger.valueOf(-1))).longValue());
+			bigInt = bigInt.shiftRight(var.variableSettings.getBits().intValue());
 		}
 	}
 		

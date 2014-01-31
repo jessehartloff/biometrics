@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 
+import settings.AllSettings;
 import system.allcommonclasses.modalities.Minutia;
-import system.allcommonclasses.settings.Settings;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.Triangles.Triangle;
 
@@ -57,7 +57,7 @@ public class TestTriangles {
 	
 	@org.junit.Test
 	public void testTrianglesAsBigInts() {
-		Settings settings = new Settings();
+		AllSettings settings = new AllSettings();
 		Triangles triangleMethod = new Triangles();
 		
 //		ArrayList<Long> boundaries = new ArrayList<Long>(Arrays.asList(5L,10L,15L,20L));
@@ -96,7 +96,7 @@ public class TestTriangles {
 	
 	@org.junit.Test
 	public void testBigIntsAsTriangles() {
-		Settings settings = new Settings();
+		AllSettings settings = new AllSettings();
 		Triangles triangleMethod = new Triangles();
 		
 		settings.triangleSettings.theta0.setBins(5);

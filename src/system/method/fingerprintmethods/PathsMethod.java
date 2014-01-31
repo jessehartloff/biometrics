@@ -3,10 +3,10 @@ package system.method.fingerprintmethods;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.PathSettings;
 import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
-import system.allcommonclasses.settings.*;
 import system.method.feature.Feature;
 import system.method.feature.SigmaVariable;
 import system.method.feature.Variable;
@@ -18,29 +18,29 @@ import system.method.feature.Variable;
  */
 public class PathsMethod extends FingerprintMethod {
 
-	private PathSettings settings;
+	private PathSettings pathSettings;
 	
 	public class Path extends Feature{
 		private PathSettings innerSettings;
 		public Path(){
-			this.innerSettings = settings;
-			variables.put("d0", new Variable(innerSettings.d0));
-			variables.put("d1", new Variable(innerSettings.d1));
-			variables.put("d2", new Variable(innerSettings.d2));
-			variables.put("d3", new Variable(innerSettings.d3));
-			variables.put("phi1", new Variable(innerSettings.phi1));
-			variables.put("phi2", new Variable(innerSettings.phi2));
-			variables.put("phi3", new Variable(innerSettings.phi3));
-			variables.put("sigma0", new SigmaVariable(innerSettings.sigma0));
-			variables.put("sigma1", new SigmaVariable(innerSettings.sigma1));
-			variables.put("sigma2", new SigmaVariable(innerSettings.sigma2));
-			variables.put("sigma3", new SigmaVariable(innerSettings.sigma3));
+			this.innerSettings = pathSettings;
+			variables.put("d0", new Variable(innerSettings.d0()));
+			variables.put("d1", new Variable(innerSettings.d1()));
+			variables.put("d2", new Variable(innerSettings.d2()));
+			variables.put("d3", new Variable(innerSettings.d3()));
+			variables.put("phi1", new Variable(innerSettings.phi1()));
+			variables.put("phi2", new Variable(innerSettings.phi2()));
+			variables.put("phi3", new Variable(innerSettings.phi3()));
+			variables.put("sigma0", new SigmaVariable(innerSettings.sigma0()));
+			variables.put("sigma1", new SigmaVariable(innerSettings.sigma1()));
+			variables.put("sigma2", new SigmaVariable(innerSettings.sigma2()));
+			variables.put("sigma3", new SigmaVariable(innerSettings.sigma3()));
 		}
 	}
 
 	
 	public PathsMethod() {
-		settings = PathSettings.getInstance();
+		this.pathSettings = PathSettings.getInstance();
 	}
 
 

@@ -6,11 +6,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
+import settings.hashersettings.FuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.indexingstructure.IndexingPoint;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.modalities.Biometric;
-import system.allcommonclasses.settings.FuzzyVaultSettings;
 
 /**
  * 
@@ -72,7 +72,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	//not the best. Does not check if values are already in the set. could do this easy for existing chaff, 
 	//but to check for collisions with genuines would need to handle shifts that way this is set up.
 	private void addChaffPoints(Template template){
-		for(int i=0; i<settings.getNumberOfChaffPoints(); i++){
+		for(int i=0; i<settings.numberOfChaffPoints().getValue(); i++){
 			Random random = new Random();
 			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(),random);
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));

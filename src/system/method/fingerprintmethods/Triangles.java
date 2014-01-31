@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
-import system.allcommonclasses.settings.TriangleSettings;
 import system.method.feature.*;
 
 
@@ -50,13 +50,13 @@ public class Triangles extends FingerprintMethod {
 		public Triangle(){
 			minutiaIndecies = new HashSet<Long>();
 			this.innerSettings = settings;
-			variables.put("theta0", new ThetaVariable(settings.theta0));
-			variables.put("x1", new XYVariable(settings.x1));
-			variables.put("y1", new XYVariable(settings.y1));
-			variables.put("theta1", new ThetaVariable(settings.theta1));
-			variables.put("x2", new XYVariable(settings.x2));
-			variables.put("y2", new XYVariable(settings.y2));
-			variables.put("theta2", new ThetaVariable(settings.theta2));
+			variables.put("theta0", new ThetaVariable(settings.theta0()));
+			variables.put("x1", new XYVariable(settings.x1()));
+			variables.put("y1", new XYVariable(settings.y1()));
+			variables.put("theta1", new ThetaVariable(settings.theta1()));
+			variables.put("x2", new XYVariable(settings.x2()));
+			variables.put("y2", new XYVariable(settings.y2()));
+			variables.put("theta2", new ThetaVariable(settings.theta2()));
 		}
 		
 		public Double distanceBetweenCenters(Triangle that){
@@ -109,9 +109,9 @@ public class Triangles extends FingerprintMethod {
 	
 	public ArrayList<Template> triangleQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>(); 
-		for(double rotation=settings.getRotationStart(); 
-				rotation<settings.getRotationStop(); 
-				rotation+=settings.getRotationStep())
+		for(double rotation=settings.rotationStart().getValue(); 
+				rotation<settings.rotationStop().getValue(); 
+				rotation+=settings.rotationStep().getValue())
 		{
 			Fingerprint rotatedPrint = fingerprint.rotate(rotation);
 			templates.add(this.trianglesQuantizeOne(rotatedPrint));
@@ -137,7 +137,7 @@ public class Triangles extends FingerprintMethod {
 			
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
 			minutiae.add(minutia);
-			for(int i=0; i<settings.getkClosestMinutia(); i++){
+			for(int i=0; i<settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
 			

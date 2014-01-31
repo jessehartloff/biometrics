@@ -3,6 +3,7 @@ package system.method.fingerprintmethods;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 
@@ -15,6 +16,7 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
 	
 	public TriplesOfTrianglesAllRotations() {
+		super();	
 	}
 	
 

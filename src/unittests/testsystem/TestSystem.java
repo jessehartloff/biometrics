@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	unittests.testsystem.testallcommonclasses.TestAllCommonClasses.class, 
 //	unittests.testsystem.testbase.TestBase.class, 
-	unittests.testsystem.testcoordinator.TestCoordinator.class, 
+//	unittests.testsystem.testcoordinator.TestCoordinator.class, 
 //	unittests.testsystem.testhasher.TestHasher.class, 
 	unittests.testsystem.testmethod.TestMethod.class, 
 //	unittests.testsystem.testvectordistance.TestVectorDistance.class, 

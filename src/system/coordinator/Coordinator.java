@@ -6,7 +6,6 @@ import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
 import system.allcommonclasses.modalities.Fingerprint;
-import system.allcommonclasses.settings.GlobalSettings;
 import system.hasher.*;
 
 /**

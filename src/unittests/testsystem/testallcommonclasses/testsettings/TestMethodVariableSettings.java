@@ -5,14 +5,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import system.allcommonclasses.settings.MethodVariableSettings;
+import settings.settingsvariables.SettingsMethodVariable;
 
 public class TestMethodVariableSettings {
 
 	@org.junit.Test
 	public void testComputeBinBoundaries() {
 		
-		MethodVariableSettings var = new MethodVariableSettings();
+		SettingsMethodVariable var = new SettingsMethodVariable();
 		var.setBins(4);
 		
 		ArrayList<Long> prequantizedValue = new ArrayList<Long>();
@@ -43,7 +43,7 @@ public class TestMethodVariableSettings {
 	@org.junit.Test
 	public void testBinPlacement() {
 		
-		MethodVariableSettings var = new MethodVariableSettings();
+		SettingsMethodVariable var = new SettingsMethodVariable();
 		var.setBins(4);
 		
 		ArrayList<Long> prequantizedValue = new ArrayList<Long>();
@@ -85,7 +85,7 @@ public class TestMethodVariableSettings {
 		ArrayList<Integer> expectedBits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
 		ArrayList<Integer> computedBits = new ArrayList<Integer>(); 
 		int n=bins.size();
-		MethodVariableSettings forTheFunction = new MethodVariableSettings();
+		SettingsMethodVariable forTheFunction = new SettingsMethodVariable();
 		for(int i=0; i<n; i++){
 			result = result && forTheFunction.binsToBits(bins.get(i)) == expectedBits.get(i);
 			computedBits.add(forTheFunction.binsToBits(bins.get(i)));
