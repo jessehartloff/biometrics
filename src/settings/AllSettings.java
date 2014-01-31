@@ -1,5 +1,7 @@
 package settings;
 
+import interfaces.gui.ResultsGUI;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -70,6 +72,9 @@ public class AllSettings extends Settings{
 		
 		BiometricSystem system = new BiometricSystem();
 		Results results = system.go();
+		
+		//this GUI probably shouldn't go here... but fuck it
+		ResultsGUI resultsGUI = new ResultsGUI(results);
 
 		System.out.print(results.rawScores);
 		System.out.println(results);

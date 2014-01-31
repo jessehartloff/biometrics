@@ -23,7 +23,7 @@ public class FingerprintMethodSettings extends AMethodSettings{
 
 	//Singleton
 	private FingerprintMethodSettings(){
-		this.settingsVariables.put("fingerprintMethod", PathSettings.getInstance());
+		this.settingsVariables.put("fingerprintMethod", TriangleSettings.getInstance());
 	}
 	
 	private static FingerprintMethodSettings instance;

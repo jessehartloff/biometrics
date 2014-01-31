@@ -13,7 +13,7 @@ public class SettingsLong extends SettingsVariable{
 	private Long value;
 	
 	public SettingsLong(){
-		this.setValue(8);
+		this.setValue(16);
 	}
 	public SettingsLong(Integer value){
 		this.setValue(value);
