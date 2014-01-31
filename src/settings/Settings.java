@@ -21,12 +21,18 @@ public abstract class Settings implements Serializable{
 	
 	protected Settings(){
 		this.settingsVariables = new LinkedHashMap<String, Settings>();
-		this.panel = this.thisJPanel();
+		this.init();
+		this.panel = new JPanel();
+		this.panel.add(this.thisJPanel(), BorderLayout.WEST);
+		this.panel.add(this.makeChildrenJPanel(), BorderLayout.EAST);
 	}
 
-	public Settings makeCopy(){
-		return /*a copy of*/ this;
-	}
+	protected abstract void init();
+	
+
+//	public Settings makeCopy(){
+//		return /*a copy of*/ this;
+//	}
 	
 //	private Settings(String filename){
 //		
@@ -51,18 +57,22 @@ public abstract class Settings implements Serializable{
 	
 
 	public JPanel getJPanel(){
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-		panel.add(this.panel); 
+		return this.panel;
+	}
+	
+	
+	public JPanel makeChildrenJPanel(){
+		JPanel childrenPanel = new JPanel();
+		childrenPanel.setLayout(new BoxLayout(childrenPanel, BoxLayout.PAGE_AXIS));
 		
 		for(String subSettingsName : settingsVariables.keySet()){
-			JPanel innerPanel = new JPanel();
-			innerPanel.add(new JLabel(subSettingsName), BorderLayout.WEST);
-			innerPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.EAST);
-			panel.add(innerPanel);
+			JPanel childPanel = new JPanel();
+			childPanel.add(new JLabel(subSettingsName), BorderLayout.WEST);
+			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.EAST);
+			childrenPanel.add(childPanel);
 		}
-		return panel;
+		
+		return childrenPanel;
 	}
 	
 	

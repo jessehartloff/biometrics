@@ -9,22 +9,7 @@ public class TriangleSettings extends AFingerprintMethodSettings{
 	private static final long serialVersionUID = 1L;
 	
 	private static TriangleSettings instance;
-	private TriangleSettings(){
-		this.settingsVariables.put("theta0", new SettingsMethodVariable());
-		this.settingsVariables.put("x1", new SettingsMethodVariable());
-		this.settingsVariables.put("y1", new SettingsMethodVariable());
-		this.settingsVariables.put("theta1", new SettingsMethodVariable());
-		this.settingsVariables.put("x2", new SettingsMethodVariable());
-		this.settingsVariables.put("y2", new SettingsMethodVariable());
-		this.settingsVariables.put("theta2", new SettingsMethodVariable());
-		
-		this.settingsVariables.put("rotationStep", new SettingsDouble(5.0));
-		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
-		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
-		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong());
-		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
-		this.settingsVariables.put("kClosestTriangles", new SettingsLong());
-	}
+	private TriangleSettings(){}
 	public static TriangleSettings getInstance(){
 		if(instance == null){
 			instance = new TriangleSettings();
@@ -95,6 +80,23 @@ public class TriangleSettings extends AFingerprintMethodSettings{
 	@Override
 	public String getLabel(){
 		return "Triangles";
+	}
+	@Override
+	protected void init() {
+		this.settingsVariables.put("theta0", new SettingsMethodVariable());
+		this.settingsVariables.put("x1", new SettingsMethodVariable());
+		this.settingsVariables.put("y1", new SettingsMethodVariable());
+		this.settingsVariables.put("theta1", new SettingsMethodVariable());
+		this.settingsVariables.put("x2", new SettingsMethodVariable());
+		this.settingsVariables.put("y2", new SettingsMethodVariable());
+		this.settingsVariables.put("theta2", new SettingsMethodVariable());
+		
+		this.settingsVariables.put("rotationStep", new SettingsDouble(5.0));
+		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
+		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
+		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong());
+		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
+		this.settingsVariables.put("kClosestTriangles", new SettingsLong());
 	}
 	
 }

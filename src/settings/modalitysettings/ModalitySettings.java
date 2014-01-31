@@ -4,8 +4,8 @@ package settings.modalitysettings;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import settings.ComboBoxSettings;
 import settings.Settings;
-import settings.SettingsComboBoxActionListener;
 import settings.SettingsRenderer;
 import settings.coordinatorsettings.HistogramCoordinatorSettings;
 import settings.hashersettings.FuzzyVaultSettings;
@@ -13,7 +13,7 @@ import settings.hashersettings.HasherSettings;
 import system.allcommonclasses.commonstructures.Users;
 import system.method.Method;
 
-public class ModalitySettings extends Settings {
+public class ModalitySettings extends ComboBoxSettings{
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,6 @@ public class ModalitySettings extends Settings {
 	//Singleton
 	private static ModalitySettings instance;
 	private ModalitySettings() {
-		this.settingsVariables.put("Modality", FingerprintSettings.getInstance());
 	}
 	public static ModalitySettings getInstance(){
 		if(instance == null){
@@ -47,25 +46,21 @@ public class ModalitySettings extends Settings {
 		return (AModalitySettings) this.settingsVariables.get("Modality");
 	}
 	
+
+	
+
 	@Override
-	protected JPanel thisJPanel() {
-		
-		JPanel panel = new JPanel();
-		
-		Settings[] modalityList = new Settings[] {
-				FingerprintSettings.getInstance(),
-				new IrisSettings(),
-				new FaceSettings(),
-				new PizzaSettings()		
-		};
-		
-		JComboBox modalitiesBox = new JComboBox(modalityList);
-		modalitiesBox.addActionListener(new SettingsComboBoxActionListener(this, "Modality"));
-		modalitiesBox.setRenderer(new SettingsRenderer());
-		
-		panel.add(modalitiesBox);
-		
-		return panel;
+	protected void init() {
+		this.variableString = "Modality";
+		this.settingsVariables.put("Modality", FingerprintSettings.getInstance());
+	}
+	
+	@Override
+	protected void addALLOptions() {
+		this.addToOptions(FingerprintSettings.getInstance());
+		this.addToOptions(new IrisSettings());
+		this.addToOptions(new FaceSettings());
+		this.addToOptions(new PizzaSettings());
 	}
 
 

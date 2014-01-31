@@ -11,21 +11,7 @@ public class PathSettings extends AFingerprintMethodSettings{
 	private static final long serialVersionUID = 1L;
 
 	private static PathSettings instance;
-	private PathSettings(){
-		this.settingsVariables.put("kClosestMinutia", new SettingsLong());
-
-		this.settingsVariables.put("d0", new SettingsMethodVariable());
-		this.settingsVariables.put("d1", new SettingsMethodVariable());
-		this.settingsVariables.put("d2", new SettingsMethodVariable());
-		this.settingsVariables.put("d3", new SettingsMethodVariable());
-		this.settingsVariables.put("sigma0", new SettingsMethodVariable());
-		this.settingsVariables.put("sigma1", new SettingsMethodVariable());
-		this.settingsVariables.put("sigma2", new SettingsMethodVariable());
-		this.settingsVariables.put("sigma3", new SettingsMethodVariable());
-		this.settingsVariables.put("phi1", new SettingsMethodVariable());
-		this.settingsVariables.put("phi2", new SettingsMethodVariable());
-		this.settingsVariables.put("phi3", new SettingsMethodVariable());
-	}
+	private PathSettings(){}
 	public static PathSettings getInstance(){
 		if(instance == null){
 			instance = new PathSettings();
@@ -81,6 +67,22 @@ public class PathSettings extends AFingerprintMethodSettings{
 	@Override
 	public String getLabel(){
 		return "Paths";
+	}
+	@Override
+	protected void init() {
+		this.settingsVariables.put("kClosestMinutia", new SettingsLong());
+
+		this.settingsVariables.put("d0", new SettingsMethodVariable());
+		this.settingsVariables.put("d1", new SettingsMethodVariable());
+		this.settingsVariables.put("d2", new SettingsMethodVariable());
+		this.settingsVariables.put("d3", new SettingsMethodVariable());
+		this.settingsVariables.put("sigma0", new SettingsMethodVariable());
+		this.settingsVariables.put("sigma1", new SettingsMethodVariable());
+		this.settingsVariables.put("sigma2", new SettingsMethodVariable());
+		this.settingsVariables.put("sigma3", new SettingsMethodVariable());
+		this.settingsVariables.put("phi1", new SettingsMethodVariable());
+		this.settingsVariables.put("phi2", new SettingsMethodVariable());
+		this.settingsVariables.put("phi3", new SettingsMethodVariable());
 	}
 	
 }

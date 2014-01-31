@@ -29,11 +29,7 @@ public class MinutiaSettings extends AFingerprintMethodSettings{
 	
 	//singleton
 	private static MinutiaSettings instance;
-	public MinutiaSettings(){
-		this.x = new SettingsMethodVariable();
-		this.y = new SettingsMethodVariable();
-		this.theta = new SettingsMethodVariable();
-		}
+	public MinutiaSettings(){}
 	public static MinutiaSettings getInstance(){
 		if(instance == null){
 			instance = new MinutiaSettings();
@@ -124,5 +120,11 @@ public class MinutiaSettings extends AFingerprintMethodSettings{
 	public String getLabel(){
 		return "Minutia";
 	}
+	@Override
+	protected void init() {
+		this.x = new SettingsMethodVariable();
+		this.y = new SettingsMethodVariable();
+		this.theta = new SettingsMethodVariable();
+		}
 	
 }

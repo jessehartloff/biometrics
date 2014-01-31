@@ -11,7 +11,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import settings.Settings;
-import settings.SettingsComboBoxActionListener;
 import settings.SettingsRenderer;
 import settings.modalitysettings.FaceSettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -70,5 +69,8 @@ public class SettingsDouble extends SettingsVariable{
 		
 		return panel;
 	}
+	
+	@Override
+	protected void init() {}
 	
 }

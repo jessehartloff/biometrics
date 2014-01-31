@@ -30,22 +30,17 @@ public class AllSettings extends Settings{
 
 	public static final long serialVersionUID = 1L;
 	
-	private JPanel topPanel;
-	
-	public JPanel getTopJPanel(){
-		return topPanel;
-	}
+//	private JPanel topPanel;
+//	
+//	public JPanel getTopJPanel(){
+//		return topPanel;
+//	}
 	
 	//Singleton
 	private static AllSettings instance;
 	private AllSettings(){
-		this.settingsVariables.put("Modality", ModalitySettings.getInstance());
-		this.settingsVariables.put("Hasher", HasherSettings.getInstance());
-		this.settingsVariables.put("Matching", MatchingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Indexing", IndexingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Histogram", HistogramCoordinatorSettings.getInstance());
-		this.topPanel = new JPanel();
-		this.topPanel.add(this.getJPanel());
+//		this.topPanel = new JPanel();
+//		this.topPanel.add(this.getJPanel());
 	}
 	public static AllSettings getInstance(){
 		if(instance == null){
@@ -54,21 +49,28 @@ public class AllSettings extends Settings{
 		return instance;
 	}
 	
+	@Override 
+	protected void init(){
+		this.settingsVariables.put("Hasher", HasherSettings.getInstance());
+		this.settingsVariables.put("Modality", ModalitySettings.getInstance());
+		this.settingsVariables.put("Matching", MatchingCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Indexing", IndexingCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Histogram", HistogramCoordinatorSettings.getInstance());
+	}
+	
 	public static void updateGUI(){
-		AllSettings.getInstance();
+//		AllSettings.getInstance();
 //		instance.topPanel.removeAll();
-		instance.topPanel.add(instance.getJPanel());
-		System.out.println("a");
-		instance.topPanel.repaint();
+//		instance.topPanel.add(instance.getJPanel());
+		instance.getJPanel().repaint();
 //		instance.topPanel.getParent().repaint();
-		System.out.println("a");
 	}
 	
 	public BiometricSystem buildSystem(){
 
 		AllSettings.getInstance();
 		
-		instance.topPanel.removeAll(); // remove access to settings. change to progress bars and RM later
+//		instance.topPanel.removeAll(); // remove access to settings. change to progress bars and RM later
 		
 		BiometricSystem system = new BiometricSystem();
 		Results results = system.go();

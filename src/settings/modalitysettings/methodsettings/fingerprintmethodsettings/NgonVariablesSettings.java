@@ -11,7 +11,7 @@ public class NgonVariablesSettings extends Settings{
 
 	private static final long serialVersionUID = 1L;
 	
-	
+	// TODO
 
 	private static NgonVariablesSettings instance;
 	private NgonVariablesSettings(int n){
@@ -33,6 +33,11 @@ public class NgonVariablesSettings extends Settings{
 	
 	public SettingsMethodVariable getMinutiaComponentVariable(String component, Long i){
 		return (SettingsMethodVariable) this.settingsVariables.get(component+i.toString());
+	}
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

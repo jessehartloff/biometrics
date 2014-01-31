@@ -18,7 +18,6 @@ import javax.swing.KeyStroke;
 
 import settings.AllSettings;
 import settings.Settings;
-import settings.SettingsComboBoxActionListener;
 import settings.SettingsRenderer;
 import settings.modalitysettings.FaceSettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -81,7 +80,8 @@ public class GUI2E {
 //		panel2.add(modalitiesBox);
 //		
 
-		panel2.add(AllSettings.getInstance().getTopJPanel());
+//		panel2.add(AllSettings.getInstance().getTopJPanel());
+		panel2.add(AllSettings.getInstance().getJPanel());
 
 		
 		frame.add(panel2);

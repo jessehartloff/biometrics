@@ -53,5 +53,9 @@ public class SettingsLong extends SettingsVariable{
 		return panel;
 	}
 	
+	
+	@Override
+	protected void init() {}
+	
 
 }

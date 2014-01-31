@@ -20,5 +20,11 @@ public abstract class SettingsVariable extends Settings{
 	//setter
 	
 	//how to display in gui
+	
 
+	
+	public String getLabel(){
+		return name;
+	}
+	
 }

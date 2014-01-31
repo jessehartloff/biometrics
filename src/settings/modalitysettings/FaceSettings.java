@@ -8,4 +8,10 @@ public class FaceSettings extends Settings{
 	public String getLabel(){
 		return "Face";
 	}
+
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
+	}
 }

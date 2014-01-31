@@ -16,7 +16,12 @@ public class SettingsString extends SettingsVariable{
 	private static final long serialVersionUID = 1L;
 	String value;
 	
+	public SettingsString(String name, String value) {
+		this.name = name;
+		this.value = value;
+	}
 	public SettingsString(String value) {
+		this.name = value;
 		this.value = value;
 	}
 
@@ -55,6 +60,9 @@ public class SettingsString extends SettingsVariable{
 		
 		return panel;
 	}
+
+	@Override
+	protected void init() {}
 	
 	
 	

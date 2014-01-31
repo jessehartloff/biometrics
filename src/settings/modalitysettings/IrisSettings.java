@@ -8,4 +8,10 @@ public class IrisSettings extends Settings{
 	public String getLabel(){
 		return "Iris";
 	}
+
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
+	}
 }

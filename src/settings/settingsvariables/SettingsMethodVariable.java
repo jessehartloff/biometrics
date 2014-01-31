@@ -92,6 +92,9 @@ public class SettingsMethodVariable extends SettingsVariable{
 	    // might not need to all the time. maybe just for compute bits
 	}
 
+	@Override
+	protected void init() {}
+
 
 	
 	

@@ -3,12 +3,12 @@ package settings.coordinatorsettings;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import settings.ComboBoxSettings;
 import settings.Settings;
-import settings.SettingsComboBoxActionListener;
 import settings.SettingsRenderer;
 import settings.settingsvariables.SettingsString;
 
-public class IndexingCoordinatorSettings  extends Settings{
+public class IndexingCoordinatorSettings  extends ComboBoxSettings{
 
 	public static String getIndexingCoordinator(){
 		SettingsString string = (SettingsString) instance.settingsVariables.get("indexing");
@@ -18,7 +18,6 @@ public class IndexingCoordinatorSettings  extends Settings{
 	//Singleton
 	private static IndexingCoordinatorSettings instance;
 	private IndexingCoordinatorSettings() {
-		this.settingsVariables.put("indexing", new SettingsString("NONE"));
 	}
 	public static IndexingCoordinatorSettings getInstance(){
 		if(instance == null){
@@ -27,20 +26,17 @@ public class IndexingCoordinatorSettings  extends Settings{
 		return instance;
 	}
 
+
 	@Override
-	protected JPanel thisJPanel() {
-		
-		JPanel panel = new JPanel();
-		
-		Settings[] modalityList = new Settings[] {
-				new SettingsString("NONE"),
-				new SettingsString("INDEXING")	
-		};
-		
-		JComboBox settingsBox = new JComboBox(modalityList);
-		settingsBox.addActionListener(new SettingsComboBoxActionListener(this, "indexing"));
-		settingsBox.setRenderer(new SettingsRenderer());
-		return panel;
+	protected void init() {
+		this.variableString = "indexing";
+		this.settingsVariables.put(this.variableString, new SettingsString("NONE"));	
+	}
+
+	@Override
+	protected void addALLOptions() {
+		this.addToOptions(new SettingsString("NONE"));
+		this.addToOptions(new SettingsString("INDEXING"));	
 	}
 
 

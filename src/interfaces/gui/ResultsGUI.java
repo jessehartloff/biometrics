@@ -75,13 +75,13 @@ public class ResultsGUI {
         frame.add(eerPlot);
 	}
 	
-	public ArrayList<JPanel> makeFieldHistograms(JFrame frame) {
-		
-	}
-	
-	public ArrayList<JPanel> makeVariableHistograms() {
-		
-	}
+//	public ArrayList<JPanel> makeFieldHistograms(JFrame frame) {
+//		
+//	}
+//	
+//	public ArrayList<JPanel> makeVariableHistograms() {
+//		
+//	}
 	
 
 }

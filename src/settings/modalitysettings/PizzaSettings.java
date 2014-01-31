@@ -8,4 +8,10 @@ public class PizzaSettings extends Settings{
 	public String getLabel(){
 		return "Pizza";
 	}
+
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
+	}
 }

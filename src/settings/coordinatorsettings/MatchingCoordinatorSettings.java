@@ -3,13 +3,13 @@ package settings.coordinatorsettings;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import settings.ComboBoxSettings;
 import settings.Settings;
-import settings.SettingsComboBoxActionListener;
 import settings.SettingsRenderer;
 import settings.settingsvariables.SettingsDouble;
 import settings.settingsvariables.SettingsString;
 
-public class MatchingCoordinatorSettings  extends Settings{
+public class MatchingCoordinatorSettings  extends ComboBoxSettings{
 
 	public static String getMatchingCoordinator(){
 		SettingsString string = (SettingsString) instance.settingsVariables.get("matcher");
@@ -19,7 +19,6 @@ public class MatchingCoordinatorSettings  extends Settings{
 	//Singleton
 	private static MatchingCoordinatorSettings instance;
 	private MatchingCoordinatorSettings() {
-		this.settingsVariables.put("matcher", new SettingsString("DEFAULTTESTINGPREQUANTIZED"));
 	}
 	public static MatchingCoordinatorSettings getInstance(){
 		if(instance == null){
@@ -28,21 +27,18 @@ public class MatchingCoordinatorSettings  extends Settings{
 		return instance;
 	}
 
+
 	@Override
-	protected JPanel thisJPanel() {
-		
-		JPanel panel = new JPanel();
-		
-		Settings[] modalityList = new Settings[] {
-				new SettingsString("NONE"),
-				new SettingsString("DEFAULTTESTING"),
-				new SettingsString("DEFAULTTESTINGPREQUANTIZED")	
-		};
-		
-		JComboBox settingsBox = new JComboBox(modalityList);
-		settingsBox.addActionListener(new SettingsComboBoxActionListener(this, "matcher"));
-		settingsBox.setRenderer(new SettingsRenderer());
-		return panel;
+	protected void init() {
+		this.variableString = "matcher";
+		this.settingsVariables.put(this.variableString, new SettingsString("DEFAULTTESTINGPREQUANTIZED"));
+	}
+
+	@Override
+	protected void addALLOptions() {
+		this.addToOptions(new SettingsString("NONE"));
+		this.addToOptions(new SettingsString("DEFAULTTESTING"));
+		this.addToOptions(new SettingsString("DEFAULTTESTINGPREQUANTIZED"));
 	}
 	
 }

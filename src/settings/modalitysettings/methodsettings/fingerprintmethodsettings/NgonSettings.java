@@ -16,18 +16,7 @@ public class NgonSettings extends AFingerprintMethodSettings{
 	
 
 	private static NgonSettings instance;
-	private NgonSettings(){
-		this.settingsVariables.put("N", new SettingsLong()); // when n changes, make a new ngon variables settings. 
-		// might have an inner class "N" that extends SettingsLong and overrides action performed
-		
-//		this.settingsVariables.put("", Settings);
-//		this.settingsVariables.put("", Settings);
-//		this.settingsVariables.put("", Settings);
-		this.settingsVariables.put("rotationStep", new SettingsDouble());
-		this.settingsVariables.put("rotationStart", new SettingsDouble());
-		this.settingsVariables.put("rotationStop", new SettingsDouble());
-		this.settingsVariables.put("kClosestMinutia", new SettingsLong());
-	}
+	private NgonSettings(){}
 	public static NgonSettings getInstance(){
 		if(instance == null){
 			instance = new NgonSettings();
@@ -78,6 +67,19 @@ public class NgonSettings extends AFingerprintMethodSettings{
 	@Override
 	public String getLabel(){
 		return "Ngons";
+	}
+	@Override
+	protected void init() {
+		this.settingsVariables.put("N", new SettingsLong()); // when n changes, make a new ngon variables settings. 
+		// might have an inner class "N" that extends SettingsLong and overrides action performed
+		
+//		this.settingsVariables.put("", Settings);
+//		this.settingsVariables.put("", Settings);
+//		this.settingsVariables.put("", Settings);
+		this.settingsVariables.put("rotationStep", new SettingsDouble());
+		this.settingsVariables.put("rotationStart", new SettingsDouble());
+		this.settingsVariables.put("rotationStop", new SettingsDouble());
+		this.settingsVariables.put("kClosestMinutia", new SettingsLong());
 	}
 
 

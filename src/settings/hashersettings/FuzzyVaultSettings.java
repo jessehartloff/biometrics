@@ -11,8 +11,7 @@ public class FuzzyVaultSettings  extends AHasherSettings{
 	
 	//Singleton
 	private static FuzzyVaultSettings instance;
-	public FuzzyVaultSettings(){
-		this.settingsVariables.put("numberOfChaffPoints", new SettingsLong());
+	private FuzzyVaultSettings(){
 	}
 	public static FuzzyVaultSettings getInstance(){
 		if(instance == null){
@@ -20,6 +19,12 @@ public class FuzzyVaultSettings  extends AHasherSettings{
 		}
 		return instance;
 	}
+	
+	@Override
+	protected void init(){
+		this.settingsVariables.put("numberOfChaffPoints", new SettingsLong());
+	}
+	
 
 	public SettingsLong numberOfChaffPoints(){
 		return (SettingsLong) this.settingsVariables.get("numberOfChaffPoints");
