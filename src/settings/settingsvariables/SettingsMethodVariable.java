@@ -17,20 +17,19 @@ public class SettingsMethodVariable extends SettingsVariable{
 	
 	
 	public SettingsMethodVariable(){
-		this.settingsVariables.put("bins", new SettingsLong());
-		binBoundaries = new ArrayList<Long>();
-		bits = 5L;
+		this(8L);
 	}
 	
 	public SettingsMethodVariable(Long numberOfBins){
-		this.settingsVariables.put("bins", new SettingsLong(numberOfBins));
+		this.setBins(numberOfBins);
 		binBoundaries = new ArrayList<Long>();
-		bits = this.binsToBits(numberOfBins);
+		bits = this.binsToBits(this.getBins());
 	}
 	
 	public SettingsMethodVariable(Integer numberOfBins){
 		this(numberOfBins.longValue());
 	}
+	
 	public Long findBin(Long prequantizedValue) {
 		Integer n = this.binBoundaries.size();	
 		for(Integer i=0; i<n; i++){
@@ -47,14 +46,14 @@ public class SettingsMethodVariable extends SettingsVariable{
 	}
 	
 	public Long getBins(){
-		SettingsLong sl = (SettingsLong) this.settingsVariables.get("bins");
-		return sl.getValue();
+		SettingsLong binsSettings = (SettingsLong) this.settingsVariables.get("bins");
+		return binsSettings.getValue();
 	}
 	
 	public void setBins(Long value){
-		SettingsLong sl = (SettingsLong) this.settingsVariables.get("bins");
+		SettingsLong binsLong = (SettingsLong) this.settingsVariables.get("bins");
+		binsLong.setValue(value);
 		bits = this.binsToBits(value);
-		sl.setValue(value);
 	}	
 	public void setBins(Integer value){
 		this.setBins(value.longValue());
@@ -85,15 +84,15 @@ public class SettingsMethodVariable extends SettingsVariable{
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
 	    in.defaultReadObject();
-
+	    
 		binBoundaries = new ArrayList<Long>();
-		bits = 5L;
-	    // TODO populate variables from deserialized set
-	    // might not need to all the time. maybe just for compute bits
+		bits = this.binsToBits(this.getBins());
 	}
 
 	@Override
-	protected void init() {}
+	protected void init() {
+		this.settingsVariables.put("bins", new SettingsLong());
+	}
 
 
 	
