@@ -23,6 +23,8 @@ public class HistogramCoordinatorSettings extends ComboBoxSettings{
 	//Singleton
 	private static HistogramCoordinatorSettings instance;
 	private HistogramCoordinatorSettings() {
+		this.settingsVariables.put("histogram", new SettingsString("HISTOGRAM")); //can be NONE
+
 	}
 	public static HistogramCoordinatorSettings getInstance(){
 		if(instance == null){

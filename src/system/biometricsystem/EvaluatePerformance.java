@@ -86,7 +86,7 @@ public class EvaluatePerformance {
 
 //		Double stepSize = GlobalSettings.getInstance().getEerStepSize(); //TODO
 		Double stepSize = 1.0; 
-		Double offset = stepSize/2.0;
+		Double offset = stepSize/10.0;
 		
 		ArrayList<RatesPoint> rates = new ArrayList<RatesPoint>();
 		
