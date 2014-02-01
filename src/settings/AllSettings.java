@@ -52,10 +52,10 @@ public class AllSettings extends Settings{
 	@Override 
 	protected void init(){
 		this.settingsVariables.put("Hasher", HasherSettings.getInstance());
-		this.settingsVariables.put("Modality", ModalitySettings.getInstance());
 		this.settingsVariables.put("Matching", MatchingCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Indexing", IndexingCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Histogram", HistogramCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Modality", ModalitySettings.getInstance());
 	}
 	
 	public static void updateGUI(){

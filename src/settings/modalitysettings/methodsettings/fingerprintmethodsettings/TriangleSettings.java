@@ -83,11 +83,11 @@ public class TriangleSettings extends AFingerprintMethodSettings{
 	}
 	@Override
 	protected void init() {
-		this.settingsVariables.put("theta0", new SettingsMethodVariable());
-		this.settingsVariables.put("x1", new SettingsMethodVariable());
-		this.settingsVariables.put("y1", new SettingsMethodVariable());
-		this.settingsVariables.put("theta1", new SettingsMethodVariable());
-		this.settingsVariables.put("x2", new SettingsMethodVariable());
+		this.settingsVariables.put("theta0", new SettingsMethodVariable(6));
+		this.settingsVariables.put("x1", new SettingsMethodVariable(5));
+		this.settingsVariables.put("y1", new SettingsMethodVariable(8));
+		this.settingsVariables.put("theta1", new SettingsMethodVariable(9));
+		this.settingsVariables.put("x2", new SettingsMethodVariable(10));
 		this.settingsVariables.put("y2", new SettingsMethodVariable());
 		this.settingsVariables.put("theta2", new SettingsMethodVariable());
 		

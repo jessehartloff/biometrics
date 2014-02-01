@@ -44,10 +44,14 @@ public class SettingsMethodVariable extends SettingsVariable{
 		Double d = Math.ceil(Math.log10(bins)/Math.log10(2));
 		return d.longValue();
 	}
-	
+
 	public Long getBins(){
 		SettingsLong binsSettings = (SettingsLong) this.settingsVariables.get("bins");
 		return binsSettings.getValue();
+	}
+	public SettingsLong getBinsSettings(){
+		SettingsLong binsSettings = (SettingsLong) this.settingsVariables.get("bins");
+		return binsSettings;
 	}
 	
 	public void setBins(Long value){
@@ -89,6 +93,10 @@ public class SettingsMethodVariable extends SettingsVariable{
 		bits = this.binsToBits(this.getBins());
 	}
 
+	protected JPanel makeJPanel() {
+		return this.getBinsSettings().getJPanel();
+	}
+	
 	@Override
 	protected void init() {
 		this.settingsVariables.put("bins", new SettingsLong());

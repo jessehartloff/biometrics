@@ -52,7 +52,7 @@ public class ModalitySettings extends ComboBoxSettings{
 	@Override
 	protected void init() {
 		this.variableString = "Modality";
-		this.settingsVariables.put("Modality", FingerprintSettings.getInstance());
+		this.settingsVariables.put("Modality", new IrisSettings());
 	}
 	
 	@Override

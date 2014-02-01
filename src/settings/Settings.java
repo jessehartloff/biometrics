@@ -1,9 +1,11 @@
 package settings;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,9 +24,14 @@ public abstract class Settings implements Serializable{
 	protected Settings(){
 		this.settingsVariables = new LinkedHashMap<String, Settings>();
 		this.init();
-		this.panel = new JPanel();
-		this.panel.add(this.thisJPanel(), BorderLayout.WEST);
-		this.panel.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+		this.panel = this.makeJPanel();
+	}
+
+	protected JPanel makeJPanel() {
+		JPanel toRet = new JPanel();
+		toRet.add(this.thisJPanel(), BorderLayout.WEST);
+		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+		return toRet;
 	}
 
 	protected abstract void init();
@@ -52,7 +59,9 @@ public abstract class Settings implements Serializable{
 
 
 	protected JPanel thisJPanel(){
-		return new JPanel();
+		JPanel toRet = new JPanel();
+		toRet.setMaximumSize(new Dimension(0, 0));
+		return toRet;
 	}
 	
 
@@ -63,14 +72,24 @@ public abstract class Settings implements Serializable{
 	
 	public JPanel makeChildrenJPanel(){
 		JPanel childrenPanel = new JPanel();
-		childrenPanel.setLayout(new BoxLayout(childrenPanel, BoxLayout.PAGE_AXIS));
+		BoxLayout boxLayout = new BoxLayout(childrenPanel, BoxLayout.Y_AXIS);
+		childrenPanel.setLayout(boxLayout);
 		
 		for(String subSettingsName : settingsVariables.keySet()){
 			JPanel childPanel = new JPanel();
 			childPanel.add(new JLabel(subSettingsName), BorderLayout.WEST);
 			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.EAST);
+			childPanel.validate();
+//			childPanel.setMaximumSize(new Dimension((int) childPanel.getMaximumSize().getWidth(), 0));
+//			childPanel.add(Box.createVerticalGlue());
 			childrenPanel.add(childPanel);
 		}
+		childrenPanel.validate();
+
+//		if(childrenPanel.getComponentCount() <= 2){
+			childrenPanel.setSize(0,0);
+//		}
+		childrenPanel.setMaximumSize(new Dimension(0, 0));
 		
 		return childrenPanel;
 	}

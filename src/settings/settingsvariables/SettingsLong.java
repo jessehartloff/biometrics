@@ -1,5 +1,8 @@
 package settings.settingsvariables;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -41,6 +44,7 @@ public class SettingsLong extends SettingsVariable{
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
 		this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+		this.numberBox.setSize(0, 0);
 		numberBox.addChangeListener(new ChangeListener(){
 
 			@Override
@@ -52,9 +56,14 @@ public class SettingsLong extends SettingsVariable{
 		});
 		
 		panel.add(numberBox);
+//		panel.setMaximumSize(new Dimension((int) panel.getMaximumSize().getWidth(),10));
+		panel.setMaximumSize(new Dimension(0,0));
 		return panel;
 	}
 	
+	protected JPanel makeJPanel() {
+		return this.thisJPanel();
+	}
 	
 	@Override
 	protected void init() {
