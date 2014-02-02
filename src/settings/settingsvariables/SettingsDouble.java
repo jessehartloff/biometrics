@@ -48,7 +48,7 @@ public class SettingsDouble extends SettingsVariable{
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
-//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		final JTextField textField = new JTextField();
 		textField.getDocument().addDocumentListener(new DocumentListener(){
@@ -64,8 +64,8 @@ public class SettingsDouble extends SettingsVariable{
 			
 		});
 		
-		panel.add(new JLabel(this.name), BorderLayout.WEST);
-		panel.add(textField, BorderLayout.EAST);
+		panel.add(new JLabel(this.name));//, BorderLayout.WEST);
+		panel.add(textField);//, BorderLayout.EAST);
 		
 		return panel;
 	}

@@ -1,5 +1,7 @@
  package settings.settingsvariables;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -94,9 +96,12 @@ public class SettingsMethodVariable extends SettingsVariable{
 	}
 
 	protected JPanel makeJPanel() {
-		return this.getBinsSettings().getJPanel();
+		JPanel panel = this.getBinsSettings().getJPanel();
+		return panel;
 	}
 	
+
+
 	@Override
 	protected void init() {
 		this.settingsVariables.put("bins", new SettingsLong());

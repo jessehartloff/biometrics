@@ -1,5 +1,9 @@
 package settings.modalitysettings;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 import settings.Settings;
 import settings.UsersIO;
 import settings.settingsvariables.SettingsString;
@@ -8,6 +12,15 @@ import system.method.Method;
 
 public abstract class AModalitySettings extends Settings{
 
+	
+	protected JPanel makeJPanel() {
+		JPanel toRet = new JPanel();
+		//toRet.setLayout(new GridLayout(2,1));
+		toRet.add(this.thisJPanel(), BorderLayout.WEST);
+		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+
+		return toRet;
+	}
 	
 	public Users getTrainingUsers() {
 		SettingsString train = (SettingsString) this.settingsVariables.get("trainingDataset");

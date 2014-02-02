@@ -1,17 +1,16 @@
 package settings.modalitysettings;
 
 
-import javax.swing.JComboBox;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import settings.ComboBoxSettings;
-import settings.Settings;
-import settings.SettingsRenderer;
-import settings.coordinatorsettings.HistogramCoordinatorSettings;
-import settings.hashersettings.FuzzyVaultSettings;
-import settings.hashersettings.HasherSettings;
 import system.allcommonclasses.commonstructures.Users;
-import system.method.Method;
 
 public class ModalitySettings extends ComboBoxSettings{
 
@@ -27,8 +26,22 @@ public class ModalitySettings extends ComboBoxSettings{
 //	public Method getMethod(){
 //		return instance.modalitySettings().getMethod();
 //	}
+//	@Override
+//	protected JPanel thisJPanel(){
+//		JPanel currentPanel = super.thisJPanel();
+//		currentPanel.setLayout(new GridLayout(5,1));
+//		return currentPanel;
+//	}
+	@Override
+	protected JPanel makeJPanel() {
+		JPanel toRet = new JPanel();
+		//toRet.setBackground(java.awt.Color.BLUE);
 
-	
+		//toRet.setLayout(new GridLayout(1,2));
+		toRet.add(this.thisJPanel(), BorderLayout.CENTER);
+		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+		return toRet;
+	}
 
 	//Singleton
 	private static ModalitySettings instance;
@@ -45,7 +58,7 @@ public class ModalitySettings extends ComboBoxSettings{
 	public AModalitySettings modalitySettings(){
 		return (AModalitySettings) this.settingsVariables.get("Modality");
 	}
-	
+
 
 	
 

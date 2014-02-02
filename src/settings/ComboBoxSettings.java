@@ -1,18 +1,13 @@
 package settings;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
-import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import settings.hashersettings.FuzzyVaultSettings;
-import settings.hashersettings.StraightHasherSettings;
+import javax.swing.JScrollPane;
 
 public abstract class ComboBoxSettings extends Settings{
 
@@ -35,10 +30,11 @@ public abstract class ComboBoxSettings extends Settings{
 	protected abstract void addALLOptions();
 
 	
+	
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel currentPanel = new JPanel();
-		
+
 		this.settingsBox = new JComboBox();
 		this.settingsBox.addActionListener(new SettingsComboBoxActionListener(this, this.variableString));
 		this.settingsBox.setRenderer(new SettingsRenderer());
@@ -52,6 +48,7 @@ public abstract class ComboBoxSettings extends Settings{
 	@Override
 	public JPanel makeChildrenJPanel(){
 		this.cardPanel = new JPanel(new CardLayout());
+
 		return this.cardPanel;
 	}
 	
@@ -72,7 +69,7 @@ public abstract class ComboBoxSettings extends Settings{
 
 			JComboBox sourceBox = (JComboBox) e.getSource();
 			Settings selectedSettings = (Settings) sourceBox.getSelectedItem();
-
+			
 			sourceSettings.settingsVariables.put(variableName, selectedSettings);
 			
 			CardLayout cardLayout = (CardLayout) cardPanel.getLayout();

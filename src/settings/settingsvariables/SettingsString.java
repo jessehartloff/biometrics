@@ -1,20 +1,18 @@
 package settings.settingsvariables;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class SettingsString extends SettingsVariable{
 
 	private static final long serialVersionUID = 1L;
-	String value;
+	String value; //lol
 	
 	public SettingsString(String name, String value) {
 		this.name = name;
@@ -39,8 +37,10 @@ public class SettingsString extends SettingsVariable{
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
+//		panel.setLayout(new GridLayout(1,2));
+//		panel.setLayout(new FlowLayout());
 //		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
+		
 		final JTextField textField = new JTextField();
 		textField.getDocument().addDocumentListener(new DocumentListener(){
 			
@@ -55,8 +55,8 @@ public class SettingsString extends SettingsVariable{
 			
 		});
 		
-		panel.add(new JLabel(this.name), BorderLayout.WEST);
-		panel.add(textField, BorderLayout.EAST);
+		panel.add(new JLabel(this.name));//, BorderLayout.WEST);
+		panel.add(textField);//, BorderLayout.EAST);
 		
 		return panel;
 	}

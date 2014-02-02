@@ -1,28 +1,14 @@
 package interfaces.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.Dimension;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
+import javax.swing.JScrollPane;
 
 import settings.AllSettings;
-import settings.Settings;
-import settings.SettingsRenderer;
-import settings.modalitysettings.FaceSettings;
-import settings.modalitysettings.FingerprintSettings;
-import settings.modalitysettings.IrisSettings;
-import settings.modalitysettings.PizzaSettings;
 
 
 public class GUI2E {
@@ -56,9 +42,10 @@ public class GUI2E {
 		
 		
 		frame.setJMenuBar(menuBar);
-		
 //		JPanel panel = new JPanel();
 		JPanel panel2 = new JPanel();
+
+	//	panel2.setLayout(new FlowLayout());
 //		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 //		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
 //		
@@ -82,9 +69,9 @@ public class GUI2E {
 
 //		panel2.add(AllSettings.getInstance().getTopJPanel());
 		panel2.add(AllSettings.getInstance().getJPanel());
-
-		
-		frame.add(panel2);
+		frame.setPreferredSize(new Dimension(900,700));
+		JScrollPane scr = new JScrollPane(panel2);
+		frame.add(scr);
 		
 		frame.pack();
 		frame.setVisible(true);

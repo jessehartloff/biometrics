@@ -1,5 +1,6 @@
 package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -41,7 +42,12 @@ public class FingerprintMethodSettings extends ComboBoxSettings{
 	}
 
 
-
+	@Override
+	protected JPanel makeJPanel(){
+		JPanel panel = super.makeJPanel();
+		//panel.setLayout(new GridLayout(2,1));
+		return panel;
+	}
 
 	@Override
 	protected void init() {

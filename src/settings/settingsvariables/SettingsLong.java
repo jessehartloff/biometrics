@@ -2,6 +2,7 @@ package settings.settingsvariables;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -60,6 +61,14 @@ public class SettingsLong extends SettingsVariable{
 		panel.setMaximumSize(new Dimension(0,0));
 		return panel;
 	}
+	
+//	@Override
+//	protected JPanel makeJPanel() {
+//		JPanel toRet = new JPanel();
+//		toRet.add(this.thisJPanel(), BorderLayout.WEST);
+//		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+//		return toRet;
+//	}
 	
 	protected JPanel makeJPanel() {
 		return this.thisJPanel();

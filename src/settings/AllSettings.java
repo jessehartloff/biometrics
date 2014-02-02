@@ -2,29 +2,20 @@ package settings;
 
 import interfaces.gui.ResultsGUI;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import settings.coordinatorsettings.*;
+import settings.coordinatorsettings.HistogramCoordinatorSettings;
+import settings.coordinatorsettings.IndexingCoordinatorSettings;
+import settings.coordinatorsettings.MatchingCoordinatorSettings;
 import settings.hashersettings.HasherSettings;
-import settings.modalitysettings.*;
-import system.allcommonclasses.commonstructures.RawScores;
+import settings.modalitysettings.ModalitySettings;
 import system.allcommonclasses.commonstructures.Results;
-import system.allcommonclasses.commonstructures.Users;
 import system.biometricsystem.BiometricSystem;
-import system.biometricsystem.EvaluatePerformance;
-import system.coordinator.Coordinator;
-import system.coordinator.DefaultTesting;
-import system.coordinator.DefaultTestingPrequantized;
-import system.coordinator.HistogramCoordinator;
-import system.coordinator.IndexTesting;
-import system.coordinator.MultipleEnrollment;
-import system.hasher.Hasher;
 
 public class AllSettings extends Settings{
 
@@ -48,6 +39,22 @@ public class AllSettings extends Settings{
 		}
 		return instance;
 	}
+//	
+//	@Override
+//	protected JPanel makeJPanel() {
+//		JPanel toRet = new JPanel();
+//		toRet.setBackground(java.awt.Color.MAGENTA);
+//		//toRet.setLayout(new GridLayout(2,1));
+//		JPanel p1 = this.thisJPanel();
+//
+//		toRet.add(p1, BorderLayout.WEST);
+//		JPanel p2 = this.makeChildrenJPanel();
+//		
+//		toRet.add(p2, BorderLayout.EAST);
+//		toRet.repaint();
+//		return toRet;
+//	}
+
 	
 	@Override 
 	protected void init(){
@@ -87,7 +94,10 @@ public class AllSettings extends Settings{
 	
 	protected JPanel thisJPanel(){
 		JPanel panel = new JPanel();
-		
+		//panel.setLayout(new GridLayout(2,2));
+
+		//panel.setBackground(java.awt.Color.RED);
+		//panel.setLayout(new FlowLayout());
 		JButton goButton = new JButton("GO!");
 		
 		goButton.addActionListener(new ActionListener() {
