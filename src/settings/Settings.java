@@ -1,8 +1,11 @@
 package settings;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
@@ -29,7 +32,7 @@ public abstract class Settings implements Serializable{
 	protected JPanel makeJPanel() {
 		JPanel toRet = new JPanel();
 		//toRet.setLayout(new GridLayout(2,1));
-		
+//		toRet.setAlignmentX(Container.LEFT_ALIGNMENT);
 		toRet.add(this.thisJPanel(), BorderLayout.WEST);
 		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
 		return toRet;
@@ -75,7 +78,8 @@ public abstract class Settings implements Serializable{
 	
 	public JPanel makeChildrenJPanel(){
 		JPanel childrenPanel = new JPanel();
-		childrenPanel.setBackground(java.awt.Color.BLUE);
+		
+//		childrenPanel.setBackground(java.awt.Color.BLUE);
 //		System.out.println(this.getClass()+"\t"+settingsVariables.keySet().toString());
 		BoxLayout boxLayout = new BoxLayout(childrenPanel, BoxLayout.Y_AXIS);
 		childrenPanel.setLayout(boxLayout);
@@ -85,10 +89,15 @@ public abstract class Settings implements Serializable{
 		for(String subSettingsName : settingsVariables.keySet()){
 			JPanel childPanel = new JPanel();
 			//childPanel.setLayout(new GridLayout(1,2));
-
+			childPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 //			childPanel.setBackground(java.awt.Color.GREEN);
-			childPanel.add(new JLabel(subSettingsName), BorderLayout.NORTH);
-			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.SOUTH);
+//			BoxLayout boxLayout2 = new BoxLayout(childPanel, BoxLayout.X_AXIS);
+//			childPanel.setLayout(boxLayout2);
+//			childPanel.add(new JLabel(subSettingsName));
+//			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel());
+			childPanel.add(new JLabel(subSettingsName), BorderLayout.WEST);
+			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.CENTER);
+//			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel());
 			childPanel.validate();
 //			childPanel.setMaximumSize(new Dimension((int) childPanel.getMaximumSize().getWidth(), 0));
 //			childPanel.add(Box.createVerticalGlue());
