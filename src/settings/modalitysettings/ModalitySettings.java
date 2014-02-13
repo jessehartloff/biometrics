@@ -56,7 +56,7 @@ public class ModalitySettings extends ComboBoxSettings{
 
 	
 	public AModalitySettings modalitySettings(){
-		return (AModalitySettings) this.settingsVariables.get("Modality");
+		return (AModalitySettings) this.settingsVariables.get(this.variableString);
 	}
 
 
@@ -65,7 +65,7 @@ public class ModalitySettings extends ComboBoxSettings{
 	@Override
 	protected void init() {
 		this.variableString = "Modality";
-		this.settingsVariables.put("Modality", new IrisSettings());
+		this.settingsVariables.put(this.variableString, new IrisSettings());
 	}
 	
 	@Override

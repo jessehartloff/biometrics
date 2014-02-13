@@ -1,10 +1,12 @@
 package settings;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,11 +35,18 @@ public abstract class ComboBoxSettings extends Settings{
 	
 	@Override
 	protected JPanel thisJPanel() {
+		
 		JPanel currentPanel = new JPanel();
 
+		BoxLayout boxLayout = new BoxLayout(currentPanel, BoxLayout.X_AXIS);
+		
+		currentPanel.setLayout(boxLayout);
+		
 		this.settingsBox = new JComboBox();
 		this.settingsBox.addActionListener(new SettingsComboBoxActionListener(this, this.variableString));
 		this.settingsBox.setRenderer(new SettingsRenderer());
+		
+		this.settingsBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		currentPanel.add(settingsBox);
 		
@@ -48,7 +57,7 @@ public abstract class ComboBoxSettings extends Settings{
 	@Override
 	public JPanel makeChildrenJPanel(){
 		this.cardPanel = new JPanel(new CardLayout());
-
+//		this.cardPanel.setBorder(null);
 		return this.cardPanel;
 	}
 	
@@ -80,6 +89,7 @@ public abstract class ComboBoxSettings extends Settings{
 			sourceBox.revalidate();
 			sourceBox.getParent().repaint();
 			sourceBox.getParent().validate();
+			sourceBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 			
 		}
 		

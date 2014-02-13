@@ -29,7 +29,7 @@ public class FingerprintMethodFactory{
 			case TRIPLESOFTRIANGLESALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
 				break;
-			case NGONS:
+			case NGONS: //TODO make method variable settings
 				Fingerprint.setFingerprintMethod(new Ngons());
 				break;
 			case NGONSALLROTATIONS:

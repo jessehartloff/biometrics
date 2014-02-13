@@ -19,11 +19,7 @@ public class FingerprintSettings extends AModalitySettings{
 
 	private static final long serialVersionUID = 1L;
 
-//	@Override
-//	public static Method getMethod() {
-//		FingerprintMethodSettings fingerprintMethodSettings = (FingerprintMethodSettings) this.settingsVariables.get("FingerprintMethod");
-//		return fingerprintMethodSettings.getMethod();
-//	}
+
 	
 	
 
@@ -37,15 +33,7 @@ public class FingerprintSettings extends AModalitySettings{
 		return instance;
 	}
 
-	
-//	@Override
-//	protected JPanel thisJPanel() {
-//		
-//
-//		
-//		// TODO add datasets
-//		
-//	}
+
 
 	
 
@@ -55,9 +43,9 @@ public class FingerprintSettings extends AModalitySettings{
 	}
 	@Override
 	protected void init() {
+		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings()); 
+		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings()); 
 		this.settingsVariables.put("FingerprintMethod", FingerprintMethodSettings.getInstance());
-		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings()); //TODO eventually a file list from dataset folder
-		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings()); //TODO eventually a file list from dataset folder
 	}
 	
 

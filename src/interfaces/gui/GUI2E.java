@@ -1,5 +1,6 @@
 package interfaces.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 
@@ -19,6 +20,7 @@ public class GUI2E {
 		JFrame frame = new JFrame("Biometrics");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		frame.getContentPane().setBackground(Color.WHITE);
 		
 		//Where the GUI is created:
 		JMenuBar menuBar;
@@ -66,10 +68,10 @@ public class GUI2E {
 //	
 //		panel2.add(modalitiesBox);
 //		
-
+		panel2.setBackground(Color.WHITE);
 //		panel2.add(AllSettings.getInstance().getTopJPanel());
 		panel2.add(AllSettings.getInstance().getJPanel());
-		frame.setPreferredSize(new Dimension(900,700));
+//		frame.setPreferredSize(new Dimension(1400,900));
 		JScrollPane scr = new JScrollPane(panel2);
 		frame.add(scr);
 		
