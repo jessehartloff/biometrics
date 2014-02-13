@@ -27,6 +27,18 @@ public class Results {
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}
+	
+	public String zeroFAR() {
+		for( RatesPoint r: rates){
+			if (r.getFar() == 0.0) {
+				String zfar = "ZeroFAR: FAR = " + r.getFar().toString() +
+							  ", FRR = " + r.getFrr().toString() +
+							  ", Threshold = "+ r.getThreshold().toString();
+				return zfar;
+			}
+		}
+		return "ZeroFAR Never Reached...find a better matcher";
+	}
 
 	public void setRates(ArrayList<RatesPoint> rates) {
 		this.rates = rates;

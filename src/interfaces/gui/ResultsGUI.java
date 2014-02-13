@@ -30,11 +30,9 @@ public class ResultsGUI {
 		
 		JFrame frame1 = new JFrame("HTER Curve");
         frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.add(new parent());
         frame1.setSize(500, 500);
 		JFrame frame2 = new JFrame("Variable Quantization Histogram");
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.add(new parent());
         frame2.setSize(500, 500);
         
 		results = results_;
@@ -43,7 +41,7 @@ public class ResultsGUI {
 		fieldHistograms = new ArrayList<JPanel>();
 		
 		makePlots(frame1);
-		makeVariableHistograms(frame2);
+//		makeVariableHistograms(frame2);
 		
 		frame1.setVisible(true);
 		frame2.setVisible(true);

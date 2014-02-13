@@ -87,6 +87,7 @@ public class AllSettings extends Settings{
 
 		System.out.print(results.rawScores);
 		System.out.println(results);
+		System.out.println(results.zeroFAR());
 		
 		return system;
 		
