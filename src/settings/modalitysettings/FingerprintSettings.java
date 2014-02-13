@@ -56,8 +56,8 @@ public class FingerprintSettings extends AModalitySettings{
 	@Override
 	protected void init() {
 		this.settingsVariables.put("FingerprintMethod", FingerprintMethodSettings.getInstance());
-		this.settingsVariables.put("trainingDataset", new SettingsString("training dataset", "FVC2002DB1")); //eventually a file list from dataset folder
-		this.settingsVariables.put("testingDataset", new SettingsString("testing dataset", "FVC2002DB2")); //eventually a file list from dataset folder
+		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings()); //TODO eventually a file list from dataset folder
+		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings()); //TODO eventually a file list from dataset folder
 	}
 	
 

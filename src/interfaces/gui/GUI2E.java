@@ -1,6 +1,7 @@
 package interfaces.gui;
 
 import java.awt.Dimension;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -17,7 +18,6 @@ public class GUI2E {
 	public static void main(String[] args){
 		JFrame frame = new JFrame("Biometrics");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		
 		
 		//Where the GUI is created:

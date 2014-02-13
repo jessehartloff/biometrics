@@ -28,11 +28,9 @@ public class Users implements Serializable{
 	
 	// assumes all the users have the same type of biometric
 	public void computeBins() {
-		System.out.println("gg");
 		ArrayList<ArrayList<Long>> allPrequantizedValues = new ArrayList<ArrayList<Long>>();
 		Feature blankFeature = Biometric.method.getBlankFeatureForBinning();
 		for(Variable var : blankFeature.variables.values()){
-			System.out.println(var.variableSettings.getBins());
 			allPrequantizedValues.add(new ArrayList<Long>());
 		}
 		
@@ -54,7 +52,6 @@ public class Users implements Serializable{
 			i++;
 		}
 
-		System.out.println("gg");
 		
 	}
 	

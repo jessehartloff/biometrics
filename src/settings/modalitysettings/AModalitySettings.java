@@ -23,14 +23,14 @@ public abstract class AModalitySettings extends Settings{
 	}
 	
 	public Users getTrainingUsers() {
-		SettingsString train = (SettingsString) this.settingsVariables.get("trainingDataset");
-		return UsersIO.getUsers(train.getValue()); // TODO look into training somewhere else
+		ADatasetSettings train = (ADatasetSettings) this.settingsVariables.get("trainingDataset");
+		return UsersIO.getUsers(train.getDataset()); // TODO look into training somewhere else
 	}
 	
 	
 	public Users getTestingUsers() {
-		SettingsString test  = (SettingsString) this.settingsVariables.get("testingDataset");
-		return UsersIO.getUsers(test.getValue()); // TODO look into training somewhere else
+		ADatasetSettings test  = (ADatasetSettings) this.settingsVariables.get("testingDataset");
+		return UsersIO.getUsers(test.getDataset()); // TODO look into training somewhere else
 	}
 	
 //	public abstract Method getMethod();

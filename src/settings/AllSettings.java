@@ -83,7 +83,7 @@ public class AllSettings extends Settings{
 		Results results = system.go();
 		
 		//this GUI probably shouldn't go here... but fuck it
-		ResultsGUI resultsGUI = new ResultsGUI(results);
+//		ResultsGUI resultsGUI = new ResultsGUI(results);
 
 		System.out.print(results.rawScores);
 		System.out.println(results);

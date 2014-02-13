@@ -51,6 +51,7 @@ public class SettingsDouble extends SettingsVariable{
 		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		final JTextField textField = new JTextField();
+		textField.setColumns(5);
 		textField.getDocument().addDocumentListener(new DocumentListener(){
 			
 			@Override

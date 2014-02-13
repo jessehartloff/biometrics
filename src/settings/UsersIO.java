@@ -25,7 +25,7 @@ public class UsersIO {
 		Users readUsers = null;
 		
 		try{
-			String fileName = "datasets/" + dataset + ".ser";
+			String fileName = "datasets/" + dataset;
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			readUsers = (Users) in.readObject();

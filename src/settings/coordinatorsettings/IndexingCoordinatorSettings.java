@@ -10,15 +10,15 @@ import settings.settingsvariables.SettingsString;
 
 public class IndexingCoordinatorSettings  extends ComboBoxSettings{
 
+	
 	public static String getIndexingCoordinator(){
-		SettingsString string = (SettingsString) instance.settingsVariables.get("indexing");
-		return string.getValue();
+		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		return coordinatorSettings.getCoordinator();
 	}
 	
 	//Singleton
 	private static IndexingCoordinatorSettings instance;
-	private IndexingCoordinatorSettings() {
-	}
+	private IndexingCoordinatorSettings() {}
 	public static IndexingCoordinatorSettings getInstance(){
 		if(instance == null){
 			instance = new IndexingCoordinatorSettings();
@@ -30,13 +30,14 @@ public class IndexingCoordinatorSettings  extends ComboBoxSettings{
 	@Override
 	protected void init() {
 		this.variableString = "indexing";
-		this.settingsVariables.put(this.variableString, new SettingsString("NONE"));	
+		this.settingsVariables.put(this.variableString, NoCoordinator.getInstance());	
 	}
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(new SettingsString("NONE"));
-		this.addToOptions(new SettingsString("INDEXING"));	
+		this.addToOptions(NoCoordinator.getInstance());
+		this.addToOptions(RAMIndexingSettings.getInstance());	
+		this.addToOptions(SQLIndexingSettings.getInstance());	
 	}
 
 

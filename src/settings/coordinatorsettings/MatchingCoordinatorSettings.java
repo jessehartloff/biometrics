@@ -11,15 +11,15 @@ import settings.settingsvariables.SettingsString;
 
 public class MatchingCoordinatorSettings  extends ComboBoxSettings{
 
+	
 	public static String getMatchingCoordinator(){
-		SettingsString string = (SettingsString) instance.settingsVariables.get("matcher");
-		return string.getValue();
+		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		return coordinatorSettings.getCoordinator();
 	}
 	
 	//Singleton
 	private static MatchingCoordinatorSettings instance;
-	private MatchingCoordinatorSettings() {
-	}
+	private MatchingCoordinatorSettings() {}
 	public static MatchingCoordinatorSettings getInstance(){
 		if(instance == null){
 			instance = new MatchingCoordinatorSettings();
@@ -31,14 +31,14 @@ public class MatchingCoordinatorSettings  extends ComboBoxSettings{
 	@Override
 	protected void init() {
 		this.variableString = "matcher";
-		this.settingsVariables.put(this.variableString, new SettingsString("DEFAULTTESTINGPREQUANTIZED"));
+		this.settingsVariables.put(this.variableString, DefaultTestingPrequantizedSettings.getInstance());
 	}
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(new SettingsString("NONE"));
-		this.addToOptions(new SettingsString("DEFAULTTESTING"));
-		this.addToOptions(new SettingsString("DEFAULTTESTINGPREQUANTIZED"));
+		this.addToOptions(DefaultTestingPrequantizedSettings.getInstance());
+		this.addToOptions(DefaultTestingSettings.getInstance());
+		this.addToOptions(NoCoordinator.getInstance());
 	}
 	
 }

@@ -6,26 +6,28 @@ import javax.swing.JPanel;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
+import settings.hashersettings.AHasherSettings;
 import settings.hashersettings.FuzzyVaultSettings;
 import settings.hashersettings.HasherSettings;
+import settings.hashersettings.StraightHasherSettings;
 import settings.settingsvariables.SettingsString;
 
 public class HistogramCoordinatorSettings extends ComboBoxSettings{
 
 	private static final long serialVersionUID = 1L;
 	
+
+	
+	
 	public static String getHistogramCoordinator(){
-		SettingsString string = (SettingsString) instance.settingsVariables.get("histogram");
-		return string.getValue();
+		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		return coordinatorSettings.getCoordinator();
 	}
 	
 	
 	//Singleton
 	private static HistogramCoordinatorSettings instance;
-	private HistogramCoordinatorSettings() {
-		this.settingsVariables.put("histogram", new SettingsString("HISTOGRAM")); //can be NONE
-
-	}
+	private HistogramCoordinatorSettings() {}
 	public static HistogramCoordinatorSettings getInstance(){
 		if(instance == null){
 			instance = new HistogramCoordinatorSettings();
@@ -38,13 +40,13 @@ public class HistogramCoordinatorSettings extends ComboBoxSettings{
 	@Override
 	protected void init() {
 		this.variableString = "histogram";
-		this.settingsVariables.put("histogram", new SettingsString("NONE"));
+		this.settingsVariables.put("histogram", NoCoordinator.getInstance());
 	}
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(new SettingsString("NONE"));
-		this.addToOptions(new SettingsString("HISTOGRAM"));
+		this.addToOptions(NoCoordinator.getInstance());
+		this.addToOptions(HistogramSettings.getInstance());
 	}
 
 

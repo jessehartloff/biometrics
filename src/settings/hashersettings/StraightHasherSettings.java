@@ -33,7 +33,6 @@ public class StraightHasherSettings extends AHasherSettings{
 	}
 	@Override
 	protected void init() {
-		// TODO Auto-generated method stub
 		
 	}
 	
