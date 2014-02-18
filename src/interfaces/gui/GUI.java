@@ -17,12 +17,12 @@ public class GUI {
 	
 		
 	public static void main(String[] args){
+		
 		JFrame frame = new JFrame("Biometrics");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.getContentPane().setBackground(Color.WHITE);
 		
-		//Where the GUI is created:
 		JMenuBar menuBar;
 		JMenu menu;
 
@@ -44,35 +44,15 @@ public class GUI {
 		
 		
 		frame.setJMenuBar(menuBar);
-//		JPanel panel = new JPanel();
-		JPanel panel2 = new JPanel();
+		JPanel panel = new JPanel();
 
-	//	panel2.setLayout(new FlowLayout());
-//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-//		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+
 //		
-//		panel.add(panel2); 
-//		
-//		panel2.add(new JLabel("string"));
-//
-//		Settings[] modalityList = new Settings[] {
-//				FingerprintSettings.getInstance(),
-//				new IrisSettings(),
-//				new FaceSettings(),
-//				new PizzaSettings()		
-//		};
-//		
-//		JComboBox modalitiesBox = new JComboBox(modalityList);
-//		modalitiesBox.addActionListener(new SettingsComboBoxActionListener(AllSettings.getInstance(), "Modality"));
-//		modalitiesBox.setRenderer(new SettingsRenderer());
-//	
-//		panel2.add(modalitiesBox);
-//		
-		panel2.setBackground(Color.WHITE);
-//		panel2.add(AllSettings.getInstance().getTopJPanel());
-		panel2.add(AllSettings.getInstance().getJPanel());
+		panel.setBackground(Color.WHITE);
+		
+		panel.add(AllSettings.getInstance().getJPanel());
 //		frame.setPreferredSize(new Dimension(1400,900));
-		JScrollPane scr = new JScrollPane(panel2);
+		JScrollPane scr = new JScrollPane(panel);
 		frame.add(scr);
 		
 		frame.pack();

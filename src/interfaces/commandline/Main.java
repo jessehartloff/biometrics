@@ -17,10 +17,13 @@ public class Main {
 
 	public static void main(String[] args) {		
 		
-		AllSettings settings = AllSettings.getInstance();
+		AllSettings settings = AllSettings.getInstance(); // loads all the defualt values
 		
+		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
+		//...
 		
+		// set values for everything else
 		NgonSettings.getInstance().n().setValue(4);
 		NgonSettings.getInstance().kClosestMinutia().setValue(6);
 		//...

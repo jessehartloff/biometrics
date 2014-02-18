@@ -1,6 +1,7 @@
 package system.allcommonclasses.commonstructures;
 
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Histogram {
@@ -13,6 +14,25 @@ public class Histogram {
 		histogram = new HashMap<BigInteger, Long>();
 	}
 	
+	public Double getMinEntropy() {
+		Collection<Long> longs = this.histogram.values();
+		Long max = 0L;
+		Long sum = 0L;
+		for(Long value : longs){
+			sum += value;
+			if(value.compareTo(max) > 0){
+				max = value;
+			}
+		}
+		
+		Double Prob = max.doubleValue()/sum.doubleValue();
+		Double minEntropy = -Math.log10(Prob)/Math.log10(2.0);
+		
+		return minEntropy;
+	}
+
+	
+	
 	public String getVariableName() {
 		return variableName;
 	}
@@ -21,6 +41,7 @@ public class Histogram {
 		this.variableName = variableName;
 	}
 
+	
 	@Override
 	public String toString(){
 		String toReturn = this.getVariableName() + ": \n";

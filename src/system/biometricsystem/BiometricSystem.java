@@ -7,6 +7,7 @@ import settings.modalitysettings.AllModalitySettings;
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
+import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.*;
 import system.method.fingerprintmethods.*;
 
@@ -30,16 +31,20 @@ public class BiometricSystem {
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
 		
-		AllModalitySettings.getTrainingUsers().computeBins();
-
+		this.trainTheSystem();
+		
 		RawScores rawScores = CoordinatorFactory.makeCoordinator(AllModalitySettings.getTestingUsers()).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
 
-	
 		return results;
 	}
 
 
+	private void trainTheSystem(){
+		Users trainingSet = AllModalitySettings.getTrainingUsers();
+		
+		trainingSet.computeBins();
+	}
 	
 }

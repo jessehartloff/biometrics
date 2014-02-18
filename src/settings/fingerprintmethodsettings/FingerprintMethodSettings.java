@@ -5,11 +5,13 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+import settings.MethodSettings;
 import settings.Settings;
 
-public abstract class FingerprintMethodSettings extends Settings{
+public abstract class FingerprintMethodSettings extends MethodSettings{
 
 	public abstract String getMethodString();
+	
 	@Override
 	protected JPanel makeJPanel(){
 		JPanel panel = super.makeJPanel();

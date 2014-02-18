@@ -93,7 +93,7 @@ public class Results {
 				this.getVariableHistograms().toString() + "\n\n" +
 				"EER: " + this.getEer() + "\n" + 
 				"ZeroFAR: " + this.getZeroFAR() + "\n" +
-//				"rates: " + this.getRates() + "\n" +
+				"rates: " + this.getRates() + "\n" +
 				"min entropy: " + this.getMinEntropy() + "\n";
 		return toReturn;
 	}

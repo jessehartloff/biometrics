@@ -1,10 +1,11 @@
 package settings;
 
-import system.method.Method;
-
-public interface MethodSettings{
 
 
+public abstract class MethodSettings extends Settings{
 
-	
+	private static final long serialVersionUID = 1L;
+
+
+
 }

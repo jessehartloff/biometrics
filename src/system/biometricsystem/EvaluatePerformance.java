@@ -2,7 +2,6 @@ package system.biometricsystem;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import system.allcommonclasses.commonstructures.Histogram;
@@ -23,44 +22,31 @@ public class EvaluatePerformance {
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
 		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
 
-		results.setMinEntropy(EvaluatePerformance.computeMinEntropy(results));
+		results.setMinEntropy(results.getFieldHistogram().getMinEntropy());
 		results.setZeroFAR(EvaluatePerformance.computeZeroFAR(results));
 		
+		for(Histogram varHist : results.getVariableHistograms()){
+			System.out.println(varHist.getVariableName() + ": " + varHist.getMinEntropy());
+		}
 		results.rawScores = rawScores;
 		
 		return results;
 	}
 	
-	public static ZeroFAR computeZeroFAR(Results results) {
+	
+	private static ZeroFAR computeZeroFAR(Results results) {
 		ZeroFAR zeroFAR = new ZeroFAR();
 		zeroFAR.setFRR(Double.POSITIVE_INFINITY);
 		zeroFAR.setThreshold(Double.POSITIVE_INFINITY);
 		
 		for(RatesPoint r: results.getRates()){
-			if (r.getFar() == 0.0) {
+			if (r.getFar().equals(0.0)) {
 				zeroFAR.setFRR(r.getFrr());
 				zeroFAR.setThreshold(r.getThreshold());
+				break;
 			}
 		}
 		return zeroFAR;
-	}
-	
-
-	private static Double computeMinEntropy(Results results) {
-		Collection<Long> longs = results.getFieldHistogram().histogram.values();
-		Long max = 0L;
-		Long sum = 0L;
-		for(Long value : longs){
-			sum += value;
-			if(value.compareTo(max) > 0){
-				max = value;
-			}
-		}
-		
-		Double Prob = max.doubleValue()/sum.doubleValue();
-		Double minEntropy = -Math.log10(Prob)/Math.log10(2.0);
-		
-		return minEntropy;
 	}
 
 
@@ -106,7 +92,6 @@ public class EvaluatePerformance {
 		Collections.sort(rawScores.imposterScores);
 		
 		// This needs to be looked over
-		Results results = new Results();
 
 		ArrayList<Double> gens = rawScores.genuineScores;
 		ArrayList<Double> imps = rawScores.imposterScores;

@@ -5,6 +5,8 @@ import interfaces.gui.ResultsGUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -28,19 +30,20 @@ public class AllSettings extends Settings{
 //		return topPanel;
 //	}
 	
-	//Singleton
+	
+	//Singleton. This block of code must be in all settings files (except settings variables) to enable serialization.
 	private static AllSettings instance;
-	private AllSettings(){
-		
-//		this.topPanel = new JPanel();
-//		this.topPanel.add(this.getJPanel());
-	}
+	private AllSettings(){}
 	public static AllSettings getInstance(){
 		if(instance == null){
 			instance = new AllSettings();
 		}
 		return instance;
 	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+	{AllSettings.instance = (AllSettings) in.readObject();} // TODO does this really work??
+	
+	
 //	
 //	@Override
 //	protected JPanel makeJPanel() {
