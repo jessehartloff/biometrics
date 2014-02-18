@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import system.biometricsystem.RatesPoint;
+import system.biometricsystem.ZeroFAR;
 
 /**
  * 
@@ -16,10 +17,12 @@ import system.biometricsystem.RatesPoint;
 public class Results {
 	
 	private Double eer;
+	private ZeroFAR zeroFAR;
 	private ArrayList<RatesPoint> rates;
 	private Histogram fieldHistogram;
 	private ArrayList<Histogram> variableHistograms;
 	private ArrayList<Long> indexingResults;
+	private Double minEntropy;
 	
 	public RawScores rawScores;
 	
@@ -27,17 +30,16 @@ public class Results {
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}
+
+
 	
-	public String zeroFAR() {
-		for( RatesPoint r: rates){
-			if (r.getFar() == 0.0) {
-				String zfar = "ZeroFAR: FAR = " + r.getFar().toString() +
-							  ", FRR = " + r.getFrr().toString() +
-							  ", Threshold = "+ r.getThreshold().toString();
-				return zfar;
-			}
-		}
-		return "ZeroFAR Never Reached...find a better matcher";
+	
+	public ZeroFAR getZeroFAR() {
+		return zeroFAR;
+	}
+
+	public void setZeroFAR(ZeroFAR zeroFAR) {
+		this.zeroFAR = zeroFAR;
 	}
 
 	public void setRates(ArrayList<RatesPoint> rates) {
@@ -75,14 +77,24 @@ public class Results {
 	public void setIndexingResults(ArrayList<Long> indexingResults) {
 		this.indexingResults = indexingResults;
 	}
+	
+	public Double getMinEntropy() {
+		return minEntropy;
+	}
+
+	public void setMinEntropy(Double minEntropy) {
+		this.minEntropy = minEntropy;
+	}
 
 	@Override
 	public String toString(){
 		String toReturn = "\nResults:\n"+
 //				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
-				this.getVariableHistograms().toString() + "\n" +
-				"EER:" + this.getEer() + "\n" + 
-				"rates:" + this.getRates() + "\n";
+				this.getVariableHistograms().toString() + "\n\n" +
+				"EER: " + this.getEer() + "\n" + 
+				"ZeroFAR: " + this.getZeroFAR() + "\n" +
+//				"rates: " + this.getRates() + "\n" +
+				"min entropy: " + this.getMinEntropy() + "\n";
 		return toReturn;
 	}
 	

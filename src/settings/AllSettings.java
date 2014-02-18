@@ -5,6 +5,7 @@ import interfaces.gui.ResultsGUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -88,10 +89,8 @@ public class AllSettings extends Settings{
 
 		System.out.print(results.rawScores);
 		System.out.println(results);
-		System.out.println(results.zeroFAR());
 		
-		return system;
-		
+		return system;	
 	}
 	
 	protected JPanel thisJPanel(){

@@ -2,9 +2,10 @@ package system.biometricsystem;
 
 
 public class RatesPoint {
-	Double far;
-	Double frr;
-	Double threshold;
+	
+	private Double far;
+	private Double frr;
+	private Double threshold;
 	
 	
 	@Override

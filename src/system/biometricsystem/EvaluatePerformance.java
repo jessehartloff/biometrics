@@ -2,6 +2,7 @@ package system.biometricsystem;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 import system.allcommonclasses.commonstructures.Histogram;
@@ -21,12 +22,47 @@ public class EvaluatePerformance {
 		results.setFieldHistogram(EvaluatePerformance.computeFieldHistogram(rawScores));
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
 		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
+
+		results.setMinEntropy(EvaluatePerformance.computeMinEntropy(results));
+		results.setZeroFAR(EvaluatePerformance.computeZeroFAR(results));
 		
 		results.rawScores = rawScores;
 		
 		return results;
 	}
 	
+	public static ZeroFAR computeZeroFAR(Results results) {
+		ZeroFAR zeroFAR = new ZeroFAR();
+		zeroFAR.setFRR(Double.POSITIVE_INFINITY);
+		zeroFAR.setThreshold(Double.POSITIVE_INFINITY);
+		
+		for(RatesPoint r: results.getRates()){
+			if (r.getFar() == 0.0) {
+				zeroFAR.setFRR(r.getFrr());
+				zeroFAR.setThreshold(r.getThreshold());
+			}
+		}
+		return zeroFAR;
+	}
+	
+
+	private static Double computeMinEntropy(Results results) {
+		Collection<Long> longs = results.getFieldHistogram().histogram.values();
+		Long max = 0L;
+		Long sum = 0L;
+		for(Long value : longs){
+			sum += value;
+			if(value.compareTo(max) > 0){
+				max = value;
+			}
+		}
+		
+		Double Prob = max.doubleValue()/sum.doubleValue();
+		Double minEntropy = -Math.log10(Prob)/Math.log10(2.0);
+		
+		return minEntropy;
+	}
+
 
 	private static ArrayList<Long> computeIndexingResults(RawScores rawScores) {
 		// TODO Jesse - compute indexing results
@@ -93,13 +129,13 @@ public class EvaluatePerformance {
 		//offset by half the resolution so we don't have to to deal with machine imprecision at the score ticks
 		for(Double threshold = min - offset; threshold <= max + offset; threshold += stepSize){
 			RatesPoint point = new RatesPoint();
-			point.threshold= threshold;
+			point.setThreshold(threshold);
 			
 			Double falseAccepts = Double.valueOf(imps.size());
 			Double falseRejects = 0.0;
 			
 			for(Double d : gens){
-				if(d<point.threshold){
+				if(d<point.getThreshold()){
 					falseRejects += 1.0;
 				}else{
 					break;
@@ -107,15 +143,15 @@ public class EvaluatePerformance {
 			}
 			
 			for(Double d : imps){
-				if(d<point.threshold){
+				if(d<point.getThreshold()){
 					falseAccepts -= 1.0;
 				}else{
 					break;
 				}
 			}
 			
-			point.far = falseAccepts/Double.valueOf(imps.size());
-			point.frr = falseRejects/Double.valueOf(gens.size());
+			point.setFar(falseAccepts/Double.valueOf(imps.size()));
+			point.setFrr(falseRejects/Double.valueOf(gens.size()));
 			
 			rates.add(point);
 		}
@@ -129,8 +165,8 @@ public class EvaluatePerformance {
 		Double eer = Double.POSITIVE_INFINITY;
 		
 		for(RatesPoint point : rates){
-			if(point.frr >= point.far){
-				eer = (point.frr + point.far)/2.0;
+			if(point.getFrr() >= point.getFar()){
+				eer = (point.getFrr() + point.getFar())/2.0;
 				break;
 			}
 		}
