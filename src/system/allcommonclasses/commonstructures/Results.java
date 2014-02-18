@@ -79,7 +79,7 @@ public class Results {
 	@Override
 	public String toString(){
 		String toReturn = "\nResults:\n"+
-				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
+//				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
 				this.getVariableHistograms().toString() + "\n" +
 				"EER:" + this.getEer() + "\n" + 
 				"rates:" + this.getRates() + "\n";

@@ -55,7 +55,7 @@ public class Ngons extends FingerprintMethod{
 		public Ngon(){
 			this.setCenterX(0.0);
 			this.setCenterY(0.0);
-			innerN = settings.getN().getValue();
+			innerN = settings.n().getValue();
 //			this.ngonSettings = settings;
 			this.minutiaIndices = new HashSet<Long>();
 			variables.put("theta0", new ThetaVariable(settings.getMinutiaComponentVariable("theta", 0L)));
@@ -101,7 +101,7 @@ public class Ngons extends FingerprintMethod{
 	public Ngons(){
 		this.settings = NgonSettings.getInstance();
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
-		this.N = this.settings.getN().getValue(); 
+		this.N = this.settings.n().getValue(); 
 	}
 	
 
@@ -169,11 +169,11 @@ public class Ngons extends FingerprintMethod{
 			ngonToReturn.setCenterY(ngonToReturn.getCenterY() + minutia.getY());
 		}
 		
-		ngonToReturn.setCenterX(ngonToReturn.getCenterX() / settings.getN().getValue());
-		ngonToReturn.setCenterY(ngonToReturn.getCenterY() / settings.getN().getValue());
+		ngonToReturn.setCenterX(ngonToReturn.getCenterX() / settings.n().getValue());
+		ngonToReturn.setCenterY(ngonToReturn.getCenterY() / settings.n().getValue());
 		
 		ngonToReturn.variables.get("theta0").setPrequantizedValue(minutiaList.get(0).getTheta());
-		for(Long i = 1L; i < settings.getN().getValue(); i++){
+		for(Long i = 1L; i < settings.n().getValue(); i++){
 			ngonToReturn.variables.get(ngonToReturn.makeKey("x", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getX() - m0.getX());
 			ngonToReturn.variables.get(ngonToReturn.makeKey("y", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getY() - m0.getY());
 			ngonToReturn.variables.get(ngonToReturn.makeKey("theta", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getTheta());		
@@ -189,7 +189,7 @@ public class Ngons extends FingerprintMethod{
 
 
 	public ArrayList<Ngon> recursiveNgonBuilder(ArrayList<Minutia> minutiae, ArrayList<Minutia> currentNgon){
-		if(currentNgon.size() == settings.getN().getValue()){
+		if(currentNgon.size() == settings.n().getValue()){
 			ArrayList<Ngon> baseCaseList = new ArrayList<Ngon>();
 			baseCaseList.add(this.makeNgon(currentNgon));
 			return baseCaseList;

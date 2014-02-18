@@ -21,7 +21,7 @@ public class Main {
 		
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
 		
-		NgonSettings.getInstance().getN().setValue(4);
+		NgonSettings.getInstance().n().setValue(4);
 		NgonSettings.getInstance().kClosestMinutia().setValue(6);
 		//...
 		

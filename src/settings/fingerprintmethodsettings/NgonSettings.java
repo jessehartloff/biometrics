@@ -38,16 +38,16 @@ public class NgonSettings extends FingerprintMethodSettings{
 	public SettingsLong kClosestMinutia(){
 		return (SettingsLong) this.settingsVariables.get("kClosestMinutia");
 	}
-	public SettingsLong getN(){
+	public SettingsLong n(){
 		return (SettingsLong) this.settingsVariables.get("N");
 	}	
-	public SettingsLong getThetaBins(){
+	public SettingsLong thetaBins(){
 		return (SettingsLong) this.settingsVariables.get("thetaBins");
 	}
-	public SettingsLong getXBins(){
+	public SettingsLong xBins(){
 		return (SettingsLong) this.settingsVariables.get("xBins");
 	}
-	public SettingsLong getYBins(){
+	public SettingsLong yBins(){
 		return (SettingsLong) this.settingsVariables.get("yBins");
 	}
 
@@ -66,11 +66,11 @@ public class NgonSettings extends FingerprintMethodSettings{
 	}
 
 	public void setAllNumberOfBins() {
-		this.settingsVariables.put(this.componentToString("theta", 0L), new SettingsMethodVariable(this.getThetaBins().getValue()));
-		for(Long i = 1L; i < this.getN().getValue(); i++){
-			this.settingsVariables.put(this.componentToString("x", i), new SettingsMethodVariable(this.getXBins().getValue()));
-			this.settingsVariables.put(this.componentToString("y", i), new SettingsMethodVariable(this.getYBins().getValue()));
-			this.settingsVariables.put(this.componentToString("theta", i), new SettingsMethodVariable(this.getThetaBins().getValue()));
+		this.settingsVariables.put(this.componentToString("theta", 0L), new SettingsMethodVariable(this.thetaBins().getValue()));
+		for(Long i = 1L; i < this.n().getValue(); i++){
+			this.settingsVariables.put(this.componentToString("x", i), new SettingsMethodVariable(this.xBins().getValue()));
+			this.settingsVariables.put(this.componentToString("y", i), new SettingsMethodVariable(this.yBins().getValue()));
+			this.settingsVariables.put(this.componentToString("theta", i), new SettingsMethodVariable(this.thetaBins().getValue()));
 		}
 	}
 	

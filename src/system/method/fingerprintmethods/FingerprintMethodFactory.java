@@ -36,6 +36,9 @@ public class FingerprintMethodFactory{
 			case NGONSALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new NgonsAllRotations());
 				break;
+			case PRINTS:
+				Fingerprint.setFingerprintMethod(new PRINTS());
+				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
 				Fingerprint.setFingerprintMethod(new Triangles());
@@ -45,7 +48,7 @@ public class FingerprintMethodFactory{
 	
 	public enum FingerPrintEnumerator{
 		MINUTIAEMETHOD,PATHSMETHOD,TRIANGLES,TRIPLESOFTRIANGLES,
-		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS; 
+		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS; 
 	}
 	
 }

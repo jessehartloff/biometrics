@@ -26,6 +26,7 @@ public class AllFingerprintMethodSettings extends ComboBoxSettings{
 		protected void addALLOptions() {
 			this.addToOptions(NgonSettings.getInstance());
 			this.addToOptions(NgonAllRotationsSettings.getInstance());
+			this.addToOptions(PRINTSettings.getInstance());
 			this.addToOptions(TriangleSettings.getInstance());
 			this.addToOptions(TripletsOfTrianglesSettings.getInstance());
 			this.addToOptions(TripletsOfTrianglesAllRotationsSettings.getInstance());
