@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import settings.fingerprintmethodsettings.TriangleSettings;
+import settings.fingerprintmethodsettings.TripletsOfTrianglesSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.method.feature.Feature;
@@ -17,6 +18,8 @@ import system.method.feature.Feature;
  */
 public class TriplesOfTriangles extends Triangles {
 
+	private TripletsOfTrianglesSettings settings;
+	
 	protected class TriangleTriplet extends Feature{
 		Triangle t0;
 		Triangle t1;
@@ -97,6 +100,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	public TriplesOfTriangles() {
 		super();
+		this.settings = TripletsOfTrianglesSettings.getInstance();
 	}
 	
 	

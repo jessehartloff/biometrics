@@ -9,7 +9,7 @@ public class TriangleSettings extends FingerprintMethodSettings{
 	private static final long serialVersionUID = 1L;
 	
 	private static TriangleSettings instance;
-	private TriangleSettings(){}
+	protected TriangleSettings(){}
 	public static TriangleSettings getInstance(){
 		if(instance == null){
 			instance = new TriangleSettings();
@@ -94,9 +94,7 @@ public class TriangleSettings extends FingerprintMethodSettings{
 		this.settingsVariables.put("rotationStep", new SettingsDouble(5.0));
 		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
 		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
-		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong());
 		this.settingsVariables.put("kClosestMinutia", new SettingsLong(3));
-		this.settingsVariables.put("kClosestTriangles", new SettingsLong());
 	}
 	
 }

@@ -19,7 +19,7 @@ import system.method.feature.*;
  */
 public class Triangles extends FingerprintMethod {
 	
-	public TriangleSettings settings;
+	private TriangleSettings settings;
 	
 	public class Triangle extends Feature implements Comparable<Triangle>{
 
