@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
-import settings.hashersettings.AHasherSettings;
-import settings.hashersettings.FuzzyVaultSettings;
 import settings.hashersettings.HasherSettings;
+import settings.hashersettings.FuzzyVaultSettings;
+import settings.hashersettings.AllHasherSettings;
 import settings.hashersettings.StraightHasherSettings;
 import settings.settingsvariables.SettingsString;
 
-public class HistogramCoordinatorSettings extends ComboBoxSettings{
+public class AllHistogramCoordinatorSettings extends ComboBoxSettings{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,17 +20,17 @@ public class HistogramCoordinatorSettings extends ComboBoxSettings{
 	
 	
 	public static String getHistogramCoordinator(){
-		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables.get(instance.variableString);
 		return coordinatorSettings.getCoordinator();
 	}
 	
 	
 	//Singleton
-	private static HistogramCoordinatorSettings instance;
-	private HistogramCoordinatorSettings() {}
-	public static HistogramCoordinatorSettings getInstance(){
+	private static AllHistogramCoordinatorSettings instance;
+	private AllHistogramCoordinatorSettings() {}
+	public static AllHistogramCoordinatorSettings getInstance(){
 		if(instance == null){
-			instance = new HistogramCoordinatorSettings();
+			instance = new AllHistogramCoordinatorSettings();
 		}
 		return instance;
 	}

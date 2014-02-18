@@ -1,6 +1,6 @@
 package settings.coordinatorsettings;
 
-public class RAMIndexingSettings extends ACoordinatorSettings{
+public class RAMIndexingSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {

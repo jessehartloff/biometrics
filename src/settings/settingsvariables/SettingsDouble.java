@@ -1,12 +1,17 @@
 package settings.settingsvariables;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -22,7 +27,11 @@ public class SettingsDouble extends SettingsVariable{
 	private static final long serialVersionUID = 1L;
 	
 	private Double value;
-
+	JTextField textField;
+	
+	@Override
+	protected void init(){}
+	
 	public SettingsDouble(){
 		this.setValue(5.0);
 	}
@@ -37,27 +46,44 @@ public class SettingsDouble extends SettingsVariable{
 	}
 
 	public void setValue(Double value) {
+		if(this.value==null){
+			final Double innerValue = value;
+			SwingUtilities.invokeLater(new Runnable(){
+				public void run(){
+					textField.setText(innerValue.toString());
+				}
+			});
+		}
 		this.value = value;
 	}
 	
 	public void setValue(Float value) {
-		this.value = value.doubleValue();
+		this.setValue(value.doubleValue());
 	}
 
 	
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
+		
+		textField = new JTextField();
+		
 		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-		final JTextField textField = new JTextField();
+//		textField = new JTextField();
+//		final JTextField textField = new JTextField();
+//		textField.setText(this.getValue().toString());
 		textField.setColumns(5);
 		textField.getDocument().addDocumentListener(new DocumentListener(){
 			
 			@Override
-			public void removeUpdate(DocumentEvent e){}			
+			public void removeUpdate(DocumentEvent e){
+				setValue(new Double(textField.getText()));
+				
+			}			
 			@Override
-			public void insertUpdate(DocumentEvent e){}
+			public void insertUpdate(DocumentEvent e){
+				setValue(new Double(textField.getText()));
+			}
 			@Override
 			public void changedUpdate(DocumentEvent e){
 				setValue(new Double(textField.getText()));
@@ -65,13 +91,10 @@ public class SettingsDouble extends SettingsVariable{
 			
 		});
 		
-		panel.add(new JLabel(this.name));//, BorderLayout.WEST);
+//		panel.add(new JLabel(this.name));//, BorderLayout.WEST);
 		panel.add(textField);//, BorderLayout.EAST);
 		
 		return panel;
 	}
-	
-	@Override
-	protected void init() {}
 	
 }

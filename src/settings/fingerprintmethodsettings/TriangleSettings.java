@@ -1,10 +1,10 @@
-package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
+package settings.fingerprintmethodsettings;
 
 
 import settings.settingsvariables.*;
 import system.method.fingerprintmethods.FingerprintMethod;
 
-public class TriangleSettings extends AFingerprintMethodSettings{
+public class TriangleSettings extends FingerprintMethodSettings{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -88,14 +88,14 @@ public class TriangleSettings extends AFingerprintMethodSettings{
 		this.settingsVariables.put("y1", new SettingsMethodVariable(8));
 		this.settingsVariables.put("theta1", new SettingsMethodVariable(9));
 		this.settingsVariables.put("x2", new SettingsMethodVariable(10));
-		this.settingsVariables.put("y2", new SettingsMethodVariable());
-		this.settingsVariables.put("theta2", new SettingsMethodVariable());
+		this.settingsVariables.put("y2", new SettingsMethodVariable(8));
+		this.settingsVariables.put("theta2", new SettingsMethodVariable(8));
 		
 		this.settingsVariables.put("rotationStep", new SettingsDouble(5.0));
 		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
 		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
 		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong());
-		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
+		this.settingsVariables.put("kClosestMinutia", new SettingsLong(3));
 		this.settingsVariables.put("kClosestTriangles", new SettingsLong());
 	}
 	

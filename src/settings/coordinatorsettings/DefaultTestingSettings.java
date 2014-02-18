@@ -1,6 +1,6 @@
 package settings.coordinatorsettings;
 
-public class DefaultTestingSettings extends ACoordinatorSettings{
+public class DefaultTestingSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {

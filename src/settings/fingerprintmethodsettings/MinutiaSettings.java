@@ -1,11 +1,11 @@
-package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
+package settings.fingerprintmethodsettings;
 
 import java.io.Serializable;
 
 import settings.Settings;
 import settings.settingsvariables.SettingsMethodVariable;
 
-public class MinutiaSettings extends AFingerprintMethodSettings{
+public class MinutiaSettings extends FingerprintMethodSettings{
 
 	private static final long serialVersionUID = 1L;
 

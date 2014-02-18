@@ -3,7 +3,7 @@ package system.method.fingerprintmethods;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.PathSettings;
+import settings.fingerprintmethodsettings.PathSettings;
 import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;

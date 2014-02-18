@@ -1,56 +1,11 @@
 package settings.hashersettings;
 
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-
-import settings.AllSettings;
-import settings.ComboBoxSettings;
 import settings.Settings;
-import settings.SettingsRenderer;
-import settings.coordinatorsettings.HistogramCoordinatorSettings;
-import settings.coordinatorsettings.IndexingCoordinatorSettings;
-import settings.coordinatorsettings.MatchingCoordinatorSettings;
-import settings.modalitysettings.ModalitySettings;
+import system.hasher.Hasher;
+import system.method.fingerprintmethods.FingerprintMethod;
 
-public class HasherSettings extends ComboBoxSettings{
+public abstract class HasherSettings extends Settings{
 
-	private static final long serialVersionUID = 1L;
+	public abstract String getHasher();
 	
-	
-	public AHasherSettings hasher(){
-		return (AHasherSettings) this.settingsVariables.get(this.variableString);
-	}
-	
-
-	//Singleton
-	private HasherSettings() {
-	}
-	
-	@Override
-	protected void init(){
-		this.variableString = "Hasher";
-		this.settingsVariables.put(this.variableString, FuzzyVaultSettings.getInstance());
-	}
-	
-	private static HasherSettings instance;
-	public static HasherSettings getInstance(){
-		if(instance == null){
-			instance = new HasherSettings();
-		}
-		return instance;
-	}
-	
-
-
-	public static String getHasher() {
-		return instance.hasher().getHasher();
-	}
-
-
-
-	@Override
-	protected void addALLOptions() {
-		this.addToOptions(StraightHasherSettings.getInstance());
-		this.addToOptions(FuzzyVaultSettings.getInstance());
-	}
 }

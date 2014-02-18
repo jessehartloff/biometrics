@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.feature.Variable;
 import system.method.fingerprintmethods.Ngons;

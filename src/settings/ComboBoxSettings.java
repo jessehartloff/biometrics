@@ -32,6 +32,10 @@ public abstract class ComboBoxSettings extends Settings{
 	protected abstract void addALLOptions();
 
 	
+	public void manuallySetComboBox(Settings comboBoxSettings){
+		this.settingsVariables.put(this.variableString, comboBoxSettings);
+	}
+	
 	
 	@Override
 	protected JPanel thisJPanel() {

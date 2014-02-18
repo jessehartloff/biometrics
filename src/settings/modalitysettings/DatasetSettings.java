@@ -8,7 +8,7 @@ import settings.settingsvariables.SettingsDropDownItem;
 import settings.settingsvariables.SettingsString;
 import system.allcommonclasses.commonstructures.Users;
 
-public abstract class ADatasetSettings extends ComboBoxSettings{
+public abstract class DatasetSettings extends ComboBoxSettings{
 
 
 	public String getDataset(){

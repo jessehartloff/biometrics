@@ -4,7 +4,7 @@ import settings.Settings;
 import settings.settingsvariables.SettingsLong;
 import system.hasher.Hasher;
 
-public class StraightHasherSettings extends AHasherSettings{
+public class StraightHasherSettings extends HasherSettings{
 
 	private static final long serialVersionUID = 1L;
 	

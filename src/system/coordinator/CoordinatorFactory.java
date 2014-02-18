@@ -1,9 +1,9 @@
 package system.coordinator;
 
 
-import settings.coordinatorsettings.HistogramCoordinatorSettings;
-import settings.coordinatorsettings.IndexingCoordinatorSettings;
-import settings.coordinatorsettings.MatchingCoordinatorSettings;
+import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
@@ -28,7 +28,7 @@ public class CoordinatorFactory {
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
 		
 	
-		switch(MatchingCoordinatorEnumerator.valueOf(MatchingCoordinatorSettings.getMatchingCoordinator())){
+		switch(MatchingCoordinatorEnumerator.valueOf(AllMatchingCoordinatorSettings.getMatchingCoordinator())){
 			case DEFAULTTESTING:
 				firstCoordinator = addToFront(new DefaultTesting(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
 				break;		
@@ -45,7 +45,7 @@ public class CoordinatorFactory {
 				break;
 		}		
 		
-		switch(IndexingCoordinatorEnumerator.valueOf(IndexingCoordinatorSettings.getIndexingCoordinator())){
+		switch(IndexingCoordinatorEnumerator.valueOf(AllIndexingCoordinatorSettings.getIndexingCoordinator())){
 			case RAMINDEXING:
 				firstCoordinator = addToFront(new IndexTesting(hasher, users, new RAMStructure()), firstCoordinator);
 			break;	
@@ -59,7 +59,7 @@ public class CoordinatorFactory {
 				break;
 		}	
 		
-		switch(HistogramCoordinatorEnumerator.valueOf(HistogramCoordinatorSettings.getHistogramCoordinator())){
+		switch(HistogramCoordinatorEnumerator.valueOf(AllHistogramCoordinatorSettings.getHistogramCoordinator())){
 			case HISTOGRAM:
 				firstCoordinator = addToFront(new HistogramCoordinator(hasher, users), firstCoordinator);
 				break;		

@@ -1,4 +1,4 @@
-package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
+package settings.fingerprintmethodsettings;
 
 import javax.swing.JPanel;
 

@@ -2,7 +2,7 @@ package settings.coordinatorsettings;
 
 import settings.hashersettings.FuzzyVaultSettings;
 
-public class NoCoordinator extends ACoordinatorSettings{
+public class NoCoordinator extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {

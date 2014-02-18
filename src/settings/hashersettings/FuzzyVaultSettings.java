@@ -4,7 +4,7 @@ import settings.settingsvariables.SettingsLong;
 import system.allcommonclasses.modalities.Biometric;
 import system.hasher.Hasher;
 
-public class FuzzyVaultSettings  extends AHasherSettings{
+public class FuzzyVaultSettings  extends HasherSettings{
 
 	private static final long serialVersionUID = 1L;
 

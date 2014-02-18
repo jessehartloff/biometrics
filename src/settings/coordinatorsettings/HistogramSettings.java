@@ -1,6 +1,6 @@
 package settings.coordinatorsettings;
 
-public class HistogramSettings extends ACoordinatorSettings{
+public class HistogramSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {

@@ -1,4 +1,4 @@
-package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
+package settings.fingerprintmethodsettings;
 
 
 import settings.settingsvariables.SettingsMethodVariable;
@@ -6,7 +6,7 @@ import settings.settingsvariables.SettingsLong;
 import system.method.fingerprintmethods.FingerprintMethod;
 import system.method.fingerprintmethods.PathsMethod;
 
-public class PathSettings extends AFingerprintMethodSettings{
+public class PathSettings extends FingerprintMethodSettings{
 
 	private static final long serialVersionUID = 1L;
 

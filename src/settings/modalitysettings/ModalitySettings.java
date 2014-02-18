@@ -1,80 +1,38 @@
 package settings.modalitysettings;
 
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import settings.ComboBoxSettings;
+import settings.Settings;
+import settings.UsersIO;
+import settings.settingsvariables.SettingsString;
 import system.allcommonclasses.commonstructures.Users;
+import system.method.Method;
 
-public class ModalitySettings extends ComboBoxSettings{
+public abstract class ModalitySettings extends Settings{
 
-	private static final long serialVersionUID = 1L;
-
-	public static Users getTrainingUsers(){
-		return instance.modalitySettings().getTrainingUsers();
-	}
-	public static Users getTestingUsers(){
-		return instance.modalitySettings().getTestingUsers();
-	}
 	
-//	public Method getMethod(){
-//		return instance.modalitySettings().getMethod();
-//	}
-//	@Override
-//	protected JPanel thisJPanel(){
-//		JPanel currentPanel = super.thisJPanel();
-//		currentPanel.setLayout(new GridLayout(5,1));
-//		return currentPanel;
-//	}
-	@Override
 	protected JPanel makeJPanel() {
 		JPanel toRet = new JPanel();
-		//toRet.setBackground(java.awt.Color.BLUE);
-
-		//toRet.setLayout(new GridLayout(1,2));
-		toRet.add(this.thisJPanel(), BorderLayout.CENTER);
+		//toRet.setLayout(new GridLayout(2,1));
+		toRet.add(this.thisJPanel(), BorderLayout.WEST);
 		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+
 		return toRet;
 	}
-
-	//Singleton
-	private static ModalitySettings instance;
-	private ModalitySettings() {
-	}
-	public static ModalitySettings getInstance(){
-		if(instance == null){
-			instance = new ModalitySettings();
-		}
-		return instance;
-	}
-
 	
-	public AModalitySettings modalitySettings(){
-		return (AModalitySettings) this.settingsVariables.get(this.variableString);
-	}
-
-
-	
-
-	@Override
-	protected void init() {
-		this.variableString = "Modality";
-		this.settingsVariables.put(this.variableString, new IrisSettings());
+	public Users getTrainingUsers() {
+		DatasetSettings train = (DatasetSettings) this.settingsVariables.get("trainingDataset");
+		return UsersIO.getUsers(train.getDataset()); // TODO look into training somewhere else
 	}
 	
-	@Override
-	protected void addALLOptions() {
-		this.addToOptions(FingerprintSettings.getInstance());
-		this.addToOptions(new IrisSettings());
-		this.addToOptions(new FaceSettings());
-		this.addToOptions(new PizzaSettings());
+	
+	public Users getTestingUsers() {
+		DatasetSettings test  = (DatasetSettings) this.settingsVariables.get("testingDataset");
+		return UsersIO.getUsers(test.getDataset()); // TODO look into training somewhere else
 	}
-
-
+	
+//	public abstract Method getMethod();
+	
 }

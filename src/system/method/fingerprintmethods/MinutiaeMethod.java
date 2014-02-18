@@ -3,7 +3,7 @@ package system.method.fingerprintmethods;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.MinutiaSettings;
+import settings.fingerprintmethodsettings.MinutiaSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;

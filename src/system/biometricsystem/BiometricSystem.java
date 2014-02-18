@@ -3,7 +3,7 @@ package system.biometricsystem;
 
 import settings.AllSettings;
 import settings.UsersIO;
-import settings.modalitysettings.ModalitySettings;
+import settings.modalitysettings.AllModalitySettings;
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
@@ -30,9 +30,9 @@ public class BiometricSystem {
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
 		
-		ModalitySettings.getTrainingUsers().computeBins();
+		AllModalitySettings.getTrainingUsers().computeBins();
 
-		RawScores rawScores = CoordinatorFactory.makeCoordinator(ModalitySettings.getTestingUsers()).run();
+		RawScores rawScores = CoordinatorFactory.makeCoordinator(AllModalitySettings.getTestingUsers()).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
+import settings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.method.feature.*;

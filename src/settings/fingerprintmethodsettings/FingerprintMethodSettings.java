@@ -1,4 +1,4 @@
-package settings.modalitysettings.methodsettings.fingerprintmethodsettings;
+package settings.fingerprintmethodsettings;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import settings.Settings;
 
-public abstract class AFingerprintMethodSettings extends Settings{
+public abstract class FingerprintMethodSettings extends Settings{
 
 	public abstract String getMethodString();
 	@Override

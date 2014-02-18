@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonSettings;
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.NgonVariablesSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
+import settings.fingerprintmethodsettings.NgonVariablesSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
@@ -21,12 +21,11 @@ import system.method.fingerprintmethods.Triangles.Triangle;
 public class Ngons extends FingerprintMethod{
 
 	protected NgonSettings settings;
-	protected NgonVariablesSettings varSettings;
 	public Long N;
 
 	
 	public class Ngon extends Feature implements Comparable<Ngon>{
-		private NgonSettings ngonSettings;
+//		private NgonSettings ngonSettings;
 		public HashSet<Long> minutiaIndices;
 
 		private Double centerX;
@@ -57,13 +56,13 @@ public class Ngons extends FingerprintMethod{
 			this.setCenterX(0.0);
 			this.setCenterY(0.0);
 			innerN = settings.getN().getValue();
-			this.ngonSettings = settings;
+//			this.ngonSettings = settings;
 			this.minutiaIndices = new HashSet<Long>();
-			variables.put("theta0", new ThetaVariable(varSettings.getMinutiaComponentVariable("theta", 0L)));
+			variables.put("theta0", new ThetaVariable(settings.getMinutiaComponentVariable("theta", 0L)));
 			for(Long i = 1L; i < innerN; i++){
-				variables.put(makeKey("x", i), new XYVariable(varSettings.getMinutiaComponentVariable("x", i)));
-				variables.put(makeKey("y", i), new XYVariable(varSettings.getMinutiaComponentVariable("y", i)));
-				variables.put(makeKey("theta", i), new ThetaVariable(varSettings.getMinutiaComponentVariable("theta", i)));
+				variables.put(makeKey("x", i), new XYVariable(settings.getMinutiaComponentVariable("x", i)));
+				variables.put(makeKey("y", i), new XYVariable(settings.getMinutiaComponentVariable("y", i)));
+				variables.put(makeKey("theta", i), new ThetaVariable(settings.getMinutiaComponentVariable("theta", i)));
 			}
 		}
 		
@@ -100,8 +99,9 @@ public class Ngons extends FingerprintMethod{
 		
 	}
 	public Ngons(){
-		this.settings = NgonSettings.getInstance(); // TODO global settings reach
-		this.N = settings.getN().getValue(); 
+		this.settings = NgonSettings.getInstance();
+		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
+		this.N = this.settings.getN().getValue(); 
 	}
 	
 

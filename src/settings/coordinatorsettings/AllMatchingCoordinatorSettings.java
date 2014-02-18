@@ -9,20 +9,20 @@ import settings.SettingsRenderer;
 import settings.settingsvariables.SettingsDouble;
 import settings.settingsvariables.SettingsString;
 
-public class MatchingCoordinatorSettings  extends ComboBoxSettings{
+public class AllMatchingCoordinatorSettings  extends ComboBoxSettings{
 
 	
 	public static String getMatchingCoordinator(){
-		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables.get(instance.variableString);
 		return coordinatorSettings.getCoordinator();
 	}
 	
 	//Singleton
-	private static MatchingCoordinatorSettings instance;
-	private MatchingCoordinatorSettings() {}
-	public static MatchingCoordinatorSettings getInstance(){
+	private static AllMatchingCoordinatorSettings instance;
+	private AllMatchingCoordinatorSettings() {}
+	public static AllMatchingCoordinatorSettings getInstance(){
 		if(instance == null){
-			instance = new MatchingCoordinatorSettings();
+			instance = new AllMatchingCoordinatorSettings();
 		}
 		return instance;
 	}

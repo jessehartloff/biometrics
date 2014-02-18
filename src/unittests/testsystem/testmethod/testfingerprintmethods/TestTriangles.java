@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.math.BigInteger;
 
 import settings.AllSettings;
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.TriangleSettings;
+import settings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.Triangles.Triangle;

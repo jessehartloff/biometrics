@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public abstract class IndexingStructure {
 
-	public IndexingStructure(){
-	}
+	
 	
 	public abstract void add(BigInteger bin, IndexingPoint pointToAdd);
 	

@@ -8,20 +8,20 @@ import settings.Settings;
 import settings.SettingsRenderer;
 import settings.settingsvariables.SettingsString;
 
-public class IndexingCoordinatorSettings  extends ComboBoxSettings{
+public class AllIndexingCoordinatorSettings  extends ComboBoxSettings{
 
 	
 	public static String getIndexingCoordinator(){
-		ACoordinatorSettings coordinatorSettings = (ACoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables.get(instance.variableString);
 		return coordinatorSettings.getCoordinator();
 	}
 	
 	//Singleton
-	private static IndexingCoordinatorSettings instance;
-	private IndexingCoordinatorSettings() {}
-	public static IndexingCoordinatorSettings getInstance(){
+	private static AllIndexingCoordinatorSettings instance;
+	private AllIndexingCoordinatorSettings() {}
+	public static AllIndexingCoordinatorSettings getInstance(){
 		if(instance == null){
-			instance = new IndexingCoordinatorSettings();
+			instance = new AllIndexingCoordinatorSettings();
 		}
 		return instance;
 	}

@@ -2,6 +2,9 @@ package interfaces.commandline;
 
 
 import settings.AllSettings;
+import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
+import settings.modalitysettings.FingerprintSettings;
 import system.biometricsystem.BiometricSystem;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.modalities.*;
@@ -14,6 +17,16 @@ public class Main {
 
 	public static void main(String[] args) {		
 		
+		AllSettings settings = AllSettings.getInstance();
+		
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
+		
+		NgonSettings.getInstance().getN().setValue(4);
+		NgonSettings.getInstance().kClosestMinutia().setValue(6);
+		//...
+		
+		
+		settings.buildSystem();
 
 //
 //		AllSettings settings = new AllSettings();

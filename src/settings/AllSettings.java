@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import settings.coordinatorsettings.HistogramCoordinatorSettings;
-import settings.coordinatorsettings.IndexingCoordinatorSettings;
-import settings.coordinatorsettings.MatchingCoordinatorSettings;
-import settings.hashersettings.HasherSettings;
-import settings.modalitysettings.ModalitySettings;
+import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.hashersettings.AllHasherSettings;
+import settings.modalitysettings.AllModalitySettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
 
@@ -30,6 +30,7 @@ public class AllSettings extends Settings{
 	//Singleton
 	private static AllSettings instance;
 	private AllSettings(){
+		
 //		this.topPanel = new JPanel();
 //		this.topPanel.add(this.getJPanel());
 	}
@@ -58,11 +59,11 @@ public class AllSettings extends Settings{
 	
 	@Override 
 	protected void init(){
-		this.settingsVariables.put("Matching", MatchingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Indexing", IndexingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Histogram", HistogramCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Hasher", HasherSettings.getInstance());
-		this.settingsVariables.put("Modality", ModalitySettings.getInstance());
+		this.settingsVariables.put("Matching", AllMatchingCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Hasher", AllHasherSettings.getInstance());
+		this.settingsVariables.put("Modality", AllModalitySettings.getInstance());
 	}
 	
 	public static void updateGUI(){
@@ -113,21 +114,21 @@ public class AllSettings extends Settings{
 		return panel;
 	}
 
-	public ModalitySettings modality(){
-		return (ModalitySettings) this.settingsVariables.get("Modality");
+	public AllModalitySettings modality(){
+		return (AllModalitySettings) this.settingsVariables.get("Modality");
 	}
-	public HasherSettings hasher(){
-		return (HasherSettings) this.settingsVariables.get("Hasher");
+	public AllHasherSettings hasher(){
+		return (AllHasherSettings) this.settingsVariables.get("Hasher");
 	}
-	public MatchingCoordinatorSettings matchingCoordinator(){
-		return (MatchingCoordinatorSettings) this.settingsVariables.get("Matching");
+	public AllMatchingCoordinatorSettings matchingCoordinator(){
+		return (AllMatchingCoordinatorSettings) this.settingsVariables.get("Matching");
 	}
-	public IndexingCoordinatorSettings indexingCoordinator(){
-		return (IndexingCoordinatorSettings) this.settingsVariables.get("Indexing");
+	public AllIndexingCoordinatorSettings indexingCoordinator(){
+		return (AllIndexingCoordinatorSettings) this.settingsVariables.get("Indexing");
 	}
-	public HistogramCoordinatorSettings histogramCoordinator(){
-		return (HistogramCoordinatorSettings) this.settingsVariables.get("Histogram");
+	public AllHistogramCoordinatorSettings histogramCoordinator(){
+		return (AllHistogramCoordinatorSettings) this.settingsVariables.get("Histogram");
 	}
 
-	
+
 }

@@ -1,6 +1,7 @@
 package system.method.fingerprintmethods;
 
-import settings.modalitysettings.methodsettings.fingerprintmethodsettings.FingerprintMethodSettings;
+import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.method.fingerprintmethods.MinutiaeMethod;
 import system.method.fingerprintmethods.Ngons;
@@ -13,7 +14,7 @@ import system.method.fingerprintmethods.TriplesOfTrianglesAllRotations;
 public class FingerprintMethodFactory{
 	
 	public static void makeFingerprintMethod(){
-		switch(FingerPrintEnumerator.valueOf(FingerprintMethodSettings.getFingerprintMethod())){
+		switch(FingerPrintEnumerator.valueOf(AllFingerprintMethodSettings.getFingerprintMethod())){
 			case MINUTIAEMETHOD:
 				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
 				break;
@@ -29,7 +30,7 @@ public class FingerprintMethodFactory{
 			case TRIPLESOFTRIANGLESALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new TriplesOfTrianglesAllRotations());
 				break;
-			case NGONS: //TODO make method variable settings
+			case NGONS:
 				Fingerprint.setFingerprintMethod(new Ngons());
 				break;
 			case NGONSALLROTATIONS:

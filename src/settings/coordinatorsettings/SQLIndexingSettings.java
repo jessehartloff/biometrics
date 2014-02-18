@@ -1,6 +1,6 @@
 package settings.coordinatorsettings;
 
-public class SQLIndexingSettings extends ACoordinatorSettings{
+public class SQLIndexingSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {

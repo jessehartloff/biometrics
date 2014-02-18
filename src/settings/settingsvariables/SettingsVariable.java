@@ -11,13 +11,13 @@ public abstract class SettingsVariable extends Settings{
 	
 	private static final long serialVersionUID = 1L;
 
-	protected String name;
+//	protected String name;
 	
 
 	
-	public String getLabel(){
-		return name;
-	}
+//	public String getLabel(){
+//		return name;
+//	}
 	
 
 
