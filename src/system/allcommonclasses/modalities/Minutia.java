@@ -57,6 +57,7 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 		this.setConfidence(confidence);
 	}
 	
+	
 	public Double distanceTo(Minutia that){
 		Double distance;
 		Long dx = this.x - that.x;
@@ -161,6 +162,21 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
 		return (inRadians * 180.0)/Math.PI;
 	}
+	
+	public static Double computeInsideAngle(Minutia m0, Double px, Double py, Minutia m2){
+		// variables names follow the law of cosines equation
+		Double a = distance(m0.getX().doubleValue(), m0.getY().doubleValue(), px, py);
+		Double b = distance(m0.getX().doubleValue(), m0.getY().doubleValue(),
+							m2.getX().doubleValue(), m2.getY().doubleValue());
+		Double c = distance(px, py, m2.getX().doubleValue(), m2.getY().doubleValue());
+		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
+		return (inRadians * 180.0)/Math.PI;
+	}
+	
+	public static Double distance(Double x1, Double y1, Double x2, Double y2){
+		return Math.sqrt(Math.pow(x1-x2, 2) - Math.pow(y1-y2, 2));
+	}
+	
 	
 
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException

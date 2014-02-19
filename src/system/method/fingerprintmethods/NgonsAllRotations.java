@@ -9,8 +9,9 @@ import system.allcommonclasses.modalities.Fingerprint;
 import system.method.feature.Feature;
 
 public class NgonsAllRotations extends Ngons{
-	
+
 	public NgonsAllRotations(){
+		super();
 	}
 	
 	@Override

@@ -1,20 +1,19 @@
 package interfaces.commandline;
 
 
+import javax.swing.JComboBox;
+
 import settings.AllSettings;
+
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.FingerprintSettings;
 import system.biometricsystem.BiometricSystem;
-import system.allcommonclasses.commonstructures.Results;
-import system.allcommonclasses.modalities.*;
 
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
-
-
 	public static void main(String[] args) {		
 		
 		AllSettings settings = AllSettings.getInstance(); // loads all the defualt values
@@ -22,7 +21,7 @@ public class Main {
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
 		//...
-		
+		System.out.println("hi");
 		// set values for everything else
 		NgonSettings.getInstance().n().setValue(4);
 		NgonSettings.getInstance().kClosestMinutia().setValue(6);
