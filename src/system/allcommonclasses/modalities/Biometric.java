@@ -38,4 +38,9 @@ public abstract class Biometric implements Serializable{
 
 	public abstract ArrayList<Feature> toFeatures();
 
+
+	public boolean isFailure() {
+		return false;
+	}
+
 }

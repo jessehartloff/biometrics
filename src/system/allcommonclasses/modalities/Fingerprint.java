@@ -2,6 +2,7 @@ package system.allcommonclasses.modalities;
 
 import java.util.ArrayList;
 
+import settings.modalitysettings.FingerprintSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.method.feature.Feature;
 import system.method.fingerprintmethods.FingerprintMethod;
@@ -147,7 +148,9 @@ public class Fingerprint extends Biometric{
 	
 	@Override
 	public String toString(){
-		return this.minutiae.toString();
+//		return this.minutiae.toString();
+		Integer f = this.minutiae.size();
+		return f.toString();
 	}
 
 	
@@ -160,5 +163,12 @@ public class Fingerprint extends Biometric{
 		Biometric.method = fingerprintMethod;
 	}
 
+	@Override
+	public boolean isFailure() {
+		if(this.minutiae.size() < FingerprintSettings.getInstance().minimumMinutia().getValue().intValue()){
+			return true;
+		}
+		return false;
+	}
 	
 }

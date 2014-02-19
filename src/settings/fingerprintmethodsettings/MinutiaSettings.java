@@ -121,7 +121,7 @@ public class MinutiaSettings extends FingerprintMethodSettings{
 		return "Minutia";
 	}
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.x = new SettingsMethodVariable();
 		this.y = new SettingsMethodVariable();
 		this.theta = new SettingsMethodVariable();

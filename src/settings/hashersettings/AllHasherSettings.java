@@ -1,5 +1,10 @@
 package settings.hashersettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -27,7 +32,7 @@ public class AllHasherSettings extends ComboBoxSettings{
 	}
 	
 	@Override
-	protected void init(){
+	protected void addSettings(){
 		this.variableString = "Hasher";
 		this.settingsVariables.put(this.variableString, FuzzyVaultSettings.getInstance());
 	}
@@ -38,6 +43,14 @@ public class AllHasherSettings extends ComboBoxSettings{
 			instance = new AllHasherSettings();
 		}
 		return instance;
+	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+		out.writeInt(instance.settingsBox.getSelectedIndex());
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+		instance.currentIndex = in.readInt();
 	}
 	
 

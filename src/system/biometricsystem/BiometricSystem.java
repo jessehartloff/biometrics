@@ -33,17 +33,21 @@ public class BiometricSystem {
 		
 		this.trainTheSystem();
 		
-		RawScores rawScores = CoordinatorFactory.makeCoordinator(AllModalitySettings.getTestingUsers()).run();
+		Users testingUsers = AllModalitySettings.getTestingUsers();
+		Double FTC = testingUsers.removeFailureToCapture();
+		
+		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
-
+		results.setFailureToCapture(FTC);
+		
 		return results;
 	}
 
 
 	private void trainTheSystem(){
 		Users trainingSet = AllModalitySettings.getTrainingUsers();
-		
+		trainingSet.removeFailureToCapture();
 		trainingSet.computeBins();
 	}
 	

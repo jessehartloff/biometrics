@@ -1,5 +1,11 @@
 package settings.coordinatorsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
+import settings.Settings;
 import settings.hashersettings.FuzzyVaultSettings;
 
 public class NoCoordinator extends CoordinatorSettings{
@@ -10,7 +16,7 @@ public class NoCoordinator extends CoordinatorSettings{
 	}
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 	}
 
 	
@@ -23,6 +29,12 @@ public class NoCoordinator extends CoordinatorSettings{
 			instance = new NoCoordinator();
 		}
 		return instance;
+	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
 	}
 	
 	

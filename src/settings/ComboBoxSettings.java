@@ -15,9 +15,10 @@ public abstract class ComboBoxSettings extends Settings{
 
 	private static final long serialVersionUID = 1L;
 	
-	protected JComboBox settingsBox;
+	protected transient JComboBox settingsBox;
 	protected String variableString;
-	protected JPanel cardPanel;
+	protected transient JPanel cardPanel;
+	protected int currentIndex = 0;
 	
 	protected void addToOptions(Settings settings){
 		this.settingsBox.addItem(settings);
@@ -26,7 +27,7 @@ public abstract class ComboBoxSettings extends Settings{
 	}
 	
 	protected ComboBoxSettings(){
-		this.addALLOptions();
+//		this.addALLOptions();
 	}
 
 	protected abstract void addALLOptions();
@@ -45,7 +46,10 @@ public abstract class ComboBoxSettings extends Settings{
 		BoxLayout boxLayout = new BoxLayout(currentPanel, BoxLayout.X_AXIS);
 		
 		currentPanel.setLayout(boxLayout);
-		
+//		int ix = 0;
+//		if(this.settingsBox != null){
+//			ix = this.settingsBox.getSelectedIndex();
+//		}
 		this.settingsBox = new JComboBox();
 		this.settingsBox.addActionListener(new SettingsComboBoxActionListener(this, this.variableString));
 		this.settingsBox.setRenderer(new SettingsRenderer());
@@ -60,8 +64,12 @@ public abstract class ComboBoxSettings extends Settings{
 	
 	@Override
 	public JPanel makeChildrenJPanel(){
+		
 		this.cardPanel = new JPanel(new CardLayout());
 //		this.cardPanel.setBorder(null);
+		//System.out.println("made it here");
+		this.addALLOptions();
+		this.settingsBox.setSelectedIndex(this.currentIndex);
 		return this.cardPanel;
 	}
 	
@@ -69,10 +77,10 @@ public abstract class ComboBoxSettings extends Settings{
 	
 	public class SettingsComboBoxActionListener implements ActionListener{
 		
-		Settings sourceSettings;
+		ComboBoxSettings sourceSettings;
 		String variableName;
 		
-		public SettingsComboBoxActionListener(Settings sourceSettings, String variableName) {
+		public SettingsComboBoxActionListener(ComboBoxSettings sourceSettings, String variableName) {
 			this.sourceSettings = sourceSettings;
 			this.variableName = variableName;
 		}
@@ -84,7 +92,6 @@ public abstract class ComboBoxSettings extends Settings{
 			Settings selectedSettings = (Settings) sourceBox.getSelectedItem();
 			
 			sourceSettings.settingsVariables.put(variableName, selectedSettings);
-			
 			CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
 			cardLayout.show(cardPanel, selectedSettings.getLabel());
 			    
@@ -94,7 +101,8 @@ public abstract class ComboBoxSettings extends Settings{
 			sourceBox.getParent().repaint();
 			sourceBox.getParent().validate();
 			sourceBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-			
+
+//			sourceSettings.currentIndex = sourceBox.getSelectedIndex();
 		}
 		
 		

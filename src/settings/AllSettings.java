@@ -1,13 +1,12 @@
 package settings;
 
-import interfaces.gui.ResultsGUI;
-
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Collection;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -24,14 +23,10 @@ public class AllSettings extends Settings{
 
 	public static final long serialVersionUID = 1L;
 	
-//	private JPanel topPanel;
-//	
-//	public JPanel getTopJPanel(){
-//		return topPanel;
-//	}
+	private transient JPanel panel;
+
 	
-	
-	//Singleton. This block of code must be in all settings files (except settings variables) to enable serialization.
+	//This block of code must be in all settings files (except settings variables) to enable serialization.
 	private static AllSettings instance;
 	private AllSettings(){}
 	public static AllSettings getInstance(){
@@ -40,29 +35,33 @@ public class AllSettings extends Settings{
 		}
 		return instance;
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-	{AllSettings.instance = (AllSettings) in.readObject();} // TODO does this really work??
-	
-	
-//	
-//	@Override
-//	protected JPanel makeJPanel() {
-//		JPanel toRet = new JPanel();
-//		toRet.setBackground(java.awt.Color.MAGENTA);
-//		//toRet.setLayout(new GridLayout(2,1));
-//		JPanel p1 = this.thisJPanel();
-//
-//		toRet.add(p1, BorderLayout.WEST);
-//		JPanel p2 = this.makeChildrenJPanel();
-//		
-//		toRet.add(p2, BorderLayout.EAST);
-//		toRet.repaint();
-//		return toRet;
+//	private void writeObject(ObjectOutputStream out) throws IOException{
+//		out.writeObject(instance.settingsVariables);
 //	}
+//	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+//		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+//	}
+	
+	
+
+
+	
+	// override just to make this public 
+	@Override
+	public JPanel makeJPanel() {	
+		return super.makeJPanel();
+	}
+	
+	@Override
+	public JPanel getJPanel(){
+		this.updateGUI();
+		return this.panel;
+	}
+	
 
 	
 	@Override 
-	protected void init(){
+	protected void addSettings(){
 		this.settingsVariables.put("Matching", AllMatchingCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance());
@@ -70,24 +69,25 @@ public class AllSettings extends Settings{
 		this.settingsVariables.put("Modality", AllModalitySettings.getInstance());
 	}
 	
-	public static void updateGUI(){
-//		AllSettings.getInstance();
-//		instance.topPanel.removeAll();
-//		instance.topPanel.add(instance.getJPanel());
-		instance.getJPanel().repaint();
-//		instance.topPanel.getParent().repaint();
+	public void updateGUI(){
+		if(AllSettings.getInstance().panel == null){
+			AllSettings.getInstance().panel = new JPanel();
+		}
+		AllSettings.getInstance().panel.removeAll();
+		AllSettings.getInstance().panel.add(AllSettings.getInstance().makeJPanel());
+		AllSettings.getInstance().panel.validate();
+		AllSettings.getInstance().panel.repaint();
+		AllSettings.getInstance().panel.updateUI();
 	}
 	
 	public BiometricSystem buildSystem(){
 
 		AllSettings.getInstance();
 		
-//		instance.topPanel.removeAll(); // remove access to settings. change to progress bars and RM later
-		
 		BiometricSystem system = new BiometricSystem();
 		Results results = system.go();
 		
-		//this GUI probably shouldn't go here... but fuck it
+		//this shouldn't go here
 //		ResultsGUI resultsGUI = new ResultsGUI(results);
 
 		System.out.print(results.rawScores);
@@ -98,19 +98,13 @@ public class AllSettings extends Settings{
 	
 	protected JPanel thisJPanel(){
 		JPanel panel = new JPanel();
-		//panel.setLayout(new GridLayout(2,2));
-
-		//panel.setBackground(java.awt.Color.RED);
-		//panel.setLayout(new FlowLayout());
 		JButton goButton = new JButton("GO!");
 		
-		goButton.addActionListener(new ActionListener() {
-			 
+		goButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
-            {
-            	buildSystem();
+            {buildSystem();}
             }
-        });   
+		);   
 		
 		panel.add(goButton);
 		return panel;

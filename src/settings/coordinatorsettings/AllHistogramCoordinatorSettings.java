@@ -1,5 +1,10 @@
 package settings.coordinatorsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -34,11 +39,19 @@ public class AllHistogramCoordinatorSettings extends ComboBoxSettings{
 		}
 		return instance;
 	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+		out.writeInt(instance.settingsBox.getSelectedIndex());
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+		instance.currentIndex = in.readInt();
+	}
 
 
 	
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.variableString = "histogram";
 		this.settingsVariables.put("histogram", NoCoordinator.getInstance());
 	}

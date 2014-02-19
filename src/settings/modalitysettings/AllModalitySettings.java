@@ -4,12 +4,18 @@ package settings.modalitysettings;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import settings.ComboBoxSettings;
+import settings.Settings;
+import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import system.allcommonclasses.commonstructures.Users;
 
 public class AllModalitySettings extends ComboBoxSettings{
@@ -53,17 +59,25 @@ public class AllModalitySettings extends ComboBoxSettings{
 		}
 		return instance;
 	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+		out.writeInt(instance.settingsBox.getSelectedIndex());
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+		instance.currentIndex = in.readInt();
+	}
 
-	
+
 	public ModalitySettings modalitySettings(){
 		return (ModalitySettings) this.settingsVariables.get(this.variableString);
 	}
 
 
-	
+
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.variableString = "Modality";
 		this.settingsVariables.put(this.variableString, new IrisSettings());
 	}

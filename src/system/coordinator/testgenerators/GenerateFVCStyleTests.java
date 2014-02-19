@@ -17,7 +17,11 @@ public class GenerateFVCStyleTests extends TestGenerator{
 		
 		Tests tests = new Tests();
 		
-		for(User user : users.users){
+		int n = users.users.size();
+		
+//		for(User user : users.users){ // why not use the array index as below?
+		for(Integer q=0; q<n; q++){
+			User user = users.users.get(q);
 			int m = user.readings.size();
 			for(Integer i=0; i<m; i++){
 				for(Integer j=i+1; j<m; j++){
@@ -26,9 +30,9 @@ public class GenerateFVCStyleTests extends TestGenerator{
 					testToAdd.test = user.readings.get(j);
 					testToAdd.genuine = true;
 					
-					testToAdd.enrolledUserID = new Long(user.id);
+					testToAdd.enrolledUserID = q.longValue();
 					testToAdd.enrolledReadingNumber = i.longValue();
-					testToAdd.testUserID = new Long(user.id);
+					testToAdd.testUserID = q.longValue();
 					testToAdd.testReadingNumber = j.longValue();
 					
 					tests.tests.add(testToAdd);
@@ -37,17 +41,16 @@ public class GenerateFVCStyleTests extends TestGenerator{
 		}
 		
 
-		int n = users.users.size();
-		for(int i=0; i<n; i++){
-			for(int j=i+1; j<n; j++){
+		for(Integer i=0; i<n; i++){
+			for(Integer j=i+1; j<n; j++){
 				Test testToAdd = new Test();
 				testToAdd.enroll = users.users.get(i).readings.get(0);
 				testToAdd.test = users.users.get(j).readings.get(0);
 				testToAdd.genuine = false;
 				
-				testToAdd.enrolledUserID = new Long(users.users.get(i).id);
+				testToAdd.enrolledUserID = i.longValue();
 				testToAdd.enrolledReadingNumber = 0L;
-				testToAdd.testUserID = new Long(users.users.get(j).id);
+				testToAdd.testUserID = j.longValue();
 				testToAdd.testReadingNumber = 0L;
 				
 				tests.tests.add(testToAdd);

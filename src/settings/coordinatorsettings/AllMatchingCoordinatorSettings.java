@@ -1,8 +1,14 @@
 package settings.coordinatorsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import settings.AllSettings;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
@@ -26,10 +32,18 @@ public class AllMatchingCoordinatorSettings  extends ComboBoxSettings{
 		}
 		return instance;
 	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+		out.writeInt(instance.settingsBox.getSelectedIndex());
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+		instance.currentIndex = in.readInt();
+	}
 
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.variableString = "matcher";
 		this.settingsVariables.put(this.variableString, DefaultTestingPrequantizedSettings.getInstance());
 	}

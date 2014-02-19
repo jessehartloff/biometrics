@@ -10,7 +10,7 @@ public class PizzaSettings extends Settings{
 	}
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		// TODO Auto-generated method stub
 		
 	}

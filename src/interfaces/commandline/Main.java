@@ -1,6 +1,13 @@
 package interfaces.commandline;
 
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
 
 import settings.AllSettings;
@@ -10,26 +17,97 @@ import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.FingerprintSettings;
 import system.biometricsystem.BiometricSystem;
 
+import system.allcommonclasses.commonstructures.Results;
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.User;
+import system.allcommonclasses.commonstructures.Users;
+import system.allcommonclasses.modalities.*;
+
+
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
 	public static void main(String[] args) {		
 		
-		AllSettings settings = AllSettings.getInstance(); // loads all the defualt values
+		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
 		//...
 		System.out.println("hi");
 		// set values for everything else
-		NgonSettings.getInstance().n().setValue(4);
-		NgonSettings.getInstance().kClosestMinutia().setValue(6);
+		NgonSettings.getInstance().n().setValue(3);
+		NgonSettings.getInstance().kClosestMinutia().setValue(4);
 		//...
 		
 		
 		settings.buildSystem();
 
+//		TestSerialize tester = TestSerialize.getInstance();
+//		tester.setValue(8012L);
+//		tester.setAnotherValue(57L);
+//		
+//		System.out.println(TestSerialize.getInstance());
+//		
+//		try{
+//			FileOutputStream fileOut = new FileOutputStream("testThisThing.ser");
+//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//			out.writeObject(tester);
+//			out.close();
+//			fileOut.close();
+//			System.out.println("Serialized");
+//		}catch(IOException exp){
+//			exp.printStackTrace();
+//		}
+//		
+//		
+//
+////		System.out.println(TestSerialize.staticValue);
+////		
+//		tester.setValue(0L);
+//		tester.setAnotherValue(0L);
+//		
+//
+//		System.out.println(TestSerialize.getInstance());
+//		
+//		TestSerialize testing;
+//		
+//		try{
+//			String fileName = "testThisThing.ser";
+//			FileInputStream fileIn = new FileInputStream(fileName);
+//			ObjectInputStream in = new ObjectInputStream(fileIn);
+////			testing = (TestSerialize) in.readObject();
+//			in.readObject();
+//			in.close();
+//			fileIn.close();
+//
+////			System.out.println(testing);
+//			
+//		}catch(Exception exp){
+//			exp.printStackTrace();
+//		}
+//		
+//
+//		System.out.println(TestSerialize.getInstance());
+		
+		AllSettings all = AllSettings.getInstance();
+		
+		try{
+			FileOutputStream fileOut = new FileOutputStream("testAnotherThing.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(all);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized");
+		}catch(IOException exp){
+			exp.printStackTrace();
+		}
+				
+				
+		
+		// old stuff //
+		
 //
 //		AllSettings settings = new AllSettings();
 //

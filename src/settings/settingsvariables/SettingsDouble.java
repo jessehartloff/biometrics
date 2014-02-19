@@ -5,6 +5,9 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.LinkedHashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -17,6 +20,7 @@ import javax.swing.event.DocumentListener;
 
 import settings.Settings;
 import settings.SettingsRenderer;
+import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.FaceSettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.modalitysettings.IrisSettings;
@@ -27,10 +31,10 @@ public class SettingsDouble extends SettingsVariable{
 	private static final long serialVersionUID = 1L;
 	
 	private Double value;
-	JTextField textField;
+	private transient JTextField textField;
 	
 	@Override
-	protected void init(){}
+	protected void addSettings(){}
 	
 	public SettingsDouble(){
 		this.setValue(5.0);
@@ -44,13 +48,21 @@ public class SettingsDouble extends SettingsVariable{
 	public Double getValue() {
 		return value;
 	}
-
+//	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+//		in.defaultReadObject();
+//		this.setValue(5.0);
+//	}
+	
 	public void setValue(Double value) {
-		if(this.value==null){
+		if(this.textField == null){
+			textField = new JTextField();
+		}
+		if(textField.getText().isEmpty() || this.value==null || value.compareTo(new Double(textField.getText())) != 0){
 			final Double innerValue = value;
 			SwingUtilities.invokeLater(new Runnable(){
 				public void run(){
 					textField.setText(innerValue.toString());
+					textField.validate();
 				}
 			});
 		}
@@ -65,8 +77,9 @@ public class SettingsDouble extends SettingsVariable{
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
-		
-		textField = new JTextField();
+		if(this.textField == null){
+			textField = new JTextField();
+		}
 		
 		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 //		textField = new JTextField();
@@ -83,6 +96,11 @@ public class SettingsDouble extends SettingsVariable{
 			@Override
 			public void insertUpdate(DocumentEvent e){
 				setValue(new Double(textField.getText()));
+				textField.validate();
+				textField.repaint();
+				textField.revalidate();
+				textField.setVisible(true);
+//				textField.replaceSelection(textField.getText());
 			}
 			@Override
 			public void changedUpdate(DocumentEvent e){

@@ -54,6 +54,34 @@ public class Users implements Serializable{
 
 		
 	}
+
+	
+	public Double removeFailureToCapture() {
+		Long total = 0L;
+		Long numberOfFailures = 0L;
+		ArrayList<User> usersToRemove = new ArrayList<User>();
+		for(User user : this.users){
+			ArrayList<Biometric> readingsToRemove = new ArrayList<Biometric>();
+			for(Biometric biometric : user.readings){
+				total++;
+				if(biometric.isFailure()){
+					numberOfFailures++;
+					readingsToRemove.add(biometric);
+				}
+			}
+			for(Biometric biometric : readingsToRemove){
+				user.readings.remove(biometric);
+			}
+			if(user.readings.isEmpty()){
+				usersToRemove.add(user);
+			}
+		}
+		for(User user : usersToRemove){
+			this.users.remove(user);
+			System.out.println("Lost a whole user!");
+		}
+		return numberOfFailures.doubleValue()/total.doubleValue();
+	}
 	
 		
 }

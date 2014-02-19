@@ -18,7 +18,7 @@ public class SettingsDropDownItem extends SettingsVariable{
 	}
 	
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		
 	}
 

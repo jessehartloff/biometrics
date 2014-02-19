@@ -1,5 +1,8 @@
 package settings.fingerprintmethodsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,7 +26,13 @@ public class NgonSettings extends FingerprintMethodSettings{
 		}
 		return instance;
 	}
-
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+	}
+	
 	// getters
 
 	public SettingsDouble rotationStep(){
@@ -90,8 +99,9 @@ public class NgonSettings extends FingerprintMethodSettings{
 		return "Ngons";
 	}
 	
+	
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.settingsVariables.put("N", new SettingsLong(3));
 		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
 		this.settingsVariables.put("thetaBins", new SettingsLong(8));

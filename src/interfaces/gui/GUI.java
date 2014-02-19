@@ -2,15 +2,22 @@ package interfaces.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import settings.AllSettings;
+import settings.SettingsIO;
 
 
 public class GUI {
@@ -31,6 +38,26 @@ public class GUI {
 
 		//Build the first menu.
 		menu = new JMenu("File");
+		JMenuItem item = new JMenuItem("save");
+		item.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SettingsIO.saveSettingsToFile("file1");
+		        System.out.println("settings saved");
+		    }
+		});
+		menu.add(item);
+		
+		JMenuItem item2 = new JMenuItem("load");
+		item2.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SettingsIO.loadSettingsFromFile("file1");
+		        System.out.println("settings loaded");
+		    }
+		});
+		menu.add(item2);
+		
 		menuBar.add(menu);
 
 		menu = new JMenu("Edit");
@@ -49,6 +76,10 @@ public class GUI {
 
 //		
 		panel.setBackground(Color.WHITE);
+		
+		AllSettings.getInstance();
+		
+
 		
 		panel.add(AllSettings.getInstance().getJPanel());
 //		frame.setPreferredSize(new Dimension(1400,900));

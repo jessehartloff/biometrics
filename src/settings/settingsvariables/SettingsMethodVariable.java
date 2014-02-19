@@ -15,7 +15,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	private static final long serialVersionUID = 1L;
 
 	private transient Long bits;
-	private transient ArrayList<Long> binBoundaries; // TODO compute things when deserialized
+	private transient ArrayList<Long> binBoundaries; // TODO compute things when deserialized, or not...
 	
 	
 	public SettingsMethodVariable(){
@@ -103,7 +103,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.settingsVariables.put("bins", new SettingsLong());
 	}
 

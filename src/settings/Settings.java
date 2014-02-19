@@ -22,52 +22,30 @@ public abstract class Settings implements Serializable{
 
 	protected LinkedHashMap<String, Settings> settingsVariables;
 	
-	protected JPanel panel;
+//	protected transient JPanel panel;
 	
 	protected Settings(){
 		this.settingsVariables = new LinkedHashMap<String, Settings>();
-		this.init();
-		this.panel = this.makeJPanel();
-
+		this.addSettings();
+		// init function if needed
+//		this.panel = this.makeJPanel();
 	}
 
 	protected JPanel makeJPanel() {
 		JPanel toRet = new JPanel();
-//		toRet.setBackground(Color.WHITE);
 		toRet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-//		BoxLayout boxLayout = new BoxLayout(toRet, BoxLayout.X_AXIS);
-//		toRet.setLayout(boxLayout);
-		
-		//toRet.setLayout(new GridLayout(2,1));
-//		toRet.setAlignmentX(Container.LEFT_ALIGNMENT);
 		toRet.add(this.thisJPanel(), BorderLayout.WEST);
 		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+		toRet.validate();
+		toRet.repaint();
+		toRet.setVisible(true);
 		return toRet;
 	}
 
 
-	protected abstract void init();
+	protected abstract void addSettings();
 	
 
-//	public Settings makeCopy(){
-//		return /*a copy of*/ this;
-//	}
-	
-//	private Settings(String filename){
-//		
-//	}
-
-
-	//add to map and handle naming
-	
-	
-	
-	//fromString
-	//toString
-	
-	//getter
-	
-	//setter
 
 
 	protected JPanel thisJPanel(){
@@ -79,7 +57,11 @@ public abstract class Settings implements Serializable{
 	
 
 	public JPanel getJPanel(){
-		return this.panel;
+//		if(this.panel == null){
+//			this.panel = this.makeJPanel();
+//		}
+//		return this.panel;
+		return this.makeJPanel();
 	}
 	
 	
@@ -132,6 +114,7 @@ public abstract class Settings implements Serializable{
 		return childrenPanel;
 	}
 	
+	public void updateDisplay(){}
 	
 	public String getLabel(){
 		return "getLabel() not overriden";

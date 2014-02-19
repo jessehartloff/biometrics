@@ -100,8 +100,10 @@ public class PRINTS extends FingerprintMethod{
 	
 	public PRINTS() {
 		settings = PRINTSettings.getInstance();
+
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
 		this.N = this.settings.n().getValue();
+
 	}
 
 	@Override

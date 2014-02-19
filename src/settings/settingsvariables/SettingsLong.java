@@ -15,7 +15,7 @@ public class SettingsLong extends SettingsVariable{
 	private static final long serialVersionUID = 1L;
 
 	private Long value;
-	private JSpinner numberBox;
+	private transient JSpinner numberBox;
 	
 	public SettingsLong(){
 		this(800L);
@@ -24,6 +24,9 @@ public class SettingsLong extends SettingsVariable{
 		this(value.longValue());
 	}
 	public SettingsLong(Long value){
+		if(this.numberBox == null){
+			this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+		}
 		this.setValue(value);
 	}
 
@@ -32,6 +35,9 @@ public class SettingsLong extends SettingsVariable{
 	}
 
 	public void setValue(Long value) {
+		if(this.numberBox == null){
+			this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+		}
 		this.value = value;
 		this.numberBox.setValue(new Integer(value.intValue()));
 	}
@@ -41,10 +47,13 @@ public class SettingsLong extends SettingsVariable{
 	}
 
 	
+	
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
-		this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+		if(this.numberBox == null){
+			this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+		}
 		this.numberBox.setSize(0, 0);
 		numberBox.addChangeListener(new ChangeListener(){
 
@@ -75,7 +84,7 @@ public class SettingsLong extends SettingsVariable{
 	}
 	
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		value = new Long(0);
 	}
 	

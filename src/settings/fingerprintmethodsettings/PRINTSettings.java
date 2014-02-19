@@ -1,5 +1,11 @@
 package settings.fingerprintmethodsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
+import settings.Settings;
 import settings.settingsvariables.SettingsDouble;
 import settings.settingsvariables.SettingsLong;
 import settings.settingsvariables.SettingsMethodVariable;
@@ -18,6 +24,12 @@ public class PRINTSettings extends FingerprintMethodSettings{
 			instance = new PRINTSettings();
 		}
 		return instance;
+	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
 	}
 
 	
@@ -80,7 +92,7 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	}
 	
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.settingsVariables.put("N", new SettingsLong(3));
 		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
 		this.settingsVariables.put("distanceBins", new SettingsLong(8));

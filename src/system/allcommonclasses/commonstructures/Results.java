@@ -23,6 +23,7 @@ public class Results {
 	private ArrayList<Histogram> variableHistograms;
 	private ArrayList<Long> indexingResults;
 	private Double minEntropy;
+	private Double failureToCapture;
 	
 	public RawScores rawScores;
 	
@@ -86,12 +87,22 @@ public class Results {
 		this.minEntropy = minEntropy;
 	}
 
+	public Double getFailureToCapture() {
+		return failureToCapture;
+	}
+	
+	public void setFailureToCapture(Double failureToCapture) {
+		this.failureToCapture = failureToCapture;
+	}
+
+	
 	@Override
 	public String toString(){
 		String toReturn = "\nResults:\n"+
 //				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
 				this.getVariableHistograms().toString() + "\n\n" +
 				"EER: " + this.getEer() + "\n" + 
+				"FTC: " + this.getFailureToCapture() + "\n" + 
 				"ZeroFAR: " + this.getZeroFAR() + "\n" +
 				"rates: " + this.getRates() + "\n" +
 				"min entropy: " + this.getMinEntropy() + "\n";

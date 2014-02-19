@@ -3,10 +3,13 @@ package settings.fingerprintmethodsettings;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import settings.AllSettings;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
@@ -47,9 +50,17 @@ public class AllFingerprintMethodSettings extends ComboBoxSettings{
 		}
 		return instance;
 	}
-	//
-	
-	
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+		out.writeInt(instance.settingsBox.getSelectedIndex());
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+		instance.currentIndex = in.readInt();
+	}
+
+
+
 	public static String getFingerprintMethod() {
 		FingerprintMethodSettings method = (FingerprintMethodSettings) instance.settingsVariables.get("fingerprintMethod");
 		return method.getMethodString();
@@ -64,7 +75,7 @@ public class AllFingerprintMethodSettings extends ComboBoxSettings{
 	}
 
 	@Override
-	protected void init() {
+	protected void addSettings() {
 		this.variableString = "fingerprintMethod";
 		this.settingsVariables.put("fingerprintMethod", TriangleSettings.getInstance());
 	}

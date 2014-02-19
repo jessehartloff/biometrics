@@ -72,7 +72,7 @@ public class SettingsString extends SettingsVariable{
 	}
 
 	@Override
-	protected void init() {}
+	protected void addSettings() {}
 	
 	
 	

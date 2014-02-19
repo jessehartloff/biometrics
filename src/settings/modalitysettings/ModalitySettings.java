@@ -15,22 +15,21 @@ public abstract class ModalitySettings extends Settings{
 	
 	protected JPanel makeJPanel() {
 		JPanel toRet = new JPanel();
-		//toRet.setLayout(new GridLayout(2,1));
 		toRet.add(this.thisJPanel(), BorderLayout.WEST);
 		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
-
 		return toRet;
 	}
 	
+	
 	public Users getTrainingUsers() {
 		DatasetSettings train = (DatasetSettings) this.settingsVariables.get("trainingDataset");
-		return UsersIO.getUsers(train.getDataset()); // TODO look into training somewhere else
+		return UsersIO.getUsers(train.getDataset());
 	}
 	
 	
 	public Users getTestingUsers() {
 		DatasetSettings test  = (DatasetSettings) this.settingsVariables.get("testingDataset");
-		return UsersIO.getUsers(test.getDataset()); // TODO look into training somewhere else
+		return UsersIO.getUsers(test.getDataset());
 	}
 	
 //	public abstract Method getMethod();

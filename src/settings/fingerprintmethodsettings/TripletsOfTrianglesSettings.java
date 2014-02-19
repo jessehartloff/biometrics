@@ -1,5 +1,11 @@
 package settings.fingerprintmethodsettings;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
+
+import settings.Settings;
 import settings.settingsvariables.SettingsDouble;
 import settings.settingsvariables.SettingsLong;
 
@@ -13,10 +19,17 @@ public class TripletsOfTrianglesSettings extends TriangleSettings{
 		}
 		return instance;
 	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(instance.settingsVariables);
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+	}
+	
 	
 	@Override
-	protected void init() {
-		super.init();
+	protected void addSettings() {
+		super.addSettings();
 		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong(5));
 		this.settingsVariables.put("kClosestTriangles", new SettingsLong(3));
 	}
