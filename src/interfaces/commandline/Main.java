@@ -1,34 +1,39 @@
 package interfaces.commandline;
 
 
+import java.awt.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JComboBox;
+import javax.swing.event.ListSelectionEvent;
 
 import settings.AllSettings;
-
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.FingerprintSettings;
 import system.biometricsystem.BiometricSystem;
-
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.*;
-
+import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 
 
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
 	public static void main(String[] args) {		
+		
+
+		
 		
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
@@ -91,20 +96,54 @@ public class Main {
 //
 //		System.out.println(TestSerialize.getInstance());
 		
-		AllSettings all = AllSettings.getInstance();
+//		AllSettings all = AllSettings.getInstance();
+//		
+//		try{
+//			FileOutputStream fileOut = new FileOutputStream("testAnotherThing.ser");
+//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//			out.writeObject(all);
+//			out.close();
+//			fileOut.close();
+//			System.out.println("Serialized");
+//		}catch(IOException exp){
+//			exp.printStackTrace();
+//		}
+				
 		
-		try{
-			FileOutputStream fileOut = new FileOutputStream("testAnotherThing.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(all);
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized");
-		}catch(IOException exp){
-			exp.printStackTrace();
-		}
-				
-				
+		
+//		PrincipleComponentAnalysis pca = new PrincipleComponentAnalysis();
+//		pca.setup(5, 6);
+//	
+//
+//		double[] u0 = {3.2, 3.7, 0.3, 7.5, 4.3, 99.7};
+//		double[] u1 = {6.2, 1.7, 1.3, 8.2, 4.2, 99.7};
+//		double[] u2 = {3.2, 2.1, 0.7, 7.5, 7.3, 99.7};
+//		double[] u3 = {9.2, 3.7, 1.7, 6.5, 3.3, 99.7};
+//		double[] u4 = {2.2, 4.7, 0.3, 7.9, 5.3, 99.2};
+//
+//		pca.addSample(u0);
+//		pca.addSample(u1);
+//		pca.addSample(u2);
+//		pca.addSample(u3);
+//		pca.addSample(u4);
+//		
+//		pca.computeBasis(5);
+//		
+//		double[] ux = {4.3, 2.0, 1.7, 5.4, 6.0, 14.3};
+//		for(double d : pca.sampleToEigenSpace(ux)){
+//			System.out.println(d);
+//		}
+//		System.out.println();
+//		double[] uy = {2.2, 4.7, 0.3, 7.9, 5.3, 99.2};
+//		for(double d : pca.sampleToEigenSpace(uy)){
+//			System.out.println(d);
+//		}
+//		System.out.println();
+//		double[] uz = {3.2, 3.7, 0.3, 7.5, 4.3, 3.7};
+//		for(double d : pca.sampleToEigenSpace(uz)){
+//			System.out.println(d);
+//		}
+		
 		
 		// old stuff //
 		

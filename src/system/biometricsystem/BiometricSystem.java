@@ -27,7 +27,6 @@ public class BiometricSystem {
 	 * @return
 	 */
 	public Results go(){
-//		settings.loadToSettingsClasses(); TODO
 		
 		FingerprintMethodFactory.makeFingerprintMethod();
 		

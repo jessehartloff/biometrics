@@ -24,8 +24,9 @@ public class Histogram {
 				max = value;
 			}
 		}
-		
+
 		Double Prob = max.doubleValue()/sum.doubleValue();
+//		Double Prob = 1.0/sum.doubleValue(); // minEntropy depends on how many samples we have!! This line gives the best case
 		Double minEntropy = -Math.log10(Prob)/Math.log10(2.0);
 		
 		return minEntropy;

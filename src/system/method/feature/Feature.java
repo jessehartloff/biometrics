@@ -26,7 +26,7 @@ public abstract class Feature implements MeasurableDistance<Feature> {
 		return toReturn;
 	}
 		
-	
+	// TODO if this is ever used, it needs to be updated.
 	public void fromBigInt(BigInteger bigInt){
 		BigInteger bigTwo = BigInteger.valueOf(2);
 		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
