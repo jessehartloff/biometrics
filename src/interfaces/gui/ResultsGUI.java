@@ -1,5 +1,6 @@
 package interfaces.gui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.math.plot.*;
@@ -31,7 +32,7 @@ public class ResultsGUI {
 		
 		/*** HTER CURVE ***/
 		JFrame frame1 = new JFrame("HTER Curve");
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame1.setSize(500, 500);
         makeHTER(frame1);
         frame1.setVisible(true);
@@ -92,6 +93,8 @@ public class ResultsGUI {
 		
         // create your PlotPanel (you can use it as a JPanel)
         Plot2DPanel eerPlot = new Plot2DPanel("SOUTH");
+        eerPlot.addLabel("HTER: "+new Double(HTER).toString().substring(0, 5), Color.BLACK, 
+        		thresholds[zeroFarIndex]+ 0.1, HTER); //next to dot
         eerPlot.addLinePlot("FAR", thresholds, fars);
         eerPlot.addLinePlot("FRR", thresholds, frrs);
         eerPlot.addScatterPlot("HTER", hterX, hterY);
