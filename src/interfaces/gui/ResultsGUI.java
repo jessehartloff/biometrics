@@ -27,28 +27,39 @@ public class ResultsGUI {
 	private ArrayList<JPanel> fieldHistograms;
 	
 	public ResultsGUI( Results results_) {
+		results = results_;
 		
+		/*** HTER CURVE ***/
 		JFrame frame1 = new JFrame("HTER Curve");
         frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame1.setSize(500, 500);
-		JFrame frame2 = new JFrame("Variable Quantization Histogram");
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame2.setSize(500, 500);
+        makeHTER(frame1);
+        frame1.setVisible(true);
+		
+        /*** Variable Histograms ***/
+//        JFrame frame2 = new JFrame("Variable Quantization Histogram");
+//        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame2.setSize(500, 500);
+//        variableHistograms = new ArrayList<JPanel>();
+//		  makeVariableHistograms(frame2);
+//        frame2.setVisible(true);
         
-		results = results_;
-		plots = new ArrayList<JPanel>();
-		variableHistograms = new ArrayList<JPanel>();
-		fieldHistograms = new ArrayList<JPanel>();
+		/*** Field Histograms ***/
+        fieldHistograms = new ArrayList<JPanel>();
 		
-		makePlots(frame1);
-//		makeVariableHistograms(frame2);
+        
+        //plots = new ArrayList<JPanel>();
 		
-		frame1.setVisible(true);
-		frame2.setVisible(true);
+		
+		
+		
+
+		
+		
 	}
 	
-	public void makePlots( JFrame frame) {
-		/*** EER CURVE ***/
+	public void makeHTER( JFrame frame) {
+		/*** HALF TOTAL ERROR RATE (HTER)  CURVE ***/
 		System.out.print("I'm Makin your plots...");
 		//jmathplot likes plain arrays so this is how we get them
 		ArrayList<RatesPoint> rates = results.getRates();		
