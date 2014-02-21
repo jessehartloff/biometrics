@@ -1,5 +1,7 @@
 package settings;
 
+import interfaces.gui.ResultsGUI;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,20 +84,26 @@ public class AllSettings extends Settings{
 		AllSettings.getInstance().panel.updateUI();
 	}
 	
+	
 	public BiometricSystem buildSystem(){
-
 		AllSettings.getInstance();
-		
 		BiometricSystem system = new BiometricSystem();
+		return system;	
+	}
+	
+	
+	public void runSystemAndMakeGraphs(){
+
+		BiometricSystem system =  this.buildSystem();
+		
 		Results results = system.go();
 		
-		//this shouldn't go here
-//		ResultsGUI resultsGUI = new ResultsGUI(results);
-
 		System.out.print(results.rawScores);
 		System.out.println(results);
 		
-		return system;	
+		@SuppressWarnings("unused")
+		ResultsGUI resultsGUI = new ResultsGUI(results);
+
 	}
 	
 	protected JPanel thisJPanel(){
@@ -104,7 +112,7 @@ public class AllSettings extends Settings{
 		
 		goButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
-            {buildSystem();}
+            {instance.runSystemAndMakeGraphs();}
             }
 		);   
 		

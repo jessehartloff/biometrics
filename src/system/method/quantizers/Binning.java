@@ -1,10 +1,13 @@
 package system.method.quantizers;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import settings.settingsvariables.SettingsLong;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
@@ -13,8 +16,78 @@ import system.method.feature.Variable;
 
 public class Binning extends Quantizer{
 
+	//TODO total bits
 	//TODO make binning with Doubles
 	//TODO move SettingsMethodVariable stuff to here
+	
+	private transient Long bits;
+	private transient ArrayList<Long> binBoundaries; // TODO compute things when deserialized, or not...
+	
+//	
+//	
+//	public SettingsMethodVariable(Long numberOfBins){
+//		this.setBins(numberOfBins);
+//		binBoundaries = new ArrayList<Long>();
+//		bits = this.binsToBits(this.getBins());
+//	}
+//	
+//	public SettingsMethodVariable(Integer numberOfBins){
+//		this(numberOfBins.longValue());
+//	}
+//	
+//	public Long findBin(Long prequantizedValue) {
+//		Integer n = this.binBoundaries.size();	
+//		for(Integer i=0; i<n; i++){
+//			if(prequantizedValue < this.binBoundaries.get(i)){
+//				return i.longValue();
+//			}
+//		}
+//		return n.longValue();
+//	}
+//	
+//	public Long binsToBits(Long bins){
+//		Double d = Math.ceil(Math.log10(bins)/Math.log10(2));
+//		return d.longValue();
+//	}
+//
+//	public Long getBins(){
+//		SettingsLong binsSettings = (SettingsLong) this.settingsVariables.get("bins");
+//		return binsSettings.getValue();
+//	}
+//	public SettingsLong getBinsSettings(){
+//		SettingsLong binsSettings = (SettingsLong) this.settingsVariables.get("bins");
+//		return binsSettings;
+//	}
+//	
+//	public void setBins(Long value){
+//		SettingsLong binsLong = (SettingsLong) this.settingsVariables.get("bins");
+//		binsLong.setValue(value);
+//		bits = this.binsToBits(value);
+//	}	
+//	public void setBins(Integer value){
+//		this.setBins(value.longValue());
+//	}
+//
+//
+//	public void computeBinBoundaries(ArrayList<Long> prequantizedValues){
+//		this.binBoundaries = new ArrayList<Long>();
+//		Long n = new Long(prequantizedValues.size());
+//		Long binSize = n/this.getBins();
+//		Collections.sort(prequantizedValues);
+//		for(int i=1; i<this.getBins(); i++){
+//			Long cutoff = (prequantizedValues.get((binSize.intValue()*i)-1) + prequantizedValues.get(binSize.intValue()*i))/2;
+//			this.binBoundaries.add(cutoff);
+//		}
+//	}
+
+
+
+
+	
+	
+	
+	
+	
 	
 	@Override
 	public void train(Users trainingUsers) {

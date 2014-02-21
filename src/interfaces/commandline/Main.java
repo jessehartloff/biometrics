@@ -47,7 +47,10 @@ public class Main {
 		//...
 		
 		
-		settings.buildSystem();
+		Results results = settings.buildSystem().go();
+		
+		System.out.print(results.rawScores);
+		System.out.println(results);
 
 //		TestSerialize tester = TestSerialize.getInstance();
 //		tester.setValue(8012L);
