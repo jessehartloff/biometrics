@@ -111,6 +111,8 @@ public class AllSettings extends Settings{
 		panel.add(goButton);
 		return panel;
 	}
+	
+	
 //
 //	public AllModalitySettings modality(){
 //		return (AllModalitySettings) this.settingsVariables.get("Modality");

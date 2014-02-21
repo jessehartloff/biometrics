@@ -14,6 +14,7 @@ import system.method.feature.Variable;
 public class Binning extends Quantizer{
 
 	//TODO make binning with Doubles
+	//TODO move SettingsMethodVariable stuff to here
 	
 	@Override
 	public void train(Users trainingUsers) {

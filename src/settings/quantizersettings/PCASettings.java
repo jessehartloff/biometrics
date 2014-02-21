@@ -13,10 +13,15 @@ public class PCASettings extends QuantizerSettings{
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("number of components", new SettingsLong(5));
+		this.settingsVariables.put("bits per component", new SettingsLong(8));
 	}
-	
+
 	public SettingsLong numberOfComponents(){
 		return (SettingsLong) this.settingsVariables.get("number of components");
+	}
+	
+	public SettingsLong bitsPerComponent(){
+		return (SettingsLong) this.settingsVariables.get("bits per component");
 	}	
 
 	@Override

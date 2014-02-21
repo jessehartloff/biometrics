@@ -95,10 +95,10 @@ public class SettingsMethodVariable extends SettingsVariable{
 		bits = this.binsToBits(this.getBins());
 	}
 
-	protected JPanel makeJPanel() {
-		JPanel panel = this.getBinsSettings().getJPanel();
-		return panel;
-	}
+//	protected JPanel makeJPanel() {
+//		JPanel panel = this.getBinsSettings().getJPanel();
+//		return panel;
+//	}
 	
 
 
