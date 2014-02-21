@@ -16,6 +16,7 @@ import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
 import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
 import settings.hashersettings.AllHasherSettings;
 import settings.modalitysettings.AllModalitySettings;
+import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
 
@@ -66,6 +67,7 @@ public class AllSettings extends Settings{
 		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance());
 		this.settingsVariables.put("Hasher", AllHasherSettings.getInstance());
+		this.settingsVariables.put("Quantizer", AllQuantizerSettings.getInstance());
 		this.settingsVariables.put("Modality", AllModalitySettings.getInstance());
 	}
 	
@@ -109,22 +111,25 @@ public class AllSettings extends Settings{
 		panel.add(goButton);
 		return panel;
 	}
-
-	public AllModalitySettings modality(){
-		return (AllModalitySettings) this.settingsVariables.get("Modality");
-	}
-	public AllHasherSettings hasher(){
-		return (AllHasherSettings) this.settingsVariables.get("Hasher");
-	}
-	public AllMatchingCoordinatorSettings matchingCoordinator(){
-		return (AllMatchingCoordinatorSettings) this.settingsVariables.get("Matching");
-	}
-	public AllIndexingCoordinatorSettings indexingCoordinator(){
-		return (AllIndexingCoordinatorSettings) this.settingsVariables.get("Indexing");
-	}
-	public AllHistogramCoordinatorSettings histogramCoordinator(){
-		return (AllHistogramCoordinatorSettings) this.settingsVariables.get("Histogram");
-	}
+//
+//	public AllModalitySettings modality(){
+//		return (AllModalitySettings) this.settingsVariables.get("Modality");
+//	}
+//	public AllHasherSettings hasher(){
+//		return (AllHasherSettings) this.settingsVariables.get("Hasher");
+//	}
+//	public AllQuantizerSettings quantizer(){
+//		return (AllQuantizerSettings) this.settingsVariables.get("Quantizer");
+//	}
+//	public AllMatchingCoordinatorSettings matchingCoordinator(){
+//		return (AllMatchingCoordinatorSettings) this.settingsVariables.get("Matching");
+//	}
+//	public AllIndexingCoordinatorSettings indexingCoordinator(){
+//		return (AllIndexingCoordinatorSettings) this.settingsVariables.get("Indexing");
+//	}
+//	public AllHistogramCoordinatorSettings histogramCoordinator(){
+//		return (AllHistogramCoordinatorSettings) this.settingsVariables.get("Histogram");
+//	}
 
 
 }

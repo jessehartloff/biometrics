@@ -26,8 +26,6 @@ public class FingerprintSettings extends ModalitySettings{
 	private static final long serialVersionUID = 1L;
 
 
-	
-	
 
 	//Singleton
 	private static FingerprintSettings instance;
@@ -46,7 +44,6 @@ public class FingerprintSettings extends ModalitySettings{
 	}
 
 
-
 	public SettingsLong minimumMinutia() {
 		return (SettingsLong) this.settingsVariables.get("minimumMinutia");
 	}
@@ -55,6 +52,7 @@ public class FingerprintSettings extends ModalitySettings{
 	public String getLabel(){
 		return "Fingerprints";
 	}
+	
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings()); 

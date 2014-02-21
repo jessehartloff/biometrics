@@ -38,16 +38,16 @@ public class AllModalitySettings extends ComboBoxSettings{
 //		currentPanel.setLayout(new GridLayout(5,1));
 //		return currentPanel;
 //	}
-	@Override
-	protected JPanel makeJPanel() {
-		JPanel toRet = new JPanel();
-		//toRet.setBackground(java.awt.Color.BLUE);
-
-		//toRet.setLayout(new GridLayout(1,2));
-		toRet.add(this.thisJPanel(), BorderLayout.CENTER);
-		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
-		return toRet;
-	}
+//	@Override
+//	protected JPanel makeJPanel() {
+//		JPanel toRet = new JPanel();
+//		//toRet.setBackground(java.awt.Color.BLUE);
+//
+//		//toRet.setLayout(new GridLayout(1,2));
+//		toRet.add(this.thisJPanel(), BorderLayout.CENTER);
+//		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+//		return toRet;
+//	}
 
 	//Singleton
 	private static AllModalitySettings instance;
@@ -86,7 +86,7 @@ public class AllModalitySettings extends ComboBoxSettings{
 	@Override
 	protected void addALLOptions() {
 		this.addToOptions(FingerprintSettings.getInstance());
-		this.addToOptions(new IrisSettings());
+		this.addToOptions(new IrisSettings()); //TODO
 		this.addToOptions(new FaceSettings());
 		this.addToOptions(new PizzaSettings());
 	}

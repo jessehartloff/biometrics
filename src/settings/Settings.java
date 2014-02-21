@@ -85,7 +85,7 @@ public abstract class Settings implements Serializable{
 //			childPanel.setBackground(java.awt.Color.GREEN);
 //			BoxLayout boxLayout2 = new BoxLayout(childPanel, BoxLayout.X_AXIS);
 //			childPanel.setLayout(boxLayout2);
-			childPanel.add(new JLabel(subSettingsName), BorderLayout.WEST);
+			childPanel.add(new JLabel(subSettingsName + ":"), BorderLayout.WEST);
 			childPanel.add(this.settingsVariables.get(subSettingsName).getJPanel(), BorderLayout.EAST);
 			
 //			JLabel nameLabel = new JLabel(subSettingsName + ": ");

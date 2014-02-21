@@ -11,6 +11,7 @@ import system.vectordistance.MeasurableDistance;
 public abstract class Feature implements MeasurableDistance<Feature> {
 
 	public LinkedHashMap<String, Variable> variables;
+	
 
 	public Feature(){
 			this.variables = new LinkedHashMap<String, Variable>();

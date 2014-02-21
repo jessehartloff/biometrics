@@ -1,5 +1,6 @@
 package settings.fingerprintmethodsettings;
 
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -42,7 +43,6 @@ public class AllFingerprintMethodSettings extends ComboBoxSettings{
 	//Singleton
 	private AllFingerprintMethodSettings(){
 	}
-	
 	private static AllFingerprintMethodSettings instance;
 	public static AllFingerprintMethodSettings getInstance(){
 		if(instance == null){
@@ -67,17 +67,17 @@ public class AllFingerprintMethodSettings extends ComboBoxSettings{
 	}
 
 
-	@Override
-	protected JPanel makeJPanel(){
-		JPanel panel = super.makeJPanel();
-		//panel.setLayout(new GridLayout(2,1));
-		return panel;
-	}
+//	@Override
+//	protected JPanel makeJPanel(){
+//		JPanel panel = super.makeJPanel();
+//		//panel.setLayout(new GridLayout(2,1));
+//		return panel;
+//	}
 
 	@Override
 	protected void addSettings() {
 		this.variableString = "fingerprintMethod";
-		this.settingsVariables.put("fingerprintMethod", TriangleSettings.getInstance());
+		this.settingsVariables.put(this.variableString, TriangleSettings.getInstance());
 	}
 
 

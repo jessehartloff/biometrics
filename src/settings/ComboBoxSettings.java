@@ -50,6 +50,9 @@ public abstract class ComboBoxSettings extends Settings{
 //		if(this.settingsBox != null){
 //			ix = this.settingsBox.getSelectedIndex();
 //		}
+//		if(this.settingsBox == null){
+//			this.settingsBox = new JComboBox();
+//		}
 		this.settingsBox = new JComboBox();
 		this.settingsBox.addActionListener(new SettingsComboBoxActionListener(this, this.variableString));
 		this.settingsBox.setRenderer(new SettingsRenderer());
@@ -67,7 +70,6 @@ public abstract class ComboBoxSettings extends Settings{
 		
 		this.cardPanel = new JPanel(new CardLayout());
 //		this.cardPanel.setBorder(null);
-		//System.out.println("made it here");
 		this.addALLOptions();
 		this.settingsBox.setSelectedIndex(this.currentIndex);
 		return this.cardPanel;
