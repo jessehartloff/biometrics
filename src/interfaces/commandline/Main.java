@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import settings.AllSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
+import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.modalitysettings.FingerprintSettings;
 import system.biometricsystem.BiometricSystem;
 import system.allcommonclasses.commonstructures.Results;
@@ -38,10 +39,10 @@ public class Main {
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		//...
-		System.out.println("hi");
 		// set values for everything else
+
 		NgonSettings.getInstance().n().setValue(3);
 		NgonSettings.getInstance().kClosestMinutia().setValue(4);
 		//...

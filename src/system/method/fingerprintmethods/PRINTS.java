@@ -52,18 +52,14 @@ public class PRINTS extends FingerprintMethod{
 			this.minutiaIndices = new HashSet<Long>();
 			this.setCenterX(0.0);
 			this.setCenterY(0.0);
-			for(Long i = 1L; i < N; i ++){
+			for(Long i = 0L; i < N; i ++){
 				variables.put(makeKey("distance", i), new DistanceVariable(settings.getMinutiaComponentVariable("distance", i)));
 				variables.put(makeKey("sigma",i), new SigmaVariable(settings.getMinutiaComponentVariable("sigma", i)));
 				variables.put(makeKey("phi",i), new PhiVariable(settings.getMinutiaComponentVariable("phi", i)));
+				variables.put("region", new RegionVariables())
 			}
 		}
-		
-		public String makeKey(String component, Long i){
-			return component+i.toString();
-		}
-		
-	
+
 		public Double getCenterX() {
 			return centerX;
 		}
@@ -95,9 +91,6 @@ public class PRINTS extends FingerprintMethod{
 		
 	}
 	
-	
-	
-	
 	public PRINTS() {
 		settings = PRINTSettings.getInstance();
 
@@ -110,6 +103,7 @@ public class PRINTS extends FingerprintMethod{
 	public Template quantizeOne(Fingerprint fingerprint) {
 		return this.PRINTSQuantizeOne(fingerprint);
 	}
+	
 	//used for enrollment
 	private Template PRINTSQuantizeOne(Fingerprint fingerprint) {
 		Template template = new Template();
@@ -126,7 +120,8 @@ public class PRINTS extends FingerprintMethod{
 	}
 	//used for matching
 	private ArrayList<Template> PRINTSQuantizeAll(Fingerprint fingerprint) {
-		return null;
+		ArrayList<Template> templates = new ArrayList<Template>();
+		return templates;
 	}
 	
 
@@ -146,12 +141,12 @@ public class PRINTS extends FingerprintMethod{
 			for(int i = 0; i < settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
-			prints.addAll(this.makePRINT(minutiae));
+			prints.add(this.makePRINT(minutiae));
 		}
-		return null;
+		return prints;
 	}
 
-	private ArrayList<PRINT> makePRINT(ArrayList<Minutia> minutiaList) {
+	private PRINT makePRINT(ArrayList<Minutia> minutiaList) {
 		PRINT returnPRINT = new PRINT();
 		
 		for(Minutia minutia : minutiaList){
@@ -167,26 +162,44 @@ public class PRINTS extends FingerprintMethod{
 		ArrayList<Double> phis = new ArrayList<Double>();
 		
 		
-		//epic rounding happening. think about this a t some opint that isn't now
 		Double cx = returnPRINT.getCenterX().doubleValue();
 		Double cy = returnPRINT.getCenterY().doubleValue();
 		for(Minutia minutia : minutiaList){
-			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
-			//Math.sqrt(Math.pow(cx-minutia.getX(), 2) + Math.pow(cy-minutia.getY(), 2));
-			distances.add(distFromCenter);
 		}
 		
 		for(int i = 0;i < minutiaList.size(); i ++){
-			Minutia m1 = minutiaList.get(i), m2 = minutiaList.get( (i+1) % minutiaList.size() );
+			Minutia m1 = minutiaList.get(i), m2 = minutiaList.get( (i+1) % minutiaList.size() ); //going around counterclockwise...
+			
+			Double distFromCenter = Minutia.distance(cx, cy, m1.getX().doubleValue(), m1.getY().doubleValue());
 			Double phi = Minutia.computeInsideAngle(m1, cx, cy, m2);
 			Double sigma = m2.getTheta().doubleValue() - m1.getTheta().doubleValue();
+
+			//ith position in each list corresponds to the ith minutia point
+			distances.add(distFromCenter);
 			phis.add(phi);
 			sigmas.add(sigma);
 		}
 		
 		
-	//	return returnPRINT;
-		return null;
+		int startingIndex = 0;
+		double maxDist = 0;
+		for(int i = 0; i < distances.size(); i++){
+			double currentDistance = distances.get(i);
+			if( currentDistance > maxDist){
+				maxDist = currentDistance;
+				startingIndex = i;
+			}
+		}
+		
+		for(Long i = 0L; i < N; i++){
+			int index = (startingIndex+i.intValue()) % N.intValue();
+			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?
+			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(index).longValue());
+			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(index).longValue());
+			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(index).longValue());
+		}
+		
+		return returnPRINT;
 	}
 
 	@Override
@@ -194,7 +207,10 @@ public class PRINTS extends FingerprintMethod{
 		return new ArrayList<Feature>(this.fingerprintToPRINTS(fingerprint));
 	}
 
-
+	public static String makeKey(String component, Long i){
+		return component+i.toString();
+	}
+	
 	@Override
 	public Feature getBlankFeatureForBinning() {
 		return new PRINT();

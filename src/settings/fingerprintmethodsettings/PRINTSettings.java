@@ -52,7 +52,7 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	public SettingsLong rotationRegions(){
 		return (SettingsLong) this.settingsVariables.get("rotationRegions");
 	}
-
+	
 	@Override
 	public String getMethodString() {
 		return "PRINTS";
@@ -67,8 +67,9 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	}
 
 	public void setAllNumberOfBins() {
-		this.settingsVariables.put(this.componentToString("distance", 0L), new SettingsMethodVariable(this.distanceBins().getValue()));
-		for(Long i = 1L; i < this.n().getValue(); i++){
+		//hehehehhehe Jesse copied and pasted :)
+		//this.settingsVariables.put(this.componentToString("distance", 0L), new SettingsMethodVariable(this.distanceBins().getValue()));
+		for(Long i = 0L; i < this.n().getValue(); i++){
 			this.settingsVariables.put(this.componentToString("distance", i), new SettingsMethodVariable(this.distanceBins().getValue()));
 			this.settingsVariables.put(this.componentToString("sigma", i), new SettingsMethodVariable(this.sigmaBins().getValue()));
 			this.settingsVariables.put(this.componentToString("phi", i), new SettingsMethodVariable(this.phiBins().getValue()));

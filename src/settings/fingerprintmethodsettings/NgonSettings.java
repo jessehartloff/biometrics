@@ -63,7 +63,7 @@ public class NgonSettings extends FingerprintMethodSettings{
 
 	@Override
 	public String getMethodString() {
-		return "NGONSALLROTATIONS";
+		return "NGONS";
 	}
 
 	private String componentToString(String componentType, Long componentNumber){
