@@ -89,15 +89,19 @@ public class ResultsGUI {
 		//calculate secure error rate
 		double HTER = (fars[zeroFarIndex] + frrs[zeroFarIndex]) /2.;
 		double[] hterX = { thresholds[zeroFarIndex], thresholds[zeroFarIndex],  thresholds[zeroFarIndex] };
-		double[] hterY = { 0., HTER,  1.};
+		double[] hterY = { 0., HTER,  frrs[zeroFarIndex]};
 		
         // create your PlotPanel (you can use it as a JPanel)
         Plot2DPanel eerPlot = new Plot2DPanel("SOUTH");
+        //HTER Label
         eerPlot.addLabel("HTER: "+new Double(HTER).toString().substring(0, 5), Color.BLACK, 
-        		thresholds[zeroFarIndex]+ 0.1, HTER); //next to dot
+        		thresholds[zeroFarIndex]+ .5, HTER); //next to dot
+        //ZeroFAR FRR
+        eerPlot.addLabel("FRR at ZeroFAR: "+new Double(frrs[zeroFarIndex]).toString().substring(0, 5), Color.RED, 
+        		thresholds[zeroFarIndex]+ .55, frrs[zeroFarIndex] - .05 ); //next to dot
         eerPlot.addLinePlot("FAR", thresholds, fars);
         eerPlot.addLinePlot("FRR", thresholds, frrs);
-        eerPlot.addScatterPlot("HTER", hterX, hterY);
+        eerPlot.addScatterPlot("HTER", Color.BLACK, hterX, hterY);
         eerPlot.setFixedBounds(minAxisBounds, maxAxisBounds);
         eerPlot.setAxisLabel(0, "Threshold");
         
