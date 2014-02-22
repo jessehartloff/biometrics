@@ -31,24 +31,24 @@ public abstract class Method{
 	 * @param templatePoint2
 	 * @return a distance determined by the method and its distance function
 	 */
-	public Double distance(BigInteger templatePoint1, BigInteger templatePoint2) {
-		Feature f1 = this.getBlankFeatureForTotalBits();
-		Feature f2 = this.getBlankFeatureForTotalBits();
-		f1.fromBigInt(templatePoint1);
-		f2.fromBigInt(templatePoint2);
-		return f1.distanceFrom(f2);
-	}
+//	public Double distance(BigInteger templatePoint1, BigInteger templatePoint2) {
+//		Feature f1 = this.getBlankFeatureForTotalBits();
+//		Feature f2 = this.getBlankFeatureForTotalBits();
+//		f1.fromBigInt(templatePoint1);
+//		f2.fromBigInt(templatePoint2);
+//		return f1.distanceFrom(f2);
+//	}
 	
 
 	public Long getTotalBits() {
-		Feature feature = this.getBlankFeatureForBinning();
+		Feature feature = this.getBlankFeatureForTraining();
 		return feature.getTotalBits();
 	}
 
-	public abstract Feature getBlankFeatureForBinning();
+	public abstract Feature getBlankFeatureForTraining();
 	
 	public Feature getBlankFeatureForTotalBits(){
-		return this.getBlankFeatureForBinning();
+		return this.getBlankFeatureForTraining();
 	}
 	
 }

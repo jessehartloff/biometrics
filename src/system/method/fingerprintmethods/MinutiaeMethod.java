@@ -81,14 +81,14 @@ public class MinutiaeMethod extends FingerprintMethod {
 	}
 
 
-	@Override
-	public Double distance(BigInteger point1, BigInteger point2) {
-		InnerMinutia m1 = new InnerMinutia();
-		InnerMinutia m2 = new InnerMinutia();
-		m1.fromBigInt(point1);
-		m2.fromBigInt(point2);
-		return m1.distanceFrom(m2);
-	}
+//	@Override
+//	public Double distance(BigInteger point1, BigInteger point2) {
+//		InnerMinutia m1 = new InnerMinutia();
+//		InnerMinutia m2 = new InnerMinutia();
+//		m1.fromBigInt(point1);
+//		m2.fromBigInt(point2);
+//		return m1.distanceFrom(m2);
+//	}
 
 
 	@Override
@@ -103,7 +103,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 	}
 	
 	@Override
-	public Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForTraining(){
 		return new InnerMinutia();
 	}
 	

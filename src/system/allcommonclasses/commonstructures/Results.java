@@ -24,7 +24,9 @@ public class Results {
 	private ArrayList<Long> indexingResults;
 	private Double minEntropy;
 	private Double failureToCapture;
-	
+	private Double TotalLogOfBins;
+	// TODO statistical distance from uniform
+
 	public RawScores rawScores;
 	
 		
@@ -34,7 +36,14 @@ public class Results {
 
 
 	
-	
+	public Double getTotalLogOfBins() {
+		return TotalLogOfBins;
+	}
+
+	public void setTotalLogOfBins(Double totalLogOfBins) {
+		TotalLogOfBins = totalLogOfBins;
+	}
+
 	public ZeroFAR getZeroFAR() {
 		return zeroFAR;
 	}
@@ -105,7 +114,8 @@ public class Results {
 				"FTC: " + this.getFailureToCapture() + "\n" + 
 				"ZeroFAR: " + this.getZeroFAR() + "\n" +
 				"rates: " + this.getRates() + "\n" +
-				"min entropy: " + this.getMinEntropy() + "\n";
+				"min entropy: " + this.getMinEntropy() + "\n" + 
+				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n";
 		return toReturn;
 	}
 	

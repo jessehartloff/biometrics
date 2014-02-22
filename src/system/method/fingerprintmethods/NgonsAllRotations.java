@@ -52,7 +52,7 @@ public class NgonsAllRotations extends Ngons{
 	
 	
 	@Override
-	public Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForTraining(){
 		return new Ngon();
 	}
 	

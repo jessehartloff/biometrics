@@ -214,7 +214,7 @@ public class Ngons extends FingerprintMethod{
 	}
 
 	@Override
-	public Feature getBlankFeatureForBinning() {
+	public Feature getBlankFeatureForTraining() {
 		return new Ngon();
 	}
 	

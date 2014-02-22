@@ -1,15 +1,18 @@
 package system.method.quantizers;
 
 import java.math.BigInteger;
+import java.util.LinkedHashMap;
 
 import settings.quantizersettings.PCASettings;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 import system.method.feature.Feature;
+import system.method.feature.Variable;
 
 public class PCA extends Quantizer{
 
 	PrincipleComponentAnalysis pca;
+	Binning binner;
 	
 //	pca.setup(5, 6);
 //
@@ -40,18 +43,32 @@ public class PCA extends Quantizer{
 	
 	@Override
 	public void train(Users trainingUsers) {
-		// TODO fill pca with users
+		// TODO pca fill pca with users
 		
 		pca.computeBasis(PCASettings.getInstance().numberOfComponents().getValue().intValue());
+		
+		// TODO binning of pca components
 	}
 
 	@Override
-	public BigInteger featureToBigInt(Feature feature) {
+	public BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues) {
 		double[] featureDoubles = null;
-//		TODO feature to double[]
+//		TODO pca feature to double[]
 		double[] featureComponents = pca.sampleToEigenSpace(featureDoubles);
-//		TODO featureComponents binning with PCASettings.getInstance().bitsPerComponent()
-//		TODO binned components to bigInt
+//		TODO pca featureComponents binning with PCASettings.getInstance().bitsPerComponent()
+//		TODO pca binned components to bigInt
+		return null;
+	}
+
+	@Override
+	public Double getTotalLogOfBins() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long getTotalBits() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -1,43 +1,42 @@
 ___Jesse___
 
--iris w/ Matt
+-Fuzzy vault
+-iris
 -distance
 -face w/ Rohit
--shortcut soft-decoding w/ Tom
+-shortcut soft-decoding
 
 
 ___Matt___
 
--iris w/ Jesse
+-PRINTS
 
 
 ___Tom___
 
--shortcut soft-decoding w/ Jesse
--MultiThreading
--general rotations
 -GUI plots
+-Machine Learning
 
 
 ___Jim___
 
+-PCA
+-Statistical difference
 -SQL w/ Jen
 
 
 ___Jen___
 
--Permutation
+-Multi-server
 -SQL w/ Jim
 
 
-
 ---Unassigned---
--!Multi server! - to be split up
+
 
 
 ---Potential---
 -new minutia extraction and matching (NIST MINDTCT and Bozorth3)
--AI technology (Machine learning/pattern recognition/science)
 
 
 ---Inactive---
@@ -45,6 +44,5 @@ ___Jen___
 -Smarter binning - could replace lax matching by adding things to both bins if it's near a boundary
 -Remember bin positioning via Sergey's idea
 -PinSketch
--Fuzzy vault
 -CRC
 

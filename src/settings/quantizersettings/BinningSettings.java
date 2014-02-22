@@ -12,8 +12,6 @@ public class BinningSettings extends QuantizerSettings{
 
 	@Override
 	protected void addSettings() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

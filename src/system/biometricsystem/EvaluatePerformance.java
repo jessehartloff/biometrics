@@ -7,6 +7,7 @@ import java.util.Collections;
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
+import system.method.quantizers.Quantizer;
 
 public class EvaluatePerformance {
 
@@ -29,6 +30,8 @@ public class EvaluatePerformance {
 			System.out.println(varHist.getVariableName() + ": " + varHist.getMinEntropy());
 		}
 		results.rawScores = rawScores;
+		
+		results.setTotalLogOfBins(Quantizer.getQuantizer().getTotalLogOfBins());
 		
 		return results;
 	}

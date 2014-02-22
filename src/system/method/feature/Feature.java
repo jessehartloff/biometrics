@@ -6,55 +6,61 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
+import system.method.quantizers.Quantizer;
 import system.vectordistance.MeasurableDistance;
 
-public abstract class Feature implements MeasurableDistance<Feature> {
+public abstract class Feature{
 
 	public LinkedHashMap<String, Variable> variables;
+	public LinkedHashMap<String, Long> quantizedValues;
+
 	
 
 	public Feature(){
 			this.variables = new LinkedHashMap<String, Variable>();
 		}
 		
-	public BigInteger toBigInt(){
-		BigInteger toReturn = BigInteger.valueOf(0);
-		Collection<Variable> vars = variables.values();
-		for(Variable var : vars){
-			toReturn = toReturn.shiftLeft(var.variableSettings.getBits().intValue());
-			toReturn = toReturn.add(BigInteger.valueOf(var.getQuantizedValue()));
-		}
-		return toReturn;
-	}
+//	public BigInteger toBigInt(){ 
+//		BigInteger toReturn = BigInteger.valueOf(0);
+//		Collection<Variable> vars = variables.values();
+//		for(Variable var : vars){
+//			toReturn = toReturn.shiftLeft(var.variableSettings.getBits().intValue());
+//			toReturn = toReturn.add(BigInteger.valueOf(var.getQuantizedValue()));
+//		}
+//		return toReturn;
+//	}
 		
-	// TODO if this is ever used, it needs to be updated.
-	public void fromBigInt(BigInteger bigInt){
-		BigInteger bigTwo = BigInteger.valueOf(2);
-		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
-		Collections.reverse(vars);
-		for(Variable var : vars){
-			var.setQuantizedValue(bigInt.and(bigTwo.pow(var.variableSettings.getBits().intValue()).add(BigInteger.valueOf(-1))).longValue());
-			bigInt = bigInt.shiftRight(var.variableSettings.getBits().intValue());
-		}
+	public BigInteger toBigInt(){ 
+		this.quantizedValues = new LinkedHashMap<String, Long>();
+		return Quantizer.getQuantizer().featureToBigInt(this, quantizedValues);
 	}
+	
+	
+	// todo if this is ever used, it needs to be updated.
+//	public void fromBigInt(BigInteger bigInt){
+//		BigInteger bigTwo = BigInteger.valueOf(2);
+//		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
+//		Collections.reverse(vars);
+//		for(Variable var : vars){
+//			var.setQuantizedValue(bigInt.and(bigTwo.pow(var.variableSettings.getBits().intValue()).add(BigInteger.valueOf(-1))).longValue());
+//			bigInt = bigInt.shiftRight(var.variableSettings.getBits().intValue());
+//		}
+//	}
 		
-	@Override
-	public Double distanceFrom(Feature compareFeature/*,Distance distanceFunction*/) {
-		//return distanceFunction.distance(this,compareFeature);
-        Double result = 0.0;
-        for(String varKey : variables.keySet()){
-        	result += Math.pow(this.variables.get(varKey).getQuantizedValue().doubleValue() -
-        			 compareFeature.variables.get(varKey).getQuantizedValue().doubleValue(),2);
-        }
-        return Math.sqrt(result);
-	}
+//	@Override
+//	public Double distanceFrom(Feature compareFeature/*,Distance distanceFunction*/) {
+//		//return distanceFunction.distance(this,compareFeature);
+//        Double result = 0.0;
+//        for(String varKey : variables.keySet()){
+//        	result += Math.pow(this.variables.get(varKey).getQuantizedValue().doubleValue() -
+//        			 compareFeature.variables.get(varKey).getQuantizedValue().doubleValue(),2);
+//        }
+//        return Math.sqrt(result);
+//	}
 
 	public Long getTotalBits() {
-		Long toReturn = 0L;
-		for(Variable var : variables.values()){
-			toReturn += var.variableSettings.getBits();
-		}
-		return toReturn;
+		return Quantizer.getQuantizer().getTotalBits();
 	}
 	
 	@Override
@@ -67,19 +73,22 @@ public abstract class Feature implements MeasurableDistance<Feature> {
             return false;
 
         Feature otherFeature = (Feature) obj;
-        Boolean result = true;
+//        Boolean result = true;
         
-        for(String varKey : variables.keySet()){
-        	result &= this.variables.get(varKey).getQuantizedValue().equals(otherFeature.variables.get(varKey).getQuantizedValue());
-        }
-        return result;
+        return this.toBigInt().equals(otherFeature.toBigInt());
+        
+//        for(String varKey : variables.keySet()){
+//        	result &= this.variables.get(varKey).getQuantizedValue().equals(otherFeature.variables.get(varKey).getQuantizedValue());
+//        }
+//        return result;
     }
 	
 	@Override
 	public String toString(){
 		String output = "";
 		for(Entry<String, Variable> var : variables.entrySet()){
-			output += var.getKey() + ": " + var.getValue().quantizedValue.toString() +" ";
+//			output += var.getKey() + ": " + var.getValue().quantizedValue.toString() +" ";
+			output += var.getKey() + ": " + var.getValue().getPrequantizedValue().toString() +" ";
 		}
 		return output;
 	}

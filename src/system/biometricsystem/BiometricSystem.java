@@ -10,6 +10,8 @@ import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.*;
 import system.method.fingerprintmethods.*;
+import system.method.quantizers.Quantizer;
+import system.method.quantizers.QuantizerFactory;
 
 /**
  * 
@@ -44,10 +46,12 @@ public class BiometricSystem {
 	}
 
 
-	private void trainTheSystem(){
+	private void trainTheSystem(){ 
+		QuantizerFactory.makeQuantizer();
 		Users trainingSet = AllModalitySettings.getTrainingUsers();
 		trainingSet.removeFailureToCapture();
-		trainingSet.computeBins();
+//		trainingSet.computeBins(); 
+		Quantizer.getQuantizer().train(trainingSet);
 	}
 	
 }

@@ -14,8 +14,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private transient Long bits;
-	private transient ArrayList<Long> binBoundaries; // TODO compute things when deserialized, or not...
+	private transient ArrayList<Double> binBoundaries;
 	
 	
 	public SettingsMethodVariable(){
@@ -24,8 +23,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	
 	public SettingsMethodVariable(Long numberOfBins){
 		this.setBins(numberOfBins);
-		binBoundaries = new ArrayList<Long>();
-		bits = this.binsToBits(this.getBins());
+		binBoundaries = new ArrayList<Double>();
 	}
 	
 	public SettingsMethodVariable(Integer numberOfBins){
@@ -43,7 +41,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	}
 	
 	public Long binsToBits(Long bins){
-		Double d = Math.ceil(Math.log10(bins)/Math.log10(2));
+		Double d = Math.ceil(Math.log10(bins.doubleValue())/Math.log10(2.0));
 		return d.longValue();
 	}
 
@@ -59,30 +57,34 @@ public class SettingsMethodVariable extends SettingsVariable{
 	public void setBins(Long value){
 		SettingsLong binsLong = (SettingsLong) this.settingsVariables.get("bins");
 		binsLong.setValue(value);
-		bits = this.binsToBits(value);
 	}	
 	public void setBins(Integer value){
 		this.setBins(value.longValue());
 	}
-	
+
 	public Long getBits() {
-		return bits;
+		return this.binsToBits(this.getBins());
+	}
+	
+	public Double getLogOfBins() {
+		return Math.log10(this.getBins().doubleValue())/Math.log10(2.0);
+
 	}
 
-
-	public void computeBinBoundaries(ArrayList<Long> prequantizedValues){
-		this.binBoundaries = new ArrayList<Long>();
+// TODO q
+	public void computeBinBoundaries(ArrayList<Double> prequantizedValues){
+		this.binBoundaries = new ArrayList<Double>();
 		Long n = new Long(prequantizedValues.size());
 		Long binSize = n/this.getBins();
 		Collections.sort(prequantizedValues);
 		for(int i=1; i<this.getBins(); i++){
-			Long cutoff = (prequantizedValues.get((binSize.intValue()*i)-1) + prequantizedValues.get(binSize.intValue()*i))/2;
+			Double cutoff = (prequantizedValues.get((binSize.intValue()*i)-1) + prequantizedValues.get(binSize.intValue()*i))/2.0;
 			this.binBoundaries.add(cutoff);
 		}
 	}
 
 	
-	public ArrayList<Long> getBinBoundaries() {
+	public ArrayList<Double> getBinBoundaries() {
 		return this.binBoundaries;
 	}
 	
@@ -91,8 +93,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	{
 	    in.defaultReadObject();
 	    
-		binBoundaries = new ArrayList<Long>();
-		bits = this.binsToBits(this.getBins());
+		binBoundaries = new ArrayList<Double>();
 	}
 
 //	protected JPanel makeJPanel() {

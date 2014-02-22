@@ -173,7 +173,7 @@ public class PathsMethod extends FingerprintMethod {
 	}
 	
 	@Override
-	public Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForTraining(){
 		return new Path();
 	}
 	

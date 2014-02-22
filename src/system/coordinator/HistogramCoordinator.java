@@ -20,7 +20,7 @@ public class HistogramCoordinator extends Coordinator{
 		RawScores scores = this.nextCoordinator.run();
 		//Histogram
 		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();
-		Feature blankFeature = Biometric.method.getBlankFeatureForBinning();
+		Feature blankFeature = Biometric.method.getBlankFeatureForTraining();
 		
 		for(String var : blankFeature.variables.keySet()){
 			allQuantizedValues.add(new ArrayList<Long>());
@@ -33,7 +33,7 @@ public class HistogramCoordinator extends Coordinator{
 				for(Feature feature : features){
 					scores.fieldHistogramValues.add(feature.toBigInt());
 					for(String var : feature.variables.keySet()){
-						scores.variableHistogramValues.get(var).add(feature.variables.get(var).getQuantizedValue());
+						scores.variableHistogramValues.get(var).add(feature.quantizedValues.get(var));
 					}
 				}
 			}

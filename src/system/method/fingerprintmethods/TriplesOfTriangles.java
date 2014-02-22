@@ -68,32 +68,32 @@ public class TriplesOfTriangles extends Triangles {
 			return toReturn;
 		}
 		
-		@Override
-		public void fromBigInt(BigInteger bigInt){
-			Long triangleBits = settings.theta0().getBits() + 
-					settings.x1().getBits() +
-					settings.y1().getBits() +
-					settings.theta1().getBits() +
-					settings.x2().getBits() +
-					settings.y2().getBits() +
-					settings.theta2().getBits();
-
-			BigInteger bigTwo = BigInteger.valueOf(2);
-			
-			Triangle triangle2 = new Triangle();
-			triangle2.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
-			t2 = triangle2;
-			bigInt = bigInt.shiftRight(triangleBits.intValue());
-
-			Triangle triangle1 = new Triangle();
-			triangle1.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
-			t1 = triangle1;
-			bigInt = bigInt.shiftRight(triangleBits.intValue());
-
-			Triangle triangle0 = new Triangle();
-			triangle0.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
-			t0 = triangle0;
-		}
+//		@Override
+//		public void fromBigInt(BigInteger bigInt){
+//			Long triangleBits = settings.theta0().getBits() + 
+//					settings.x1().getBits() +
+//					settings.y1().getBits() +
+//					settings.theta1().getBits() +
+//					settings.x2().getBits() +
+//					settings.y2().getBits() +
+//					settings.theta2().getBits();
+//
+//			BigInteger bigTwo = BigInteger.valueOf(2);
+//			
+//			Triangle triangle2 = new Triangle();
+//			triangle2.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
+//			t2 = triangle2;
+//			bigInt = bigInt.shiftRight(triangleBits.intValue());
+//
+//			Triangle triangle1 = new Triangle();
+//			triangle1.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
+//			t1 = triangle1;
+//			bigInt = bigInt.shiftRight(triangleBits.intValue());
+//
+//			Triangle triangle0 = new Triangle();
+//			triangle0.fromBigInt(bigInt.and(bigTwo.pow(triangleBits.intValue()).add(BigInteger.valueOf(-1))));
+//			t0 = triangle0;
+//		}
 	}
 	
 	
@@ -203,7 +203,7 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	@Override
-	public Feature getBlankFeatureForBinning(){
+	public Feature getBlankFeatureForTraining(){
 		return new Triangle();
 	}
 	

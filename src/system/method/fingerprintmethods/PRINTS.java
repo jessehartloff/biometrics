@@ -56,7 +56,7 @@ public class PRINTS extends FingerprintMethod{
 				variables.put(makeKey("distance", i), new DistanceVariable(settings.getMinutiaComponentVariable("distance", i)));
 				variables.put(makeKey("sigma",i), new SigmaVariable(settings.getMinutiaComponentVariable("sigma", i)));
 				variables.put(makeKey("phi",i), new PhiVariable(settings.getMinutiaComponentVariable("phi", i)));
-				variables.put("region", new RegionVariables())
+//				variables.put("region", new RegionVariables())
 			}
 		}
 
@@ -212,7 +212,7 @@ public class PRINTS extends FingerprintMethod{
 	}
 	
 	@Override
-	public Feature getBlankFeatureForBinning() {
+	public Feature getBlankFeatureForTraining() {
 		return new PRINT();
 	}
 
