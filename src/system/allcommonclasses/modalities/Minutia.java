@@ -177,9 +177,7 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 	
 	public static Double distance(Double x1, Double y1, Double x2, Double y2){
 		return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
-	}
-	
-	
+	}	
 
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
