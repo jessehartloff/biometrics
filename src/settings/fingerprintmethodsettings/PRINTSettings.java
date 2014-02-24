@@ -46,6 +46,10 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	public SettingsLong phiBins(){
 		return (SettingsLong) this.settingsVariables.get("phiBins");
 	}
+	public SettingsLong angleBins(){
+		return (SettingsLong) this.settingsVariables.get("angle");
+	}
+	
 	public SettingsLong kClosestMinutia(){
 		return (SettingsLong) this.settingsVariables.get("kClosestMinutia");
 	}
@@ -61,14 +65,16 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	private String componentToString(String componentType, Long componentNumber){
 		return componentType + componentNumber.toString();
 	}
-	
+	public SettingsMethodVariable getAngle(){
+		return (SettingsMethodVariable) this.settingsVariables.get("angle");
+	}
 	public SettingsMethodVariable getMinutiaComponentVariable(String component, Long i){
 		return (SettingsMethodVariable) this.settingsVariables.get(this.componentToString(component, i));
 	}
 
 	public void setAllNumberOfBins() {
-		//hehehehhehe Jesse copied and pasted :)
 		//this.settingsVariables.put(this.componentToString("distance", 0L), new SettingsMethodVariable(this.distanceBins().getValue()));
+		this.settingsVariables.put("angle", new SettingsMethodVariable(this.angleBins().getValue()));
 		for(Long i = 0L; i < this.n().getValue(); i++){
 			this.settingsVariables.put(this.componentToString("distance", i), new SettingsMethodVariable(this.distanceBins().getValue()));
 			this.settingsVariables.put(this.componentToString("sigma", i), new SettingsMethodVariable(this.sigmaBins().getValue()));
@@ -95,6 +101,7 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("N", new SettingsLong(3));
+		this.settingsVariables.put("angle", new SettingsLong(6));//360/k is the width of the interval we're allowing
 		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
 		this.settingsVariables.put("distanceBins", new SettingsLong(8));
 		this.settingsVariables.put("sigmaBins", new SettingsLong(8));

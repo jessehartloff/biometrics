@@ -32,10 +32,7 @@ import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
 	public static void main(String[] args) {		
-		
-
-		
-		
+	
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox

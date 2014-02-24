@@ -13,6 +13,7 @@ import system.allcommonclasses.modalities.Minutia;
 import system.method.feature.DistanceVariable;
 import system.method.feature.Feature;
 import system.method.feature.PhiVariable;
+import system.method.feature.RegionVariable;
 import system.method.feature.SigmaVariable;
 
 public class PRINTS extends FingerprintMethod{
@@ -51,12 +52,12 @@ public class PRINTS extends FingerprintMethod{
 			this.N = settings.n().getValue();
 			this.minutiaIndices = new HashSet<Long>();
 			this.setCenterX(0.0);
-			this.setCenterY(0.0);
+			this.setCenterY(0.0);			
+			variables.put("angle", new RegionVariable(settings.getAngle()));
 			for(Long i = 0L; i < N; i ++){
 				variables.put(makeKey("distance", i), new DistanceVariable(settings.getMinutiaComponentVariable("distance", i)));
 				variables.put(makeKey("sigma",i), new SigmaVariable(settings.getMinutiaComponentVariable("sigma", i)));
 				variables.put(makeKey("phi",i), new PhiVariable(settings.getMinutiaComponentVariable("phi", i)));
-//				variables.put("region", new RegionVariables())
 			}
 		}
 
@@ -190,6 +191,10 @@ public class PRINTS extends FingerprintMethod{
 				startingIndex = i;
 			}
 		}
+		Minutia m0 = minutiaList.get(0);
+		
+		Double angle = Math.tan(m0.getY().doubleValue()/m0.getX().doubleValue());//verify the angle is from the positive x axis... shouldn't make a difference
+		returnPRINT.variables.get("angle").setPrequantizedValue(angle.longValue());
 		
 		for(Long i = 0L; i < N; i++){
 			int index = (startingIndex+i.intValue()) % N.intValue();
