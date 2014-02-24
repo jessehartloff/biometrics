@@ -6,7 +6,7 @@ import system.coordinator.testgenerators.TestGenerator;
 public class TestGeneratorFactory{
 	
 	public static TestGenerator makeTestGenerator(){
-		switch(TestGeneratorEnumerator.valueOf("GENERATEFVCSTYLETESTS")){ //TODO
+		switch(TestGeneratorEnumerator.valueOf("GENERATEFVCSTYLETESTS")){ //TODO Jesse - test generator factory
 			case GENERATEFVCSTYLETESTS:
 				return new GenerateFVCStyleTests();
 			default:

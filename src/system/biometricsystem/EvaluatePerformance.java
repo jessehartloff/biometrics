@@ -108,7 +108,7 @@ public class EvaluatePerformance {
 			max = Math.max(gens.get(gens.size()-1), imps.get(imps.size()-1));
 		}
 
-//		Double stepSize = GlobalSettings.getInstance().getEerStepSize(); //TODO
+//		Double stepSize = GlobalSettings.getInstance().getEerStepSize(); //LATER if we want non-integer scores
 		Double stepSize = 1.0; 
 		Double offset = stepSize/10.0;
 		

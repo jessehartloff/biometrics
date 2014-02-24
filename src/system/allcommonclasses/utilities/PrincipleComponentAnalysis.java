@@ -37,7 +37,7 @@ import org.ejml.ops.SingularOps;
  */
 public class PrincipleComponentAnalysis {
 
-	//TODO functions for the following use case
+	//TODO pca - Jesse functions for the following use case
 	
 //	PrincipleComponentAnalysis pca = new PrincipleComponentAnalysis();
 //	pca.setup(5, 6);

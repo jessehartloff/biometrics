@@ -12,13 +12,13 @@ public abstract class FingerprintMethodSettings extends MethodSettings{
 
 	public abstract String getMethodString();
 	
-	@Override
-	protected JPanel makeJPanel(){
-		JPanel panel = super.makeJPanel();
-//		panel.add(this.thisJPanel(), BorderLayout.WEST);
-//		panel.add(this.makeChildrenJPanel(), BorderLayout.EAST);
-		return panel;
-	}
+//	@Override
+//	protected JPanel makeJPanel(){
+//		JPanel panel = super.makeJPanel();
+////		panel.add(this.thisJPanel(), BorderLayout.WEST);
+////		panel.add(this.makeChildrenJPanel(), BorderLayout.EAST);
+//		return panel;
+//	}
 	
 
 }

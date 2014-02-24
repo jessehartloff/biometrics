@@ -12,7 +12,6 @@ package interfaces.gui;
 //
 //public class GUI {
 //
-//	// TODO Matt - GUI
 //
 //	private Settings settings;
 ////	private JFrame frame;
@@ -102,7 +101,6 @@ package interfaces.gui;
 //				//
 //				//public class GUI {
 //				//
-//				//	{}// TODO Matt - GUI
 //				//	
 //				//	private AllSettings settings;
 //				//	private JFrame frame;

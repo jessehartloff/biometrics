@@ -36,6 +36,7 @@ public class PCA extends Quantizer{
 //			System.out.println(d);
 //		}
 	
+	//TODO Jim - PCA
 	
 	public PCA(){
 		pca = new PrincipleComponentAnalysis();
@@ -43,32 +44,32 @@ public class PCA extends Quantizer{
 	
 	@Override
 	public void train(Users trainingUsers) {
-		// TODO pca fill pca with users
+		// todo pca: fill pca with users
 		
 		pca.computeBasis(PCASettings.getInstance().numberOfComponents().getValue().intValue());
 		
-		// TODO binning of pca components
+		// todo pca: binning of pca components
 	}
 
 	@Override
 	public BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues) {
 		double[] featureDoubles = null;
-//		TODO pca feature to double[]
+//		todo pca: feature to double[]
 		double[] featureComponents = pca.sampleToEigenSpace(featureDoubles);
-//		TODO pca featureComponents binning with PCASettings.getInstance().bitsPerComponent()
-//		TODO pca binned components to bigInt
+//		todo pca: featureComponents binning with PCASettings.getInstance().bitsPerComponent()
+//		todo pca: binned components to bigInt
 		return null;
 	}
 
 	@Override
 	public Double getTotalLogOfBins() {
-		// TODO Auto-generated method stub
+		// todo pca: Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Long getTotalBits() {
-		// TODO Auto-generated method stub
+		// todo pca: Auto-generated method stub
 		return null;
 	}
 

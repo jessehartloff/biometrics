@@ -14,7 +14,7 @@ import system.method.fingerprintmethods.TriplesOfTrianglesAllRotations;
 public class FingerprintMethodFactory{
 	
 	public static void makeFingerprintMethod(){
-		switch(FingerPrintEnumerator.valueOf(AllFingerprintMethodSettings.getFingerprintMethod())){
+		switch(FingerprintEnumerator.valueOf(AllFingerprintMethodSettings.getFingerprintMethod())){
 			case MINUTIAEMETHOD:
 				Fingerprint.setFingerprintMethod(new MinutiaeMethod());
 				break;
@@ -46,7 +46,7 @@ public class FingerprintMethodFactory{
 		}
 	}
 	
-	public enum FingerPrintEnumerator{
+	public enum FingerprintEnumerator{
 		MINUTIAEMETHOD,PATHSMETHOD,TRIANGLES,TRIPLESOFTRIANGLES,
 		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS; 
 	}

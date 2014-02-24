@@ -25,7 +25,7 @@ public class Results {
 	private Double minEntropy;
 	private Double failureToCapture;
 	private Double TotalLogOfBins;
-	// TODO statistical distance from uniform
+	// TODO Jesse - setup for Jim, statistical distance from uniform
 
 	public RawScores rawScores;
 	

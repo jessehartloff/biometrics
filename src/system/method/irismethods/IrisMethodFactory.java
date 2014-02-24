@@ -1,17 +1,21 @@
 package system.method.irismethods;
 
+import settings.irismethodsettings.AllIrisMethodSettings;
+import system.allcommonclasses.modalities.Iris;
+
 
 public class IrisMethodFactory{
 	
-	public static void makeIrisMethod(){
-		
-			//cases filled in here once we have iris methods
-		
+	public static void makeFingerprintMethod(){
+		switch(IrisEnumerator.valueOf(AllIrisMethodSettings.getIrisMethod())){
+			case IRISSEGMENTATION:
+				Iris.setIrisMethod(new IrisSegmentation());
+				break;
+		}
 	}
 	
-	public enum IrisMethodEnumerator{
-		//don't forget to add them here to the enumerator
-		//all caps
+	public enum IrisEnumerator{
+		IRISSEGMENTATION; 
 	}
 	
 }

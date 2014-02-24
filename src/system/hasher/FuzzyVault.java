@@ -27,6 +27,8 @@ public class FuzzyVault extends Hasher{
 					   // name. qFieldSize maybe?
 	// more variables
 	
+	// TODO Jesse - Fuzzy Vault
+	
 	/**
 	 * Makes the vault... some of these comments are not helpful. Probably not needed.
 	 * 

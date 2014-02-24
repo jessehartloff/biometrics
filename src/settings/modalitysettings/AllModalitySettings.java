@@ -80,15 +80,15 @@ public class AllModalitySettings extends ComboBoxSettings{
 	@Override
 	protected void addSettings() {
 		this.variableString = "Modality";
-		this.settingsVariables.put(this.variableString, new IrisSettings());
+		this.settingsVariables.put(this.variableString, IrisSettings.getInstance());
 	}
 	
 	
 	@Override
 	protected void addALLOptions() {
 		this.addToOptions(FingerprintSettings.getInstance());
-		this.addToOptions(new IrisSettings()); //TODO
-		this.addToOptions(new FaceSettings());
+		this.addToOptions(IrisSettings.getInstance());
+		this.addToOptions(FaceSettings.getInstance());
 		this.addToOptions(new PizzaSettings());
 	}
 

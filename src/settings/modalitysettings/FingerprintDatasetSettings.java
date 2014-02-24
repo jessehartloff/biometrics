@@ -15,11 +15,11 @@ public class FingerprintDatasetSettings extends DatasetSettings{
 
 	@Override
 	protected void addALLOptions() {
-		File directory = new File("datasets");
+		File directory = new File("datasets/fingerprint");
 		File[] files = directory.listFiles();
 		
 		for(File f : files){
-			if(f.isFile()){ //TODO make this look pretty by removing the .ser
+			if(f.isFile()){ //LATER make this look pretty by removing the .ser
 				this.addToOptions(new SettingsDropDownItem(f.getName()));
 			}
 		}

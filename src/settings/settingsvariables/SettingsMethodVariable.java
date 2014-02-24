@@ -71,7 +71,6 @@ public class SettingsMethodVariable extends SettingsVariable{
 
 	}
 
-// TODO q
 	public void computeBinBoundaries(ArrayList<Double> prequantizedValues){
 		this.binBoundaries = new ArrayList<Double>();
 		Long n = new Long(prequantizedValues.size());

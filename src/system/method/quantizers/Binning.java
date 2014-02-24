@@ -13,7 +13,6 @@ import system.method.feature.Variable;
 
 public class Binning extends Quantizer{
 
-	//TODO q make binning with Doubles
 	
 	private ArrayList<SettingsMethodVariable> variableSettings; 
 	
