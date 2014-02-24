@@ -18,7 +18,9 @@ import settings.AllSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
+import settings.settingsvariables.SettingsDropDownItem;
 import system.biometricsystem.BiometricSystem;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Template;
@@ -37,6 +39,9 @@ public class Main {
 		
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
+		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		//...
 		// set values for everything else
 
@@ -44,11 +49,12 @@ public class Main {
 		NgonSettings.getInstance().kClosestMinutia().setValue(4);
 		//...
 		
-		
-		Results results = settings.buildSystem().go();
-		
-		System.out.print(results.rawScores);
-		System.out.println(results);
+
+		settings.runSystemAndMakeGraphs();
+
+//		Results results = settings.buildSystem().go();
+//		System.out.print(results.rawScores);
+//		System.out.println(results);
 
 //		TestSerialize tester = TestSerialize.getInstance();
 //		tester.setValue(8012L);

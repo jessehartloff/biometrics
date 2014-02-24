@@ -40,7 +40,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 		return n.longValue();
 	}
 	
-	public Long binsToBits(Long bins){
+	public static Long binsToBits(Long bins){
 		Double d = Math.ceil(Math.log10(bins.doubleValue())/Math.log10(2.0));
 		return d.longValue();
 	}
@@ -63,7 +63,7 @@ public class SettingsMethodVariable extends SettingsVariable{
 	}
 
 	public Long getBits() {
-		return this.binsToBits(this.getBins());
+		return SettingsMethodVariable.binsToBits(this.getBins());
 	}
 	
 	public Double getLogOfBins() {

@@ -136,7 +136,7 @@ public class Triangles extends FingerprintMethod {
 			// could do remove spurious here
 			
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
-			minutiae.add(minutia);
+			minutiae.add(minutia); // <---- TODO Matt, do this in PRINTS
 			for(int i=0; i<settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}

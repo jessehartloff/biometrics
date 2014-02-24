@@ -49,7 +49,6 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	public SettingsLong angleBins(){
 		return (SettingsLong) this.settingsVariables.get("angle");
 	}
-	
 	public SettingsLong kClosestMinutia(){
 		return (SettingsLong) this.settingsVariables.get("kClosestMinutia");
 	}

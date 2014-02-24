@@ -44,6 +44,13 @@ public class FingerprintSettings extends ModalitySettings{
 	}
 
 
+	public FingerprintDatasetSettings trainingDataset() {
+		return (FingerprintDatasetSettings) this.settingsVariables.get("trainingDataset");
+	}
+	public FingerprintDatasetSettings testingDataset() {
+		return (FingerprintDatasetSettings) this.settingsVariables.get("testingDataset");
+	}
+
 	public SettingsLong minimumMinutia() {
 		return (SettingsLong) this.settingsVariables.get("minimumMinutia");
 	}

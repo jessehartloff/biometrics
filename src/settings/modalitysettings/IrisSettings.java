@@ -2,7 +2,7 @@ package settings.modalitysettings;
 
 import settings.Settings;
 
-public class IrisSettings extends Settings{
+public class IrisSettings extends ModalitySettings{
 
 	@Override
 	public String getLabel(){
