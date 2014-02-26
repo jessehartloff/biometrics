@@ -94,8 +94,10 @@ public class ResultsGUI {
         // create your PlotPanel (you can use it as a JPanel)
         Plot2DPanel eerPlot = new Plot2DPanel("SOUTH");
         //HTER Label
-        eerPlot.addLabel("HTER: "+new Double(HTER).toString().substring(0, 5), Color.BLACK, 
-        		thresholds[zeroFarIndex]+ .5, HTER); //next to dot
+//        eerPlot.addLabel("HTER: "+new Double(HTER).toString().substring(0, 5), Color.BLACK, 
+//        		thresholds[zeroFarIndex]+ .5, HTER); //next to dot 
+        //FIXME Tom - hardcoding substring breaks when the string is shorter than what you hardcoded it to be
+        
         //ZeroFAR FRR
         eerPlot.addLabel("FRR at ZeroFAR: "+new Double(frrs[zeroFarIndex]).toString().substring(0, 5), Color.RED, 
         		thresholds[zeroFarIndex]+ .55, frrs[zeroFarIndex] - .05 ); //next to dot

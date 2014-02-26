@@ -84,6 +84,7 @@ public class GUI {
 		panel.add(AllSettings.getInstance().getJPanel());
 //		frame.setPreferredSize(new Dimension(1400,900));
 		JScrollPane scr = new JScrollPane(panel);
+		
 		frame.add(scr);
 		
 		frame.pack();
