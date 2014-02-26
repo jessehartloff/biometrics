@@ -1,7 +1,10 @@
 package interfaces.gui;
 
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.math.plot.*;
 
@@ -31,23 +34,28 @@ public class ResultsGUI {
 		results = results_;
 		
 		/*** HTER CURVE ***/
-		JFrame frame1 = new JFrame("HTER Curve");
+		JFrame HTERframe = new JFrame("HTER Curve");
         //frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame1.setSize(500, 500);
-        makeHTER(frame1);
-        frame1.setVisible(true);
+        HTERframe.setSize(500, 500);
+        makeHTER(HTERframe);
+        HTERframe.setVisible(true);
 		
         /*** Variable Histograms ***/
-//        JFrame frame2 = new JFrame("Variable Quantization Histogram");
+        JFrame varFrame = new JFrame("Variable Quantization Histograms");
 //        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame2.setSize(500, 500);
+        varFrame.setSize(1000, 600);
 //        variableHistograms = new ArrayList<JPanel>();
-//		  makeVariableHistograms(frame2);
-//        frame2.setVisible(true);
+	    makeVariableHistograms(varFrame);
+        varFrame.setVisible(true);
         
 		/*** Field Histograms ***/
-        fieldHistograms = new ArrayList<JPanel>();
-		
+        //fieldHistograms = new ArrayList<JPanel>();
+        JFrame fieldFrame = new JFrame("Field Histogram");
+//      frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fieldFrame.setSize(600, 300);
+//      variableHistograms = new ArrayList<JPanel>();
+	    makeFieldHistogram(fieldFrame);
+        fieldFrame.setVisible(true);
         
         //plots = new ArrayList<JPanel>();
 		
@@ -118,28 +126,73 @@ public class ResultsGUI {
         frame.add(eerPlot);
 	}
 
-	public void makeFieldHistograms(JFrame frame) {
-		
+	public void makeFieldHistogram(JFrame frame) {
+		Histogram histo = results.getFieldHistogram();
+		double[] fieldHisto = new double[histo.histogram.size()];
+		int i=0;
+		for (Long fieldVal: histo.histogram.values() ){
+			fieldHisto[i] = (double) fieldVal;
+			i++;
+		}
+		String name = histo.getVariableName();
+		Plot2DPanel histoPlot = new Plot2DPanel("SOUTH");
+		//named after variable name
+		histoPlot.addBarPlot(name, fieldHisto);
+		//histoPlot.setFixedBounds(1, 0, max);
+		//add this to grid
+		frame.add(histoPlot);
 	}
 	
 	public void makeVariableHistograms(JFrame frame) {
-		JPanel container = new JPanel();
+		//get result histos and format as arrays like jmath likes
 		ArrayList<Histogram> histos = results.getVariableHistograms();
+		
 		ArrayList<double[]> variableHistograms = new ArrayList<double []>();
+		ArrayList<String> variableNames = new ArrayList<String>(); //for histo titles
 		for( Histogram h : histos ) {
 			double[] varHisto = new double[h.histogram.size()];
+			System.out.println("Histo:"+ h.getVariableName());
 			int i=0;
 			for (long quantizedVal: h.histogram.values()){
 				varHisto[i] = quantizedVal;
+				System.out.print(new Long(quantizedVal).toString() + ", ");
+				i++;
 			}
 			variableHistograms.add(varHisto);
+			variableNames.add(h.getVariableName());
 		}
-		Plot2DPanel histoPlot = new Plot2DPanel("SOUTH");
-		for ( double[] h : variableHistograms) {
-			System.out.print(h);
-			histoPlot.addHistogramPlot("Variable Histograms", h, h.length);
+		//make container and set layout
+		JPanel gridContainer = new JPanel();
+		GridLayout experimentLayout = new GridLayout(0,3);
+		gridContainer.setLayout(experimentLayout);
+		
+		//form histogram plots and add them to the container
+		Iterator<double[]> histoIt = variableHistograms.iterator();
+		Iterator<String> nameIt = variableNames.iterator();
+		while ( nameIt.hasNext() && histoIt.hasNext()) {
+			double[] h = histoIt.next();
+			String name = nameIt.next();
+			
+			//find max value of double array
+			double maxVal = 0;
+			for (int i=0; i<h.length; i++){ if (h[i] > maxVal) { maxVal = h[i]; } }
+			
+			//to fit our histogram to the way jmathplot does it
+			// we need to make a bar graph with labels as indices... I know it seems convoluted
+			double[] bins = new double[h.length];
+			
+			for (double i=0; i < h.length; i++){ bins[(int) i] = i; }
+			//System.out.print(h);
+			//new plotpanel with legend at bottom
+			Plot2DPanel histoPlot = new Plot2DPanel("SOUTH");
+			//named after variable name
+			histoPlot.addBarPlot(name, bins, h);
+			histoPlot.setFixedBounds(1, 0, maxVal);
+			//add this to grid
+			gridContainer.add(histoPlot);
 		}
-		frame.add(histoPlot);
+		
+		frame.add(gridContainer);
 	}
 
 	
