@@ -65,7 +65,10 @@ public class PRINTS extends FingerprintMethod{
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
 			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue());
-			BigInteger regionNumber = BigInteger.valueOf( new Double(Math.floor(this.angle/360.0*settings.rotationRegions().getValue().doubleValue())).intValue());
+			BigInteger regionNumber = BigInteger.valueOf( new Double(Math.floor(
+					this.angle/360.0*settings.rotationRegions().getValue().doubleValue())).intValue());
+//			System.out.println("Angle: "+this.angle);
+//			System.out.println("Region: "+regionNumber+'\n');
 			toReturn.add(regionNumber);
 			return toReturn;
 		}
@@ -138,17 +141,22 @@ public class PRINTS extends FingerprintMethod{
 	//used for matching
 	private ArrayList<Template> PRINTSQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>();
-		Template template = new Template();
 		ArrayList<PRINT> prints = this.fingerprintToPRINTS(fingerprint);
 		for(PRINT print : prints){
+			Template template = new Template();
+
 			BigInteger quantizedPRINT = print.toBigInt();
 			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
 			BigInteger PRINTNoRegion = quantizedPRINT.subtract(regionNumber);
+//			System.out.println("Original: "+quantizedPRINT);
+//			System.out.println("Original no region:"+PRINTNoRegion);
+//			System.out.println("Region: "+ regionNumber+'\n');
 			//System.out.println(PRINTNoRegion.add(regionNumber)+", "+PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1)))+", "+ PRINTNoRegion.add(BigInteger.valueOf(-1)));
 				
 			template.hashes.add(PRINTNoRegion.add(regionNumber));
 			template.hashes.add(PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1))));
-		//	template.hashes.add(PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(-1))));
+			template.hashes.add(PRINTNoRegion.add(regionNumber.subtract(BigInteger.valueOf(1))).mod(BigInteger.valueOf(settings.rotationRegions().getValue())));
+			templates.add(template);
 		}
 		
 		return templates;

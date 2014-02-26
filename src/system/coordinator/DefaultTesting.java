@@ -51,6 +51,7 @@ public class DefaultTesting extends Coordinator {
 		// Run the tests
 		for(Test test : tests.tests){
 			Double score = this.runTest(test);
+
 			testsRan++;
 			Double progress = (testsRan.doubleValue()/numberOfTests.doubleValue())*100.0;
 			System.out.format("score:%3.0f   progress: %5.2f%%", score, progress );
@@ -80,7 +81,6 @@ public class DefaultTesting extends Coordinator {
 		ArrayList<Template> testTemplates = hasher.makeTestTemplates(test.test);
 		
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
-		
 		return score; 
 	}
 	
