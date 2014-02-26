@@ -146,6 +146,7 @@ public class ResultsGUI {
 		Plot2DPanel histoPlot = new Plot2DPanel("SOUTH");
 		//named after variable name
 		histoPlot.addBarPlot(name, fieldHisto);
+		histoPlot.setFixedBounds(0, 0, histo.histogram.size());
 		//histoPlot.setFixedBounds(1, 0, max);
 		//add this to grid
 		frame.add(histoPlot);
