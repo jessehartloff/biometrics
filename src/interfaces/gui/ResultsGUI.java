@@ -38,7 +38,7 @@ public class ResultsGUI {
         //frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         HTERframe.setSize(500, 500);
         makeHTER(HTERframe);
-        HTERframe.setVisible(true);
+        //HTERframe.setVisible(true);
 		
         /*** Variable Histograms ***/
         JFrame varFrame = new JFrame("Variable Quantization Histograms");
@@ -46,7 +46,7 @@ public class ResultsGUI {
         varFrame.setSize(1000, 600);
 //        variableHistograms = new ArrayList<JPanel>();
 	    makeVariableHistograms(varFrame);
-        varFrame.setVisible(true);
+        //varFrame.setVisible(true);
         
 		/*** Field Histograms ***/
         //fieldHistograms = new ArrayList<JPanel>();
@@ -55,7 +55,7 @@ public class ResultsGUI {
         fieldFrame.setSize(600, 300);
 //      variableHistograms = new ArrayList<JPanel>();
 	    makeFieldHistogram(fieldFrame);
-        fieldFrame.setVisible(true);
+        //fieldFrame.setVisible(true);
         
         //plots = new ArrayList<JPanel>();
 		
@@ -69,7 +69,7 @@ public class ResultsGUI {
 	
 	public void makeHTER( JFrame frame) {
 		/*** HALF TOTAL ERROR RATE (HTER)  CURVE ***/
-		System.out.print("I'm Makin your plots...");
+		//System.out.print("I'm Makin your plots...");
 		//jmathplot likes plain arrays so this is how we get them
 		ArrayList<RatesPoint> rates = results.getRates();		
 		double[] fars = new double[rates.size()];
@@ -124,10 +124,18 @@ public class ResultsGUI {
         // put the PlotPanel in a JFrame like a JPanel
         frame.setSize(600, 600);
         frame.add(eerPlot);
+        frame.setVisible(true);
 	}
 
 	public void makeFieldHistogram(JFrame frame) {
 		Histogram histo = results.getFieldHistogram();
+		//failsafe
+		if (histo.histogram.isEmpty()) {
+			System.out.println("We didn't calculate field histogram.  Turn 'Histogram' ON next time");
+			return;
+		}
+		
+		//do the work
 		double[] fieldHisto = new double[histo.histogram.size()];
 		int i=0;
 		for (Long fieldVal: histo.histogram.values() ){
@@ -141,12 +149,18 @@ public class ResultsGUI {
 		//histoPlot.setFixedBounds(1, 0, max);
 		//add this to grid
 		frame.add(histoPlot);
+		frame.setVisible(true);
 	}
 	
 	public void makeVariableHistograms(JFrame frame) {
 		//get result histos and format as arrays like jmath likes
 		ArrayList<Histogram> histos = results.getVariableHistograms();
-		
+		//fail safe
+		if (histos.isEmpty()) {
+			System.out.println("We didn't calculate variable histograms.  Turn 'Histogram' ON next time");
+			return;
+		}
+		//do the work
 		ArrayList<double[]> variableHistograms = new ArrayList<double []>();
 		ArrayList<String> variableNames = new ArrayList<String>(); //for histo titles
 		for( Histogram h : histos ) {
@@ -193,6 +207,7 @@ public class ResultsGUI {
 		}
 		
 		frame.add(gridContainer);
+		frame.setVisible(true);
 	}
 
 	
