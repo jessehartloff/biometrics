@@ -12,7 +12,6 @@ import settings.settingsvariables.SettingsLong;
 
 public class IrisSettings extends ModalitySettings{
 
-	// TODO Jesse - Iris settings
 	
 	//Singleton
 	private static IrisSettings instance;

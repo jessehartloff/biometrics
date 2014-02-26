@@ -42,7 +42,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 
 	@Override
-	protected Double runTest(Test test){
+	protected Double runTest(Test test){ //FIXME null pointer for allTests, but not for FVC tests.
 		Template enrolledTemplate = users.users.get(test.enrolledUserID.intValue()).prequantizedEnrolledTemplates.get(test.enrolledReadingNumber.intValue());
 		ArrayList<Template> testTemplates = users.users.get(test.testUserID.intValue()).prequantizedTestTemplates.get(test.testReadingNumber.intValue());
 		

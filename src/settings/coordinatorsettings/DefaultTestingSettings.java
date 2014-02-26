@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
+import settings.modalitysettings.AllModalitySettings;
 
 public class DefaultTestingSettings extends CoordinatorSettings{
 
@@ -16,6 +17,7 @@ public class DefaultTestingSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
+		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 	}
 
 	

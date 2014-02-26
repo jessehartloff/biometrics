@@ -19,7 +19,7 @@ public class GenerateFVCStyleTests extends TestGenerator{
 		
 		int n = users.users.size();
 		
-//		for(User user : users.users){ // why not use the array index as below?
+		//add genuines
 		for(Integer q=0; q<n; q++){
 			User user = users.users.get(q);
 			int m = user.readings.size();
@@ -30,7 +30,7 @@ public class GenerateFVCStyleTests extends TestGenerator{
 					testToAdd.test = user.readings.get(j);
 					testToAdd.genuine = true;
 					
-					testToAdd.enrolledUserID = q.longValue();
+					testToAdd.enrolledUserID = q.longValue(); // the users ID is its index in the array
 					testToAdd.enrolledReadingNumber = i.longValue();
 					testToAdd.testUserID = q.longValue();
 					testToAdd.testReadingNumber = j.longValue();
@@ -41,6 +41,7 @@ public class GenerateFVCStyleTests extends TestGenerator{
 		}
 		
 
+		//add imposters
 		for(Integer i=0; i<n; i++){
 			for(Integer j=i+1; j<n; j++){
 				Test testToAdd = new Test();
@@ -48,7 +49,7 @@ public class GenerateFVCStyleTests extends TestGenerator{
 				testToAdd.test = users.users.get(j).readings.get(0);
 				testToAdd.genuine = false;
 				
-				testToAdd.enrolledUserID = i.longValue();
+				testToAdd.enrolledUserID = i.longValue(); // the users ID is its index in the array
 				testToAdd.enrolledReadingNumber = 0L;
 				testToAdd.testUserID = j.longValue();
 				testToAdd.testReadingNumber = 0L;

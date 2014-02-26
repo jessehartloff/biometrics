@@ -70,7 +70,6 @@ public class AllModalitySettings extends ComboBoxSettings{
 
 
 	public ModalitySettings modalitySettings(){
-		System.out.println(this.variableString);
 		return (ModalitySettings) this.settingsVariables.get(this.variableString);
 	}
 

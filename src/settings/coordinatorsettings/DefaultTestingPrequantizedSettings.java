@@ -16,6 +16,7 @@ public class DefaultTestingPrequantizedSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
+		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 	}
 
 	
