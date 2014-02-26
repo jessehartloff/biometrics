@@ -1,5 +1,6 @@
 package system.method.fingerprintmethods;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,12 +138,23 @@ public class PRINTS extends FingerprintMethod{
 	//used for matching
 	private ArrayList<Template> PRINTSQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>();
+		Template template = new Template();
 		ArrayList<PRINT> prints = this.fingerprintToPRINTS(fingerprint);
 		for(PRINT print : prints){
-			template.hashes.add(print.toBigInt());
+			BigInteger quantizedPRINT = print.toBigInt();
+			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
+			template.hashes.add(quantizedPRINT);
+			template.hashes.add(quantizedPRINT.add( BigInteger.valueOf(1)));
+			template.hashes.add(quantizedPRINT.add( BigInteger.valueOf(-1)));
 		}
 		
 		return templates;
+	}
+	
+	public  BigInteger getRegionBigInteger(BigInteger integer){
+		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
+		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length())).toBigInteger());
+		return regionNumber;
 	}
 	
 
@@ -167,6 +179,21 @@ public class PRINTS extends FingerprintMethod{
 		}
 		return prints;
 	}
+	
+	
+	public static boolean isLeft(Minutia center, Minutia linePoint, Minutia pointToCheck){
+		return PRINTS.isLeft(center.getX().doubleValue(), center.getY().doubleValue(), linePoint, pointToCheck);
+				//returns true if pointToCheck is left of the line made by linePointA and linePointB
+				//note: returns true if pointTCheck is above the horizontal line made by A and B
+	}
+	
+	public static boolean isLeft(Double centerX, Double centerY, Minutia linePoint, Minutia pointToCheck){
+		return ((linePoint.getX() - centerX)*(pointToCheck.getY() - centerY)
+				- (linePoint.getY() - centerY)*(pointToCheck.getX() - centerX)) > 0;
+				//returns true if pointToCheck is left of the line made by linePointA and linePointB
+				//note: returns true if pointTCheck is above the horizontal line made by A and B
+	}
+	 
 
 	private PRINT makePRINT(ArrayList<Minutia> minutiaList) {
 		PRINT returnPRINT = new PRINT();
@@ -191,6 +218,7 @@ public class PRINTS extends FingerprintMethod{
 		for(int i = 0;i < minutiaList.size(); i ++){
 			Minutia minutia = minutiaList.get(i);
 			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
+
 			distances.add(distFromCenter);
 			indexDistanceMinutia.put(distFromCenter, i);
 			minutiaToSortDistance.add(minutia);
@@ -207,6 +235,10 @@ public class PRINTS extends FingerprintMethod{
 		for(int i = 0;i < minutiaList.size(); i ++){
 			Minutia minutia = minutiaList.get(i);
 			Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
+			if(isLeft(cx,cy, m0, minutia)){
+				intAngle  = (intAngle + 180) % 360;
+			}
+			
 			absoluteInteriorAngles.add(intAngle);
 			indexInteriorAngleMinutia.put(intAngle, i);
 			minutiaToSortAngles.add(minutia);
