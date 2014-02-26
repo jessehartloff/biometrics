@@ -99,8 +99,8 @@ public class ResultsGUI {
         //FIXME Tom - hardcoding substring breaks when the string is shorter than what you hardcoded it to be
         
         //ZeroFAR FRR
-        eerPlot.addLabel("FRR at ZeroFAR: "+new Double(frrs[zeroFarIndex]).toString().substring(0, 5), Color.RED, 
-        		thresholds[zeroFarIndex]+ .55, frrs[zeroFarIndex] - .05 ); //next to dot
+//        eerPlot.addLabel("FRR at ZeroFAR: "+new Double(frrs[zeroFarIndex]).toString().substring(0, 5), Color.RED, 
+//        		thresholds[zeroFarIndex]+ .55, frrs[zeroFarIndex] - .05 ); //next to dot
         eerPlot.addLinePlot("FAR", thresholds, fars);
         eerPlot.addLinePlot("FRR", thresholds, frrs);
         eerPlot.addScatterPlot("HTER", Color.BLACK, hterX, hterY);
