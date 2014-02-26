@@ -143,9 +143,12 @@ public class PRINTS extends FingerprintMethod{
 		for(PRINT print : prints){
 			BigInteger quantizedPRINT = print.toBigInt();
 			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
-			template.hashes.add(quantizedPRINT);
-			template.hashes.add(quantizedPRINT.add( BigInteger.valueOf(1)));
-			template.hashes.add(quantizedPRINT.add( BigInteger.valueOf(-1)));
+			BigInteger PRINTNoRegion = quantizedPRINT.subtract(regionNumber);
+			//System.out.println(PRINTNoRegion.add(regionNumber)+", "+PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1)))+", "+ PRINTNoRegion.add(BigInteger.valueOf(-1)));
+				
+			template.hashes.add(PRINTNoRegion.add(regionNumber));
+			template.hashes.add(PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1))));
+		//	template.hashes.add(PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(-1))));
 		}
 		
 		return templates;
@@ -274,7 +277,7 @@ public class PRINTS extends FingerprintMethod{
 		
 		returnPRINT.setAngle(angle);
 		
-		for(Long i = 0L; i < sortedMinutia.size(); i++){
+		for(Long i = 0L; i < N; i++){
 			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?
 			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).longValue());
 			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(i.intValue()).longValue());

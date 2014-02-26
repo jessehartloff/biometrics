@@ -47,8 +47,8 @@ public class Main {
 		//...
 		// set values for everything else
 
-		NgonSettings.getInstance().n().setValue(3);
-		NgonSettings.getInstance().kClosestMinutia().setValue(4);
+		PRINTSettings.getInstance().n().setValue(3);
+		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
 		//...
 		
 
