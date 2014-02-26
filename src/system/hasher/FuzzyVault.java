@@ -62,17 +62,15 @@ public class FuzzyVault extends Hasher{
 	}
 	
 	@Override
-	public Template makeEnrollTemplate(Biometric biometric) {
-		Template template = biometric.quantizeOne();
+	public Template hashEnrollTemplate(Template template) {
 		return this.makeVault(template);
 	}
 	
 	
 	@Override
-	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
+	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
 		
 		ArrayList<Template> returnTemplates = new ArrayList<Template>();
-		ArrayList<Template> templates = biometric.quantizeAll();
 		
 		int n = templates.size();
 		

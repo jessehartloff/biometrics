@@ -28,8 +28,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	}
 	
 	@Override
-	public Template makeEnrollTemplate(Biometric biometric) {
-		Template template = biometric.quantizeOne();
+	public Template hashEnrollTemplate(Template template) {
 		for(BigInteger bigInt : template.hashes){
 			bigInt = bigInt.shiftLeft(1);
 		}
@@ -40,8 +39,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	}
 
 	@Override
-	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
-		ArrayList<Template> templates = biometric.quantizeAll();
+	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
 		for(Template template : templates){
 			for(BigInteger bigInt : template.hashes){
 				bigInt = bigInt.shiftLeft(1);

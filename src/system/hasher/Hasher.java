@@ -19,6 +19,9 @@ import system.allcommonclasses.transformations.Transformation;
 public abstract class Hasher {
 
 //	Method method;
+
+	public abstract Template hashEnrollTemplate(Template template);
+	public abstract ArrayList<Template> hashTestTemplates(ArrayList<Template> template);
 	
 	/**
 	 * Converts a biometric to an enrolling template.
@@ -26,7 +29,9 @@ public abstract class Hasher {
 	 * @param biometric any biometric
 	 * @return a template
 	 */
-	public abstract Template makeEnrollTemplate(Biometric biometric);
+	public Template makeEnrollTemplate(Biometric biometric){
+		return this.hashEnrollTemplate(biometric.quantizeOne());
+	}
 	
 	/**
 	 * Converts a biometric to the test template(s). There could be more than one if the method is not invariant
@@ -37,7 +42,9 @@ public abstract class Hasher {
 	 * @param biometric
 	 * @return an ArrayList containing all relevant templates.
 	 */
-	public abstract ArrayList<Template> makeTestTemplates(Biometric biometric);
+	public ArrayList<Template> makeTestTemplates(Biometric biometric){
+		return this.hashTestTemplates(biometric.quantizeAll());
+	}
 	
 	/**
 	 * Computes the matching score between an enrolled template and a set of test templates.

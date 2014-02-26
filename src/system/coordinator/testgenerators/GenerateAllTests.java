@@ -12,7 +12,7 @@ public class GenerateAllTests extends TestGenerator {
 
 	@Override
 	public Tests generateTests(Users users) {
-		// FIXME indecies are bad. See GenerateFVCStyleTests
+
 		Tests tests = new Tests();
 		
 

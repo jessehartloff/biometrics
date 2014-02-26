@@ -16,8 +16,7 @@ import system.allcommonclasses.transformations.*;
 public class StraightHasher extends Hasher {
 
 	@Override
-	public Template makeEnrollTemplate(Biometric biometric) {
-		Template template = biometric.quantizeOne();
+	public Template hashEnrollTemplate(Template template) {
 		
 		Transformation hashFunction = new SHA2();
 		for(BigInteger bigInt : template.hashes){
@@ -28,8 +27,7 @@ public class StraightHasher extends Hasher {
 	}
 
 	@Override
-	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
-		ArrayList<Template> templates = biometric.quantizeAll();
+	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
 		
 		Transformation hashFunction = new SHA2();
 		for(Template template : templates){

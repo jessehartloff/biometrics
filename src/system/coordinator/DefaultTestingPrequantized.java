@@ -16,7 +16,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	public DefaultTestingPrequantized(Hasher hasher, Users users,
 			TestGenerator testGenerator) {
 		super(hasher, users, testGenerator);
-		prequantize();
+		this.prequantize();
 	}
 	
 	private void prequantize(){
@@ -42,7 +42,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 
 	@Override
-	protected Double runTest(Test test){ //FIXME null pointer for allTests, but not for FVC tests.
+	protected Double runTest(Test test){
 		Template enrolledTemplate = users.users.get(test.enrolledUserID.intValue()).prequantizedEnrolledTemplates.get(test.enrolledReadingNumber.intValue());
 		ArrayList<Template> testTemplates = users.users.get(test.testUserID.intValue()).prequantizedTestTemplates.get(test.testReadingNumber.intValue());
 		

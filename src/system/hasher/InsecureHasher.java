@@ -8,19 +8,24 @@ import system.allcommonclasses.modalities.Biometric;
 public class InsecureHasher extends Hasher{
 
 	@Override
-	public Template makeEnrollTemplate(Biometric biometric) {
+	public Template hashEnrollTemplate(Template template) {
+		// todo Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Template> makeTestTemplates(Biometric biometric) {
+	public ArrayList<Template> hashTestTemplates(ArrayList<Template> template) {
+		// todo Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Double compareTemplates(Template enrolledTemplate,
 			ArrayList<Template> testTemplates) {
+		// todo Auto-generated method stub
 		return null;
 	}
+
+
 
 }
