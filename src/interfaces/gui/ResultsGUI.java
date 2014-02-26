@@ -98,7 +98,7 @@ public class ResultsGUI {
         int HTERround = 5;
         if (HTERlabel.length() < 5) {HTERround = HTERlabel.length()-1;}
         eerPlot.addLabel("HTER: "+HTERlabel.substring(0, HTERround), Color.BLACK, 
-        		thresholds[zeroFarIndex]+ .5, HTER); //next to dot         //FIXME Tom - hardcoding substring breaks when the string is shorter than what you hardcoded it to be
+        		thresholds[zeroFarIndex]+ .5, HTER); //next to dot   
         
         //ZeroFAR FRR
         String ZFARlabel = new Double(frrs[zeroFarIndex]).toString();
