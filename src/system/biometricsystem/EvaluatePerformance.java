@@ -7,7 +7,7 @@ import java.util.Collections;
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
-import system.method.quantizers.Quantizer;
+import system.quantizers.Quantizer;
 
 public class EvaluatePerformance {
 

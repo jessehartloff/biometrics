@@ -1,4 +1,4 @@
-package system.method.quantizers;
+package system.quantizers;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -18,18 +18,19 @@ public class Binning extends Quantizer{
 	
 	
 	public Binning(){
-		variableSettings = new ArrayList<SettingsMethodVariable>();
+		this.variableSettings = new ArrayList<SettingsMethodVariable>();
 	}
 
 	
 	@Override
 	public void train(Users trainingUsers) {
+		
 		ArrayList<ArrayList<Double>> allPrequantizedValues = new ArrayList<ArrayList<Double>>();
 		Feature blankFeature = Biometric.method.getBlankFeatureForTraining();
 		for(Variable var : blankFeature.variables.values()){
 			variableSettings.add(var.variableSettings);
 			allPrequantizedValues.add(new ArrayList<Double>());
-		}// 0.080178259
+		}
 		
 		for(User user : trainingUsers.users){
 			for(Biometric bio : user.readings){
@@ -57,7 +58,7 @@ public class Binning extends Quantizer{
 		int i=0;
 		for(String varName : feature.variables.keySet()){
 			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
-			Long quantizedValue = variableSettings.get(i).findBin(feature.variables.get(varName).getPrequantizedValue());
+			Long quantizedValue = variableSettings.get(i).findBin(feature.variables.get(varName).getPrequantizedValue().doubleValue());
 			quantizedValues.put(varName, quantizedValue);
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 			i++;
@@ -83,6 +84,12 @@ public class Binning extends Quantizer{
 			totalBits += variable.getBits();
 		}
 		return totalBits;
+	}
+
+
+	@Override
+	public Feature getBlankFeatureForTraining() {
+		return Biometric.method.getBlankFeatureForTraining();
 	}
 	
 	

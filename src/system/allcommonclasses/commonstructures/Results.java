@@ -24,7 +24,7 @@ public class Results {
 	private ArrayList<Long> indexingResults;
 	private Double minEntropy;
 	private Double failureToCapture;
-	private Double TotalLogOfBins;
+	private Double totalLogOfBins;
 	// TODO Jesse - setup for Jim, statistical distance from uniform
 
 	public RawScores rawScores;
@@ -37,11 +37,11 @@ public class Results {
 
 	
 	public Double getTotalLogOfBins() {
-		return TotalLogOfBins;
+		return totalLogOfBins;
 	}
 
 	public void setTotalLogOfBins(Double totalLogOfBins) {
-		TotalLogOfBins = totalLogOfBins;
+		this.totalLogOfBins = totalLogOfBins;
 	}
 
 	public ZeroFAR getZeroFAR() {

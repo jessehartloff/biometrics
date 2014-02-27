@@ -1,9 +1,10 @@
-package system.method.quantizers;
+package system.quantizers;
 
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 
 import system.allcommonclasses.commonstructures.Users;
+import system.allcommonclasses.modalities.Biometric;
 import system.method.feature.Feature;
 import system.method.feature.Variable;
 
@@ -21,7 +22,7 @@ public abstract class Quantizer {
 	
 	public abstract Double getTotalLogOfBins();
 	public abstract Long getTotalBits();
-	
+	public abstract Feature getBlankFeatureForTraining();
 	public abstract void train(Users trainingUsers);
 	
 	// quantizedValues is used for variable histograms. It will be empty and can be filled by this function

@@ -1,4 +1,4 @@
-package system.method.quantizers;
+package system.quantizers;
 
 import settings.quantizersettings.AllQuantizerSettings;
 

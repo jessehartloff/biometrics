@@ -79,12 +79,13 @@ public class GUI {
 		
 		AllSettings.getInstance();
 		
-
+// binning: 0.07286560557237248
+//     pca: 
 		
 		panel.add(AllSettings.getInstance().getJPanel());
 //		frame.setPreferredSize(new Dimension(1400,900));
 		JScrollPane scr = new JScrollPane(panel);
-		
+		scr.getVerticalScrollBar().setUnitIncrement(15);
 		frame.add(scr);
 		
 		frame.pack();

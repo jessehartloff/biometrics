@@ -40,12 +40,12 @@ public class AllTestGeneratorSettings extends ComboBoxSettings{
 	@Override
 	protected void addSettings() {
 		this.variableString = "testGenerator";
-		this.settingsVariables.put(this.variableString, NoCoordinator.getInstance());
+		this.settingsVariables.put(this.variableString, new TestGeneratorFVCTestsSettings());
 	}
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(new TestGeneratorFVCTestsSettings());
+		this.addToOptions(new TestGeneratorFVCTestsSettings()); // TODO Singleton
 		this.addToOptions(new TestGeneratorAllTestsSettings());
 	}
 

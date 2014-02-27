@@ -30,10 +30,10 @@ public class SettingsMethodVariable extends SettingsVariable{
 		this(numberOfBins.longValue());
 	}
 	
-	public Long findBin(Long prequantizedValue) {
+	public Long findBin(Double prequantizedValue) {
 		Integer n = this.binBoundaries.size();	
 		for(Integer i=0; i<n; i++){
-			if(prequantizedValue < this.binBoundaries.get(i)){
+			if(prequantizedValue.compareTo(this.binBoundaries.get(i)) < 0){
 				return i.longValue();
 			}
 		}
