@@ -8,8 +8,8 @@ import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
 import system.hasher.Hasher;
 import system.method.feature.Feature;
-import system.quantizers.Quantizer;
-import system.quantizers.QuantizerFactory;
+import system.quantizer.Quantizer;
+import system.quantizer.QuantizerFactory;
 
 public class HistogramCoordinator extends Coordinator{
 

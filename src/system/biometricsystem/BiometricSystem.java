@@ -10,8 +10,8 @@ import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.*;
 import system.method.fingerprintmethods.*;
-import system.quantizers.Quantizer;
-import system.quantizers.QuantizerFactory;
+import system.quantizer.Quantizer;
+import system.quantizer.QuantizerFactory;
 
 /**
  * 

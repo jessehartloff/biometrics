@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import system.quantizers.Quantizer;
+import system.quantizer.Quantizer;
 import system.vectordistance.MeasurableDistance;
 
 public abstract class Feature{
