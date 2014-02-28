@@ -65,7 +65,7 @@ public class PRINTS extends FingerprintMethod{
 		@Override
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
-			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue());
+			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue()); //this is wrong too. there's no way this makes sense
 			BigInteger regionNumber =  BigInteger.valueOf(new Double(Math.floor((this.angle.doubleValue()/360.0)*settings.rotationRegions()
 								.getValue().doubleValue())).intValue());
 			System.out.println("Angle: "+this.angle);

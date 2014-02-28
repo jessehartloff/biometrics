@@ -2,6 +2,7 @@ package optimize;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class Chromosome {
 	//TODO Matt: Make chromosome class for genetic algorithm
@@ -9,6 +10,12 @@ public class Chromosome {
 	private Long value;
 	private Method method;
 	protected Object self;
+	private final ArrayList<Long> bounds;
+	
+	public ArrayList<Long> getBounds(){
+		return this.bounds;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -34,14 +41,26 @@ public class Chromosome {
 	}
 
 	
-	public Chromosome(Object self, Long value, String name, Method m ){
+	public Chromosome(Object self, Long value, String name, Method m, ArrayList<Long> bounds){
 		this.value = value;
 		this.method = m;
 		this.name = name;
 		this.self = self;
+		this.bounds = bounds; 
 	}
 	
-	public void execute() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		this.method.invoke(self, value);
+	public void execute() {
+		try {
+			this.method.invoke(self, value);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
