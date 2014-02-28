@@ -34,4 +34,10 @@ public class IrisSegmentation extends IrisMethod{
 		return null;
 	}
 
+	@Override
+	public ArrayList<Feature> irisToQuantizedFeatures(Iris iris) {
+		// todo Auto-generated method stub
+		return null;
+	}
+
 }

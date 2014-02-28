@@ -45,6 +45,10 @@ public class Fingerprint extends Biometric{
 		return Fingerprint.fingerprintMethod.fingerprintToFeatures(this);
 	}
 
+	@Override
+	public ArrayList<Feature> toQuantizedFeatures() {
+		return Fingerprint.fingerprintMethod.fingerprintToQuantizedFeatures(this);
+	}
 	
 	/**
 	 * Rotate the fingerprint around the point (0,0)

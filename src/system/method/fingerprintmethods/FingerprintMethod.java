@@ -7,6 +7,7 @@ import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.*;
 import system.method.Method;
 import system.method.feature.Feature;
+import system.quantizer.Quantizer;
 
 public abstract class FingerprintMethod extends Method{
 
@@ -31,6 +32,17 @@ public abstract class FingerprintMethod extends Method{
 	
 	
 	public abstract ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint);
+	
+	
+	public ArrayList<Feature> fingerprintToQuantizedFeatures(Fingerprint fingerprint){
+		ArrayList<Feature> featuresToReturn = new ArrayList<Feature>();
+		ArrayList<Feature> features = this.fingerprintToFeatures(fingerprint);
+		for(Feature feature : features){
+			featuresToReturn.add(Quantizer.getQuantizer().quantizeFeature(feature));
+//			System.out.println("!@#$%^&*()(*&^%$#@!" + Quantizer.getQuantizer().quantizeFeature(feature).quantizedValues.size());
+		}
+		return featuresToReturn;
+	}
 
 
 	

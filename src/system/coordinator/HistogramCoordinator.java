@@ -32,12 +32,18 @@ public class HistogramCoordinator extends Coordinator{
 		
 		for(User user : this.users.users){
 			for(Biometric bio : user.readings){
-//				ArrayList<Feature> features = bio.toFeatures();
 				ArrayList<Feature> features = bio.toFeatures();
-				for(Feature feature : features){ //FIXME toFeature should give the pca components
+				ArrayList<Feature> quantizedFeatures = bio.toQuantizedFeatures();
+//				System.out.println("######" + features.size());
+				for(Feature feature : features){
 					scores.fieldHistogramValues.add(feature.toBigInt());
-					for(String var : feature.variables.keySet()){
+				}
+				for(Feature feature : quantizedFeatures){ //FIXME toFeature should give the pca components
+//					System.out.println("&&&&&&&" + feature.quantizedValues.size());
+//					System.out.println(feature.toBigInt());
+					for(String var : feature.quantizedValues.keySet()){
 						scores.variableHistogramValues.get(var).add(feature.quantizedValues.get(var));
+//						System.out.println("THITHIT######" + feature.quantizedValues.get(var));
 					}
 				}
 			}

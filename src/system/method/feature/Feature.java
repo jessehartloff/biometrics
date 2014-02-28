@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import system.quantizer.Quantizer;
 import system.vectordistance.MeasurableDistance;
 
-public abstract class Feature{
+public class Feature{
 
 	public LinkedHashMap<String, Variable> variables;
 	public LinkedHashMap<String, Long> quantizedValues;
@@ -19,6 +19,7 @@ public abstract class Feature{
 
 	public Feature(){
 			this.variables = new LinkedHashMap<String, Variable>();
+			this.quantizedValues = new LinkedHashMap<String, Long>();
 		}
 		
 //	public BigInteger toBigInt(){ 
@@ -32,8 +33,8 @@ public abstract class Feature{
 //	}
 		
 	public BigInteger toBigInt(){ 
-		this.quantizedValues = new LinkedHashMap<String, Long>();
-		return Quantizer.getQuantizer().featureToBigInt(this, quantizedValues);
+//		this.quantizedValues = new LinkedHashMap<String, Long>();
+		return Quantizer.getQuantizer().featureToBigInt(this, this.quantizedValues);
 	}
 	
 	

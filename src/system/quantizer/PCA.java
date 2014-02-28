@@ -123,14 +123,39 @@ public class PCA extends Quantizer{
 		for(int i=0; i<this.numberOfComponents; i++){
 			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
 			Long quantizedValue = variableSettings.get(i).findBin(featureComponents[i]);
-			quantizedValues.put("Component " + i, quantizedValue);
+//			quantizedValues.put("Component " + i, quantizedValue);
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 		}
-		
 		
 		return toReturn;
 	}
 
+	
+	@Override
+	public Feature quantizeFeature(Feature feature) {
+		Feature toReturn = new Feature();
+		
+		double[] featureDoubles = new double[this.numberOfVariables];
+		
+		int q=0;
+		for(Variable var : feature.variables.values()){
+			featureDoubles[q] = var.getPrequantizedValue().doubleValue();
+			q++;
+		}
+		
+		double[] featureComponents = pca.sampleToEigenSpace(featureDoubles);
+		
+		
+		
+		for(int i=0; i<this.numberOfComponents; i++){
+			Long quantizedValue = variableSettings.get(i).findBin(featureComponents[i]);
+			toReturn.quantizedValues.put("Component " + i, quantizedValue);
+		}
+		
+		return toReturn;
+	}
+	
+	
 	
 	@Override
 	public Double getTotalLogOfBins() {

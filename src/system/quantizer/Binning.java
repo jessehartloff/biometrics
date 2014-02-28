@@ -59,13 +59,28 @@ public class Binning extends Quantizer{
 		for(String varName : feature.variables.keySet()){
 			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
 			Long quantizedValue = variableSettings.get(i).findBin(feature.variables.get(varName).getPrequantizedValue().doubleValue());
-			quantizedValues.put(varName, quantizedValue);
+//			quantizedValues.put(varName, quantizedValue);
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 			i++;
 		}
 		return toReturn;
 	}
 
+	
+	@Override
+	public Feature quantizeFeature(Feature feature) {
+		Feature toReturn = new Feature();
+		int i=0;
+		for(String varName : feature.variables.keySet()){
+			Long quantizedValue = variableSettings.get(i).findBin(feature.variables.get(varName).getPrequantizedValue().doubleValue());
+			toReturn.quantizedValues.put(varName, quantizedValue);
+//			System.out.println("$$$$$$$$$" + quantizedValue);
+			i++;
+		}
+//		System.out.println("$$$$$$$$$$$$$$$ " + toReturn.quantizedValues.size());
+		return toReturn;
+	}
+	
 
 	@Override
 	public Double getTotalLogOfBins() {
@@ -91,7 +106,8 @@ public class Binning extends Quantizer{
 	public Feature getBlankFeatureForTraining() {
 		return Biometric.method.getBlankFeatureForTraining();
 	}
-	
+
+
 	
 
 

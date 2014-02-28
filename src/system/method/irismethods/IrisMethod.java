@@ -17,8 +17,9 @@ public abstract class IrisMethod extends Method{
 
 	public abstract ArrayList<Template> quantizeAll(Iris iris);
 	
-	
 	public abstract ArrayList<Feature> irisToFeatures(Iris iris);
+	
+	public abstract ArrayList<Feature> irisToQuantizedFeatures(Iris iris);
 
 
 

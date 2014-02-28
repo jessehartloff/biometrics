@@ -46,6 +46,7 @@ public abstract class Method{
 	}
 
 	public abstract Feature getBlankFeatureForTraining();
+//	public abstract Feature getBlankQuantizedFeatureForTraining();
 	
 	public Feature getBlankFeatureForTotalBits(){
 		return this.getBlankFeatureForTraining();

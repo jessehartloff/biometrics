@@ -27,6 +27,10 @@ public class Iris extends Biometric{
 		return Iris.irisMethod.irisToFeatures(this);
 	} 
 
+	@Override
+	public ArrayList<Feature> toQuantizedFeatures() {
+		return Iris.irisMethod.irisToQuantizedFeatures(this);
+	} 
 	
 	@Override
 	public boolean equals(Object other){
@@ -67,6 +71,7 @@ public class Iris extends Biometric{
 		// used for failure to capture
 		return false;
 	}
+
 	
 	
 }

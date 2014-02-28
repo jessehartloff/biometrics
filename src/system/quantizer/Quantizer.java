@@ -29,4 +29,6 @@ public abstract class Quantizer {
 	// if you want to see your variable histograms.
 	public abstract BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues); 
 	
+	public abstract Feature quantizeFeature(Feature feature);
+	
 }
