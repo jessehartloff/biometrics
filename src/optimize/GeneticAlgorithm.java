@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import settings.AllSettings;
 import settings.coordinatorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
-import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
-import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.fingerprintmethodsettings.FingerprintMethodSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
@@ -14,13 +14,18 @@ import system.allcommonclasses.commonstructures.Results;
 
 public class GeneticAlgorithm {
 	//FIXME Matt
-	
-	public GeneticAlgorithm(FitnessFunction f){
+	private FitnessFunction f;
+	public GeneticAlgorithm(FitnessFunction fitness){
+		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
+		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		this.f = fitness;
 		
 	}
 
 
-	private void optimize() {
+	private void evolve(ArrayList<Chromosome> chromosomes) {
 		/*
 		 * 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
@@ -36,19 +41,32 @@ public class GeneticAlgorithm {
 		
 		
 	}
-
+	
+	public static ArrayList<Chromosome> getMatchingChromosomeList(){
+		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+		NgonSettings fpm = NgonSettings.getInstance();
+		try {
+			chromosomes.add(new Chromosome(fpm.n(), 6L,"N", fpm.n().getClass().getMethod("setValue", Long.class)));
+			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 8L,"k-closest Minutia", fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return chromosomes;
+	}
 	
 	public static void main(String[] args){
-		GeneticAlgorithm ga = new GeneticAlgorithm(new FitnessFunction(){
+		ArrayList<Chromosome> chromosomes = getMatchingChromosomeList();
 
+		GeneticAlgorithm ga = new GeneticAlgorithm(new FitnessFunction(){
+			//minimizing EER
 			@Override
 			public Double evaluateFitness(ArrayList<Chromosome> chromosomes) {
 				AllSettings settings = AllSettings.getInstance();
 				Results results =  settings.runSystemAndGetResults();
-				return null;
+				return results.getEer();
 			}	
 		});		
-		ga.optimize();
+		ga.evolve(chromosomes);
 	}
 	
 }
