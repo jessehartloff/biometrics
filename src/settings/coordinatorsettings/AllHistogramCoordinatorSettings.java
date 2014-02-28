@@ -58,8 +58,8 @@ public class AllHistogramCoordinatorSettings extends ComboBoxSettings{
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(NoCoordinator.getInstance());
 		this.addToOptions(HistogramSettings.getInstance());
+		this.addToOptions(NoCoordinator.getInstance());
 	}
 
 

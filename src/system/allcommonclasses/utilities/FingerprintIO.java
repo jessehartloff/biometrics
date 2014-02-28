@@ -158,7 +158,7 @@ public class FingerprintIO {
 	public static Users readOddFVC(int year, int db){
 		Users users = new Users();
 		ArrayList<Fingerprint> allFingerprints = new ArrayList<Fingerprint>();
-		for(int id=1; id<=100; id+=2){
+		for(int id=1; id< 100; id+=2){
 			User user = new User();
 			user.id = id-1L;
 			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();

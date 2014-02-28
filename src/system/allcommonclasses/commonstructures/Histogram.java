@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Histogram {
 
 	private String variableName;
+	private Long numberSamples;
 	public HashMap<BigInteger, Long> histogram;
 	
 	public Histogram(){
@@ -30,6 +31,26 @@ public class Histogram {
 		Double minEntropy = -Math.log10(Prob)/Math.log10(2.0);
 		
 		return minEntropy;
+	}
+	
+	public Long getNumberSamples() {
+		//if not already set, calculate it
+		if (numberSamples == null) {
+			if (histogram.size() == 0) {
+				System.out.println("No samples...");
+				return null;
+			}
+			else {
+				Long sampleSize = 0L;
+				for (Long l : histogram.values()) {
+					sampleSize += l;
+				}
+				return sampleSize;
+			}
+		}
+		else {
+			return numberSamples;
+		}
 	}
 
 	

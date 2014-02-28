@@ -30,8 +30,8 @@ public class TripletsOfTrianglesSettings extends TriangleSettings{
 	@Override
 	protected void addSettings() {
 		super.addSettings();
-		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong(5));
-		this.settingsVariables.put("kClosestTriangles", new SettingsLong(3));
+		this.settingsVariables.put("minimumPointsForTripletOfTriangles", new SettingsLong(7));
+		this.settingsVariables.put("kClosestTriangles", new SettingsLong(5));
 	}
 	
 

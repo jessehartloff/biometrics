@@ -29,7 +29,7 @@ public class EvaluatePerformance {
 		for(Histogram varHist : results.getVariableHistograms()){
 			System.out.println(varHist.getVariableName() + ": " + varHist.getMinEntropy());
 		}
-		results.rawScores = rawScores;
+		results.setRawScores(rawScores);
 		
 		results.setTotalLogOfBins(Quantizer.getQuantizer().getTotalLogOfBins());
 		

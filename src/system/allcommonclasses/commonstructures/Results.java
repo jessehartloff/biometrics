@@ -25,11 +25,53 @@ public class Results {
 	private Double minEntropy;
 	private Double failureToCapture;
 	private Double totalLogOfBins;
+	
 	// TODO Jesse - setup for Jim, statistical distance from uniform
 
-	public RawScores rawScores;
+	private RawScores rawScores;
 	
-		
+	/**  FIELD HISTO CHI SQUARED
+	 * Calculate chi squared such that we are uniform in sample set of large field size
+	 * This particular method assumes an uniform reference distribution with frequency 1 per bin
+	 * and compares the input distribution to this theoretical reference distribution.
+	 * @param h (typically field histogram)
+	 * @return cs
+	 */
+	public Long chiSquared(Histogram h) {
+		Long N = h.getNumberSamples();
+		Double cs = 0.0;
+		for (Long frequency : h.histogram.values()) {
+			cs += Math.pow(frequency - 1, 2.0);
+		}
+		// missing bins will be 0 => (0-1)^2/1 = 1
+		//there are N- histogram.size of these => add N- histogram.size to cs
+		cs += N-h.histogram.size();
+		return cs.longValue();
+	}
+	
+	/**  VARIABLE HISTO CHI SQUARED
+	 * Calculate chi squared such that we are uniform in sample set
+	 * This particular method assumes an uniform reference distribution
+	 * and compares the input distribution to this theoretical reference distribution.
+	 * @param h (typically field histogram)
+	 * @return cs
+	 */
+	public ArrayList<Double> chiSquared(ArrayList<Histogram> histos) {
+		ArrayList<Double> chiSquareds = new ArrayList<Double>();
+		for ( Histogram h : histos){
+			Long N = h.getNumberSamples();
+			Double n = new Double(h.histogram.values().size()); //number of bins
+			Double E = N/n; //uniform bin frequency
+			Double cs = 0.0;
+			for (Long frequency : h.histogram.values()) {
+				cs += Math.pow(frequency - E, 2.0)/E;
+			}
+			chiSquareds.add(cs);
+		}
+
+		return chiSquareds;
+	}
+	
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}
@@ -118,6 +160,23 @@ public class Results {
 				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n";
 		return toReturn;
 	}
+
+
+
+
+
+
+
+	public RawScores getRawScores() {
+		return rawScores;
+	}
+
+
+
+	public void setRawScores(RawScores rawScores) {
+		this.rawScores = rawScores;
+	}
+
 	
 	
 }

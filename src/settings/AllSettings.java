@@ -22,6 +22,8 @@ import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
 
+import interfaces.gui.ResultsGUI;
+
 public class AllSettings extends Settings{
 
 	public static final long serialVersionUID = 1L;
@@ -31,6 +33,7 @@ public class AllSettings extends Settings{
 	
 	//This block of code must be in all settings files (except settings variables) to enable serialization.
 	private static AllSettings instance;
+	
 	private AllSettings(){}
 	public static AllSettings getInstance(){
 		if(instance == null){
@@ -98,7 +101,8 @@ public class AllSettings extends Settings{
 		
 		Results results = system.go();
 		
-		System.out.print(results.rawScores);
+
+		System.out.print(results.getRawScores());
 		System.out.println(results);
 		
 		@SuppressWarnings("unused")

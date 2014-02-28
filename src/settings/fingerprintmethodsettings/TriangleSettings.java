@@ -95,18 +95,18 @@ public class TriangleSettings extends FingerprintMethodSettings{
 	}
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("theta0", new SettingsMethodVariable(6));
-		this.settingsVariables.put("x1", new SettingsMethodVariable(5));
+		this.settingsVariables.put("theta0", new SettingsMethodVariable(8));
+		this.settingsVariables.put("x1", new SettingsMethodVariable(8));
 		this.settingsVariables.put("y1", new SettingsMethodVariable(8));
-		this.settingsVariables.put("theta1", new SettingsMethodVariable(9));
-		this.settingsVariables.put("x2", new SettingsMethodVariable(10));
+		this.settingsVariables.put("theta1", new SettingsMethodVariable(8));
+		this.settingsVariables.put("x2", new SettingsMethodVariable(8));
 		this.settingsVariables.put("y2", new SettingsMethodVariable(8));
 		this.settingsVariables.put("theta2", new SettingsMethodVariable(8));
-		
 		this.settingsVariables.put("rotationStep", new SettingsDouble(5.0));
 		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
 		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
-		this.settingsVariables.put("kClosestMinutia", new SettingsLong(3));
+		this.settingsVariables.put("kClosestMinutia", new SettingsLong(2));
+		
 	}
 	
 }

@@ -3,7 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="jmathplot.jar"/>
+	<classpathentry kind="lib" path="jmathplot.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://code.google.com/p/jmathplot/source/browse/trunk/jmathplot/doc/?r=4"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="ejml-0.24.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

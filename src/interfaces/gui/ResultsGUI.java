@@ -142,12 +142,18 @@ public class ResultsGUI {
 			fieldHisto[i] = (double) fieldVal;
 			i++;
 		}
+		
 		String name = histo.getVariableName();
 		Plot2DPanel histoPlot = new Plot2DPanel("SOUTH");
 		//named after variable name
 		histoPlot.addBarPlot(name, fieldHisto);
 		histoPlot.setFixedBounds(0, 0, histo.histogram.size());
-		//histoPlot.setFixedBounds(1, 0, max);
+		
+        //Chi Squared Label
+        Long chiSqr = results.chiSquared(histo);
+        //histoPlot.addLabel("Chi Squared: "+chiSqr.toString() , Color.BLACK, 0, -0 );
+		System.out.println("Field Chi Squared: "+chiSqr.toString());
+        //histoPlot.setFixedBounds(1, 0, max);
 		//add this to grid
 		frame.add(histoPlot);
 		frame.setVisible(true);
@@ -162,6 +168,8 @@ public class ResultsGUI {
 			return;
 		}
 		//do the work
+		ArrayList<Double> chiSqr = results.chiSquared(histos);
+		
 		ArrayList<double[]> variableHistograms = new ArrayList<double []>();
 		ArrayList<String> variableNames = new ArrayList<String>(); //for histo titles
 		for( Histogram h : histos ) {
@@ -170,7 +178,7 @@ public class ResultsGUI {
 			int i=0;
 			for (long quantizedVal: h.histogram.values()){
 				varHisto[i] = quantizedVal;
-				System.out.print(new Long(quantizedVal).toString() + ", ");
+				//System.out.print(new Long(quantizedVal).toString() + ", ");
 				i++;
 			}
 			variableHistograms.add(varHisto);
@@ -184,10 +192,12 @@ public class ResultsGUI {
 		//form histogram plots and add them to the container
 		Iterator<double[]> histoIt = variableHistograms.iterator();
 		Iterator<String> nameIt = variableNames.iterator();
-		while ( nameIt.hasNext() && histoIt.hasNext()) {
+		Iterator<Double> chiSqrIt = chiSqr.iterator();
+		while ( nameIt.hasNext() && histoIt.hasNext() && chiSqrIt.hasNext()) {
 			double[] h = histoIt.next();
 			String name = nameIt.next();
-			
+			Double chiSqr1 = chiSqrIt.next();
+			System.out.println(name + " Chi Squared: "+chiSqr1.toString());
 			//find max value of double array
 			double maxVal = 0;
 			for (int i=0; i<h.length; i++){ if (h[i] > maxVal) { maxVal = h[i]; } }

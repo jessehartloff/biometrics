@@ -11,3 +11,19 @@
 -face
 -multi-modal
 
+===========================================
+== Security concerns to keep in mind: =====
+===========================================
+1. No combination of data from multiple enrollments by the same individual should be able to be combined 
+   to recover the biometric template data or to generate a spoof.
+   
+2. If any non-biometric data that is used to encode/decode (e.g. link table), or is released by the system 
+   (e.g. key), is known, the biometric template must not be recoverable nor should it allow hill-climbing or spoof generation.
+   
+3. Itshouldnotbepossiblefortwouserstoauthenticateagainst the same token with significantly higher frequency
+   than the system’s documented False Accept Rate.
+   
+4. No undetected substitution of records should be possible.
+
+5. Any data transmitted outside the system, except during en- rollment, should not be suitable to link 
+   the underlying user over space/time/companies.
