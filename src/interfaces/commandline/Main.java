@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 
 import settings.AllSettings;
+import settings.coordinatorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
@@ -41,12 +43,12 @@ public class Main {
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
-		
+		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		//...
 		// set values for everything else
-
+		PRINTSettings.getInstance().rotationRegions().setValue(36);
 		PRINTSettings.getInstance().n().setValue(3);
 		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
 		//...

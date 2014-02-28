@@ -106,6 +106,12 @@ public class AllSettings extends Settings{
 
 	}
 	
+	public Results runSystemAndGetResults(){
+		BiometricSystem system =  this.buildSystem();
+		return system.go();
+	}
+	
+	
 	protected JPanel thisJPanel(){
 		JPanel panel = new JPanel();
 		JButton goButton = new JButton("GO!");

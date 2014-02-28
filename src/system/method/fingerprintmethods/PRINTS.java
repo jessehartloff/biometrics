@@ -61,15 +61,18 @@ public class PRINTS extends FingerprintMethod{
 				variables.put(makeKey("phi",i), new PhiVariable(settings.getMinutiaComponentVariable("phi", i)));
 			}
 		}
+		
 		@Override
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
 			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue());
-			BigInteger regionNumber = BigInteger.valueOf( new Double(Math.floor(
-					this.angle/360.0*settings.rotationRegions().getValue().doubleValue())).intValue());
-//			System.out.println("Angle: "+this.angle);
-//			System.out.println("Region: "+regionNumber+'\n');
-			toReturn.add(regionNumber);
+			BigInteger regionNumber =  BigInteger.valueOf(new Double(Math.floor((this.angle.doubleValue()/360.0)*settings.rotationRegions()
+								.getValue().doubleValue())).intValue());
+			System.out.println("Angle: "+this.angle);
+			System.out.println("Region: "+regionNumber+'\n');
+//			System.out.println("ToBigIntBefore: "+featureBigInt+", "+toReturn+", "+regionNumber);
+			toReturn = toReturn.add(regionNumber);
+///			System.out.println("ToBigIntAfter: "+featureBigInt+", "+toReturn+", "+regionNumber);
 			return toReturn;
 		}
 		
@@ -138,7 +141,8 @@ public class PRINTS extends FingerprintMethod{
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		return this.PRINTSQuantizeAll(fingerprint);
 	}
-	//used for matching
+	
+//	used for matching
 	private ArrayList<Template> PRINTSQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>();
 		ArrayList<PRINT> prints = this.fingerprintToPRINTS(fingerprint);
@@ -148,14 +152,20 @@ public class PRINTS extends FingerprintMethod{
 			BigInteger quantizedPRINT = print.toBigInt();
 			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
 			BigInteger PRINTNoRegion = quantizedPRINT.subtract(regionNumber);
-//			System.out.println("Original: "+quantizedPRINT);
-//			System.out.println("Original no region:"+PRINTNoRegion);
-//			System.out.println("Region: "+ regionNumber+'\n');
-			//System.out.println(PRINTNoRegion.add(regionNumber)+", "+PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1)))+", "+ PRINTNoRegion.add(BigInteger.valueOf(-1)));
-				
-			template.hashes.add(PRINTNoRegion.add(regionNumber));
-			template.hashes.add(PRINTNoRegion.add(regionNumber.add(BigInteger.valueOf(1))));
-			template.hashes.add(PRINTNoRegion.add(regionNumber.subtract(BigInteger.valueOf(1))).mod(BigInteger.valueOf(settings.rotationRegions().getValue())));
+			//BigInteger PRINTwithRegion = PRINTNoRegion.add(regionNumber);
+			
+			BigInteger nextRegion = regionNumber.add(BigInteger.valueOf(1))
+					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
+			BigInteger previousRegion = regionNumber.subtract(BigInteger.valueOf(1))
+					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
+			
+			BigInteger PRINTwithRegionPlusOne = PRINTNoRegion.add(nextRegion);
+			BigInteger PRINTwithRegionMinusOne = PRINTNoRegion.add(previousRegion);
+		//	System.out.println("Adjacent regions: "+quantizedPRINT+", "+PRINTwithRegionPlusOne+", "+PRINTwithRegionMinusOne);
+			
+			template.hashes.add(quantizedPRINT);
+			template.hashes.add(PRINTwithRegionPlusOne);
+			template.hashes.add(PRINTwithRegionMinusOne);
 			templates.add(template);
 		}
 		
@@ -280,8 +290,9 @@ public class PRINTS extends FingerprintMethod{
 		}
 		
 		//Double angle = Math.tan(m0.getY().doubleValue()/m0.getX().doubleValue());//verify the angle is from the positive x axis... shouldn't make a difference
-		Double angle = Minutia.computeInsideAngle(m0, cx, cy, new Minutia(0,0,0));//verify the angle is from the positive x axis... shouldn't make a difference
-
+		Double angle = Minutia.computeInsideAngle(m0, cx, cy, new Minutia(cx.longValue()+Minutia
+				.distance(m0.getX().doubleValue(), m0.getY().doubleValue(), cx, cy).longValue(),cy.longValue(),0));//verify the angle is from the positive x axis... shouldn't make a difference
+		
 		
 		returnPRINT.setAngle(angle);
 		
