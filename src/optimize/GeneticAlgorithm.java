@@ -42,13 +42,19 @@ public class GeneticAlgorithm {
 //				System.out.println(ch.getName()+": "+ch.getValue());
 //			}
 //		}
-		//ga.evolve(chromosomes);
+		ga.evolve(candidates);
 	}
 	
 	
 
 	private ArrayList<Candidate> evolve(ArrayList<Candidate> candidates) {
-	
+		//Selection
+		
+		//Crossover
+		
+		//Mutation
+		
+		//Termination
 	
 		return null;		
 	}
@@ -90,9 +96,7 @@ public class GeneticAlgorithm {
 		}
 		return chromosomes;
 	}
-	
-
-	
+		
 	private class Candidate{
 	
 		private ArrayList<Chromosome> chromosomes;
@@ -100,30 +104,29 @@ public class GeneticAlgorithm {
 		
 		public Candidate(ArrayList<Chromosome> chromosomes){
 			bitRep = BigInteger.valueOf(0);
-
 			this.chromosomes = chromosomes;
+			updateBitRep();
 		}
 		
 		public void updateBitRep(){
 			for(Chromosome c: chromosomes){
-				//bitRep.shiftLeft(BigInteger.valueOf(c.getValue()).);
+				c.getValue();
+				int shift = Long.SIZE;
+				bitRep.shiftLeft(shift);
+				bitRep.add(BigInteger.valueOf(c.getValue()));
 			}
 		}
-		
-		
+	
 		public ArrayList<Chromosome> getChromosomes() {
 			return chromosomes;
 		}
 		
-		public BigInteger getIntRep() {
+		public BigInteger getBitRep() {
 			return bitRep;
 		}
 
-		public void setIntRep(BigInteger intRep) {
-			this.bitRep = intRep;
-		}
-
-		
-
+		public void setBitRep(BigInteger bitRep) {
+			this.bitRep = bitRep;
+		}		
 	}
 }

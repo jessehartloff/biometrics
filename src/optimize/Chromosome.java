@@ -53,13 +53,10 @@ public class Chromosome {
 		try {
 			this.method.invoke(self, value);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
