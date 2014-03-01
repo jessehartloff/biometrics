@@ -3,6 +3,7 @@ package system.method.fingerprintmethods;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import system.method.feature.DistanceVariable;
 import system.method.feature.Feature;
 import system.method.feature.PhiVariable;
 import system.method.feature.SigmaVariable;
+import system.method.fingerprintmethods.Ngons.Ngon;
 
 public class PRINTS extends FingerprintMethod{
 
@@ -192,28 +194,44 @@ public class PRINTS extends FingerprintMethod{
 			int startingIndex;
 			for(startingIndex = 0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
-			minutiae.add(minutia);
+//			minutiae.add(minutia); //<--- don't need this
 			for(int i = 0; i < settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
-			prints.add(this.makePRINT(minutiae));
+			
+			prints.addAll(this.makeAllPossiblePRINTs(minutiae));
 		}
 		return prints;
 	}
 	
 	
-	public static boolean isLeft(Minutia center, Minutia linePoint, Minutia pointToCheck){
-		return PRINTS.isLeft(center.getX().doubleValue(), center.getY().doubleValue(), linePoint, pointToCheck);
-				//returns true if pointToCheck is left of the line made by linePointA and linePointB
-				//note: returns true if pointTCheck is above the horizontal line made by A and B
+	
+	private Collection<? extends PRINT> makeAllPossiblePRINTs(ArrayList<Minutia> minutiae) {
+		return this.recursivePRINTBuilder(minutiae, new ArrayList<Minutia>());
+	}
+
+	public ArrayList<PRINT> recursivePRINTBuilder(ArrayList<Minutia> minutiae, ArrayList<Minutia> currentPRINT){
+		if(currentPRINT.size() == settings.n().getValue()){
+			ArrayList<PRINT> baseCaseList = new ArrayList<PRINT>();
+			baseCaseList.add(this.makePRINT(currentPRINT));
+			return baseCaseList;
+		} else {
+			ArrayList<PRINT> intermediaryPRINTs = new ArrayList<PRINT>();
+			for(Minutia minutia : minutiae){
+				if(currentPRINT.contains(minutia)){
+					return intermediaryPRINTs;
+				} else {
+					currentPRINT.add(minutia);
+					intermediaryPRINTs.addAll(recursivePRINTBuilder(minutiae, currentPRINT));
+					currentPRINT.remove(currentPRINT.size()-1);
+				}
+			}
+			return intermediaryPRINTs;
+		}
+		
 	}
 	
-	public static boolean isLeft(Double centerX, Double centerY, Minutia linePoint, Minutia pointToCheck){
-		return ((linePoint.getX() - centerX)*(pointToCheck.getY() - centerY)
-				- (linePoint.getY() - centerY)*(pointToCheck.getX() - centerX)) > 0;
-				//returns true if pointToCheck is left of the line made by linePointA and linePointB
-				//note: returns true if pointTCheck is above the horizontal line made by A and B
-	}
+
 	 
 
 	private PRINT makePRINT(ArrayList<Minutia> minutiaList) {
@@ -224,12 +242,10 @@ public class PRINTS extends FingerprintMethod{
 			returnPRINT.setCenterY(returnPRINT.getCenterY() + minutia.getY());
 		}
 		
-		returnPRINT.setCenterX(returnPRINT.getCenterX() /(float) settings.n().getValue());
-		returnPRINT.setCenterY(returnPRINT.getCenterY() /(float) settings.n().getValue());
+		returnPRINT.setCenterX(returnPRINT.getCenterX() / settings.n().getValue().doubleValue());
+		returnPRINT.setCenterY(returnPRINT.getCenterY() / settings.n().getValue().doubleValue());
 		
 		ArrayList<Double> distances = new ArrayList<Double>();
-
-		
 		ArrayList<Minutia> minutiaToSortDistance = new ArrayList<Minutia>();
 		LinkedHashMap<Double, Integer> indexDistanceMinutia = new LinkedHashMap<Double, Integer>();
 		
@@ -239,22 +255,24 @@ public class PRINTS extends FingerprintMethod{
 		for(int i = 0;i < minutiaList.size(); i ++){
 			Minutia minutia = minutiaList.get(i);
 			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
-
 			distances.add(distFromCenter);
 			indexDistanceMinutia.put(distFromCenter, i);
 			minutiaToSortDistance.add(minutia);
 		}
-		
+
 		Collections.sort(distances);
+
 		Minutia m0 = minutiaToSortDistance.get(indexDistanceMinutia.get(distances.get(0)));
 //		System.out.println("M_0: "+m0);
 //		System.out.println("Center: "+cx+", "+cy);
 		
 		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue()-cy, m0.getX().doubleValue()-cx));
-		System.out.println("X: "+(m0.getX().doubleValue()-cx));
-		System.out.println("Y: "+(m0.getY().doubleValue()-cy));
-		System.out.println("Angle: "+angle);
-		
+//		System.out.println("center: "+cx+", "+cy);
+//		System.out.println("X: "+(m0.getX().doubleValue()-cx));
+//		System.out.println("Y: "+(m0.getY().doubleValue()-cy));
+//		System.out.println("Minutia: "+m0);
+//		System.out.println("Center: "+cx+", "+cy);
+//		System.out.println("Angle: "+angle);
 		returnPRINT.setAngle(angle);
 		
 		
@@ -313,6 +331,20 @@ public class PRINTS extends FingerprintMethod{
 		return returnPRINT;
 	}
 
+	
+	public static boolean isLeft(Minutia center, Minutia linePoint, Minutia pointToCheck){
+		return PRINTS.isLeft(center.getX().doubleValue(), center.getY().doubleValue(), linePoint, pointToCheck);
+				//returns true if pointToCheck is left of the line made by linePointA and linePointB
+				//note: returns true if pointTCheck is above the horizontal line made by A and B
+	}
+	
+	public static boolean isLeft(Double centerX, Double centerY, Minutia linePoint, Minutia pointToCheck){
+		return ((linePoint.getX() - centerX)*(pointToCheck.getY() - centerY)
+				- (linePoint.getY() - centerY)*(pointToCheck.getX() - centerX)) > 0;
+				//returns true if pointToCheck is left of the line made by linePointA and linePointB
+				//note: returns true if pointTCheck is above the horizontal line made by A and B
+	}
+	
 	@Override
 	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint) {
 		return new ArrayList<Feature>(this.fingerprintToPRINTS(fingerprint));

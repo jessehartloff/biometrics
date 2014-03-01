@@ -48,9 +48,9 @@ public class Main {
 		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		//...
 		// set values for everything else
-		PRINTSettings.getInstance().rotationRegions().setValue(36);
+		PRINTSettings.getInstance().rotationRegions().setValue(8);
 		PRINTSettings.getInstance().n().setValue(3);
-		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
+		PRINTSettings.getInstance().kClosestMinutia().setValue(6);
 		//...
 		
 

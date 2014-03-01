@@ -67,7 +67,6 @@ public class PRINTSettings extends FingerprintMethodSettings{
 	}
 
 	public void setAllNumberOfBins() {
-		//this.settingsVariables.put(this.componentToString("distance", 0L), new SettingsMethodVariable(this.distanceBins().getValue()));
 		for(Long i = 0L; i < this.n().getValue(); i++){
 			this.settingsVariables.put(this.componentToString("distance", i), new SettingsMethodVariable(this.distanceBins().getValue()));
 			this.settingsVariables.put(this.componentToString("sigma", i), new SettingsMethodVariable(this.sigmaBins().getValue()));
