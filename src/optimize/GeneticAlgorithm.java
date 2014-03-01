@@ -1,8 +1,9 @@
 package optimize;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 import settings.AllSettings;
@@ -17,6 +18,7 @@ import system.allcommonclasses.commonstructures.Results;
 public class GeneticAlgorithm {
 	//FIXME Matt
 	private FitnessFunction f;
+	
 	public GeneticAlgorithm(FitnessFunction fitness){
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
@@ -31,24 +33,68 @@ public class GeneticAlgorithm {
 			@Override
 			public Double evaluateFitness(ArrayList<Chromosome> chromosomes) {
 				AllSettings settings = AllSettings.getInstance();
+				for(Chromosome c : chromosomes){
+					c.execute();
+				}
 				Results results =  settings.runSystemAndGetResults();
-				return results.getEer(); 			//minimizing EER
+				System.out.println(results.getEer());
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				return results.getEer()*100.0; 			//minimizing EER
 			}	
 		});		
 
-		ArrayList<Candidate> candidates = ga.intializePopulation();
-//		for(Candidate c : candidates){
-//			for(Chromosome ch : c.getChromosomes()){
-//				System.out.println(ch.getName()+": "+ch.getValue());
-//			}
-//		}
+		ArrayList<Candidate> candidates = ga.intializePopulation(10);
+
 		ga.evolve(candidates);
 	}
 	
 	
 
 	private ArrayList<Candidate> evolve(ArrayList<Candidate> candidates) {
+		//Evaluation -- expensive fitness function evaluations
+		for(Candidate candidate : candidates)
+			candidate.evaluate(f);
+		
 		//Selection
+		//normalizing
+		Double norm = 0.0;
+		for(Candidate candidate : candidates){
+			norm += candidate.getFitness();
+		}
+		for(int i = 0; i < candidates.size(); i++){
+			//Candidate candidate = candidates.get(i);
+			candidates.get(i).setNormalizedFitness(candidates.get(i).getFitness()/norm);
+		}
+		
+		Collections.sort(candidates, Collections.reverseOrder());
+		
+		for(int i = 0; i < candidates.size(); i++){
+			Double anf = 0.0;
+			for(int j = 0; j <= i; j++){
+				anf += candidates.get(j).getNormalizedFitness();
+			}
+			candidates.get(i).setAccumlatedNormalizedFitness(anf);
+		}
+		System.out.println("\n\n\n");
+		for(Candidate c: candidates){
+			System.out.println("ANF: "+c.getAccumlatedNormalizedFitness());
+			System.out.println("Normalized: "+c.getNormalizedFitness());
+		}
+		System.out.println("Norm: "+norm);
+		System.exit(0);
+		/*for(Double fitness : evaluatedFitness)
+			norm += fitness;
+		norm /= Double.valueOf(candidates.size());
+		ArrayList<Double>
+		//find most fit candidates
+		ArrayList<Candidate> candidatesSorted = new ArrayList<Candidate>();
+		for(Double d : evaluatedFitness)
+			candidatesSorted.add(candidateFitness.get(d));*/
+		
 		
 		//Crossover
 		
@@ -59,19 +105,17 @@ public class GeneticAlgorithm {
 		return null;		
 	}
 	
-	private ArrayList<Candidate> intializePopulation(){
-		int populationSize = 20;
+	private ArrayList<Candidate> intializePopulation(int populationSize){
 		ArrayList<Candidate> candidateSolutions = new ArrayList<Candidate>();
 		Random r = new Random();
 		
 		for(int i = 0; i < populationSize; i++){
-			ArrayList<Chromosome> chromosomes = getMatchingChromosomeList();
+			ArrayList<Chromosome> chromosomes = getChromosomeList();
 			for(int c = 0; c < chromosomes.size(); c++){
 				Chromosome chromosome = chromosomes.get(c);
 				ArrayList<Long> bounds = chromosome.getBounds();
 				Long shiftInterval = bounds.get(1) - bounds.get(0);
 				chromosome.setValue(r.nextInt(shiftInterval.intValue())+bounds.get(0));
-				chromosome.execute();
 			}
 			candidateSolutions.add(new Candidate(chromosomes));
 		}
@@ -79,7 +123,7 @@ public class GeneticAlgorithm {
 	}
 	
 	
-	public static ArrayList<Chromosome> getMatchingChromosomeList(){
+	public static ArrayList<Chromosome> getChromosomeList(){
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		NgonSettings fpm = NgonSettings.getInstance();
 		try {
@@ -97,36 +141,5 @@ public class GeneticAlgorithm {
 		return chromosomes;
 	}
 		
-	private class Candidate{
-	
-		private ArrayList<Chromosome> chromosomes;
-		private BigInteger bitRep;
-		
-		public Candidate(ArrayList<Chromosome> chromosomes){
-			bitRep = BigInteger.valueOf(0);
-			this.chromosomes = chromosomes;
-			updateBitRep();
-		}
-		
-		public void updateBitRep(){
-			for(Chromosome c: chromosomes){
-				c.getValue();
-				int shift = Long.SIZE;
-				bitRep.shiftLeft(shift);
-				bitRep.add(BigInteger.valueOf(c.getValue()));
-			}
-		}
-	
-		public ArrayList<Chromosome> getChromosomes() {
-			return chromosomes;
-		}
-		
-		public BigInteger getBitRep() {
-			return bitRep;
-		}
 
-		public void setBitRep(BigInteger bitRep) {
-			this.bitRep = bitRep;
-		}		
-	}
 }

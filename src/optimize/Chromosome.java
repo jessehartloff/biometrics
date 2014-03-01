@@ -10,7 +10,17 @@ public class Chromosome {
 	private Long value;
 	private Method method;
 	protected Object self;
+	private Integer size;	
 	private final ArrayList<Long> bounds;
+	
+	
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
 	
 	public ArrayList<Long> getBounds(){
 		return this.bounds;
@@ -60,4 +70,5 @@ public class Chromosome {
 			e.printStackTrace();
 		}
 	}
+
 }
