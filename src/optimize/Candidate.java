@@ -55,6 +55,16 @@ public class Candidate implements Comparable<Candidate>{
 		return this.getNormalizedFitness().compareTo(c.getNormalizedFitness());
 	}
 	
+	@Override
+	public String toString(){
+		String s = "< ";
+		s += "Fitness: " + this.fitness+", ";
+		for(Chromosome c : this.chromosomes){
+			s += c.getName() + ": "+c.getValue()+", ";
+		}
+		return s+">";
+	}
+	
 	
 }
 

@@ -66,7 +66,6 @@ public class GeneticAlgorithm {
 			norm += candidate.getFitness();
 		}
 		for(int i = 0; i < candidates.size(); i++){
-			//Candidate candidate = candidates.get(i);
 			candidates.get(i).setNormalizedFitness(candidates.get(i).getFitness()/norm);
 		}
 		
@@ -79,28 +78,48 @@ public class GeneticAlgorithm {
 			}
 			candidates.get(i).setAccumlatedNormalizedFitness(anf);
 		}
-		System.out.println("\n\n\n");
-		for(Candidate c: candidates){
-			System.out.println("ANF: "+c.getAccumlatedNormalizedFitness());
-			System.out.println("Normalized: "+c.getNormalizedFitness());
+		
+		//constructing breeding population based on accumulated frequency
+		int offspringProportion = 2; //make this more clear
+		int numberToSelect = candidates.size()/offspringProportion;
+		
+		ArrayList<Candidate> breedingPopulation = new ArrayList<Candidate>();
+		Random r = new Random();
+		while(breedingPopulation.size() < numberToSelect){
+			Double R = r.nextDouble();
+			for(Candidate c : candidates){
+				if(c.getAccumlatedNormalizedFitness() > R){
+					breedingPopulation.add(c);
+					break;
+				}
+			}
 		}
-		System.out.println("Norm: "+norm);
+		System.out.println("\n\n\n");
+		for(Candidate c : candidates){
+			System.out.println("Candidate: "+c);
+		}
+		for(Candidate c : breedingPopulation){
+			System.out.println("Candidate chosen: "+c);
+		}
 		System.exit(0);
-		/*for(Double fitness : evaluatedFitness)
-			norm += fitness;
-		norm /= Double.valueOf(candidates.size());
-		ArrayList<Double>
-		//find most fit candidates
-		ArrayList<Candidate> candidatesSorted = new ArrayList<Candidate>();
-		for(Double d : evaluatedFitness)
-			candidatesSorted.add(candidateFitness.get(d));*/
 		
-		
-		//Crossover
-		
-		//Mutation
-		
-		//Termination
+		//Crossover/Mutation
+		ArrayList<Candidate> nextGenPopulation = new ArrayList<Candidate>();
+		nextGenPopulation.addAll(breedingPopulation);
+        Random R = new Random();
+		Double crossoverCoeff = .7, scalingCoeff = .87; //adjust these for varying crossover and magnitude of mutations
+		while(nextGenPopulation.size() != candidates.size()){
+			Candidate parentA = breedingPopulation.get(R.nextInt(breedingPopulation.size()));
+			Candidate parentB = breedingPopulation.get(R.nextInt(breedingPopulation.size()));
+			ArrayList<Chromosome> chromosomesA = parentA.getChromosomes();
+			ArrayList<Chromosome> chromosomesB = parentB.getChromosomes();
+			//for()
+			//Candidate child = new Candidate(parent.getChromosomes());
+			Double crossover = R.nextDouble(), scale = R.nextDouble();
+			if(crossover > crossoverCoeff){
+				
+			}
+		}
 	
 		return null;		
 	}
