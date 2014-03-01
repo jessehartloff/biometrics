@@ -55,6 +55,7 @@ public class Main {
 		
 
 		settings.runSystemAndMakeGraphs();
+		//settings.runSystemAndGetResults();
 
 //		Results results = settings.buildSystem().go();
 //		System.out.print(results.rawScores);

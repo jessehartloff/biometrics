@@ -68,8 +68,8 @@ public class PRINTS extends FingerprintMethod{
 			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue()); //this is wrong too. there's no way this makes sense
 			BigInteger regionNumber =  BigInteger.valueOf(new Double(Math.floor((this.angle.doubleValue()/360.0)*settings.rotationRegions()
 								.getValue().doubleValue())).intValue());
-			System.out.println("Angle: "+this.angle);
-			System.out.println("Region: "+regionNumber+'\n');
+//			System.out.println("Angle: "+this.angle);
+//			System.out.println("Region: "+regionNumber);
 //			System.out.println("ToBigIntBefore: "+featureBigInt+", "+toReturn+", "+regionNumber);
 			toReturn = toReturn.add(regionNumber);
 ///			System.out.println("ToBigIntAfter: "+featureBigInt+", "+toReturn+", "+regionNumber);
@@ -247,6 +247,17 @@ public class PRINTS extends FingerprintMethod{
 		
 		Collections.sort(distances);
 		Minutia m0 = minutiaToSortDistance.get(indexDistanceMinutia.get(distances.get(0)));
+//		System.out.println("M_0: "+m0);
+//		System.out.println("Center: "+cx+", "+cy);
+		
+		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue()-cy, m0.getX().doubleValue()-cx));
+		System.out.println("X: "+(m0.getX().doubleValue()-cx));
+		System.out.println("Y: "+(m0.getY().doubleValue()-cy));
+		System.out.println("Angle: "+angle);
+		
+		returnPRINT.setAngle(angle);
+		
+		
 		
 		ArrayList<Double> absoluteInteriorAngles = new ArrayList<Double>();
 		LinkedHashMap<Double, Integer> indexInteriorAngleMinutia = new LinkedHashMap<Double, Integer>();
@@ -290,12 +301,8 @@ public class PRINTS extends FingerprintMethod{
 		}
 		
 		//Double angle = Math.tan(m0.getY().doubleValue()/m0.getX().doubleValue());//verify the angle is from the positive x axis... shouldn't make a difference
-		Double angle = Minutia.computeInsideAngle(m0, cx, cy, new Minutia(cx.longValue()+Minutia
-				.distance(m0.getX().doubleValue(), m0.getY().doubleValue(), cx, cy).longValue(),cy.longValue(),0));//verify the angle is from the positive x axis... shouldn't make a difference
 		
-		
-		returnPRINT.setAngle(angle);
-		
+
 		for(Long i = 0L; i < N; i++){
 			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?
 			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).longValue());
