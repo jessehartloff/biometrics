@@ -118,7 +118,6 @@ public class PRINTS extends FingerprintMethod{
 	
 	public PRINTS() {
 		settings = PRINTSettings.getInstance();
-
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
 		this.N = this.settings.n().getValue();
 
@@ -194,11 +193,10 @@ public class PRINTS extends FingerprintMethod{
 			int startingIndex;
 			for(startingIndex = 0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
-//			minutiae.add(minutia); //<--- don't need this
+			//minutiae.add(minutia); //<--- don't need this..... ???
 			for(int i = 0; i < settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
-			
 			prints.addAll(this.makeAllPossiblePRINTs(minutiae));
 		}
 		return prints;
@@ -228,7 +226,6 @@ public class PRINTS extends FingerprintMethod{
 			}
 			return intermediaryPRINTs;
 		}
-		
 	}
 	
 
@@ -247,7 +244,7 @@ public class PRINTS extends FingerprintMethod{
 		
 		ArrayList<Double> distances = new ArrayList<Double>();
 		ArrayList<Minutia> minutiaToSortDistance = new ArrayList<Minutia>();
-		LinkedHashMap<Double, Integer> indexDistanceMinutia = new LinkedHashMap<Double, Integer>();
+		LinkedHashMap<Double, Minutia> indexMinutiaByDistance = new LinkedHashMap<Double, Minutia>();
 		
 		Double cx = returnPRINT.getCenterX().doubleValue();
 		Double cy = returnPRINT.getCenterY().doubleValue();
@@ -256,17 +253,18 @@ public class PRINTS extends FingerprintMethod{
 			Minutia minutia = minutiaList.get(i);
 			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
 			distances.add(distFromCenter);
-			indexDistanceMinutia.put(distFromCenter, i);
-			minutiaToSortDistance.add(minutia);
+			indexMinutiaByDistance.put(distFromCenter, minutia);
 		}
 
 		Collections.sort(distances);
 
-		Minutia m0 = minutiaToSortDistance.get(indexDistanceMinutia.get(distances.get(0)));
+		Minutia m0 = indexMinutiaByDistance.get(distances.get(0));
 //		System.out.println("M_0: "+m0);
 //		System.out.println("Center: "+cx+", "+cy);
 		
 		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue()-cy, m0.getX().doubleValue()-cx));
+		angle  = (angle + 180) % 360;
+
 //		System.out.println("center: "+cx+", "+cy);
 //		System.out.println("X: "+(m0.getX().doubleValue()-cx));
 //		System.out.println("Y: "+(m0.getY().doubleValue()-cy));
@@ -275,30 +273,31 @@ public class PRINTS extends FingerprintMethod{
 //		System.out.println("Angle: "+angle);
 		returnPRINT.setAngle(angle);
 		
-		
-		
 		ArrayList<Double> absoluteInteriorAngles = new ArrayList<Double>();
-		LinkedHashMap<Double, Integer> indexInteriorAngleMinutia = new LinkedHashMap<Double, Integer>();
+		LinkedHashMap<Double, Minutia> indexMinutiaByInteriorAngle = new LinkedHashMap<Double, Minutia>();
 
 		ArrayList<Minutia> minutiaToSortAngles = new ArrayList<Minutia>();
 
 		for(int i = 0;i < minutiaList.size(); i ++){
 			Minutia minutia = minutiaList.get(i);
 			Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
-			if(isLeft(cx,cy, m0, minutia)){
+			if(isLeft(cx,cy, m0, minutia)){ //this is probably an issue
 				intAngle  = (intAngle + 180) % 360;
 			}
-			
 			absoluteInteriorAngles.add(intAngle);
-			indexInteriorAngleMinutia.put(intAngle, i);
-			minutiaToSortAngles.add(minutia);
+			indexMinutiaByInteriorAngle.put(intAngle, minutia);
 		}
 		
+		for(Double d : absoluteInteriorAngles)
+			System.out.println(d);
 		Collections.sort(absoluteInteriorAngles);
+		for(Double d : absoluteInteriorAngles)
+			System.out.println(d);
+		System.exit(0);
 		
 		ArrayList<Minutia> sortedMinutia = new ArrayList<Minutia>();
 		for(Double interiorAngle : absoluteInteriorAngles){
-			Minutia m = minutiaToSortAngles.get(indexInteriorAngleMinutia.get(interiorAngle));
+			Minutia m = indexMinutiaByInteriorAngle.get(interiorAngle);
 			sortedMinutia.add(m);
 		}
 		
@@ -327,7 +326,6 @@ public class PRINTS extends FingerprintMethod{
 			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(i.intValue()).longValue());
 			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(i.intValue()).longValue());
 		}
-		
 		return returnPRINT;
 	}
 

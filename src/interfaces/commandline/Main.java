@@ -37,7 +37,6 @@ import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 public class Main {
 	public static void main(String[] args) {		
 	
-		
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox
@@ -50,8 +49,7 @@ public class Main {
 		// set values for everything else
 		PRINTSettings.getInstance().rotationRegions().setValue(8);
 		PRINTSettings.getInstance().n().setValue(3);
-		PRINTSettings.getInstance().kClosestMinutia().setValue(6);
-		//...
+		PRINTSettings.getInstance().kClosestMinutia().setValue(6);		//...
 		
 
 		settings.runSystemAndMakeGraphs();
