@@ -48,8 +48,16 @@ public class GeneticAlgorithm {
 		});		
 
 		ArrayList<Candidate> candidates = ga.intializePopulation(10);
+		System.out.println("Previous Generation:");
+		for(Candidate c : candidates){
+			System.out.println(c);
+		}
+		System.out.println("Current Generation:");
 
-		ga.evolve(candidates);
+		for(Candidate c : ga.evolve(candidates)){
+			System.out.println("Candidate: "+c);
+		}
+		System.exit(0);
 	}
 	
 	
@@ -95,35 +103,45 @@ public class GeneticAlgorithm {
 			}
 		}
 		System.out.println("\n\n\n");
-		for(Candidate c : candidates){
-			System.out.println("Candidate: "+c);
-		}
-		for(Candidate c : breedingPopulation){
-			System.out.println("Candidate chosen: "+c);
-		}
-		System.exit(0);
+
 		
 		//Crossover/Mutation
 		ArrayList<Candidate> nextGenPopulation = new ArrayList<Candidate>();
 		nextGenPopulation.addAll(breedingPopulation);
-        Random R = new Random();
-		Double crossoverCoeff = .7, scalingCoeff = .87; //adjust these for varying crossover and magnitude of mutations
-		while(nextGenPopulation.size() != candidates.size()){
+		Random R = new Random();
+ 		while(nextGenPopulation.size() != candidates.size()){
 			Candidate parentA = breedingPopulation.get(R.nextInt(breedingPopulation.size()));
 			Candidate parentB = breedingPopulation.get(R.nextInt(breedingPopulation.size()));
-			ArrayList<Chromosome> chromosomesA = parentA.getChromosomes();
-			ArrayList<Chromosome> chromosomesB = parentB.getChromosomes();
-			//for()
-			//Candidate child = new Candidate(parent.getChromosomes());
-			Double crossover = R.nextDouble(), scale = R.nextDouble();
-			if(crossover > crossoverCoeff){
-				
-			}
+			Candidate child = makeOffspring(parentA, parentB);
+			nextGenPopulation.add(child);
 		}
 	
-		return null;		
+		return nextGenPopulation;		
 	}
 	
+	private Candidate makeOffspring(Candidate A, Candidate B) {
+		Random R = new Random();
+		Double crossoverConstant = .7, scalingConstant = .87; //adjust these for varying crossover and magnitude of mutations
+		//one point crossover
+		//switch to two point crossover if there are enough variables
+		int initialParent = R.nextInt(2);
+		boolean crossed = false;
+		ArrayList<Chromosome> childChromosomes = new ArrayList<Chromosome>();
+		for(int i = 0; i < A.getChromosomes().size(); i++){
+			if(initialParent == 0){
+				childChromosomes.add(A.getChromosomes().get(i));
+			} else{
+				childChromosomes.add(B.getChromosomes().get(i));
+			}
+			if(R.nextDouble() > crossoverConstant && !crossed){
+				initialParent = (initialParent+1) % 2;
+				crossed = true;
+			}
+		}
+		
+		return new Candidate(childChromosomes);
+	}
+
 	private ArrayList<Candidate> intializePopulation(int populationSize){
 		ArrayList<Candidate> candidateSolutions = new ArrayList<Candidate>();
 		Random r = new Random();
