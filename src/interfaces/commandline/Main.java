@@ -40,16 +40,16 @@ public class Main {
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		//...
 		// set values for everything else
-		PRINTSettings.getInstance().rotationRegions().setValue(8);
-		PRINTSettings.getInstance().n().setValue(3);
-		PRINTSettings.getInstance().kClosestMinutia().setValue(6);		//...
+		//NgonSettings.getInstance().rotationRegions().setValue(8);
+		NgonSettings.getInstance().n().setValue(5);
+		NgonSettings.getInstance().kClosestMinutia().setValue(7);		//...
 		
 
 		settings.runSystemAndMakeGraphs();

@@ -9,6 +9,7 @@ import java.util.Random;
 import settings.AllSettings;
 import settings.coordinatorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
+import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -20,6 +21,7 @@ public class GeneticAlgorithm {
 	private FitnessFunction f;
 	
 	public GeneticAlgorithm(FitnessFunction fitness){
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());;
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
@@ -38,23 +40,28 @@ public class GeneticAlgorithm {
 				}
 				Results results =  settings.runSystemAndGetResults();
 				System.out.println(results.getEer());
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+
 				return results.getEer()*100.0; 			//minimizing EER
 			}	
 		});		
 
-		ArrayList<Candidate> candidates = ga.intializePopulation(10);
-		System.out.println("Previous Generation:");
-		for(Candidate c : candidates){
-			System.out.println(c);
+		ArrayList<Candidate> candidates = ga.intializePopulation(15);
+		ArrayList<Candidate> init = new ArrayList<Candidate>(candidates);
+		for(int i = 0; i < 10; i++){
+			candidates = ga.evolve(candidates);
+			for(Candidate c : candidates){
+				System.out.println(i+"th Gen Candidate: "+c);
+			}
 		}
+		System.out.println("\n\n\n\n\n\n\n\n\n");
+		System.out.println("Initial Population:");
+		for(Candidate c : init){
+			System.out.println("Candidate: "+c);
+		}
+		
 		System.out.println("Current Generation:");
 
-		for(Candidate c : ga.evolve(candidates)){
+		for(Candidate c : candidates){
 			System.out.println("Candidate: "+c);
 		}
 		System.exit(0);

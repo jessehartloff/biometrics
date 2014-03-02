@@ -56,4 +56,14 @@ public class BiometricSystem {
 		System.out.println("Done training");
 	}
 	
+	private void trainTheSystemNoOut(){ 
+		System.out.println("Training");
+		QuantizerFactory.makeQuantizer();
+		Users trainingSet = AllModalitySettings.getTrainingUsers();
+		trainingSet.removeFailureToCapture();
+//		trainingSet.computeBins(); 
+		Quantizer.getQuantizer().train(trainingSet);
+		System.out.println("Done training");
+	}
+	
 }

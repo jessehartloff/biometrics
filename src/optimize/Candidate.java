@@ -11,13 +11,23 @@ public class Candidate implements Comparable<Candidate>{
 	
 	public Candidate(ArrayList<Chromosome> chromosomes){
 		this.chromosomes = chromosomes;
+		applyConstraints();
 	}
 	
+	public void applyConstraints(){
+		//TODO Generalize
+		while(chromosomes.get(0).getValue() <= chromosomes.get(1).getValue()){
+			chromosomes.get(0).setValue(chromosomes.get(0).getValue()+1);
+		}
+	}
 
 	public Double evaluate(FitnessFunction f){
 		Double fitness =  f.evaluateFitness(this.chromosomes);
+		if(fitness == null){
+			fitness = 0.0;
+		}
 		this.fitness = fitness;
-		return fitness;
+		return  fitness;
 	}
 
 	public ArrayList<Chromosome> getChromosomes() {
