@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class Chromosome {
-	//TODO Matt: Make chromosome class for genetic algorithm
 	private String name;
 	private Long value;
 	private Method method;

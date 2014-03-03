@@ -41,13 +41,17 @@ public class GeneticAlgorithm {
 				Results results =  settings.runSystemAndGetResults();
 				System.out.println(results.getEer());
 
-				return results.getEer()*100.0; 			//minimizing EER
+				return -results.getEer()*100.0; 			//minimizing EER
 			}	
 		});		
 
-		ArrayList<Candidate> candidates = ga.intializePopulation(15);
+		ArrayList<Candidate> candidates = ga.intializePopulation(8);
 		ArrayList<Candidate> init = new ArrayList<Candidate>(candidates);
-		for(int i = 0; i < 10; i++){
+		System.out.println("Initial Population:");
+		for(Candidate c : init){
+			System.out.println("Candidate: "+c);
+		}
+		for(int i = 0; i < 4; i++){
 			candidates = ga.evolve(candidates);
 			for(Candidate c : candidates){
 				System.out.println(i+"th Gen Candidate: "+c);
@@ -128,7 +132,7 @@ public class GeneticAlgorithm {
 	
 	private Candidate makeOffspring(Candidate A, Candidate B) {
 		Random R = new Random();
-		Double crossoverConstant = .7, scalingConstant = .87; //adjust these for varying crossover and magnitude of mutations
+		Double crossoverConstant = .5, scalingConstant = .87; //adjust these for varying crossover and magnitude of mutations
 		//one point crossover
 		//switch to two point crossover if there are enough variables
 		int initialParent = R.nextInt(2);
@@ -171,10 +175,11 @@ public class GeneticAlgorithm {
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		NgonSettings fpm = NgonSettings.getInstance();
 		try {
-			Long[] nbounds = {1L,9L};
-			Long[] kClosestBounds = {1L,9L};
+			Long[] nbounds = {3L,8L};
+			Long[] kClosestBounds = {3L,9L};
 			
-			chromosomes.add(new Chromosome(fpm.n(), 0L,"N", fpm.n().getClass().getMethod("setValue", Long.class),
+			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
+							fpm.n().getClass().getMethod("setValue", Long.class),
 							new ArrayList<Long>(Arrays.asList(nbounds))));
 			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"k-closest Minutia", 
 							fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class), 

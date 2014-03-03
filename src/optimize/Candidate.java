@@ -15,9 +15,9 @@ public class Candidate implements Comparable<Candidate>{
 	}
 	
 	public void applyConstraints(){
-		//TODO Generalize
-		while(chromosomes.get(0).getValue() <= chromosomes.get(1).getValue()){
-			chromosomes.get(0).setValue(chromosomes.get(0).getValue()+1);
+		//TODO Generalize genetic constraints
+		while(chromosomes.get(0).getValue() > chromosomes.get(1).getValue()){
+			chromosomes.get(1).setValue(chromosomes.get(1).getValue()+1);
 		}
 	}
 

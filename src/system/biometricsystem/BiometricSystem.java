@@ -45,7 +45,22 @@ public class BiometricSystem {
 		return results;
 	}
 
-
+	public Results goNoOut(){
+		
+		FingerprintMethodFactory.makeFingerprintMethod();
+		
+		this.trainTheSystemNoOut();
+		
+		Users testingUsers = AllModalitySettings.getTestingUsers();
+		Double FTC = testingUsers.removeFailureToCapture();
+		
+		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
+		
+		Results results = EvaluatePerformance.processResults(rawScores);
+		results.setFailureToCapture(FTC);
+		
+		return results;
+	}
 	private void trainTheSystem(){ 
 		System.out.println("Training");
 		QuantizerFactory.makeQuantizer();
@@ -57,13 +72,13 @@ public class BiometricSystem {
 	}
 	
 	private void trainTheSystemNoOut(){ 
-		System.out.println("Training");
+		//System.out.println("Training");
 		QuantizerFactory.makeQuantizer();
 		Users trainingSet = AllModalitySettings.getTrainingUsers();
 		trainingSet.removeFailureToCapture();
 //		trainingSet.computeBins(); 
 		Quantizer.getQuantizer().train(trainingSet);
-		System.out.println("Done training");
+		//System.out.println("Done training");
 	}
 	
 }
