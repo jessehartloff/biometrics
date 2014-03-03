@@ -293,7 +293,7 @@ public class PRINTS extends FingerprintMethod{
 		Collections.sort(absoluteInteriorAngles);
 		for(Double d : absoluteInteriorAngles)
 			System.out.println(d);
-		System.exit(0);
+		//System.exit(0);
 		
 		ArrayList<Minutia> sortedMinutia = new ArrayList<Minutia>();
 		for(Double interiorAngle : absoluteInteriorAngles){

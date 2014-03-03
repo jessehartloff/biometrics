@@ -30,7 +30,7 @@ public class FingerprintIO {
 			for(int db=1; db<=4; db++){
 				users = readFVC(year, db);
 				try{
-					FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "DB" + db + ".ser");
+					FileOutputStream fileOut = new FileOutputStream("datasets/fingerprint/FVC" + year + "DB" + db + ".ser");
 					ObjectOutputStream out = new ObjectOutputStream(fileOut);
 					out.writeObject(users);
 					out.close();
@@ -57,7 +57,7 @@ public class FingerprintIO {
 		}
 		//output test users
 		try{
-			FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "Testing.ser");
+			FileOutputStream fileOut = new FileOutputStream("datasets/fingerprint/FVC" + year + "Testing.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(testUsers);
 			out.close();
@@ -68,7 +68,7 @@ public class FingerprintIO {
 		}
 		//output training users
 		try{
-			FileOutputStream fileOut = new FileOutputStream("FVC/FVC" + year + "Training.ser");
+			FileOutputStream fileOut = new FileOutputStream("datasets/fingerprint/FVC" + year + "Training.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(trainingUsers);
 			out.close();
@@ -78,6 +78,30 @@ public class FingerprintIO {
 			exp.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * Run this function from the main method at the bottom to generate all 4 small databases of year 2002
+	 * NOTE: As of now you need to change 'year' manually
+	 */
+	public static void generateSmallDatabases() {
+		int year = 2002;
+		for(int db=1; db<=4; db++){
+			Users trainingUsers = new Users();
+			trainingUsers.users.addAll(readTenFVC(year, db).users); //add these to the existing training users set
+			try{
+				FileOutputStream fileOut = new FileOutputStream("datasets/fingerprint/FVC" + year + db+"Small.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(trainingUsers);
+				out.close();
+				fileOut.close();
+				System.out.println("Testing Database Output Done");
+			}catch(IOException exp){
+				exp.printStackTrace();
+			}
+		}
+		//output test users
+
 	}
 	
 	public static Fingerprint fingerprintFromFile(String file){
@@ -203,6 +227,36 @@ public class FingerprintIO {
 		}		
 		return users;
 	}
+	/**
+	 * Genereate small db's for quick testing
+	 * @param year
+	 * @param db
+	 * @return
+	 */
+	public static Users readTenFVC(int year, int db){
+		Users users = new Users();
+		ArrayList<Fingerprint> allFingerprints = new ArrayList<Fingerprint>();
+		for(int id=1; id<=10; id++){
+			User user = new User();
+			user.id = id-1L;
+			ArrayList<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
+			user.readings = fingerprints;
+			
+			String directoryPathForFVC = "/Users/thomaseffland/Documents/";
+			
+			for(int reading=1; reading<=8; reading++){
+				String file = directoryPathForFVC + "CUBS_FP_DATA/FVC" +year+ "/DB" +db+ "/features/" 
+						+ id +"_"+ reading + ".fp";
+				fingerprints.add(fingerprintFromFile(file));
+				allFingerprints.add(fingerprintFromFile(file));
+			}
+
+			//System.out.println("id: " + id);
+			users.users.add(user);
+			//System.out.println(user.readings);
+		}		
+		return users;
+	}
 	
 	/**
 	 * So this runs separately from 
@@ -210,7 +264,8 @@ public class FingerprintIO {
 	 */
 	public static void main(String[] args) {
 		new FingerprintIO();
-		generateTrainingAndTestDatabases();
+		//generateTrainingAndTestDatabases();
+		generateSmallDatabases();
 		//readAllFVC();
 	}
 }

@@ -35,6 +35,7 @@ public class BiometricSystem {
 		this.trainTheSystem();
 		
 		Users testingUsers = AllModalitySettings.getTestingUsers();
+		System.out.println("Failure to Capture");
 		Double FTC = testingUsers.removeFailureToCapture();
 		
 		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
