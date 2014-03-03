@@ -149,10 +149,6 @@ public class ResultsGUI {
 		histoPlot.addBarPlot(name, fieldHisto);
 		histoPlot.setFixedBounds(0, 0, histo.histogram.size());
 		
-        //Chi Squared Label
-        Long chiSqr = results.chiSquared(histo);
-        //histoPlot.addLabel("Chi Squared: "+chiSqr.toString() , Color.BLACK, 0, -0 );
-		System.out.println("Field Chi Squared: "+chiSqr.toString());
         //histoPlot.setFixedBounds(1, 0, max);
 		//add this to grid
 		frame.add(histoPlot);
@@ -168,17 +164,14 @@ public class ResultsGUI {
 			return;
 		}
 		//do the work
-		ArrayList<Double> chiSqr = results.chiSquared(histos);
 		
 		ArrayList<double[]> variableHistograms = new ArrayList<double []>();
 		ArrayList<String> variableNames = new ArrayList<String>(); //for histo titles
 		for( Histogram h : histos ) {
 			double[] varHisto = new double[h.histogram.size()];
-			System.out.println("Histo:"+ h.getVariableName());
 			int i=0;
 			for (long quantizedVal: h.histogram.values()){
 				varHisto[i] = quantizedVal;
-				//System.out.print(new Long(quantizedVal).toString() + ", ");
 				i++;
 			}
 			variableHistograms.add(varHisto);
@@ -192,12 +185,9 @@ public class ResultsGUI {
 		//form histogram plots and add them to the container
 		Iterator<double[]> histoIt = variableHistograms.iterator();
 		Iterator<String> nameIt = variableNames.iterator();
-		Iterator<Double> chiSqrIt = chiSqr.iterator();
-		while ( nameIt.hasNext() && histoIt.hasNext() && chiSqrIt.hasNext()) {
+		while ( nameIt.hasNext() && histoIt.hasNext()){
 			double[] h = histoIt.next();
 			String name = nameIt.next();
-			Double chiSqr1 = chiSqrIt.next();
-			System.out.println(name + " Chi Squared: "+chiSqr1.toString());
 			//find max value of double array
 			double maxVal = 0;
 			for (int i=0; i<h.length; i++){ if (h[i] > maxVal) { maxVal = h[i]; } }

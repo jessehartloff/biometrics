@@ -3,6 +3,7 @@ package system.biometricsystem;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
@@ -21,6 +22,8 @@ public class EvaluatePerformance {
 		
 		results.setFieldHistogram(EvaluatePerformance.computeFieldHistogram(rawScores));
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
+		results.setChiSquare(EvaluatePerformance.computeChiSquare(results));
+		results.setChiSquareValues(EvaluatePerformance.computeChiSquareValues(results));
 		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
 
 		results.setMinEntropy(results.getFieldHistogram().getMinEntropy());
@@ -36,7 +39,53 @@ public class EvaluatePerformance {
 		return results;
 	}
 	
+	/**  VARIABLE HISTO CHI SQUARED
+	 * Calculate chi squared such that we are uniform in sample set
+	 * This particular method assumes an uniform reference distribution
+	 * and compares the input distribution to this theoretical reference distribution.
+	 * @param h (typically field histogram)
+	 * @return cs
+	 */
+	private static ArrayList<Double> computeChiSquareValues(Results results) {
+		ArrayList<Double> chiSquareds = new ArrayList<Double>();
+		for ( Histogram h : results.getVariableHistograms()){
+			Long N = h.getNumberSamples();
+			if(N != null){
+				Double n = new Double(h.histogram.values().size()); //number of bins
+				Double E = N/n; //uniform bin frequency
+				Double cs = 0.0;
+				for (Long frequency : h.histogram.values()) {
+					cs += Math.pow(frequency - E, 2.0)/E;
+				}
+				chiSquareds.add(cs);
+			}
+		}
+		return chiSquareds;
+	}
 	
+	/**  FIELD HISTO CHI SQUARED
+	 * Calculate chi squared such that we are uniform in sample set of large field size
+	 * This particular method assumes an uniform reference distribution with frequency 1 per bin
+	 * and compares the input distribution to this theoretical reference distribution.
+	 * @param h (typically field histogram)
+	 * @return cs
+	 */
+	private static Double computeChiSquare(Results results) {
+		Long N = results.getFieldHistogram().getNumberSamples();
+		Double cs = 0.0;
+		if(N != null){
+			for (Long frequency : results.getFieldHistogram().histogram.values()) {
+				cs += Math.pow(frequency - 1, 2.0);
+			}
+			// missing bins will be 0 => (0-1)^2/1 = 1
+			//there are N- histogram.size of these => add N- histogram.size to cs
+			cs += N-results.getFieldHistogram().histogram.size();
+			return cs;
+		}
+		return Double.POSITIVE_INFINITY;
+	}
+
+
 	private static ZeroFAR computeZeroFAR(Results results) {
 		ZeroFAR zeroFAR = new ZeroFAR();
 		zeroFAR.setFRR(Double.POSITIVE_INFINITY);
