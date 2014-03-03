@@ -24,7 +24,6 @@ public class HistogramCoordinator extends Coordinator{
 		ArrayList<ArrayList<Long>> allQuantizedValues = new ArrayList<ArrayList<Long>>();
 //		Feature blankFeature = Biometric.method.getBlankFeatureForTraining();
 		Feature blankFeature = Quantizer.getQuantizer().getBlankFeatureForTraining();
-		// FIXME get blank feature from quantizer
 		for(String var : blankFeature.variables.keySet()){
 			allQuantizedValues.add(new ArrayList<Long>());
 			scores.variableHistogramValues.put(var, new ArrayList<Long>());
@@ -38,7 +37,7 @@ public class HistogramCoordinator extends Coordinator{
 				for(Feature feature : features){
 					scores.fieldHistogramValues.add(feature.toBigInt());
 				}
-				for(Feature feature : quantizedFeatures){ //FIXME toFeature should give the pca components
+				for(Feature feature : quantizedFeatures){ 
 //					System.out.println("&&&&&&&" + feature.quantizedValues.size());
 //					System.out.println(feature.toBigInt());
 					for(String var : feature.quantizedValues.keySet()){

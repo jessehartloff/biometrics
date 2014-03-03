@@ -28,6 +28,7 @@ public class Results {
 	private Double chiSquare;
 	private ArrayList<Double> chiSquareValues;
 	// TODO Jesse - setup for Jim, statistical distance from uniform
+
 	private RawScores rawScores;
 	
 	public ArrayList<RatesPoint> getRates() {

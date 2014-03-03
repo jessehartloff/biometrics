@@ -11,15 +11,26 @@ import settings.settingsvariables.SettingsDropDownItem;
 
 public class FingerprintDatasetSettings extends DatasetSettings{
 	private static final long serialVersionUID = 1L;
+	private String initialSet;
 	
+	public FingerprintDatasetSettings(String initialSet){
+		super();
+		this.initialSet = initialSet;
+	}
 
 	@Override
 	protected void addALLOptions() {
 		File directory = new File("datasets/fingerprint");
 		File[] files = directory.listFiles();
-		
+
 		for(File f : files){
-			if(f.isFile()){ //LATER make this look pretty by removing the .ser
+			if(f.isFile() && (f.getName().equalsIgnoreCase(this.initialSet))){
+				this.addToOptions(new SettingsDropDownItem(f.getName()));
+			}
+		}
+
+		for(File f : files){
+			if(f.isFile() && !(f.getName().equalsIgnoreCase(this.initialSet))){
 				this.addToOptions(new SettingsDropDownItem(f.getName()));
 			}
 		}

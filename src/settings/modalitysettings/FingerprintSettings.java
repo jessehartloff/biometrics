@@ -62,8 +62,8 @@ public class FingerprintSettings extends ModalitySettings{
 	
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings()); 
-		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings()); 
+		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings("FVC2002DB1.ser")); 
+		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings("FVC2002DB2.ser")); 
 		this.settingsVariables.put("minimumMinutia", new SettingsLong(10)); 
 		this.settingsVariables.put("FingerprintMethod", AllFingerprintMethodSettings.getInstance());
 	}

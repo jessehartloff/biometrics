@@ -12,7 +12,6 @@ import system.quantizer.Quantizer;
 
 public class EvaluatePerformance {
 
-	// TODO Jesse - print total bits for security measure
 	
 	protected static Results processResults(RawScores rawScores) {
 		Results results = new Results();
