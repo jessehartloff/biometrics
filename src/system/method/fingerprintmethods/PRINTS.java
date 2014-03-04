@@ -293,7 +293,6 @@ public class PRINTS extends FingerprintMethod{
 		Collections.sort(absoluteInteriorAngles);
 		for(Double d : absoluteInteriorAngles)
 			System.out.println(d);
-		//System.exit(0);
 		
 		ArrayList<Minutia> sortedMinutia = new ArrayList<Minutia>();
 		for(Double interiorAngle : absoluteInteriorAngles){
@@ -322,9 +321,9 @@ public class PRINTS extends FingerprintMethod{
 
 		for(Long i = 0L; i < N; i++){
 			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?
-			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).longValue());
-			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(i.intValue()).longValue());
-			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(i.intValue()).longValue());
+			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).doubleValue());
+			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(i.intValue()).doubleValue());
+			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(i.intValue()).doubleValue());
 		}
 		return returnPRINT;
 	}

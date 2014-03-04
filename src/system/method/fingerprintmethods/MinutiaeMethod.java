@@ -72,9 +72,9 @@ public class MinutiaeMethod extends FingerprintMethod {
 		ArrayList<InnerMinutia> minutiae = new ArrayList<InnerMinutia>();
 		for(Minutia minutia : fingerprint.minutiae){
 			InnerMinutia minu = new InnerMinutia();
-			minu.variables.get("x").setPrequantizedValue(minutia.getX());
-			minu.variables.get("y").setPrequantizedValue(minutia.getY());
-			minu.variables.get("theta").setPrequantizedValue(minutia.getTheta());
+			minu.variables.get("x").setPrequantizedValue(minutia.getX().doubleValue());
+			minu.variables.get("y").setPrequantizedValue(minutia.getY().doubleValue());
+			minu.variables.get("theta").setPrequantizedValue(minutia.getTheta().doubleValue());
 			minutiae.add(minu);
 		}
 		return minutiae;

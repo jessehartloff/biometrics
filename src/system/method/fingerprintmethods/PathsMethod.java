@@ -142,19 +142,19 @@ public class PathsMethod extends FingerprintMethod {
 		
 		Path pathToReturn = new Path();
 
-		pathToReturn.variables.get("d0").setPrequantizedValue(Math.round(m0.distanceTo(m1)));
-		pathToReturn.variables.get("d1").setPrequantizedValue(Math.round(m1.distanceTo(m2)));
-		pathToReturn.variables.get("d2").setPrequantizedValue(Math.round(m2.distanceTo(m3)));
-		pathToReturn.variables.get("d3").setPrequantizedValue(Math.round(m3.distanceTo(m4)));
+		pathToReturn.variables.get("d0").setPrequantizedValue(m0.distanceTo(m1));
+		pathToReturn.variables.get("d1").setPrequantizedValue(m1.distanceTo(m2));
+		pathToReturn.variables.get("d2").setPrequantizedValue(m2.distanceTo(m3));
+		pathToReturn.variables.get("d3").setPrequantizedValue(m3.distanceTo(m4));
 		
-		pathToReturn.variables.get("phi1").setPrequantizedValue(Math.round(Minutia.computeInsideAngle(m0,m1,m2)));
-		pathToReturn.variables.get("phi2").setPrequantizedValue(Math.round(Minutia.computeInsideAngle(m1,m2,m3)));
-		pathToReturn.variables.get("phi3").setPrequantizedValue(Math.round(Minutia.computeInsideAngle(m2,m3,m4)));
+		pathToReturn.variables.get("phi1").setPrequantizedValue(Minutia.computeInsideAngle(m0,m1,m2));
+		pathToReturn.variables.get("phi2").setPrequantizedValue(Minutia.computeInsideAngle(m1,m2,m3));
+		pathToReturn.variables.get("phi3").setPrequantizedValue(Minutia.computeInsideAngle(m2,m3,m4));
 		
-		pathToReturn.variables.get("sigma0").setPrequantizedValue(m0.getTheta() - m1.getTheta());
-		pathToReturn.variables.get("sigma1").setPrequantizedValue(m1.getTheta() - m2.getTheta());
-		pathToReturn.variables.get("sigma2").setPrequantizedValue(m2.getTheta() - m3.getTheta());
-		pathToReturn.variables.get("sigma3").setPrequantizedValue(m3.getTheta() - m4.getTheta());
+		pathToReturn.variables.get("sigma0").setPrequantizedValue(m0.getTheta().doubleValue() - m1.getTheta().doubleValue());
+		pathToReturn.variables.get("sigma1").setPrequantizedValue(m1.getTheta().doubleValue() - m2.getTheta().doubleValue());
+		pathToReturn.variables.get("sigma2").setPrequantizedValue(m2.getTheta().doubleValue() - m3.getTheta().doubleValue());
+		pathToReturn.variables.get("sigma3").setPrequantizedValue(m3.getTheta().doubleValue() - m4.getTheta().doubleValue());
 		
 		return pathToReturn;
 	}

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import settings.fingerprintmethodsettings.PRINTSettings;
 import system.allcommonclasses.modalities.Minutia;
+import system.method.feature.DistanceVariable;
+import system.method.feature.PhiVariable;
+import system.method.feature.SigmaVariable;
 import system.method.fingerprintmethods.PRINTS;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.PRINTS.PRINT;
@@ -51,22 +54,32 @@ public class TestPRINTS {
 		
 		PRINT expectedPRINT = printMethod.new PRINT();
 
-//		expectedTriangle.variables.get("theta0").setPrequantizedValue(2L);
-//		expectedTriangle.variables.get("x1").setPrequantizedValue(0L);
-//		expectedTriangle.variables.get("y1").setPrequantizedValue(116L);
-//		expectedTriangle.variables.get("theta1").setPrequantizedValue(1L);
-//		expectedTriangle.variables.get("x2").setPrequantizedValue(50L);
-//		expectedTriangle.variables.get("y2").setPrequantizedValue(-65L);
-//		expectedTriangle.variables.get("theta2").setPrequantizedValue(0L);
-//		
-//		expectedTriangle.setCenterX(68.6666666667);
-//		expectedTriangle.setCenterY(7.0);
+		expectedPRINT.variables.get("distance0").setPrequantizedValue(5.5);
+		expectedPRINT.variables.get("sigma0").setPrequantizedValue(0.0);
+		expectedPRINT.variables.get("phi0").setPrequantizedValue(116.0);
+		
+		expectedPRINT.variables.get("distance1").setPrequantizedValue(2.0);
+		expectedPRINT.variables.get("sigma1").setPrequantizedValue(.0);
+		expectedPRINT.variables.get("phi1").setPrequantizedValue(116.0);
+		
+		expectedPRINT.variables.get("distance2").setPrequantizedValue(2.0);
+		expectedPRINT.variables.get("sigma2").setPrequantizedValue(0.0);
+		expectedPRINT.variables.get("phi2").setPrequantizedValue(116.0);
+		
+		expectedPRINT.variables.get("distance3").setPrequantizedValue(2.0);
+		expectedPRINT.variables.get("sigma3").setPrequantizedValue(0.0);
+		expectedPRINT.variables.get("phi3").setPrequantizedValue(116.0);
+		
+		expectedPRINT.variables.get("distance4").setPrequantizedValue(2.0);
+		expectedPRINT.variables.get("sigma4").setPrequantizedValue(0.0);
+		expectedPRINT.variables.get("phi4").setPrequantizedValue(116.0);
+
 		
 		assertTrue(
 				"\nExpected: " + expectedPRINT.prequantizedToString() + " " + 
 				"\nComputed: " + computedPRINT.prequantizedToString() + " ",
 				
-				false
+				false // prequantized compare
 				);
 	}
 	

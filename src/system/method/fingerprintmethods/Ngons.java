@@ -171,11 +171,11 @@ public class Ngons extends FingerprintMethod{
 		ngonToReturn.setCenterX(ngonToReturn.getCenterX() / settings.n().getValue());
 		ngonToReturn.setCenterY(ngonToReturn.getCenterY() / settings.n().getValue());
 		
-		ngonToReturn.variables.get("theta0").setPrequantizedValue(minutiaList.get(0).getTheta());
+		ngonToReturn.variables.get("theta0").setPrequantizedValue(minutiaList.get(0).getTheta().doubleValue());
 		for(Long i = 1L; i < settings.n().getValue(); i++){
-			ngonToReturn.variables.get(ngonToReturn.makeKey("x", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getX() - m0.getX());
-			ngonToReturn.variables.get(ngonToReturn.makeKey("y", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getY() - m0.getY());
-			ngonToReturn.variables.get(ngonToReturn.makeKey("theta", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getTheta());		
+			ngonToReturn.variables.get(ngonToReturn.makeKey("x", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getX().doubleValue() - m0.getX().doubleValue());
+			ngonToReturn.variables.get(ngonToReturn.makeKey("y", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getY().doubleValue() - m0.getY().doubleValue());
+			ngonToReturn.variables.get(ngonToReturn.makeKey("theta", i)).setPrequantizedValue(minutiaList.get(i.intValue()).getTheta().doubleValue());		
 		}
 		
 		return ngonToReturn;

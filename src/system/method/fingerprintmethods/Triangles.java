@@ -170,15 +170,15 @@ public class Triangles extends FingerprintMethod {
 		triangleToReturn.centerX = (m0.getX() + m1.getX() + m2.getX())/3.0;
 		triangleToReturn.centerY = (m0.getY() + m1.getY() + m2.getY())/3.0;
 		
-		triangleToReturn.variables.get("theta0").setPrequantizedValue(m0.getTheta());
+		triangleToReturn.variables.get("theta0").setPrequantizedValue(m0.getTheta().doubleValue());
 		
-		triangleToReturn.variables.get("x1").setPrequantizedValue(m1.getX() - m0.getX());
-		triangleToReturn.variables.get("y1").setPrequantizedValue(m1.getY() - m0.getY());
-		triangleToReturn.variables.get("theta1").setPrequantizedValue(m1.getTheta());
+		triangleToReturn.variables.get("x1").setPrequantizedValue(m1.getX().doubleValue() - m0.getX().doubleValue());
+		triangleToReturn.variables.get("y1").setPrequantizedValue(m1.getY().doubleValue() - m0.getY().doubleValue());
+		triangleToReturn.variables.get("theta1").setPrequantizedValue(m1.getTheta().doubleValue());
 		
-		triangleToReturn.variables.get("x2").setPrequantizedValue(m2.getX() - m0.getX());
-		triangleToReturn.variables.get("y2").setPrequantizedValue(m2.getY() - m0.getY());
-		triangleToReturn.variables.get("theta2").setPrequantizedValue(m2.getTheta());
+		triangleToReturn.variables.get("x2").setPrequantizedValue(m2.getX().doubleValue() - m0.getX().doubleValue());
+		triangleToReturn.variables.get("y2").setPrequantizedValue(m2.getY().doubleValue() - m0.getY().doubleValue());
+		triangleToReturn.variables.get("theta2").setPrequantizedValue(m2.getTheta().doubleValue());
 		
 		return triangleToReturn;
 	}

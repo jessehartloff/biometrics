@@ -33,13 +33,13 @@ public class TestTriangles {
 		
 		Triangle expectedTriangle = triangleMethod.new Triangle();
 
-		expectedTriangle.variables.get("theta0").setPrequantizedValue(2L);
-		expectedTriangle.variables.get("x1").setPrequantizedValue(0L);
-		expectedTriangle.variables.get("y1").setPrequantizedValue(116L);
-		expectedTriangle.variables.get("theta1").setPrequantizedValue(1L);
-		expectedTriangle.variables.get("x2").setPrequantizedValue(50L);
-		expectedTriangle.variables.get("y2").setPrequantizedValue(-65L);
-		expectedTriangle.variables.get("theta2").setPrequantizedValue(0L);
+		expectedTriangle.variables.get("theta0").setPrequantizedValue(2.0);
+		expectedTriangle.variables.get("x1").setPrequantizedValue(0.0);
+		expectedTriangle.variables.get("y1").setPrequantizedValue(116.0);
+		expectedTriangle.variables.get("theta1").setPrequantizedValue(1.0);
+		expectedTriangle.variables.get("x2").setPrequantizedValue(50.0);
+		expectedTriangle.variables.get("y2").setPrequantizedValue(-65.0);
+		expectedTriangle.variables.get("theta2").setPrequantizedValue(0.0);
 		
 		expectedTriangle.setCenterX(68.6666666667);
 		expectedTriangle.setCenterY(7.0);
