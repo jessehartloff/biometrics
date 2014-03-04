@@ -5,7 +5,7 @@ import settings.settingsvariables.SettingsMethodVariable;
 public class Variable {
  	
 	public SettingsMethodVariable variableSettings;
-	protected Double prequantizedValue; // TODO Jesse - make these Double
+	protected Double prequantizedValue;
 //	protected Long quantizedValue;
 	
 	public Variable(SettingsMethodVariable variableSettings){

@@ -112,4 +112,20 @@ public class Feature{
 		return output;
 	}
 	
+	public boolean equalsPrequantized(Feature otherFeature){
+		if(this.variables.size() != otherFeature.variables.size()){
+			return false;
+		}
+		
+		for(String var : this.variables.keySet()){
+			if( Math.abs(this.variables.get(var).getPrequantizedValue() - 
+					otherFeature.variables.get(var).getPrequantizedValue()) 
+					> 0.00001 ){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 }

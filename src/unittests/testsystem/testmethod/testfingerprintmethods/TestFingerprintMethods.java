@@ -7,7 +7,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	TestTriangles.class,
-	TestNgons.class
+	TestNgons.class,
+	TestCrossProduct.class,
+	TestPRINTS.class
 	})
 
 

@@ -12,10 +12,11 @@ public class SigmaVariable extends Variable{
 
 	@Override
 	public void setPrequantizedValue(Double prequantizedValue) {	
-		Double toSet = (prequantizedValue.compareTo(0.0) < 0) ? -prequantizedValue : prequantizedValue;
-		while(toSet>=180.0){
-			toSet -= 180.0;
+		Double toSet = Math.abs(prequantizedValue);
+		while(toSet>=360.0){
+			toSet -= 360.0; 
 		}
+		toSet = (toSet > 180.0) ? (360.0 - toSet) : toSet;
 		super.setPrequantizedValue(toSet);
 	}
 	
