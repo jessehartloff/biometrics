@@ -106,7 +106,7 @@ public class Feature{
 	public String prequantizedToString(){
 		String output = "[";
 		for(Entry<String, Variable> var : variables.entrySet()){
-			output += var.getKey() + ": " + var.getValue().prequantizedValue.toString() +" ";
+			output += var.getKey() + ": " + var.getValue().prequantizedValue.toString() +" \n";
 		}
 		output += "]";
 		return output;

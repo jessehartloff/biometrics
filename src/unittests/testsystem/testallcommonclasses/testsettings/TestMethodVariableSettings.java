@@ -77,20 +77,20 @@ public class TestMethodVariableSettings {
 //		assertTrue("This message is not helpful",
 //				result);
 //	}
-//
-//	@org.junit.Test
-//	public void testBinsToBits() {
-//		Boolean result = true;
-//		ArrayList<Integer> bins = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,13,15,16,17)); 
-//		ArrayList<Integer> expectedBits = new ArrayList<Integer>(Arrays.asList(1,2,2,3,3,3,3,4, 4, 4, 4, 4, 5)); 
-//		ArrayList<Integer> computedBits = new ArrayList<Integer>(); 
-//		int n=bins.size();
-//		for(int i=0; i<n; i++){
-//			result = result && SettingsMethodVariable.binsToBits(bins.get(i).longValue()).equals(expectedBits.get(i));
-//			computedBits.add(SettingsMethodVariable.binsToBits(bins.get(i)));
-//		}
-//		assertTrue("\nexpected: " + expectedBits + "\ncomputed: " + computedBits, result);
-//	}
+
+	@org.junit.Test
+	public void testBinsToBits() {
+		Boolean result = true;
+		ArrayList<Long> bins = new ArrayList<Long>(Arrays.asList(2L,3L,4L,5L,6L,7L,8L,9L,10L,13L,15L,16L,17L)); 
+		ArrayList<Long> expectedBits = new ArrayList<Long>(Arrays.asList(1L,2L,2L,3L,3L,3L,3L,4L, 4L,4L, 4L, 4L, 5L)); 
+		ArrayList<Long> computedBits = new ArrayList<Long>(); 
+		int n=bins.size();
+		for(int i=0; i<n; i++){
+			result &= SettingsMethodVariable.binsToBits(bins.get(i).longValue()).equals(expectedBits.get(i));
+			computedBits.add(SettingsMethodVariable.binsToBits(bins.get(i).longValue()));
+		}
+		assertTrue("\nexpected: " + expectedBits + "\ncomputed: " + computedBits, result);
+	}
 	
 	
 	

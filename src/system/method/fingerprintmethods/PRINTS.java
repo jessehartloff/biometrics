@@ -232,21 +232,21 @@ public class PRINTS extends FingerprintMethod{
 		PRINT returnPRINT = new PRINT();
 		
 		for(Minutia minutia : minutiaList){
-			returnPRINT.setCenterX(returnPRINT.getCenterX() + minutia.getX());
-			returnPRINT.setCenterY(returnPRINT.getCenterY() + minutia.getY());
+			returnPRINT.setCenterX(returnPRINT.getCenterX() + minutia.getX().doubleValue());
+			returnPRINT.setCenterY(returnPRINT.getCenterY() + minutia.getY().doubleValue());
 		}
 		
 		returnPRINT.setCenterX(returnPRINT.getCenterX() / settings.n().getValue().doubleValue());
 		returnPRINT.setCenterY(returnPRINT.getCenterY() / settings.n().getValue().doubleValue());
 		
 		ArrayList<Double> distances = new ArrayList<Double>();
-		ArrayList<Minutia> minutiaToSortDistance = new ArrayList<Minutia>();
+//		ArrayList<Minutia> minutiaToSortDistance = new ArrayList<Minutia>();
 		LinkedHashMap<Double, Minutia> indexMinutiaByDistance = new LinkedHashMap<Double, Minutia>();
 		
-		Double cx = returnPRINT.getCenterX().doubleValue();
-		Double cy = returnPRINT.getCenterY().doubleValue();
+		Double cx = returnPRINT.getCenterX();
+		Double cy = returnPRINT.getCenterY();
 		
-		for(int i = 0;i < minutiaList.size(); i ++){
+		for(int i=0; i < minutiaList.size(); i++){
 			Minutia minutia = minutiaList.get(i);
 			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
 			distances.add(distFromCenter);
@@ -260,7 +260,7 @@ public class PRINTS extends FingerprintMethod{
 //		System.out.println("Center: "+cx+", "+cy);
 		
 		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue()-cy, m0.getX().doubleValue()-cx));
-		angle  = (angle + 180) % 360;
+		angle  = (angle + 180) % 360; //wtf?
 
 //		System.out.println("center: "+cx+", "+cy);
 //		System.out.println("X: "+(m0.getX().doubleValue()-cx));
@@ -273,16 +273,15 @@ public class PRINTS extends FingerprintMethod{
 		ArrayList<Double> absoluteInteriorAngles = new ArrayList<Double>();
 		LinkedHashMap<Double, Minutia> indexMinutiaByInteriorAngle = new LinkedHashMap<Double, Minutia>();
 
-		ArrayList<Minutia> minutiaToSortAngles = new ArrayList<Minutia>();
+//		ArrayList<Minutia> minutiaToSortAngles = new ArrayList<Minutia>();
 
-		for(int i = 0;i < minutiaList.size(); i ++){
-			Minutia minutia = minutiaList.get(i);
+		for(Minutia minutia : minutiaList){
 //			System.out.println(m0);
 //			System.out.println(cx+", "+cy);
 //			System.out.println(minutia+"\n");
 			if(!m0.equals(minutia)){
 				Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
-				if(isLeft(cx,cy, m0, minutia)){ //this is probably an issue
+				if(!isLeft(cx,cy, m0, minutia)){ //this is probably an issue
 					intAngle  = 360 - intAngle;
 				}
 				absoluteInteriorAngles.add(intAngle);
@@ -293,8 +292,9 @@ public class PRINTS extends FingerprintMethod{
 			}
 		}
 		
-//		for(Double d : absoluteInteriorAngles)
-//			System.out.println(d);
+//		for(Double d : absoluteInteriorAngles){
+//			System.out.println("thing: " + d);
+//		}
 		Collections.sort(absoluteInteriorAngles);
 
 //		for(Double d : absoluteInteriorAngles)
@@ -311,13 +311,13 @@ public class PRINTS extends FingerprintMethod{
 		distances = new ArrayList<Double>();
 		ArrayList<Double> sigmas = new ArrayList<Double>();
 		ArrayList<Double> phis = new ArrayList<Double>();
-		
+
 		for(int i = 0; i < sortedMinutia.size(); i ++){
 			Minutia m1 = sortedMinutia.get(i), m2 = sortedMinutia.get((i+1) % sortedMinutia.size()); //going around counterclockwise...
 			Double distance = Minutia.distance(cx, cy, m1.getX().doubleValue(), m1.getY().doubleValue());
 			Double phi = Minutia.computeInsideAngle(m1, cx, cy, m2);
 
-			if(isLeft(cx,cy, m1, m2)){ //this is probably an issue
+			if(!isLeft(cx,cy, m1, m2)){ //this is probably an issue
 				phi  = 360 - phi;
 			}
 
@@ -330,15 +330,15 @@ public class PRINTS extends FingerprintMethod{
 			sigmas.add(sigma);
 		}
 		
-		for(int i = 0; i < sortedMinutia.size(); i++){
-			Double distance = distances.get(i);
-			Double sigma = sigmas.get(i);
-			Double phi  = phis.get(i);
-			
+//		for(int i = 0; i < sortedMinutia.size(); i++){
+//			Double distance = distances.get(i);
+//			Double sigma = sigmas.get(i);
+//			Double phi  = phis.get(i);
+//			
 //			System.out.println("Distance: "+distance);
 //			System.out.println("Phi: "+phi);
 //			System.out.println("Sigma: "+sigma+"\n");
-		}
+//		}
 		//System.exit(0);
 		for(Long i = 0L; i < N; i++){
 			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?

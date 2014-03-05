@@ -63,7 +63,7 @@ public class TestPRINTS {
 		expectedPRINT.variables.get("phi1").setPrequantizedValue(72.096705089175344356292);
 		
 		expectedPRINT.variables.get("distance2").setPrequantizedValue(131.1849076685271749);
-		expectedPRINT.variables.get("sigma2").setPrequantizedValue(10.0);
+		expectedPRINT.variables.get("sigma2").setPrequantizedValue(1.0);
 		expectedPRINT.variables.get("phi2").setPrequantizedValue(122.69805665078455280515222617);
 		
 		expectedPRINT.variables.get("distance3").setPrequantizedValue(87.488742132916735);
@@ -81,5 +81,7 @@ public class TestPRINTS {
 				expectedPRINT.equalsPrequantized(computedPRINT)
 				);
 	}
+	
+	//TODO unit test PRINT to big int (region number stuff)
 	
 }

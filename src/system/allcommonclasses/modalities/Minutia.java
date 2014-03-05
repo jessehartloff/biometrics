@@ -166,16 +166,16 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 	
 	public static Double computeInsideAngle(Minutia m0, Double px, Double py, Minutia m2){
 		// variables names follow the law of cosines equation
-		Double a = distance(m0.getX().doubleValue(), m0.getY().doubleValue(), px, py);
+		Double a = Minutia.distance(m0.getX().doubleValue(), m0.getY().doubleValue(), px, py);
 		
-		Double b = distance(m0.getX().doubleValue(), m0.getY().doubleValue(),
-							m2.getX().doubleValue(), m2.getY().doubleValue());
+		Double b = Minutia.distance(m2.getX().doubleValue(), m2.getY().doubleValue(),
+							px, py);
 		
-		Double c = distance(px, py, m2.getX().doubleValue(), m2.getY().doubleValue());
+		Double c = Minutia.distance(m0.getX().doubleValue(), m0.getY().doubleValue(), m2.getX().doubleValue(), m2.getY().doubleValue());
 		//System.out.println(a+", "+b+", "+c);
 		
 		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
-		return (inRadians * 180.0)/Math.PI;
+		return Math.toDegrees(inRadians);
 	}
 	
 	public static Double distance(Double x1, Double y1, Double x2, Double y2){
