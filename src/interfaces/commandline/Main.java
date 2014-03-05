@@ -46,16 +46,19 @@ public class Main {
 		//AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
-		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
-		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
+//		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
+//		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		//...
 		// set values for everything else
 		//NgonSettings.getInstance().rotationRegions().setValue(8);
 		NgonSettings.getInstance().n().setValue(4);
-		NgonSettings.getInstance().kClosestMinutia().setValue(10);
-		NgonSettings.getInstance().xBins().setValue(10);//...
-		NgonSettings.getInstance().yBins().setValue(10);//...
-		NgonSettings.getInstance().thetaBins().setValue(4);//...
+		NgonSettings.getInstance().kClosestMinutia().setValue(8);
+		NgonSettings.getInstance().xBins().setValue(4);//...EER: 0.0581910403714915
+
+		NgonSettings.getInstance().yBins().setValue(9);//...
+		NgonSettings.getInstance().thetaBins().setValue(7);//...
 		
 
 		settings.runSystemAndMakeGraphs();

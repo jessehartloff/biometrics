@@ -133,7 +133,7 @@ public class GeneticAlgorithm {
 	
 	private Candidate makeOffspring(Candidate A, Candidate B) {
 		Random R = new Random();
-		Double crossoverConstant = .5, scalingConstant = .87; //adjust these for varying crossover and magnitude of mutations
+		Double crossoverConstant = .7, scalingConstant = .87; //adjust these for varying crossover and magnitude of mutations
 		//one point crossover
 		//switch to two point crossover if there are enough variables
 		int initialParent = R.nextInt(2);
