@@ -35,6 +35,10 @@ public class CoordinatorFactory {
 			case DEFAULTTESTINGPREQUANTIZED:
 				firstCoordinator = addToFront(new DefaultTestingPrequantized(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
 				break;
+			case DEFAULTTESTINGPREQUANTIZEDMULTITHREADED:
+				firstCoordinator = addToFront(new DefaultTestingPrequantizedMultiThreaded(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
+				break;
+				
 			case MULTIPLEENROLLMENT:
 				firstCoordinator = addToFront(new MultipleEnrollment(hasher, users), firstCoordinator);
 				break;
@@ -83,7 +87,7 @@ public class CoordinatorFactory {
 	}
 	
 	public enum MatchingCoordinatorEnumerator{
-		MULTIPLEENROLLMENT, DEFAULTTESTING, DEFAULTTESTINGPREQUANTIZED, NONE;
+		MULTIPLEENROLLMENT, DEFAULTTESTING, DEFAULTTESTINGPREQUANTIZED, DEFAULTTESTINGPREQUANTIZEDMULTITHREADED, NONE;
 	}
 	
 	public enum IndexingCoordinatorEnumerator{

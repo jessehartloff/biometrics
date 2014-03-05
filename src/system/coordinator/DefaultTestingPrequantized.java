@@ -19,28 +19,35 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 		this.prequantize();
 	}
 	
-	private void prequantize(){
+	protected void prequantize(){
+		quantizeUserSet(users.users, true);
+	}
+	
+	public void quantizeUserSet(ArrayList<User> users, boolean print){	
 		Long total = 0L;
 		Long completed = 0L;
 		Double progress;
-		for(User user : users.users){
+		for(User user : users){
 			total += user.readings.size();
 		}
-		
-		for(User user : users.users){
+		for(User user : users){
 			int numberOfReadings = user.readings.size();
 			for(int i=0; i<numberOfReadings; i++){
 				user.prequantizedEnrolledTemplates.add(hasher.makeEnrollTemplate(user.readings.get(i)));
 				user.prequantizedTestTemplates.add(hasher.makeTestTemplates(user.readings.get(i)));
 				completed++;
 				progress = (completed.doubleValue()/total.doubleValue())*100.0;
-				System.out.format("prequantizing: %5.2f%%%n", progress);
+				if(print){
+					System.out.format("prequantizing: %5.2f%%%n", progress);
+				}
+				//System.out.format("prequantizing: %5.2f%%%n", progress);
 			}
 			progress = (completed.doubleValue()/total.doubleValue())*100.0;
-//			System.out.format("prequantizing: %5.2f%%%n", progress);
+			//		System.out.format("prequantizing: %5.2f%%%n", progress);
 		}
 	}
-
+	
+	
 	@Override
 	protected Double runTest(Test test){
 		Template enrolledTemplate = users.users.get(test.enrolledUserID.intValue()).prequantizedEnrolledTemplates.get(test.enrolledReadingNumber.intValue());

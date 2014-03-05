@@ -51,6 +51,7 @@ public class AllMatchingCoordinatorSettings  extends ComboBoxSettings{
 	@Override
 	protected void addALLOptions() {
 		this.addToOptions(DefaultTestingPrequantizedSettings.getInstance());
+		this.addToOptions(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
 		this.addToOptions(DefaultTestingSettings.getInstance());
 		this.addToOptions(MultipleEnrollmentSettings.getInstance());
 		this.addToOptions(NoCoordinator.getInstance());

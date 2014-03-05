@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-
 import settings.fingerprintmethodsettings.PRINTSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
@@ -204,7 +203,7 @@ public class PRINTS extends FingerprintMethod{
 	
 	
 	
-	private Collection<? extends PRINT> makeAllPossiblePRINTs(ArrayList<Minutia> minutiae) {
+	private ArrayList<PRINT> makeAllPossiblePRINTs(ArrayList<Minutia> minutiae) {
 		return this.recursivePRINTBuilder(minutiae, new ArrayList<Minutia>());
 	}
 
@@ -228,8 +227,6 @@ public class PRINTS extends FingerprintMethod{
 		}
 	}
 	
-
-	 
 
 	private PRINT makePRINT(ArrayList<Minutia> minutiaList) {
 		PRINT returnPRINT = new PRINT();
@@ -280,19 +277,30 @@ public class PRINTS extends FingerprintMethod{
 
 		for(int i = 0;i < minutiaList.size(); i ++){
 			Minutia minutia = minutiaList.get(i);
-			Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
-			if(isLeft(cx,cy, m0, minutia)){ //this is probably an issue
-				intAngle  = (intAngle + 180) % 360;
+//			System.out.println(m0);
+//			System.out.println(cx+", "+cy);
+//			System.out.println(minutia+"\n");
+			if(!m0.equals(minutia)){
+				Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
+				if(isLeft(cx,cy, m0, minutia)){ //this is probably an issue
+					intAngle  = 360 - intAngle;
+				}
+				absoluteInteriorAngles.add(intAngle);
+				indexMinutiaByInteriorAngle.put(intAngle, minutia);
+			} else {
+				absoluteInteriorAngles.add(0.0);
+				indexMinutiaByInteriorAngle.put(0.0, minutia);
 			}
-			absoluteInteriorAngles.add(intAngle);
-			indexMinutiaByInteriorAngle.put(intAngle, minutia);
 		}
 		
-		for(Double d : absoluteInteriorAngles)
-			System.out.println(d);
+//		for(Double d : absoluteInteriorAngles)
+//			System.out.println(d);
 		Collections.sort(absoluteInteriorAngles);
-		for(Double d : absoluteInteriorAngles)
-			System.out.println(d);
+
+//		for(Double d : absoluteInteriorAngles)
+//			System.out.println(d);
+
+
 		
 		ArrayList<Minutia> sortedMinutia = new ArrayList<Minutia>();
 		for(Double interiorAngle : absoluteInteriorAngles){
@@ -304,10 +312,16 @@ public class PRINTS extends FingerprintMethod{
 		ArrayList<Double> sigmas = new ArrayList<Double>();
 		ArrayList<Double> phis = new ArrayList<Double>();
 		
-		for(int i = 0;i < sortedMinutia.size(); i ++){
+		for(int i = 0; i < sortedMinutia.size(); i ++){
 			Minutia m1 = sortedMinutia.get(i), m2 = sortedMinutia.get((i+1) % sortedMinutia.size()); //going around counterclockwise...
 			Double distance = Minutia.distance(cx, cy, m1.getX().doubleValue(), m1.getY().doubleValue());
 			Double phi = Minutia.computeInsideAngle(m1, cx, cy, m2);
+
+			if(isLeft(cx,cy, m1, m2)){ //this is probably an issue
+				phi  = 360 - phi;
+			}
+
+			
 			Double sigma = m2.getTheta().doubleValue() - m1.getTheta().doubleValue();
 
 			//ith position in each list corresponds to the ith minutia point
@@ -316,9 +330,16 @@ public class PRINTS extends FingerprintMethod{
 			sigmas.add(sigma);
 		}
 		
-		//Double angle = Math.tan(m0.getY().doubleValue()/m0.getX().doubleValue());//verify the angle is from the positive x axis... shouldn't make a difference
-		
-
+		for(int i = 0; i < sortedMinutia.size(); i++){
+			Double distance = distances.get(i);
+			Double sigma = sigmas.get(i);
+			Double phi  = phis.get(i);
+			
+//			System.out.println("Distance: "+distance);
+//			System.out.println("Phi: "+phi);
+//			System.out.println("Sigma: "+sigma+"\n");
+		}
+		//System.exit(0);
 		for(Long i = 0L; i < N; i++){
 			//worth thinking about overloading setPrequantizedValue if Double has more bits than Long?
 			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).doubleValue());
@@ -341,6 +362,7 @@ public class PRINTS extends FingerprintMethod{
 				//returns true if pointToCheck is left of the line made by linePointA and linePointB
 				//note: returns true if pointTCheck is above the horizontal line made by A and B
 	}
+	
 	
 	@Override
 	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint) {

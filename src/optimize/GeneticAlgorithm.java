@@ -24,8 +24,8 @@ public class GeneticAlgorithm {
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());;
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
-		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
-		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
 		this.f = fitness;
 		
 	}
@@ -41,17 +41,17 @@ public class GeneticAlgorithm {
 				Results results =  settings.runSystemAndGetResults();
 				System.out.println(results.getEer());
 
-				return -results.getEer()*100.0; 			//minimizing EER
+				return results.getEer()*100.0; 			//minimizing EER
 			}	
 		});		
 
-		ArrayList<Candidate> candidates = ga.intializePopulation(8);
+		ArrayList<Candidate> candidates = ga.intializePopulation(5);
 		ArrayList<Candidate> init = new ArrayList<Candidate>(candidates);
 		System.out.println("Initial Population:");
 		for(Candidate c : init){
 			System.out.println("Candidate: "+c);
 		}
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 2; i++){
 			candidates = ga.evolve(candidates);
 			for(Candidate c : candidates){
 				System.out.println(i+"th Gen Candidate: "+c);
@@ -100,7 +100,8 @@ public class GeneticAlgorithm {
 		
 		//constructing breeding population based on accumulated frequency
 		int offspringProportion = 2; //make this more clear
-		int numberToSelect = candidates.size()/offspringProportion;
+		//int numberToSelect = candidates.size()/offspringProportion;
+		int numberToSelect = candidates.size()*3/4;
 		
 		ArrayList<Candidate> breedingPopulation = new ArrayList<Candidate>();
 		Random r = new Random();
@@ -175,8 +176,11 @@ public class GeneticAlgorithm {
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		NgonSettings fpm = NgonSettings.getInstance();
 		try {
-			Long[] nbounds = {3L,8L};
-			Long[] kClosestBounds = {3L,9L};
+			Long[] nbounds = {3L,11L};
+			Long[] kClosestBounds = {3L,11L};
+			Long[] xBinBounds = {2L, 11L};
+			Long[] yBinBounds = {2L, 11L};
+			Long[] thetaBinBounds = {2L, 11L};
 			
 			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
 							fpm.n().getClass().getMethod("setValue", Long.class),
@@ -184,6 +188,15 @@ public class GeneticAlgorithm {
 			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"k-closest Minutia", 
 							fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class), 
 							new ArrayList<Long>(Arrays.asList(kClosestBounds))));
+			chromosomes.add(new Chromosome(fpm.xBins(), 0L, "xBins",
+							fpm.xBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(xBinBounds))));
+			chromosomes.add(new Chromosome(fpm.yBins(), 0L, "yBins",
+							fpm.yBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(yBinBounds))));
+			chromosomes.add(new Chromosome(fpm.thetaBins(), 0L, "thetaBins",
+							fpm.thetaBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(thetaBinBounds))));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

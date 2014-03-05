@@ -15,7 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 
 import settings.AllSettings;
+import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
 import settings.coordinatorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
 import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
@@ -41,15 +43,19 @@ public class Main {
 		
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
+		//AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
-		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
-		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
 		//...
 		// set values for everything else
 		//NgonSettings.getInstance().rotationRegions().setValue(8);
-		NgonSettings.getInstance().n().setValue(5);
-		NgonSettings.getInstance().kClosestMinutia().setValue(7);		//...
+		NgonSettings.getInstance().n().setValue(4);
+		NgonSettings.getInstance().kClosestMinutia().setValue(10);
+		NgonSettings.getInstance().xBins().setValue(10);//...
+		NgonSettings.getInstance().yBins().setValue(10);//...
+		NgonSettings.getInstance().thetaBins().setValue(4);//...
 		
 
 		settings.runSystemAndMakeGraphs();

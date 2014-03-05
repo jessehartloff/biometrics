@@ -172,6 +172,8 @@ public class Minutia implements Comparable<Minutia>, Serializable{
 							m2.getX().doubleValue(), m2.getY().doubleValue());
 		
 		Double c = distance(px, py, m2.getX().doubleValue(), m2.getY().doubleValue());
+		//System.out.println(a+", "+b+", "+c);
+		
 		Double inRadians = Math.acos( (a*a + b*b - c*c)/(2*a*b) );
 		return (inRadians * 180.0)/Math.PI;
 	}
