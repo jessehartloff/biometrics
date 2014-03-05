@@ -181,7 +181,7 @@ public class PRINTS extends FingerprintMethod{
 	public  BigInteger getRegionBigInteger(BigInteger integer){
 		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
 		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length())).toBigInteger());
-		return regionNumber; // wtf wtf wtf is going on here???
+		return regionNumber; 
 	}
 	
 
@@ -198,10 +198,11 @@ public class PRINTS extends FingerprintMethod{
 			int startingIndex;
 			for(startingIndex = 0; minutiaeCopy.get(startingIndex).distanceTo(minutia) < 0.0001; startingIndex++);
 			ArrayList<Minutia> minutiae = new ArrayList<Minutia>();
-			//minutiae.add(minutia); //<--- don't need this..... ???
+			minutiae.add(minutia); //<--- don't need this..... ???
 			for(int i = 0; i < settings.kClosestMinutia().getValue(); i++){
 				minutiae.add(minutiaeCopy.get(startingIndex+i));
 			}
+
 			prints.addAll(this.makeAllPossiblePRINTs(minutiae));
 		}
 		return prints;

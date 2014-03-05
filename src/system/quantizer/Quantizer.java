@@ -30,5 +30,6 @@ public abstract class Quantizer {
 	public abstract BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues); 
 	
 	public abstract Feature quantizeFeature(Feature feature);
+	public abstract Feature getRandomFeature();
 	
 }

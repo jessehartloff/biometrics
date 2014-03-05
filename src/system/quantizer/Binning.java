@@ -108,6 +108,21 @@ public class Binning extends Quantizer{
 	}
 
 
+	@Override
+	public Feature getRandomFeature() {
+		Feature toReturn = new Feature();
+		Long i = 0L;
+		for(SettingsMethodVariable variable : this.variableSettings){
+			Double fart = Math.floor(Math.random() * variable.getBins().doubleValue());
+			Long rando = fart.longValue();
+//			toReturn.variables.put(i.toString(), new Variable(rando));
+			i++;
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
 
 

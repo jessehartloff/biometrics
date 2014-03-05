@@ -25,6 +25,7 @@ public class StraightHasher extends Hasher {
 		
 		return template;
 	}
+	
 
 	@Override
 	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {

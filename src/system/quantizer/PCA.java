@@ -197,6 +197,13 @@ public class PCA extends Quantizer{
 
 	
 	}
+
+
+	@Override
+	public Feature getRandomFeature() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

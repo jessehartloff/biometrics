@@ -128,4 +128,17 @@ public class Feature{
 		return true;
 	}
 	
+//	public BigInteger toBigIntQuantized(){
+//		BigInteger toReturn = BigInteger.valueOf(0);
+//		int i=0;
+//		for(String varName : feature.variables.keySet()){
+//			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
+//			Long quantizedValue = variableSettings.get(i).findBin(feature.variables.get(varName).getPrequantizedValue().doubleValue());
+////			quantizedValues.put(varName, quantizedValue);
+//			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
+//			i++;
+//		}
+//		return toReturn;
+//	}
+	
 }
