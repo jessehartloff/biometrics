@@ -146,8 +146,10 @@ public class PRINTS extends FingerprintMethod{
 	private ArrayList<Template> PRINTSQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> templates = new ArrayList<Template>();
 		ArrayList<PRINT> prints = this.fingerprintToPRINTS(fingerprint);
+		Template template = new Template();
+		Template templatePlusOne = new Template();
+		Template templateMinusOne = new Template();
 		for(PRINT print : prints){
-			Template template = new Template();
 
 			BigInteger quantizedPRINT = print.toBigInt();
 			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
@@ -164,10 +166,14 @@ public class PRINTS extends FingerprintMethod{
 		//	System.out.println("Adjacent regions: "+quantizedPRINT+", "+PRINTwithRegionPlusOne+", "+PRINTwithRegionMinusOne);
 			
 			template.hashes.add(quantizedPRINT);
-			template.hashes.add(PRINTwithRegionPlusOne);
-			template.hashes.add(PRINTwithRegionMinusOne);
-			templates.add(template);
+			templatePlusOne.hashes.add(PRINTwithRegionPlusOne);
+			templateMinusOne.hashes.add(PRINTwithRegionMinusOne);
+			
 		}
+		
+		templates.add(template);
+		templates.add(templatePlusOne);
+		templates.add(templateMinusOne);
 		
 		return templates;
 	}
@@ -175,7 +181,7 @@ public class PRINTS extends FingerprintMethod{
 	public  BigInteger getRegionBigInteger(BigInteger integer){
 		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
 		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length())).toBigInteger());
-		return regionNumber;
+		return regionNumber; // wtf wtf wtf is going on here???
 	}
 	
 
