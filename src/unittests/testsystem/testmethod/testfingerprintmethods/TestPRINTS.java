@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.settingsvariables.SettingsMethodVariable;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.fingerprintmethods.PRINTS;
 import system.method.fingerprintmethods.PRINTS.PRINT;
@@ -79,18 +80,170 @@ public class TestPRINTS {
 				expectedPRINT.equalsPrequantized(computedPRINT)
 				);
 	}
-	
-	
+
 	@Test
 	public void testGetRegionNumber(){
 		this.getSettings();
-		PRINTS p = new PRINTS();
-		BigInteger testRegion = p.getRegionBigInteger(BigInteger.valueOf(900685799));
+		PRINTSettings.getInstance().rotationRegions().setValue(5);
+		PRINTS printsMethod = new PRINTS();
+		PRINT print = printsMethod.new PRINT();
+		print.setAngle(126.6);
+		Long computed = print.getRegionNumber();
+		Long expected = 1L;
 		assertTrue(
-				"\nExpected: "+BigInteger.valueOf(99)+" "+
-				"\nComputed: "+testRegion,
-				testRegion.equals(BigInteger.valueOf(99)));
-		
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
 	}
+	@Test
+	public void testGetRegionNumber1(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(3);
+		PRINTS printsMethod = new PRINTS();
+		PRINT print = printsMethod.new PRINT();
+		print.setAngle(270.0);
+		Long computed = print.getRegionNumber();
+		Long expected = 2L;
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	@Test
+	public void testGetRegionNumber2(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(100);
+		PRINTS printsMethod = new PRINTS();
+		PRINT print = printsMethod.new PRINT();
+		print.setAngle(126.6);
+		Long computed = print.getRegionNumber();
+		Long expected = 35L;
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	
+
+	@Test
+	public void testAppendRegionNumber(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(33);
+		BigInteger computed = PRINTS.appendRegionNumber(BigInteger.valueOf(6L), 13L);
+		BigInteger expected = BigInteger.valueOf(397L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+
+	@Test
+	public void testAppendRegionNumber1(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(5);
+		BigInteger computed = PRINTS.appendRegionNumber(BigInteger.valueOf(21348973L), 0L);
+		BigInteger expected = BigInteger.valueOf(170791784L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	@Test
+	public void testAppendRegionNumber2(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(100);
+		BigInteger computed = PRINTS.appendRegionNumber(BigInteger.valueOf(432158976234905L), 98L);
+		BigInteger expected = BigInteger.valueOf(55316348958067938L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	
+
+
+	@Test
+	public void testGetAppendedRegion(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(33);
+		Long computed = PRINTS.getAppendedRegion(BigInteger.valueOf(397L));
+		Long expected = 13L;
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+
+	@Test
+	public void testGetAppendedRegion1(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(5);
+		Long computed = PRINTS.getAppendedRegion(BigInteger.valueOf(170791784L));
+		Long expected = 0L;
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+
+	@Test
+	public void testGetAppendedRegion2(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(100);
+		Long computed = PRINTS.getAppendedRegion(BigInteger.valueOf(55316348958067938L));
+		Long expected = 98L;
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	
+	
+
+	@Test
+	public void testGetPrintWithoutRegionNumber(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(33);
+		BigInteger computed = PRINTS.getPrintWithoutRegionNumber(BigInteger.valueOf(397L));
+		BigInteger expected = BigInteger.valueOf(6L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	@Test
+	public void testGetPrintWithoutRegionNumber1(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(5);
+		BigInteger computed = PRINTS.getPrintWithoutRegionNumber(BigInteger.valueOf(170791784L));
+		BigInteger expected = BigInteger.valueOf(21348973L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+	@Test
+	public void testGetPrintWithoutRegionNumber2(){
+		this.getSettings();
+		PRINTSettings.getInstance().rotationRegions().setValue(100);
+		BigInteger computed = PRINTS.getPrintWithoutRegionNumber(BigInteger.valueOf(55316348958067938L));
+		BigInteger expected = BigInteger.valueOf(432158976234905L);
+		assertTrue(
+				"\nExpected: "+expected+" "+
+				"\nComputed: "+computed,
+				expected.equals(computed));
+	}
+
+//	@Test
+//	public void testGetRegionNumber(){
+//		this.getSettings();
+//		PRINTS p = new PRINTS();
+//		BigInteger testRegion = p.getRegionBigInteger(BigInteger.valueOf(900685799));
+//		assertTrue(
+//				"\nExpected: "+BigInteger.valueOf(99)+" "+
+//				"\nComputed: "+testRegion,
+//				testRegion.equals(BigInteger.valueOf(99)));
+//		
+//	}
 
 }

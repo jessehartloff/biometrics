@@ -2,7 +2,11 @@ package settings;
 
 import interfaces.gui.ResultsGUI;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -10,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -21,7 +26,6 @@ import settings.modalitysettings.AllModalitySettings;
 import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
-
 import interfaces.gui.ResultsGUI;
 
 public class AllSettings extends Settings{
@@ -115,14 +119,32 @@ public class AllSettings extends Settings{
 		return system.go();
 	}
 	
+
+	 
 	
 	protected JPanel thisJPanel(){
 		JPanel panel = new JPanel();
-		JButton goButton = new JButton("GO!");
+		JButton goButton = new JButton("GO!") {	 
+			@Override
+		     protected void paintComponent(Graphics g) {
+	         if (getModel().isPressed()) {
+	             g.setColor(Color.RED);
+	         } else {
+	             g.setColor(Color.GREEN);
+	         }
+	         g.fillRect(0, 0, getWidth(), getHeight());
+	         super.paintComponent(g);
+	     }};
+
+		goButton.setFont(goButton.getFont().deriveFont(Font.BOLD));
+		goButton.setFont(goButton.getFont().deriveFont(20.0f));
+		goButton.setBorder(BorderFactory.createRaisedBevelBorder());
+		goButton.setPreferredSize(new Dimension(150, 100));
 		
 		goButton.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e)
-            {instance.runSystemAndMakeGraphs();}
+            public void actionPerformed(ActionEvent e){
+            	instance.runSystemAndMakeGraphs();
+            	}
             }
 		);   
 		

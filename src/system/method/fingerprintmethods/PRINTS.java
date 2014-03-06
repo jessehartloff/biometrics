@@ -8,7 +8,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.settingsvariables.SettingsMethodVariable;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
@@ -66,15 +68,12 @@ public class PRINTS extends FingerprintMethod{
 		@Override
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
-			BigInteger toReturn = featureBigInt.shiftLeft(settings.rotationRegions().getValue().intValue()); //this is wrong too. there's no way this makes sense
-			BigInteger regionNumber =  BigInteger.valueOf(new Double(Math.floor((this.angle.doubleValue()/360.0)*settings.rotationRegions()
-								.getValue().doubleValue())).intValue());
-//			System.out.println("Angle: "+this.angle);
-//			System.out.println("Region: "+regionNumber);
-//			System.out.println("ToBigIntBefore: "+featureBigInt+", "+toReturn+", "+regionNumber);
-			toReturn = toReturn.add(regionNumber);
-///			System.out.println("ToBigIntAfter: "+featureBigInt+", "+toReturn+", "+regionNumber);
-			return toReturn;
+			return PRINTS.appendRegionNumber(featureBigInt, this.getRegionNumber());
+		}
+		
+		public Long getRegionNumber(){
+			Double d = Math.floor((this.angle/360.0)*settings.rotationRegions().getValue().doubleValue());
+			return d.longValue();
 		}
 		
 		public Double getCenterX() {
@@ -115,6 +114,10 @@ public class PRINTS extends FingerprintMethod{
 		
 	}
 	
+	
+
+	
+	
 	public PRINTS() {
 		settings = PRINTSettings.getInstance();
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
@@ -152,38 +155,64 @@ public class PRINTS extends FingerprintMethod{
 		for(PRINT print : prints){
 
 			BigInteger quantizedPRINT = print.toBigInt();
-			BigInteger regionNumber = this.getRegionBigInteger(quantizedPRINT);
-			BigInteger PRINTNoRegion = quantizedPRINT.subtract(regionNumber);
-			//BigInteger PRINTwithRegion = PRINTNoRegion.add(regionNumber);
+			Long regionNumber = PRINTS.getAppendedRegion(quantizedPRINT);
+			BigInteger PRINTNoRegion = PRINTS.getPrintWithoutRegionNumber(quantizedPRINT);
+
+			BigInteger PRINTwithRegionPlusOne = PRINTS.appendRegionNumber(PRINTNoRegion, 
+					(regionNumber+1)%settings.rotationRegions().getValue());
+			BigInteger PRINTwithRegionMinusOne = PRINTS.appendRegionNumber(PRINTNoRegion, 
+					(regionNumber-1)%settings.rotationRegions().getValue());
+					
+//			BigInteger nextRegion = regionNumber.add(BigInteger.valueOf(1))
+//					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
+//			BigInteger previousRegion = regionNumber.subtract(BigInteger.valueOf(1))
+//					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
 			
-			BigInteger nextRegion = regionNumber.add(BigInteger.valueOf(1))
-					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
-			BigInteger previousRegion = regionNumber.subtract(BigInteger.valueOf(1))
-					.mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
-			
-			BigInteger PRINTwithRegionPlusOne = PRINTNoRegion.add(nextRegion);
-			BigInteger PRINTwithRegionMinusOne = PRINTNoRegion.add(previousRegion);
+//			BigInteger PRINTwithRegionPlusOne = PRINTNoRegion.add(nextRegion);
+//			BigInteger PRINTwithRegionMinusOne = PRINTNoRegion.add(previousRegion);
 		//	System.out.println("Adjacent regions: "+quantizedPRINT+", "+PRINTwithRegionPlusOne+", "+PRINTwithRegionMinusOne);
+
+//			template.hashes.add(quantizedPRINT);
+//			templatePlusOne.hashes.add(PRINTwithRegionPlusOne);
+//			templateMinusOne.hashes.add(PRINTwithRegionMinusOne);
 			
 			template.hashes.add(quantizedPRINT);
-			templatePlusOne.hashes.add(PRINTwithRegionPlusOne);
-			templateMinusOne.hashes.add(PRINTwithRegionMinusOne);
-			
+//			template.hashes.add(PRINTwithRegionPlusOne);
+//			template.hashes.add(PRINTwithRegionMinusOne);
+// 3 k closest : 0.19514218446549275
+//			System.out.println("Adjacent regions: "+quantizedPRINT+", "+PRINTwithRegionPlusOne+", "+PRINTwithRegionMinusOne);
 		}
 		
 		templates.add(template);
-		templates.add(templatePlusOne);
-		templates.add(templateMinusOne);
+//		templates.add(templatePlusOne);
+//		templates.add(templateMinusOne);
 		
 		return templates;
 	}
 	
-	public  BigInteger getRegionBigInteger(BigInteger integer){
-		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
-		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length()-1)).toBigInteger());
-		return regionNumber;
+	
 
+	public static BigInteger appendRegionNumber(BigInteger print, Long regionNumber){
+		BigInteger toReturn = print.shiftLeft(SettingsMethodVariable.binsToBits(
+				PRINTSettings.getInstance().rotationRegions().getValue()).intValue());
+		return toReturn.add(BigInteger.valueOf(regionNumber));
 	}
+	
+	public static Long getAppendedRegion(BigInteger appendedPrint){
+		Long numberOfBits = SettingsMethodVariable.binsToBits(PRINTSettings.getInstance().rotationRegions().getValue());
+		return appendedPrint.and(BigInteger.valueOf(2L).pow(numberOfBits.intValue()).subtract(BigInteger.ONE)).longValue();
+	}
+	
+	public static BigInteger getPrintWithoutRegionNumber(BigInteger appendedPrint){
+		return appendedPrint.shiftRight(SettingsMethodVariable.binsToBits(PRINTSettings.getInstance().rotationRegions().getValue()).intValue());
+	}
+	
+//	public  BigInteger getRegionBigInteger(BigInteger integer){
+		// though I love this code... it's gotta go.
+//		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
+//		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length()-1)).toBigInteger());
+//		return regionNumber;
+//	}
 	
 
 	private ArrayList<PRINT> fingerprintToPRINTS(Fingerprint fingerprint) {
