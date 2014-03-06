@@ -180,8 +180,9 @@ public class PRINTS extends FingerprintMethod{
 	
 	public  BigInteger getRegionBigInteger(BigInteger integer){
 		String regionNumberDigits = this.settings.rotationRegions().getValue().toString();
-		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length())).toBigInteger());
-		return regionNumber; 
+		BigInteger regionNumber = integer.remainder(new BigDecimal(Math.pow(10,regionNumberDigits.length()-1)).toBigInteger());
+		return regionNumber;
+
 	}
 	
 

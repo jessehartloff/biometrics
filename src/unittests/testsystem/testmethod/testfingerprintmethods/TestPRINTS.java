@@ -3,17 +3,15 @@ package unittests.testsystem.testmethod.testfingerprintmethods;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.ArrayList;
+
+import org.junit.Test;
 
 import settings.fingerprintmethodsettings.PRINTSettings;
 import system.allcommonclasses.modalities.Minutia;
-import system.method.feature.DistanceVariable;
-import system.method.feature.PhiVariable;
-import system.method.feature.SigmaVariable;
 import system.method.fingerprintmethods.PRINTS;
-import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.PRINTS.PRINT;
-import system.method.fingerprintmethods.Triangles.Triangle;
 
 public class TestPRINTS {
 	
@@ -21,7 +19,7 @@ public class TestPRINTS {
 		PRINTSettings settings = PRINTSettings.getInstance();
 		
 		settings.n().setValue(5);
-		
+		settings.rotationRegions().setValue(100);
 		return settings;
 	}
 	
@@ -82,6 +80,17 @@ public class TestPRINTS {
 				);
 	}
 	
-	//TODO unit test PRINT to big int (region number stuff)
 	
+	@Test
+	public void testGetRegionNumber(){
+		this.getSettings();
+		PRINTS p = new PRINTS();
+		BigInteger testRegion = p.getRegionBigInteger(BigInteger.valueOf(900685799));
+		assertTrue(
+				"\nExpected: "+BigInteger.valueOf(99)+" "+
+				"\nComputed: "+testRegion,
+				testRegion.equals(BigInteger.valueOf(99)));
+		
+	}
+
 }
