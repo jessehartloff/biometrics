@@ -131,6 +131,15 @@ public class RSAClient {
 		System.out.println("DecryptedString is : " +decryptedPassword);
 	}
 	
+	public KeyPair generateKeyPair() throws NoSuchAlgorithmException{
+		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
+		keyGenerator.initialize(1024);
+		KeyPair rsaKeys = keyGenerator.generateKeyPair();
+		// How to get public Key  :  PublicKey publicKey = rsaKeys.getPublic();	
+		// To get private key     :  PrivateKey privateKey = rsaKeys.getPrivate();
+		return rsaKeys;
+	}
+	
 	public static void main ( String[] args){
 		RSAClient client = new RSAClient();
 		try {
