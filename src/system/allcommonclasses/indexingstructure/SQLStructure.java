@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import system.allcommonclasses.utilities.SQLFunctions;
 
-public class SQLStructure1 extends IndexingStructure{
+public class SQLStructure extends IndexingStructure{
 
 	{}// TODO Jen/Jim - SQL indexing
 
@@ -20,7 +20,7 @@ public class SQLStructure1 extends IndexingStructure{
 	//this needs to be some sort of sql table, only used internally
 	HashMap<BigInteger, ArrayList<IndexingPoint>> indexingStructure;
 	
-	public SQLStructure1(){
+	public SQLStructure(){
 		//again, we won't use a hashmap here, but a table
 		indexingStructure = new HashMap<BigInteger, ArrayList<IndexingPoint>>();
 		SQLFunctions sqlf = new SQLFunctions();
@@ -43,18 +43,18 @@ public class SQLStructure1 extends IndexingStructure{
 	}
 	
 	public static Connection ConnectToDatabase(){
-		try{
-			OracleDataSource ds = new OracleDataSource();
-	        ds.setUser(userName);
-	        ds.setPassword(password);
-	        ds.setURL("jdbc:oracle:thin:@aos.acsu.buffalo.edu:1521/aos.buffalo.edu");
-	        connection = ds.getConnection();
-			
-		}catch(SQLException e){
-			System.out.println("Cannot connect to database");
-			e.printStackTrace();
-	        System.exit(1);
-		}
+//		try{
+//			OracleDataSource ds = new OracleDataSource();
+//	        ds.setUser(userName);
+//	        ds.setPassword(password);
+//	        ds.setURL("jdbc:oracle:thin:@aos.acsu.buffalo.edu:1521/aos.buffalo.edu");
+//	        connection = ds.getConnection();
+//			
+//		}catch(SQLException e){
+//			System.out.println("Cannot connect to database");
+//			e.printStackTrace();
+//	        System.exit(1);
+//		}
 		return null;
 		
 	}
