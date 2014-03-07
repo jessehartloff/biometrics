@@ -3,6 +3,8 @@ package system.coordinator.multiserver;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -39,7 +41,7 @@ public class RSAClient {
 		
 		
 		Socket clnt_socket;
-		int port = 58063;
+		int port = 58196;
 		clnt_socket = new Socket(InetAddress.getLocalHost(),port);
 		ObjectOutputStream objOut = new ObjectOutputStream(clnt_socket.getOutputStream());
 		objOut.writeObject(publicKey);
@@ -49,45 +51,95 @@ public class RSAClient {
 		inputStream.read(inputBuffer,0,128);
 		System.out.println("Received Encrypted Key :" +new String(inputBuffer, "UTF-8"));
 		
+		long startDecryption = System.currentTimeMillis();
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
 		byte[] decryptedKey = cipher.doFinal(inputBuffer);
 		System.out.println("Decrypted Key :" +new String(decryptedKey, "UTF-8"));
 		
 		long finishTime = System.currentTimeMillis();
-		
+		System.out.println("Time for Decryption is :" + (finishTime - startDecryption));
 		System.out.println("Time For RSA Key Exchange Was : " + (finishTime-startTime) + " milliseconds");
 		
 	}
+	public Cipher getCipherInstance(String cipherType){
+		
+		try {
+			return Cipher.getInstance(cipherType);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Something is broke: could not get Cipher Instance");
+		} 
+		return null;
+	}
+	
+	public BigInteger decryption(Cipher cipher, PrivateKey privateKey, BigInteger minutia){
+		byte[] decryptedKey = null;
+		try{
+			//cipher = Cipher.getInstance("RSA"); 
+			cipher.init(Cipher.DECRYPT_MODE, privateKey); //make sure to pull this out before doing multiple decryptions when you integrate this function
+			decryptedKey = cipher.doFinal(minutia.toByteArray());
+		}catch(Exception e){
+			
+		}	
+		// if we need to send it can use an Object Output Stream : return (Object)decryptedKey;
+		return new BigInteger(decryptedKey);
+	}
+	
+	public String decryptionString(Cipher cipher, PrivateKey privateKey, byte[] minutia) throws UnsupportedEncodingException{
+		byte[] decryptedKey = null;
+		try{
+			//cipher = Cipher.getInstance("RSA"); 
+			cipher.init(Cipher.DECRYPT_MODE, privateKey); //make sure to pull this out before doing multiple decryptions when you integrate this function
+			decryptedKey = cipher.doFinal(minutia);
+		}catch(Exception e){
+			
+		}	
+		// if we need to send it can use an Object Output Stream : return (Object)decryptedKey;
+		return new String(decryptedKey, "UTF-8");
+	}
+	public byte[] encryptString(PublicKey publicKey, String minutia){
+		byte[] encryptedKey = null;
+		try{
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+			encryptedKey = cipher.doFinal(minutia.getBytes());
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return encryptedKey;
+	}
+	public void testMethods() throws NoSuchAlgorithmException{
+		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
+		keyGenerator.initialize(1024);
+		KeyPair rsaKeys = keyGenerator.generateKeyPair();
+		PublicKey publicKey = rsaKeys.getPublic();
+		String publicKeyString = publicKey.toString();
+		PrivateKey privateKey = rsaKeys.getPrivate();
+		String password = "thisIsMyPassword";
+		Cipher cipher = getCipherInstance("RSA");
+		String decryptedPassword = null;
+		try {
+			decryptedPassword = decryptionString(cipher, privateKey, encryptString(publicKey, password)  );
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		System.out.println("DecryptedString is : " +decryptedPassword);
+	}
+	
 	public static void main ( String[] args){
 		RSAClient client = new RSAClient();
 		try {
-			client.RSAKeyExchange();
-		} catch (InvalidKeyException e) {
+			client.testMethods();
+			//client.RSAKeyExchange();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 }

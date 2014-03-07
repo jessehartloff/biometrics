@@ -3,6 +3,7 @@ package system.coordinator.multiserver;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.InvalidAlgorithmParameterException;
@@ -43,16 +44,33 @@ public class Server {
 		ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
 		PublicKey pk = (PublicKey) objInput.readObject();
 		System.out.println(pk.toString());
+		long startEncryption = System.currentTimeMillis();
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE,pk);
 		byte[] encryptedKey = cipher.doFinal(secretKeySpec.getEncoded());
-		//System.out.println("Length of Encrypted Key : " + encryptedKey.length);
+		long finishEncryption = System.currentTimeMillis();
+		System.out.println("Time to encrypt is " + (finishEncryption - startEncryption));
 		System.out.println("Key Encrypted With Public Key : " + new String(encryptedKey, "UTF-8"));
 		DataOutputStream dataOut = new DataOutputStream(client.getOutputStream());
 		dataOut.write(encryptedKey,0,encryptedKey.length);
 		
 	}
 
+	public BigInteger encrypt(PublicKey publicKey, BigInteger minutia){
+		byte[] encryptedKey = null;
+		try{
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+			encryptedKey = cipher.doFinal(minutia.toByteArray());
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return new BigInteger(encryptedKey);
+	}
+	
 	public static void main(String[] args) throws NoSuchProviderException, InvalidKeySpecException, ClassNotFoundException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException {
 		// TODO Auto-generated method stub
 		Server server = new Server();
