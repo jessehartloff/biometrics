@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -22,10 +23,12 @@ import settings.SettingsIO;
 
 public class GUI {
 	
-		
+	public static final Color BACKGROUNDCOLOR = Color.BLUE;
+	
 	public static void main(String[] args){
 		
 		JFrame frame = new JFrame("Biometrics");
+		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.getContentPane().setBackground(Color.WHITE);
@@ -75,7 +78,7 @@ public class GUI {
 
 
 //		
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(BACKGROUNDCOLOR);
 		
 		AllSettings.getInstance();
 		

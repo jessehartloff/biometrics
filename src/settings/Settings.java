@@ -14,7 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import static interfaces.gui.GUI.BACKGROUNDCOLOR;
 
 public abstract class Settings implements Serializable{
 
@@ -33,6 +33,7 @@ public abstract class Settings implements Serializable{
 
 	protected JPanel makeJPanel() {
 		JPanel toRet = new JPanel();
+		toRet.setBackground(BACKGROUNDCOLOR);
 		toRet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		toRet.add(this.thisJPanel(), BorderLayout.WEST);
 		toRet.add(this.makeChildrenJPanel(), BorderLayout.EAST);
@@ -50,6 +51,7 @@ public abstract class Settings implements Serializable{
 
 	protected JPanel thisJPanel(){
 		JPanel toRet = new JPanel();
+		toRet.setBackground(BACKGROUNDCOLOR);
 		//toRet.setLayout(new FlowLayout());
 		toRet.setMaximumSize(new Dimension(0, 0));
 		return toRet;
@@ -67,7 +69,8 @@ public abstract class Settings implements Serializable{
 	
 	public JPanel makeChildrenJPanel(){
 		JPanel childrenPanel = new JPanel();
-//		childrenPanel.setBackground(Color.WHITE);
+		childrenPanel.setLayout(new GridLayout(3,2));
+		childrenPanel.setBackground(BACKGROUNDCOLOR);
 //		childrenPanel.setBackground(java.awt.Color.BLUE);
 //		System.out.println(this.getClass()+"\t"+settingsVariables.keySet().toString());
 		BoxLayout boxLayout = new BoxLayout(childrenPanel, BoxLayout.Y_AXIS);
@@ -82,7 +85,7 @@ public abstract class Settings implements Serializable{
 //			childPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 //			BoxLayout innerBoxLayout = new BoxLayout(childPanel, BoxLayout.X_AXIS);
 //			childPanel.setLayout(innerBoxLayout);
-//			childPanel.setBackground(java.awt.Color.GREEN);
+			childPanel.setBackground(BACKGROUNDCOLOR);
 //			BoxLayout boxLayout2 = new BoxLayout(childPanel, BoxLayout.X_AXIS);
 //			childPanel.setLayout(boxLayout2);
 			childPanel.add(new JLabel(subSettingsName + ":"), BorderLayout.WEST);

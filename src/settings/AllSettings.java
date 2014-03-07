@@ -26,7 +26,9 @@ import settings.modalitysettings.AllModalitySettings;
 import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
+
 import interfaces.gui.ResultsGUI;
+
 
 public class AllSettings extends Settings{
 
@@ -84,6 +86,7 @@ public class AllSettings extends Settings{
 		if(AllSettings.getInstance().panel == null){
 			AllSettings.getInstance().panel = new JPanel();
 		}
+//		AllSettings.getInstance().panel.setBackground(BACKGROUNDCOLOR);
 		AllSettings.getInstance().panel.removeAll();
 		AllSettings.getInstance().panel.add(AllSettings.getInstance().makeJPanel());
 		AllSettings.getInstance().panel.validate();
@@ -140,6 +143,7 @@ public class AllSettings extends Settings{
 		goButton.setFont(goButton.getFont().deriveFont(20.0f));
 		goButton.setBorder(BorderFactory.createRaisedBevelBorder());
 		goButton.setPreferredSize(new Dimension(150, 100));
+
 		
 		goButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e){
