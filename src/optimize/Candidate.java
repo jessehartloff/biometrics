@@ -11,7 +11,8 @@ public class Candidate implements Comparable<Candidate>{
 	
 	public Candidate(ArrayList<Chromosome> chromosomes){
 		this.chromosomes = chromosomes;
-		applyConstraints();
+		fitness = 0.0;
+		//applyConstraints();
 	}
 	
 	public void applyConstraints(){

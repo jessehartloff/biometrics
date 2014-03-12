@@ -32,7 +32,8 @@ public class BruteForce {
 		BruteForce b = new BruteForce(f);
 		
 		ArrayList<Chromosome> chromosomes = BruteForce.getChromosomeList();
-		
+		Candidate c = new Candidate(b.getMostFit(chromosomes, new ArrayList<Chromosome>(), new Candidate(new ArrayList<Chromosome>())));
+		System.out.println(c);
 		
 	}
 	
@@ -48,7 +49,32 @@ public class BruteForce {
 	
 	
 	
-	public Double getMostFit(ArrayList<Chromosome> chromosomes){
+	public ArrayList<Chromosome> getMostFit(ArrayList<Chromosome> chromosomesToOptimize, ArrayList<Chromosome> chromosomesToCompute, Candidate currentBest){
+		if(chromosomesToOptimize.isEmpty()){
+//			for(Chromosome c : chromosomesToCompute)
+//				c.execute();
+			System.out.println(new Candidate(chromosomesToCompute));
+			return chromosomesToCompute;
+//			Chromosome chromosomeToIterate= chromosomesToCompute.get(chromosomesToCompute.size()-1);
+//			Double bestVal = Double.MAX_VALUE;
+			
+		} else{
+			Chromosome c = chromosomesToOptimize.get(0);
+			chromosomesToCompute.add(c);
+			chromosomesToOptimize.remove(0);
+			for(Long i = c.getBounds().get(0); i <= c.getBounds().get(1); i++){
+				Double bestVal = Double.MAX_VALUE;
+				Chromosome bestChromosome;
+				c.setValue(i);
+				ArrayList<Chromosome> evaluated = getMostFit(chromosomesToOptimize,chromosomesToCompute, currentBest);
+
+			}
+			chromosomesToOptimize.add(c);
+			chromosomesToCompute.remove(chromosomesToCompute.size()-1);
+
+			
+			
+		}
 		return null;
 	}
 
@@ -63,7 +89,7 @@ public class BruteForce {
 			Long[] distanceBinBounds = {2L, 11L};
 			Long[] sigmaBinBounds = {2L, 11L};
 			Long[] phiBinBounds = {2L, 11L};
-			Long[] rotationRegionsBounds = {3L, 30L};
+			Long[] rotationRegionsBounds = {3L, 10L};
 			
 			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
 							fpm.n().getClass().getMethod("setValue", Long.class),

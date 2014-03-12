@@ -10,6 +10,7 @@ import settings.AllSettings;
 import settings.coordinatorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
+import settings.fingerprintmethodsettings.NgonSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -21,7 +22,8 @@ public class GeneticAlgorithm {
 	private FitnessFunction f;
 	
 	public GeneticAlgorithm(FitnessFunction fitness){
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());;
+//		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonSettings.getInstance());
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
@@ -74,8 +76,10 @@ public class GeneticAlgorithm {
 
 	private ArrayList<Candidate> evolve(ArrayList<Candidate> candidates) {
 		//Evaluation -- expensive fitness function evaluations
-		for(Candidate candidate : candidates)
+		for(Candidate candidate : candidates){
 			candidate.evaluate(f);
+			System.out.println(candidate);
+		}
 		
 		//Selection
 		//normalizing
@@ -100,8 +104,9 @@ public class GeneticAlgorithm {
 		//constructing breeding population based on accumulated frequency
 		int offspringProportion = 2; //make this more clear
 		//int numberToSelect = candidates.size()/offspringProportion;
-		int numberToSelect = candidates.size()*3/4;
-		
+		int numberToSelect = candidates.size()/3;
+		for(Candidate c : candidates)
+			System.out.println(c+"anf: "+c.getAccumlatedNormalizedFitness());
 		ArrayList<Candidate> breedingPopulation = new ArrayList<Candidate>();
 		Random r = new Random();
 		while(breedingPopulation.size() < numberToSelect){
@@ -119,6 +124,7 @@ public class GeneticAlgorithm {
 		//Crossover/Mutation
 		ArrayList<Candidate> nextGenPopulation = new ArrayList<Candidate>();
 		nextGenPopulation.addAll(breedingPopulation);
+		nextGenPopulation.addAll(intializePopulation(1));
 		Random R = new Random();
  		while(nextGenPopulation.size() != candidates.size()){
 			Candidate parentA = breedingPopulation.get(R.nextInt(breedingPopulation.size()));
@@ -132,7 +138,7 @@ public class GeneticAlgorithm {
 	
 	private Candidate makeOffspring(Candidate A, Candidate B) {
 		Random R = new Random();
-		Double crossoverConstant = .7, scalingConstant = .6; //adjust these for varying crossover and magnitude of mutations
+		Double crossoverConstant = .7, mutationConstant = .6; //adjust these for varying crossover and magnitude of mutations
 		//one point crossover
 		//switch to two point crossover if there are enough variables
 		int initialParent = R.nextInt(2);
@@ -145,17 +151,26 @@ public class GeneticAlgorithm {
 			} else{
 				c = B.getChromosomes().get(i);
 			}
+			//crossover
 			if(R.nextDouble() > crossoverConstant && !crossed){
 				System.out.println("crossover...");
 				initialParent = (initialParent+1) % 2;
 				crossed = true;
 			}
+			//mutation
+			if(R.nextDouble() > mutationConstant){
+				Long m = c.getValue()+(R.nextInt(2) -1);
+				while(!(m < c.getBounds().get(1)  && m > c.getBounds().get(0))){
+					m = c.getValue()+(R.nextInt(2) -1);
+				}
+				c.setValue(m);
+			}
+			childChromosomes.add(c);
 //			if(R.nextDouble() > scalingConstant){
 //				System.out.println("Scaling...");
 //				Double scale = R.nextDouble()*c.getBounds().get(1).doubleValue();
 //				c.setValue(BigDecimal.valueOf(Math.floor(c.getValue()*scale-c.getBounds().get(0).doubleValue())).longValue());
 //			}
-			childChromosomes.add(c);
 		}
 		
 		return new Candidate(childChromosomes);
@@ -181,6 +196,7 @@ public class GeneticAlgorithm {
 	
 	public static ArrayList<Chromosome> getChromosomeList(){
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+//		NgonSettings fpm = NgonSettings.getInstance();
 		PRINTSettings fpm = PRINTSettings.getInstance();
 		try {
 			Long[] nbounds = {3L,9L};
@@ -190,10 +206,35 @@ public class GeneticAlgorithm {
 			Long[] phiBinBounds = {2L, 11L};
 			Long[] rotationRegionsBounds = {3L, 30L};
 			
+//			
+//			Long[] nbounds = {3L,10L};
+//			Long[] kClosestBounds = {3L,10L};
+//			Long[] xBinBounds = {2L, 15L};
+//			Long[] yBinBounds = {2L, 15L};
+//			Long[] thetaBinBounds = {2L, 15L};
+//			
+//			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
+//							fpm.n().getClass().getMethod("setValue", Long.class),
+//							new ArrayList<Long>(Arrays.asList(nbounds))));
+//			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"k-closest Minutia", 
+//							fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class), 
+//							new ArrayList<Long>(Arrays.asList(kClosestBounds))));
+//			chromosomes.add(new Chromosome(fpm.xBins(), 0L, "xBins",
+//							fpm.xBins().getClass().getMethod("setValue", Long.class),
+//							new ArrayList<Long>(Arrays.asList(xBinBounds))));
+//			chromosomes.add(new Chromosome(fpm.yBins(), 0L, "yBins",
+//							fpm.yBins().getClass().getMethod("setValue", Long.class),
+//							new ArrayList<Long>(Arrays.asList(yBinBounds))));
+//			chromosomes.add(new Chromosome(fpm.thetaBins(), 0L, "thetaBins",
+//							fpm.thetaBins().getClass().getMethod("setValue", Long.class),
+//							new ArrayList<Long>(Arrays.asList(thetaBinBounds))));
+//			
+//			
+			
 			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
 							fpm.n().getClass().getMethod("setValue", Long.class),
 							new ArrayList<Long>(Arrays.asList(nbounds))));
-			
+
 			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"k-closest Minutia", 
 							fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class), 
 							new ArrayList<Long>(Arrays.asList(kClosestBounds))));

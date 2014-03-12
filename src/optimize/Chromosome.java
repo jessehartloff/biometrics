@@ -9,8 +9,28 @@ public class Chromosome {
 	private Long value;
 	private Method method;
 	protected Object self;
-	private Integer size;	
+	private Integer size;
+
+
+	private Long upperBound;
+	private Long lowerBound;
 	private final ArrayList<Long> bounds;
+	
+	public Long getUpperBound() {
+		return upperBound;
+	}
+
+	public void setUpperBound(Long upperBound) {
+		this.upperBound = upperBound;
+	}
+
+	public Long getLowerBound() {
+		return lowerBound;
+	}
+
+	public void setLowerBound(Long lowerBound) {
+		this.lowerBound = lowerBound;
+	}
 	
 	
 	public Integer getSize() {
