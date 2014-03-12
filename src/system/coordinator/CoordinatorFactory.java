@@ -8,7 +8,7 @@ import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.RAMStructure;
-import system.allcommonclasses.indexingstructure.SQLStructure;
+//import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.coordinator.Coordinator;
 import system.coordinator.DefaultTesting;
 import system.coordinator.DefaultTestingPrequantized;
@@ -53,9 +53,9 @@ public class CoordinatorFactory {
 			case RAMINDEXING:
 				firstCoordinator = addToFront(new IndexTesting(hasher, users, new RAMStructure()), firstCoordinator);
 			break;	
-			case SQLINDEXING:
-				firstCoordinator = addToFront(new IndexTesting(hasher, users, new SQLStructure()), firstCoordinator);
-			break;		
+//			case SQLINDEXING:
+//				firstCoordinator = addToFront(new IndexTesting(hasher, users, new SQLStructure()), firstCoordinator);
+//			break;		
 			case NONE:
 				break;				
 			default:

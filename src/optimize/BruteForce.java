@@ -1,5 +1,106 @@
 package optimize;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import settings.AllSettings;
+import settings.coordinatorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
+import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
+import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.modalitysettings.AllModalitySettings;
+import settings.modalitysettings.FingerprintSettings;
+import settings.settingsvariables.SettingsDropDownItem;
+import system.allcommonclasses.commonstructures.Results;
+
+public class BruteForce {
+	FitnessFunction f;
+	public static void main(String[] args){
+		FitnessFunction f = new FitnessFunction(){
+			@Override
+			public Double evaluateFitness(ArrayList<Chromosome> chromosomes) {
+				AllSettings settings = AllSettings.getInstance();
+				for(Chromosome c : chromosomes){
+					c.execute();
+				}
+				Results results =  settings.runSystemAndGetResults();
+				System.out.println(results.getEer());
+
+				return results.getEer(); 			//minimizing EER
+			}	
+		};
+		BruteForce b = new BruteForce(f);
+		
+		ArrayList<Chromosome> chromosomes = BruteForce.getChromosomeList();
+		
+		
+	}
+	
+
+	public BruteForce(FitnessFunction fitness){
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());;
+		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
+		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+		this.f = fitness;		
+	}
+	
+	
+	
+	public Double getMostFit(ArrayList<Chromosome> chromosomes){
+		return null;
+	}
+
+	
+	
+	public static ArrayList<Chromosome> getChromosomeList(){
+		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+		PRINTSettings fpm = PRINTSettings.getInstance();
+		try {
+			Long[] nbounds = {3L,9L};
+			Long[] kClosestBounds = {3L,9L};
+			Long[] distanceBinBounds = {2L, 11L};
+			Long[] sigmaBinBounds = {2L, 11L};
+			Long[] phiBinBounds = {2L, 11L};
+			Long[] rotationRegionsBounds = {3L, 30L};
+			
+			chromosomes.add(new Chromosome(fpm.n(), 0L,"N",
+							fpm.n().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(nbounds))));
+			
+			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"k-closest Minutia", 
+							fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class), 
+							new ArrayList<Long>(Arrays.asList(kClosestBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.distanceBins(), 0L, "distanceBins",
+							fpm.distanceBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(distanceBinBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.sigmaBins(), 0L, "sigmaBins",
+							fpm.sigmaBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(sigmaBinBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.phiBins(), 0L, "phiBins",
+							fpm.phiBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(phiBinBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.rotationRegions(), 0L, "rotationRegions",
+							fpm.rotationRegions().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(rotationRegionsBounds))));
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return chromosomes;
+	}
+	
+	
+}
+/*
+ * 
+ * package optimize;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +127,8 @@ public class GeneticAlgorithm {
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
 		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
-		this.f = fitness;		
+		this.f = fitness;
+		
 	}
 
 	public static void main(String[] args){
@@ -222,3 +324,7 @@ public class GeneticAlgorithm {
 		
 
 }
+
+ * 
+ * 
+ * */
