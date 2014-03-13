@@ -179,6 +179,7 @@ public class PRINTS extends FingerprintMethod{
 			template.hashes.add(quantizedPRINT);
 //			template.hashes.add(PRINTwithRegionPlusOne);
 //			template.hashes.add(PRINTwithRegionMinusOne);
+			// 0.14138669183781966
 // 3 k closest : 0.19514218446549275
 //			System.out.println("Adjacent regions: "+quantizedPRINT+", "+PRINTwithRegionPlusOne+", "+PRINTwithRegionMinusOne);
 		}

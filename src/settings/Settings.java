@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import static interfaces.gui.GUI.BACKGROUNDCOLOR;
 
 public abstract class Settings implements Serializable{

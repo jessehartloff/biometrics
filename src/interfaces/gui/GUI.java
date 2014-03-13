@@ -23,7 +23,7 @@ import settings.SettingsIO;
 
 public class GUI {
 	
-	public static final Color BACKGROUNDCOLOR = Color.BLUE;
+	public static final Color BACKGROUNDCOLOR = Color.getHSBColor(0.0f, 0.0f, 0.9f);
 	
 	public static void main(String[] args){
 		
