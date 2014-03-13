@@ -18,6 +18,7 @@ public class Results {
 	
 	private Double eer;
 	private ZeroFAR zeroFAR;
+	private Double AverageEERandZeroFAR;
 	private ArrayList<RatesPoint> rates;
 	private Histogram fieldHistogram;
 	private ArrayList<Histogram> variableHistograms;
@@ -127,11 +128,21 @@ public class Results {
 		this.rawScores = rawScores;
 	}
 	
+	public Double getAverageEERandZeroFAR() {
+		if (AverageEERandZeroFAR == null) {
+			AverageEERandZeroFAR = (eer + zeroFAR.getFRR())/2.;
+		}
+		return AverageEERandZeroFAR;
+	}
+
+	public void setAverageEERandZeroFAR(Double averageEERandZeroFAR) {
+		AverageEERandZeroFAR = averageEERandZeroFAR;
+	}	
 	@Override
 	public String toString(){
 		String toReturn = "\nResults:\n"+
 //				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
-				this.getVariableHistograms().toString() + "\n\n" +
+				this.getVariableHistograms().toString() + "\n" +
 				"Variable Histogram Chi Square Values:" + this.getChiSquareValues().toString() + "\n"+
 				"Field Histogram Chi Square: " + this.getChiSquare().toString() + "\n" +
 				"EER: " + this.getEer() + "\n" + 
@@ -141,5 +152,6 @@ public class Results {
 				"min entropy: " + this.getMinEntropy() + "\n" + 
 				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n";
 		return toReturn;
-	}	
+	}
+
 }

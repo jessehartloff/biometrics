@@ -74,9 +74,9 @@ public class AllSettings extends Settings{
 	
 	@Override 
 	protected void addSettings(){
-		this.settingsVariables.put("Matching", AllMatchingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance());
-		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance());
+		this.settingsVariables.put("Matching", AllMatchingCoordinatorSettings.getInstance()); //default to all prequantized
+		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance()); //default to none
+		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance()); //
 		this.settingsVariables.put("Hasher", AllHasherSettings.getInstance());
 		this.settingsVariables.put("Quantizer", AllQuantizerSettings.getInstance());
 		this.settingsVariables.put("Modality", AllModalitySettings.getInstance());
@@ -110,7 +110,7 @@ public class AllSettings extends Settings{
 		
 
 		System.out.print(results.getRawScores());
-		System.out.println(results);
+		System.out.println(results.toString());
 		
 		@SuppressWarnings("unused")
 		ResultsGUI resultsGUI = new ResultsGUI(results);

@@ -39,7 +39,7 @@ public class BiometricSystem {
 		Double FTC = testingUsers.removeFailureToCapture();
 		
 		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
-		
+		System.out.println(rawScores.toString());
 		Results results = EvaluatePerformance.processResults(rawScores);
 		results.setFailureToCapture(FTC);
 		
