@@ -76,6 +76,7 @@ public class Vault {
 		// TODO FuzzyVault - unlock
 		
 		RSDecoder decoder = new RSDecoder();
+		//BWDecoder decoder = new BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html for details
 		
 		//BW
 		//CRC
