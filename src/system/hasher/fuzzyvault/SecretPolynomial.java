@@ -9,11 +9,17 @@ public class SecretPolynomial {
 	private Long termsInPoly;
 	private Long totalBits;
 	private ArrayList<BigInteger> polynomialTerms;
-	
+
 	public SecretPolynomial(Long termsInPoly, Long totalBits){
 		this.termsInPoly = termsInPoly;
 		this.totalBits = totalBits;
 		this.generateRandomPolynomial();
+	}
+	
+	public SecretPolynomial(Long termsInPoly, Long totalBits, ArrayList<BigInteger> polynomialTerms){
+		this.termsInPoly = termsInPoly;
+		this.totalBits = totalBits;
+		this.polynomialTerms = polynomialTerms;
 	}
 
 	private void generateRandomPolynomial() {
@@ -29,6 +35,17 @@ public class SecretPolynomial {
 		return null;
 	}
 
+	
+	public Long getTermsInPoly() {
+		return termsInPoly;
+	}
+
+	public void setTermsInPoly(Long termsInPoly) {
+		this.termsInPoly = termsInPoly;
+	}
+
 	// TODO FuzzyVault - polynomial stuff
+	
+	
 	
 }
