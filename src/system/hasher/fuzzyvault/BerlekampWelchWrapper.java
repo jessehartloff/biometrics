@@ -2,6 +2,7 @@ package system.hasher.fuzzyvault;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import system.hasher.fuzzyvault.bwdecoding.BWDecoder;
 import system.hasher.fuzzyvault.bwdecoding.BigPoly;
@@ -23,7 +24,7 @@ public class BerlekampWelchWrapper implements RSDecoder{
 		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, k, mod);
 		decoder.CalcPoly();
 		BigPoly polynomial = decoder.getSecretPolynomial();
-		return new SecretPolynomial(k, mod, polynomial.getCoefficients());
+		return new SecretPolynomial(k.longValue(), mod.longValue(), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
 	}
 	
 }
