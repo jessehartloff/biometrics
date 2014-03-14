@@ -1,4 +1,4 @@
-package system.hasher.fuzzyvault;
+package system.hasher.fuzzyvault.bwdecoding;
 
 import java.math.BigInteger;
 

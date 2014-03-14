@@ -54,6 +54,7 @@ public class BruteForce {
 //			for(Chromosome c : chromosomesToCompute)
 //				c.execute();
 			System.out.println(new Candidate(chromosomesToCompute));
+			
 			return chromosomesToCompute;
 //			Chromosome chromosomeToIterate= chromosomesToCompute.get(chromosomesToCompute.size()-1);
 //			Double bestVal = Double.MAX_VALUE;
@@ -62,11 +63,12 @@ public class BruteForce {
 			Chromosome c = chromosomesToOptimize.get(0);
 			chromosomesToCompute.add(c);
 			chromosomesToOptimize.remove(0);
+            Double bestVal = Double.MAX_VALUE;
+            ArrayList<Chromosome> bestChromosomes;
 			for(Long i = c.getBounds().get(0); i <= c.getBounds().get(1); i++){
-				Double bestVal = Double.MAX_VALUE;
-				Chromosome bestChromosome;
 				c.setValue(i);
 				ArrayList<Chromosome> evaluated = getMostFit(chromosomesToOptimize,chromosomesToCompute, currentBest);
+				Candidate cand = new Candidate(evaluated);
 
 			}
 			chromosomesToOptimize.add(c);
