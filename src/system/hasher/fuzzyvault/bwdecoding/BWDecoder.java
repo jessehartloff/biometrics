@@ -53,6 +53,10 @@ public class BWDecoder {
 	private BigPoly N_div_E;
 	
 		
+	public BigPoly getSecretPolynomial() {
+		return N_div_E;
+	}
+
 	/**
 	 * Constructor for BWDecoder
 	 * @param alphaArray a 1D array of BigIntegers containing the alpha values

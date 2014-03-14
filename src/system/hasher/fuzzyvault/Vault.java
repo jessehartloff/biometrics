@@ -10,13 +10,19 @@ import system.quantizer.Quantizer;
 public class Vault {
 
 	private ArrayList<FuzzyVaultPoint> vaultPoints;
+	private Long termsInPoly;
+	private Long totalBits;
 
 	public Vault(){
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>();
+		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
+		this.totalBits = Quantizer.getQuantizer().getTotalBits(); // FIXME this has to change to handle #bins that are not powers of 2
 	}
 	
 	public Vault(Template lockedVault){
 		this.vaultPoints = Vault.getVaultPoints(lockedVault);
+		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
+		this.totalBits = Quantizer.getQuantizer().getTotalBits();
 	}
 
 	public ArrayList<FuzzyVaultPoint> getVaultPoints(){
@@ -31,8 +37,6 @@ public class Vault {
 
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against making a vault more than once
 		
-		Long termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
-		Long totalBits = Quantizer.getQuantizer().getTotalBits(); // FIXME this has to change to handle #bins that are not powers of 2
 		
 		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
 
@@ -70,16 +74,27 @@ public class Vault {
 	 * @return did it unlock? determined by the CRC check
 	 */
 	public boolean unlock(Template testTemplate){
+		ArrayList<FuzzyVaultPoint> hashesInFuzzyVault = new ArrayList<FuzzyVaultPoint>();
+
+		for(FuzzyVaultPoint point : vaultPoints){
+			for(BigInteger hash : testTemplate.getHashes()){
+				if(point.getZ().equals(hash)){
+					hashesInFuzzyVault.add(point);
+				}
+			}
+		}
 		
 		//loop through vault and extract points with matching z-value
 		
 		// TODO FuzzyVault - unlock
 		
-		RSDecoder decoder = new RSDecoder();
+		RSDecoder decoder = new BerlekampWelchWrapper();
+		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(new Double(Math.pow(2, this.totalBits)).intValue()));
 		//BWDecoder decoder = new BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html for details
 		
 		//BW
 		//CRC
+
 		return false;
 	}
 	

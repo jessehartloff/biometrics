@@ -13,6 +13,10 @@ public class BigPoly {
 	 */
 	private BigInteger coefficients[] = null;
 
+	public BigInteger[] getCoefficients() {
+		return coefficients;
+	}
+
 	/**
 	 * the modulo of the field used for BigInteger calculations
 	 */
