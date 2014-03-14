@@ -40,7 +40,7 @@ public class Vault {
 		//CRC on the end of polynomial
 		
 		// add the genuine points to vaultPoints
-		for (BigInteger bigInt : enrollingTemplate.hashes) {
+		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
 			genuinePoint.setZ(bigInt);
 			genuinePoint.setGamma(secretPoly.evaluateAt(bigInt));
@@ -92,7 +92,7 @@ public class Vault {
 	 */
 	public static ArrayList<FuzzyVaultPoint> getVaultPoints(Template lockedVault){
 		ArrayList<FuzzyVaultPoint> vaultPoints = new ArrayList<FuzzyVaultPoint>();
-		for(BigInteger bigInt : lockedVault.hashes){
+		for(BigInteger bigInt : lockedVault.getHashes()){
 			vaultPoints.add(new FuzzyVaultPoint(bigInt));
 		}
 		return vaultPoints;
@@ -102,7 +102,7 @@ public class Vault {
 	public Template toTemplate(){
 		Template toReturn = new Template();
 		for(FuzzyVaultPoint point : this.vaultPoints){
-			toReturn.hashes.add(point.toBigInt());
+			toReturn.getHashes().add(point.toBigInt());
 		}
 		return toReturn;
 	}

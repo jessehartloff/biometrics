@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
@@ -39,6 +41,10 @@ import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 public class Main {
 	public static void main(String[] args) {		
 	
+		for(int i=0; i<1000; i++){
+			System.out.println(new BigInteger(20, new Random()));
+		}
+		System.exit(1);
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox

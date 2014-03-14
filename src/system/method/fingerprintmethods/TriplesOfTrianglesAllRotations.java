@@ -2,6 +2,8 @@ package system.method.fingerprintmethods;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import settings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.commonstructures.Template;
@@ -27,18 +29,36 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	
 	public Template triplesOfTrianglesAllRotationsQuantizeOne(Fingerprint fingerprint) {
 		Template toReturn = new Template();
+//		toReturn.hashes.
 		ArrayList<Template> manyTemplates = super.triplesOfTrianglesQuantizeAll(fingerprint);
 //		HashSet<BigInteger> manyTemplates2 = new HashSet<BigInteger>();
 		
+		int totalHashes = 0;
 		for(Template template : manyTemplates){
-			for(BigInteger bigInt : template.hashes){
-				toReturn.hashes.add(bigInt);
+			totalHashes += template.getHashes().size();
+		}
+		
+		BigInteger[] allHashes = new BigInteger[totalHashes];
+		
+		int i=0;
+		for(Template template : manyTemplates){
+			for(BigInteger bigInt : template.getHashes()){
+				allHashes[i] = bigInt;
+				i++;
+//				toReturn.hashes.add(bigInt);
 //				manyTemplates2.add(bigInt);
 			}
 		}
+		
+		toReturn.setHashes(new HashSet<BigInteger>(Arrays.asList(allHashes))); 
+		
 		return toReturn;
 	}
 
+//	EER: 0.24113856068743286
+//	FTC: 0.00125
+//	ZeroFAR: [FRR=0.4822771213748657, threshold=0.9]
+	
 	@Override
 	public ArrayList<Template> quantizeAll(Fingerprint fingerprint) {
 		return triplesOfTrianglesAllRotationsQuantizeAll(fingerprint);

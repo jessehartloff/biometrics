@@ -29,7 +29,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	
 	@Override
 	public Template hashEnrollTemplate(Template template) {
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			bigInt = bigInt.shiftLeft(1);
 		}
 		
@@ -41,7 +41,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	@Override
 	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
 		for(Template template : templates){
-			for(BigInteger bigInt : template.hashes){
+			for(BigInteger bigInt : template.getHashes()){
 				bigInt = bigInt.shiftLeft(1);
 			}
 		}
@@ -53,10 +53,10 @@ public class ShortcutFuzzyVault extends Hasher{
 		Double maxScore = Double.NEGATIVE_INFINITY;
 		for (Template template : testTemplates) {
 			Double score = 0.0;
-			for (BigInteger hash : template.hashes) {
-				if(enrolledTemplate.hashes.contains(hash)){
+			for (BigInteger hash : template.getHashes()) {
+				if(enrolledTemplate.getHashes().contains(hash)){
 					score += 1.0;
-				}else if(enrolledTemplate.hashes.contains(hash.add(BigInteger.valueOf(1)))){
+				}else if(enrolledTemplate.getHashes().contains(hash.add(BigInteger.valueOf(1)))){
 					score -= 1.0;
 				}
 			}
@@ -74,7 +74,7 @@ public class ShortcutFuzzyVault extends Hasher{
 			Random random = new Random();
 			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(),random);
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));
-			template.hashes.add(chaff);
+			template.getHashes().add(chaff);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
 
 		Template template = this.makeEnrollTemplate(enrollBiometric);
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			IndexingPoint pointToAdd = new IndexingPoint();
 			pointToAdd.setValue(BigInteger.ZERO);
 			pointToAdd.setUserID(enrollID);
@@ -97,7 +97,7 @@ public class ShortcutFuzzyVault extends Hasher{
 	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
 		
 		Template template = testBiometric.quantizeOne();
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			bigInt = bigInt.shiftLeft(1);
 		}
 	
@@ -106,7 +106,7 @@ public class ShortcutFuzzyVault extends Hasher{
 		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
 		
 		
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			ArrayList<IndexingPoint> binPoints = indexingStructure.getBinContents(bigInt);
 			if(binPoints != null){
 				indexingPoints.addAll(binPoints);

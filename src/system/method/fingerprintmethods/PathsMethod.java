@@ -49,7 +49,7 @@ public class PathsMethod extends FingerprintMethod {
 		Template template = new Template();
 		ArrayList<Path> paths = this.fingerprintToPaths(fingerprint);
 		for(Path path : paths){
-			template.hashes.add(path.toBigInt());
+			template.getHashes().add(path.toBigInt());
 		}
 		return template;
 	}

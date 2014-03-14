@@ -65,7 +65,7 @@ public abstract class Hasher {
 	 */
 	public Template permute(Template template, Transformation permutation){
 		
-		for(BigInteger hash : template.hashes){
+		for(BigInteger hash : template.getHashes()){
 			hash = permutation.transform(hash);
 		}
 		

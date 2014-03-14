@@ -19,7 +19,7 @@ public class StraightHasher extends Hasher {
 	public Template hashEnrollTemplate(Template template) {
 		
 		Transformation hashFunction = new SHA2();
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			bigInt = hashFunction.transform(bigInt);
 		}
 		
@@ -32,7 +32,7 @@ public class StraightHasher extends Hasher {
 		
 		Transformation hashFunction = new SHA2();
 		for(Template template : templates){
-			for(BigInteger bigInt : template.hashes){
+			for(BigInteger bigInt : template.getHashes()){
 				bigInt = hashFunction.transform(bigInt);
 			}
 		}
@@ -47,8 +47,8 @@ public class StraightHasher extends Hasher {
 		Double score;
 		for(Template template : testTemplates){
 			score = 0.0;
-			for(BigInteger hash : template.hashes){
-				if(enrolledTemplate.hashes.contains(hash)){
+			for(BigInteger hash : template.getHashes()){
+				if(enrolledTemplate.getHashes().contains(hash)){
 					score += 1.0;
 				}
 			}

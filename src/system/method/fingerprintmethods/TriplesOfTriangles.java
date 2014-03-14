@@ -162,7 +162,7 @@ public class TriplesOfTriangles extends Triangles {
 			triplet.t1 = t1;
 			triplet.t2 = t2;
 			triplet.order();
-			template.hashes.add(triplet.toBigInt());
+			template.getHashes().add(triplet.toBigInt());
 		}
 	}
 	

@@ -114,7 +114,7 @@ public class Ngons extends FingerprintMethod{
 		Template template = new Template();
 		ArrayList<Ngon> ngons = this.fingerprintToNgons(fingerprint);
 		for(Ngon ngon : ngons){
-			template.hashes.add(ngon.toBigInt());
+			template.getHashes().add(ngon.toBigInt());
 		}
 		return template;
 	}

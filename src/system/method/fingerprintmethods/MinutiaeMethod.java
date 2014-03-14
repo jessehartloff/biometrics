@@ -41,7 +41,7 @@ public class MinutiaeMethod extends FingerprintMethod {
 		Template template = new Template();
 		ArrayList<InnerMinutia> minutiae = this.fingerprintToMinutia(fingerprint);
 		for(InnerMinutia minutia : minutiae){
-			template.hashes.add(minutia.toBigInt());
+			template.getHashes().add(minutia.toBigInt());
 		}
 		return template;
 	}

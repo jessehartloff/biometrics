@@ -60,7 +60,7 @@ public class BWDecoder {
 	 * @param _k the degree of the poly we are reconstructing
 	 * @param _fieldModulo the modulo of the field
 	 */
-	public BWDecoder(BigInteger[] alphaArray, BigInteger[] rArray,int _k,BigInteger _fieldModulo) {
+	public BWDecoder(BigInteger[] alphaArray, BigInteger[] rArray, int _k,BigInteger _fieldModulo) {
 		r = rArray;
 		alpha = alphaArray;
 		k = _k;
@@ -103,7 +103,7 @@ public class BWDecoder {
 		e = (n - k - 1) / 2 + (n - k - 1) % 2;
 		int dim = 2*e+k+2;
 
-		// generate the linear homogenious equations system				
+		// generate the linear homogeneous equations system				
 		BigInteger[][] eqSys = new BigInteger[dim][dim];
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
@@ -116,7 +116,7 @@ public class BWDecoder {
 				} else {
 					// -(r_i)*(alpha_i)^j
 					eqSys[i][j] = (r[i].multiply(alpha[i].pow(j-e-k-1))).negate().mod(fieldModulo);
-				} 
+				}
 			}
 		}
 		

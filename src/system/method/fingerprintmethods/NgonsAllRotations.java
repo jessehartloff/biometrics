@@ -24,8 +24,8 @@ public class NgonsAllRotations extends Ngons{
 		ArrayList<Ngon> ngons = super.fingerprintToNgons(fingerprint);
 		ArrayList<Template> rotatedTemplates = super.ngonsQuantizeAll(fingerprint);
 		for(Template temp : rotatedTemplates){
-			for(BigInteger bigInt : temp.hashes){
-				template.hashes.add(bigInt);
+			for(BigInteger bigInt : temp.getHashes()){
+				template.getHashes().add(bigInt);
 			}
 		}
 		

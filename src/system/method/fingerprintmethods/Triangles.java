@@ -96,7 +96,7 @@ public class Triangles extends FingerprintMethod {
 		Template template = new Template();
 		ArrayList<Triangle> triangles = this.fingerprintToTriangles(fingerprint);
 		for(Triangle triangle : triangles){
-			template.hashes.add(triangle.toBigInt());
+			template.getHashes().add(triangle.toBigInt());
 		}
 		return template;
 	}

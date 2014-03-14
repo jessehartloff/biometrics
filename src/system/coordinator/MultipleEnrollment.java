@@ -37,7 +37,7 @@ public class MultipleEnrollment extends Coordinator{
 			//make enrolling multi-reading template
 			Template enrolled = new Template();
 			for(int q=0; q<readingsToEnroll; q++){
-				enrolled.hashes.addAll(user.readings.get(q).quantizeOne().hashes);
+				enrolled.getHashes().addAll(user.readings.get(q).quantizeOne().getHashes());
 			}
 			user.prequantizedEnrolledTemplates.add(hasher.hashEnrollTemplate(enrolled));
 			

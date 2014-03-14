@@ -21,7 +21,7 @@ public class IndexingFunctions {
 		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
 		
 		
-		for(BigInteger bigInt : template.hashes){
+		for(BigInteger bigInt : template.getHashes()){
 			ArrayList<IndexingPoint> binPoints = indexingStructure.getBinContents(bigInt);
 			if(binPoints != null){
 				indexingPoints.addAll(binPoints);

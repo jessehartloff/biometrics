@@ -135,7 +135,7 @@ public class PRINTS extends FingerprintMethod{
 		Template template = new Template();
 		ArrayList<PRINT> prints = this.fingerprintToPRINTS(fingerprint);
 		for(PRINT print : prints){
-			template.hashes.add(print.toBigInt());
+			template.getHashes().add(print.toBigInt());
 		}
 		return template;
 	}
@@ -176,7 +176,7 @@ public class PRINTS extends FingerprintMethod{
 //			templatePlusOne.hashes.add(PRINTwithRegionPlusOne);
 //			templateMinusOne.hashes.add(PRINTwithRegionMinusOne);
 			
-			template.hashes.add(quantizedPRINT);
+			template.getHashes().add(quantizedPRINT);
 //			template.hashes.add(PRINTwithRegionPlusOne);
 //			template.hashes.add(PRINTwithRegionMinusOne);
 			// 0.14138669183781966
