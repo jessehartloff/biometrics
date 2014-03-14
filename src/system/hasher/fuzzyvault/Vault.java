@@ -89,7 +89,8 @@ public class Vault {
 		// TODO FuzzyVault - unlock
 		
 		RSDecoder decoder = new BerlekampWelchWrapper();
-		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(new Double(Math.pow(2, this.totalBits)).intValue()));
+		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), 
+												 BigInteger.valueOf(new Double(Math.pow(2, this.totalBits)).intValue()));
 		//BWDecoder decoder = new BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html for details
 		
 		//BW

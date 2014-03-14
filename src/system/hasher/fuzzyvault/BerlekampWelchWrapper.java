@@ -22,8 +22,8 @@ public class BerlekampWelchWrapper implements RSDecoder{
 		BigInteger[] gammaValueArray = (BigInteger[]) gammaValues.toArray();
 		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, k, mod);
 		decoder.CalcPoly();
-		BigPoly secretPoly = decoder.getSecretPolynomial();
-		return null;
+		BigPoly polynomial = decoder.getSecretPolynomial();
+		return new SecretPolynomial(polynomial.getCoefficients());
 	}
 	
 }
