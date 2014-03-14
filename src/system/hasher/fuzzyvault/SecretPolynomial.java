@@ -29,7 +29,7 @@ public class SecretPolynomial {
 		// TODO Auto-generated method stub
 		// add CRC
 	}
-
+	
 	public BigInteger evaluateAt(BigInteger bigInt) {
 		// TODO Auto-generated method stub
 		return null;

@@ -34,17 +34,31 @@ import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
-
-
+import java.sql.*;
+//import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 public class Main {
-	public static void main(String[] args) {		
-	
-		for(int i=0; i<1000; i++){
-			System.out.println(new BigInteger(20, new Random()));
+	public static void main(String[] args) {
+	/*
+		private static Connection connection = null;
+		if(connection == null){
+			try{
+				OracleDataSource ds = new OracleDataSource();
+		        ds.setUser(userName);
+		        ds.setPassword(password);
+		        ds.setURL("jdbc:oracle:thin:@aos.acsu.buffalo.edu:1521/aos.buffalo.edu");
+		        connection = ds.getConnection();
+			
+			}catch(SQLException e){
+				System.out.println("Cannot connect to database");
+				e.printStackTrace();
+		        System.exit(1);
+			}
 		}
+		
 		System.exit(1);
+		*/
 		AllSettings settings = AllSettings.getInstance(); // loads all the default values
 		
 		// set the values for any comboBox
@@ -72,8 +86,8 @@ public class Main {
 //		NgonSettings.getInstance().thetaBins().setValue(7);//...
 		
 
-		settings.runSystemAndMakeGraphs();
-		//settings.runSystemAndGetResults();
+		//settings.runSystemAndMakeGraphs();
+		settings.runSystemAndGetResults();
 
 //		Results results = settings.buildSystem().go();
 //		System.out.print(results.rawScores);
