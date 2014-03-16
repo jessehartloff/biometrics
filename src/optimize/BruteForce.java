@@ -15,29 +15,7 @@ import system.allcommonclasses.commonstructures.Results;
 
 public class BruteForce {
 	FitnessFunction f;
-	public static void main(String[] args){
-		FitnessFunction f = new FitnessFunction(){
-			@Override
-			public Double evaluateFitness(ArrayList<Chromosome> chromosomes) {
-				AllSettings settings = AllSettings.getInstance();
-				for(Chromosome c : chromosomes){
-					c.execute();
-				}
-				Results results =  settings.runSystemAndGetResults();
-				System.out.println(results.getEer());
-
-				return results.getEer(); 			//minimizing EER
-			}	
-		};
-		BruteForce b = new BruteForce(f);
-		
-		ArrayList<Chromosome> chromosomes = BruteForce.getChromosomeList();
-		Candidate c = new Candidate(b.getMostFit(chromosomes, new ArrayList<Chromosome>(), new Candidate(new ArrayList<Chromosome>())));
-		System.out.println(c);
-		
-	}
 	
-
 	public BruteForce(FitnessFunction fitness){
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());;
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
@@ -48,36 +26,62 @@ public class BruteForce {
 	}
 	
 	
+	public static void main(String[] args){
+		FitnessFunction f = new FitnessFunction(){
+			@Override
+			public Results evaluateFitness(ArrayList<Chromosome> chromosomes) {
+				AllSettings settings = AllSettings.getInstance();
+				for(Chromosome c : chromosomes){
+					c.execute();
+				}
+				return settings.runSystemAndGetResults();
+			}	
+		};
+		BruteForce b = new BruteForce(f);
+		
+		ArrayList<Chromosome> chromosomes = BruteForce.getChromosomeList();
+		ArrayList<Candidate> allCandidates = b.getAllParameterSets(chromosomes, new ArrayList<Chromosome>());
+		OptimizationResults op = new OptimizationResults(50);
+		try {
+			System.out.println("Size: "+allCandidates.size());
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Candidate c : allCandidates){
+			op.commitResult(c.evaluate(f));
+		}
+		op.displayTopNResults(8);
+		
+	}
 	
-	public ArrayList<Chromosome> getMostFit(ArrayList<Chromosome> chromosomesToOptimize, ArrayList<Chromosome> chromosomesToCompute, Candidate currentBest){
+
+	
+	
+	public ArrayList<Candidate> getAllParameterSets(ArrayList<Chromosome> chromosomesToOptimize,
+												ArrayList<Chromosome> chromosomesToCompute){
 		if(chromosomesToOptimize.isEmpty()){
-//			for(Chromosome c : chromosomesToCompute)
-//				c.execute();
-			System.out.println(new Candidate(chromosomesToCompute));
-			
-			return chromosomesToCompute;
-//			Chromosome chromosomeToIterate= chromosomesToCompute.get(chromosomesToCompute.size()-1);
-//			Double bestVal = Double.MAX_VALUE;
+			ArrayList<Candidate> baseCase = new ArrayList<Candidate>();
+			baseCase.add(new Candidate(chromosomesToCompute));
+			return baseCase;
+
 			
 		} else{
 			Chromosome c = chromosomesToOptimize.get(0);
 			chromosomesToCompute.add(c);
 			chromosomesToOptimize.remove(0);
-            Double bestVal = Double.MAX_VALUE;
             ArrayList<Chromosome> bestChromosomes;
+            ArrayList<Candidate> candidatesToReturn = new ArrayList<Candidate>();
 			for(Long i = c.getBounds().get(0); i <= c.getBounds().get(1); i++){
 				c.setValue(i);
-				ArrayList<Chromosome> evaluated = getMostFit(chromosomesToOptimize,chromosomesToCompute, currentBest);
-				Candidate cand = new Candidate(evaluated);
-
+				ArrayList<Candidate> candidates = getAllParameterSets(chromosomesToOptimize,chromosomesToCompute);
+				candidatesToReturn.addAll(candidates);
 			}
 			chromosomesToOptimize.add(c);
-			chromosomesToCompute.remove(chromosomesToCompute.size()-1);
-
-			
-			
+			chromosomesToCompute.remove(chromosomesToCompute.size()-1);		
+			return candidatesToReturn;
 		}
-		return null;
 	}
 
 	
@@ -86,7 +90,7 @@ public class BruteForce {
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		PRINTSettings fpm = PRINTSettings.getInstance();
 		try {
-			Long[] nbounds = {3L,9L};
+			Long[] nbounds = {3L,4L};
 			Long[] kClosestBounds = {3L,9L};
 			Long[] distanceBinBounds = {2L, 11L};
 			Long[] sigmaBinBounds = {2L, 11L};

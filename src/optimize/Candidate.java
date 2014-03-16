@@ -2,16 +2,17 @@ package optimize;
 
 import java.util.ArrayList;
 
+import system.allcommonclasses.commonstructures.Results;
+
 public class Candidate implements Comparable<Candidate>{
 
 	private ArrayList<Chromosome> chromosomes;
-	private Double fitness;
+	private Results fitness;
 	private Double normalizedFitness;
 	private Double accumlatedNormalizedFitness;
 	
 	public Candidate(ArrayList<Chromosome> chromosomes){
 		this.chromosomes = chromosomes;
-		fitness = 0.0;
 		//applyConstraints();
 	}
 	
@@ -22,11 +23,8 @@ public class Candidate implements Comparable<Candidate>{
 		}
 	}
 
-	public Double evaluate(FitnessFunction f){
-		Double fitness =  f.evaluateFitness(this.chromosomes);
-		if(fitness == null){
-			fitness = 0.0;
-		}
+	public Results evaluate(FitnessFunction f){
+		Results fitness =  f.evaluateFitness(this.chromosomes);
 		this.fitness = fitness;
 		return  fitness;
 	}
@@ -39,7 +37,7 @@ public class Candidate implements Comparable<Candidate>{
 	}
 
 	
-	public Double getFitness(){
+	public Results getFitness(){
 		return this.fitness;
 	}
 	

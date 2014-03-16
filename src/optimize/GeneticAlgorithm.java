@@ -34,15 +34,16 @@ public class GeneticAlgorithm {
 	public static void main(String[] args){
 		GeneticAlgorithm ga = new GeneticAlgorithm(new FitnessFunction(){
 			@Override
-			public Double evaluateFitness(ArrayList<Chromosome> chromosomes) {
+			public Results evaluateFitness(ArrayList<Chromosome> chromosomes) {
 				AllSettings settings = AllSettings.getInstance();
 				for(Chromosome c : chromosomes){
 					c.execute();
 				}
-				Results results =  settings.runSystemAndGetResults();
-				System.out.println(results.getEer());
-
-				return (1-results.getEer())*100.0; 			//minimizing EER
+				return settings.runSystemAndGetResults();
+//				Results results =  settings.runSystemAndGetResults();
+//				System.out.println(results.getEer());
+//
+//				return (1-results.getEer())*100.0; 			//minimizing EER
 			}	
 		});		
 
@@ -73,7 +74,8 @@ public class GeneticAlgorithm {
 	}
 	
 	
-
+	//TODO Matt: the type of Candidate.fitness was change to Results from Double to interface
+	//with OptimizationResults. Alter this code to work with Results instead of Double.
 	private ArrayList<Candidate> evolve(ArrayList<Candidate> candidates) {
 		//Evaluation -- expensive fitness function evaluations
 		for(Candidate candidate : candidates){
@@ -83,13 +85,14 @@ public class GeneticAlgorithm {
 		
 		//Selection
 		//normalizing
-		Double norm = 0.0;
-		for(Candidate candidate : candidates){
-			norm += candidate.getFitness();
-		}
-		for(int i = 0; i < candidates.size(); i++){
-			candidates.get(i).setNormalizedFitness(candidates.get(i).getFitness()/norm);
-		}
+		
+//		Double norm = 0.0;
+//		for(Candidate candidate : candidates){
+//			norm += candidate.getFitness();
+//		}
+//		for(int i = 0; i < candidates.size(); i++){
+//			candidates.get(i).setNormalizedFitness(candidates.get(i).getFitness()/norm);
+//		}
 		
 		Collections.sort(candidates, Collections.reverseOrder());
 		
