@@ -17,11 +17,11 @@ public class BruteForce {
 	FitnessFunction f;
 	
 	public BruteForce(FitnessFunction fitness){
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());;
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
-		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
-		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem("FVC2002Testing.ser"));
+		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem("FVC2002Training.ser"));
 		this.f = fitness;		
 	}
 	
@@ -90,7 +90,7 @@ public class BruteForce {
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		PRINTSettings fpm = PRINTSettings.getInstance();
 		try {
-			Long[] nbounds = {3L,4L};
+			Long[] nbounds = {3L,11L};
 			Long[] kClosestBounds = {3L,9L};
 			Long[] distanceBinBounds = {2L, 11L};
 			Long[] sigmaBinBounds = {2L, 11L};
