@@ -19,6 +19,7 @@ import system.method.feature.Feature;
 import system.method.feature.PhiVariable;
 import system.method.feature.SigmaVariable;
 import system.method.fingerprintmethods.Ngons.Ngon;
+import system.quantizer.Quantizer;
 
 public class PRINTS extends FingerprintMethod{
 
@@ -68,7 +69,8 @@ public class PRINTS extends FingerprintMethod{
 		@Override
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
-			return PRINTS.appendRegionNumber(featureBigInt, this.getRegionNumber());
+			//return PRINTS.appendRegionNumber(featureBigInt, this.getRegionNumber());
+			return Quantizer.getQuantizer().getRandomBigInt();
 		}
 		
 		public Long getRegionNumber(){
@@ -385,6 +387,7 @@ public class PRINTS extends FingerprintMethod{
 			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(i.intValue()).doubleValue());
 		}
 		return returnPRINT;
+		//return (PRINT) Quantizer.getQuantizer().getRandomFeature();
 	}
 
 	

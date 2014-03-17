@@ -2,11 +2,8 @@ package system.quantizer;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 
-import settings.fingerprintmethodsettings.TriangleSettings;
 import settings.quantizersettings.PCASettings;
 import settings.settingsvariables.SettingsMethodVariable;
 import system.allcommonclasses.commonstructures.User;
@@ -15,11 +12,7 @@ import system.allcommonclasses.modalities.Biometric;
 import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
 import system.method.feature.Feature;
 import system.method.feature.PCAVariable;
-import system.method.feature.ThetaVariable;
 import system.method.feature.Variable;
-import system.method.feature.XYVariable;
-import system.method.fingerprintmethods.Triangles.Triangle;
-import system.method.fingerprintmethods.Triangles.Triangle.TriangleComparator;
 
 public class PCA extends Quantizer{
 
@@ -205,5 +198,10 @@ public class PCA extends Quantizer{
 		return null;
 	}
 	
+	@Override
+	public BigInteger getRandomBigInt() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

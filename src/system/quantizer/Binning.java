@@ -55,7 +55,7 @@ public class Binning extends Quantizer{
 	
 	@Override
 	public BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues) {
-		BigInteger toReturn = BigInteger.valueOf(0);
+		BigInteger toReturn = BigInteger.ZERO;
 		int i=0;
 		for(String varName : feature.variables.keySet()){
 			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
@@ -121,6 +121,20 @@ public class Binning extends Quantizer{
 		return toReturn;
 	}
 
+	public BigInteger getRandomBigInt(){
+		Feature randomFeature = getRandomFeature();
+		BigInteger toReturn = BigInteger.ZERO;
+		int i=0;
+		for(String varName : randomFeature.variables.keySet()){
+			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
+			Long quantizedValue = variableSettings.get(i).findBin(randomFeature.variables.get(varName).getPrequantizedValue().doubleValue());
+			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
+			i++;
+		}
+		return toReturn;
+		
+		
+	}
 
 	
 

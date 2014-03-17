@@ -11,6 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 //	unittests.testsystem.testcoordinator.TestCoordinator.class, 
 //	unittests.testsystem.testhasher.TestHasher.class, 
 	unittests.testsystem.testmethod.TestMethod.class, 
+	unittests.testsystem.TestBinning.class, 
+
 //	unittests.testsystem.testvectordistance.TestVectorDistance.class, 
 	})
 

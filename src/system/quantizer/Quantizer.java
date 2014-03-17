@@ -4,9 +4,7 @@ import java.math.BigInteger;
 import java.util.LinkedHashMap;
 
 import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.modalities.Biometric;
 import system.method.feature.Feature;
-import system.method.feature.Variable;
 
 public abstract class Quantizer {
 
@@ -31,5 +29,5 @@ public abstract class Quantizer {
 	
 	public abstract Feature quantizeFeature(Feature feature);
 	public abstract Feature getRandomFeature();
-	
+	public abstract BigInteger getRandomBigInt();
 }
