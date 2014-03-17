@@ -64,14 +64,11 @@ public class BruteForce {
 		if(chromosomesToOptimize.isEmpty()){
 			ArrayList<Candidate> baseCase = new ArrayList<Candidate>();
 			baseCase.add(new Candidate(chromosomesToCompute));
-			return baseCase;
-
-			
+			return baseCase;	
 		} else{
 			Chromosome c = chromosomesToOptimize.get(0);
 			chromosomesToCompute.add(c);
 			chromosomesToOptimize.remove(0);
-            ArrayList<Chromosome> bestChromosomes;
             ArrayList<Candidate> candidatesToReturn = new ArrayList<Candidate>();
 			for(Long i = c.getBounds().get(0); i <= c.getBounds().get(1); i++){
 				c.setValue(i);

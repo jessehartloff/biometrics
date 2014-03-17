@@ -31,8 +31,13 @@ public class SecretPolynomial {
 	}
 	
 	public BigInteger evaluateAt(BigInteger bigInt) {
-		// TODO Auto-generated method stub
-		return null;
+		BigInteger evaluatedInteger = BigInteger.valueOf(0);
+		for(int i = 0; i < this.polynomialTerms.size(); i++){
+			BigInteger currentTerm = (bigInt.pow(i)).multiply(this.polynomialTerms.get(i));
+			evaluatedInteger.add(currentTerm);
+		}
+		// TODO Review me
+		return evaluatedInteger;
 	}
 
 	
@@ -45,7 +50,4 @@ public class SecretPolynomial {
 	}
 
 	// TODO FuzzyVault - polynomial stuff
-	
-	
-	
 }

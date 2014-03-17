@@ -34,15 +34,10 @@ public class Vault {
 	 * @param enrollingTemplate set of BigIntegers representing z-values only
 	 */
 	public void lock(Template enrollingTemplate){
-
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against making a vault more than once
-		
-		
 		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
-
 		
 		//CRC on the end of polynomial
-		
 		// add the genuine points to vaultPoints
 		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
