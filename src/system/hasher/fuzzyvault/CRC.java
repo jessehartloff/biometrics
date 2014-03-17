@@ -13,7 +13,7 @@ public class CRC{
 	}
 
 	public static BigInteger ComputeCRC(ArrayList<BigInteger> poly,
-			ArrayList<BigInteger> CRCpoly) {
+										ArrayList<BigInteger> CRCpoly) {
 		int CRClength = CRCpoly.size();
 		int polyLength = poly.size();
 		BigInteger dummy = BigInteger.ZERO;

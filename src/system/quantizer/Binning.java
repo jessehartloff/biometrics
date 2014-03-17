@@ -3,6 +3,7 @@ package system.quantizer;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import settings.settingsvariables.SettingsMethodVariable;
 import system.allcommonclasses.commonstructures.User;
@@ -110,16 +111,14 @@ public class Binning extends Quantizer{
 
 	@Override
 	public Feature getRandomFeature() {
-		Feature toReturn = new Feature();
-		Long i = 0L;
-		for(SettingsMethodVariable variable : this.variableSettings){
-			Double fart = Math.floor(Math.random() * variable.getBins().doubleValue());
-			Long rando = fart.longValue();
-//			toReturn.variables.put(i.toString(), new Variable(rando));
-			i++;
+		Feature toReturn = Biometric.method.getBlankFeatureForTraining();
+		for(Entry<String,Variable> entry : toReturn.variables.entrySet()){
+			Variable variable = entry.getValue();
+			Double randomBinValue = Math.floor(Math.random() * variable.variableSettings.getBins().doubleValue());
+			toReturn.quantizedValues.put(entry.getKey(), randomBinValue.longValue());
 		}
-		// TODO Auto-generated method stub
-		return null;
+		// TODO fart
+		return toReturn;
 	}
 
 
