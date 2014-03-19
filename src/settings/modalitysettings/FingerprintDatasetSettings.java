@@ -4,9 +4,9 @@ import java.io.File;
 
 import settings.ComboBoxSettings;
 import settings.coordinatorsettings.CoordinatorSettings;
-import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
-import settings.coordinatorsettings.HistogramSettings;
 import settings.coordinatorsettings.NoCoordinator;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.HistogramSettings;
 import settings.settingsvariables.SettingsDropDownItem;
 
 public class FingerprintDatasetSettings extends DatasetSettings{

@@ -11,7 +11,7 @@ import system.hasher.Hasher;
 
 public class DefaultTestingPrequantized extends DefaultTesting{
 
-	{}// TODO Jen/Jim - SQL prequantizing
+	// TODO Jen/Jim - SQL prequantizing
 	
 	public DefaultTestingPrequantized(Hasher hasher, Users users,
 			TestGenerator testGenerator) {

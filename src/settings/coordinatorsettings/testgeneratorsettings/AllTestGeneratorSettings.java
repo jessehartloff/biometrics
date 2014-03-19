@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.testgeneratorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

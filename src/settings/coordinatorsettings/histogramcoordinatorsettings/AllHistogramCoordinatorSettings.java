@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.histogramcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,22 +11,33 @@ import javax.swing.JPanel;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
+import settings.coordinatorsettings.CoordinatorSettings;
+import settings.coordinatorsettings.NoCoordinator;
+import settings.hashersettings.HasherSettings;
+import settings.hashersettings.FuzzyVaultSettings;
+import settings.hashersettings.AllHasherSettings;
+import settings.hashersettings.StraightHasherSettings;
 import settings.settingsvariables.SettingsString;
 
-public class AllIndexingCoordinatorSettings  extends ComboBoxSettings{
+public class AllHistogramCoordinatorSettings extends ComboBoxSettings{
+
+	private static final long serialVersionUID = 1L;
+	
 
 	
-	public static String getIndexingCoordinator(){
+	
+	public static String getHistogramCoordinator(){
 		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables.get(instance.variableString);
 		return coordinatorSettings.getCoordinator();
 	}
 	
+	
 	//Singleton
-	private static AllIndexingCoordinatorSettings instance;
-	private AllIndexingCoordinatorSettings() {}
-	public static AllIndexingCoordinatorSettings getInstance(){
+	private static AllHistogramCoordinatorSettings instance;
+	private AllHistogramCoordinatorSettings() {}
+	public static AllHistogramCoordinatorSettings getInstance(){
 		if(instance == null){
-			instance = new AllIndexingCoordinatorSettings();
+			instance = new AllHistogramCoordinatorSettings();
 		}
 		return instance;
 	}
@@ -40,17 +51,17 @@ public class AllIndexingCoordinatorSettings  extends ComboBoxSettings{
 	}
 
 
+	
 	@Override
 	protected void addSettings() {
-		this.variableString = "indexing";
-		this.settingsVariables.put(this.variableString, NoCoordinator.getInstance());	
+		this.variableString = "histogram";
+		this.settingsVariables.put("histogram", NoCoordinator.getInstance());
 	}
 
 	@Override
 	protected void addALLOptions() {
+		this.addToOptions(HistogramSettings.getInstance());
 		this.addToOptions(NoCoordinator.getInstance());
-		this.addToOptions(RAMIndexingSettings.getInstance());	
-		this.addToOptions(SQLIndexingSettings.getInstance());	
 	}
 
 

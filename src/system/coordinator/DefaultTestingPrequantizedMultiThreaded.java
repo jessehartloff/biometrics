@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import settings.coordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.testgenerators.TestGenerator;

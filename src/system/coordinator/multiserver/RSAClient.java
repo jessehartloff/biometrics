@@ -67,7 +67,6 @@ public class RSAClient {
 		try {
 			return Cipher.getInstance(cipherType);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("Something is broke: could not get Cipher Instance");
 		} 
 		return null;
@@ -106,7 +105,6 @@ public class RSAClient {
 			encryptedKey = cipher.doFinal(minutia.getBytes());
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
@@ -125,7 +123,6 @@ public class RSAClient {
 		try {
 			decryptedPassword = decryptionString(cipher, privateKey, encryptString(publicKey, password)  );
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		System.out.println("DecryptedString is : " +decryptedPassword);
@@ -146,7 +143,6 @@ public class RSAClient {
 			client.testMethods();
 			//client.RSAKeyExchange();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}

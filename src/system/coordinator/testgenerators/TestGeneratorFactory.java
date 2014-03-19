@@ -1,6 +1,6 @@
 package system.coordinator.testgenerators;
 
-import settings.coordinatorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import system.coordinator.testgenerators.GenerateFVCStyleTests;
 import system.coordinator.testgenerators.TestGenerator;
 

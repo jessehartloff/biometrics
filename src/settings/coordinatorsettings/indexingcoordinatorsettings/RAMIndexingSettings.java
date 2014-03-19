@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.indexingcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
+import settings.coordinatorsettings.CoordinatorSettings;
 
 public class RAMIndexingSettings extends CoordinatorSettings{
 

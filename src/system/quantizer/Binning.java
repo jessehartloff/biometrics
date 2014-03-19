@@ -131,8 +131,8 @@ public class Binning extends Quantizer{
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 			i++;
 		}
+
 		return toReturn;
-		
 		
 	}
 

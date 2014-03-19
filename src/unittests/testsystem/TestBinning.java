@@ -3,8 +3,8 @@ package unittests.testsystem;
 import org.junit.Test;
 
 import settings.AllSettings;
-import settings.coordinatorsettings.AllTestGeneratorSettings;
-import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
+import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.modalitysettings.AllModalitySettings;

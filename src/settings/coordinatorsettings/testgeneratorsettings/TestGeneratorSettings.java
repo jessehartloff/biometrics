@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.testgeneratorsettings;
 
 import settings.Settings;
 

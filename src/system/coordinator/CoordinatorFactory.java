@@ -1,9 +1,10 @@
 package system.coordinator;
 
 
-import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
-import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
-import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.indexingcoordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserverCoordinatorSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
@@ -22,6 +23,20 @@ import system.hasher.HasherFactory;
 public class CoordinatorFactory {
 	 	
 	public static Coordinator makeCoordinator(Users users){
+		
+		switch(MultiserverCoordinatorEnumerator.valueOf(AllMultiserverCoordinatorSettings.getMultiserverCoordinator())){
+			case NONE:
+				break;
+			case SERVER1:
+				break;
+			case SERVER2:
+				break;
+			case SUPERTESTINGMETACLIENT:
+//				return new 
+				break;
+			default:
+				break;
+		}
 		
 		Hasher hasher = HasherFactory.makeHasher();
 		
@@ -96,6 +111,10 @@ public class CoordinatorFactory {
 	
 	public enum HistogramCoordinatorEnumerator{
 		HISTOGRAM, NONE;
+	}
+	
+	public enum MultiserverCoordinatorEnumerator{
+		SUPERTESTINGMETACLIENT, SERVER1, SERVER2, NONE;
 	}
 	
 	

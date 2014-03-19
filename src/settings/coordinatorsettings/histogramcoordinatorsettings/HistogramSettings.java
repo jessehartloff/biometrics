@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.histogramcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,32 +6,27 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
-import settings.settingsvariables.SettingsLong;
+import settings.coordinatorsettings.CoordinatorSettings;
 
-public class MultipleEnrollmentSettings extends CoordinatorSettings{
+public class HistogramSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {
-		return "MULTIPLEENROLLMENT";
+		return "HISTOGRAM";
 	}
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("readingsForEnrollment", new SettingsLong(4));
 	}
 
 	
-	public SettingsLong readingsForEnrollment(){
-		return (SettingsLong) this.settingsVariables.get("readingsForEnrollment");
-	}
-	
 	//Singleton
-	private static MultipleEnrollmentSettings instance;
-	private MultipleEnrollmentSettings(){
+	private static HistogramSettings instance;
+	private HistogramSettings(){
 	}
-	public static MultipleEnrollmentSettings getInstance(){
+	public static HistogramSettings getInstance(){
 		if(instance == null){
-			instance = new MultipleEnrollmentSettings();
+			instance = new HistogramSettings();
 		}
 		return instance;
 	}
@@ -45,7 +40,6 @@ public class MultipleEnrollmentSettings extends CoordinatorSettings{
 	
 	@Override
 	public String getLabel(){
-		return "Multiple Enrollment";
+		return "Histogram";
 	}
-
 }

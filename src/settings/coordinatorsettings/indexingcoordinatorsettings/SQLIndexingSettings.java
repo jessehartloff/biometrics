@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.indexingcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,28 +6,27 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
-import settings.modalitysettings.AllModalitySettings;
+import settings.coordinatorsettings.CoordinatorSettings;
 
-public class DefaultTestingSettings extends CoordinatorSettings{
+public class SQLIndexingSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {
-		return "DEFAULTTESTING";
+		return "SQLINDEXING";
 	}
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 	}
 
 	
 	//Singleton
-	private static DefaultTestingSettings instance;
-	private DefaultTestingSettings(){
+	private static SQLIndexingSettings instance;
+	private SQLIndexingSettings(){
 	}
-	public static DefaultTestingSettings getInstance(){
+	public static SQLIndexingSettings getInstance(){
 		if(instance == null){
-			instance = new DefaultTestingSettings();
+			instance = new SQLIndexingSettings();
 		}
 		return instance;
 	}
@@ -41,7 +40,7 @@ public class DefaultTestingSettings extends CoordinatorSettings{
 	
 	@Override
 	public String getLabel(){
-		return "Default Testing";
+		return "SQL Indexing";
 	}
 
 }

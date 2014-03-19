@@ -12,9 +12,9 @@ import settings.AllSettings;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
-import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
-import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
-import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.indexingcoordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
 import settings.modalitysettings.AllModalitySettings;
 
 public class AllHasherSettings extends ComboBoxSettings{

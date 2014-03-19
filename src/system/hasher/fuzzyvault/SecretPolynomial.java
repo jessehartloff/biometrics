@@ -26,8 +26,7 @@ public class SecretPolynomial {
 		for(int i=0; i<this.termsInPoly; i++){
 			BigInteger randomValue = new BigInteger(this.totalBits.intValue(), new Random());
 		}
-		// TODO Auto-generated method stub
-		// add CRC
+		// TODO add CRC
 	}
 	
 	public BigInteger evaluateAt(BigInteger bigInt) {
@@ -49,5 +48,4 @@ public class SecretPolynomial {
 		this.termsInPoly = termsInPoly;
 	}
 
-	// TODO FuzzyVault - polynomial stuff
 }

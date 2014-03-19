@@ -64,15 +64,13 @@ public class Server {
 			encryptedKey = cipher.doFinal(minutia.toByteArray());
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
 		return new BigInteger(encryptedKey);
 	}
 	
-	public static void main(String[] args) throws NoSuchProviderException, InvalidKeySpecException, ClassNotFoundException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws Exception{
 		Server server = new Server();
 		server.RSA();
 	

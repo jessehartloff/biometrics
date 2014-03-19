@@ -18,7 +18,7 @@ public class Vault {
 		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
 		this.totalBits = Quantizer.getQuantizer().getTotalBits(); // FIXME this has to change to handle #bins that are not powers of 2
 	}
-	
+
 	public Vault(Template lockedVault){
 		this.vaultPoints = Vault.getVaultPoints(lockedVault);
 		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
@@ -81,7 +81,6 @@ public class Vault {
 		
 		//loop through vault and extract points with matching z-value
 		
-		// TODO FuzzyVault - unlock
 		
 		RSDecoder decoder = new BerlekampWelchWrapper();
 		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), 

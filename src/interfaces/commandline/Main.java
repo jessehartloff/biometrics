@@ -17,10 +17,10 @@ import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 
 import settings.AllSettings;
-import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
-import settings.coordinatorsettings.AllTestGeneratorSettings;
-import settings.coordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
-import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
+import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
@@ -34,6 +34,7 @@ import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.*;
 import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
+
 import java.sql.*;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.

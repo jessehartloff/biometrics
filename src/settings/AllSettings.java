@@ -18,15 +18,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
-import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
-import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.indexingcoordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserverCoordinatorSettings;
 import settings.hashersettings.AllHasherSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
-
 import interfaces.gui.ResultsGUI;
 
 
@@ -74,6 +74,7 @@ public class AllSettings extends Settings{
 	
 	@Override 
 	protected void addSettings(){
+		this.settingsVariables.put("Multiserver", AllMultiserverCoordinatorSettings.getInstance()); //default to all prequantized
 		this.settingsVariables.put("Matching", AllMatchingCoordinatorSettings.getInstance()); //default to all prequantized
 		this.settingsVariables.put("Indexing", AllIndexingCoordinatorSettings.getInstance()); //default to none
 		this.settingsVariables.put("Histogram", AllHistogramCoordinatorSettings.getInstance()); //

@@ -7,12 +7,12 @@ import java.util.Collections;
 import java.util.Random;
 
 import settings.AllSettings;
-import settings.coordinatorsettings.AllHistogramCoordinatorSettings;
-import settings.coordinatorsettings.AllIndexingCoordinatorSettings;
-import settings.coordinatorsettings.AllMatchingCoordinatorSettings;
-import settings.coordinatorsettings.AllTestGeneratorSettings;
-import settings.coordinatorsettings.HistogramSettings;
-import settings.coordinatorsettings.TestGeneratorFVCTestsSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.histogramcoordinatorsettings.HistogramSettings;
+import settings.coordinatorsettings.indexingcoordinatorsettings.AllIndexingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.fingerprintmethodsettings.TripletsOfTrianglesSettings;

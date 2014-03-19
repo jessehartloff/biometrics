@@ -28,7 +28,6 @@ public class Results {
 	private Double totalLogOfBins;
 	private Double chiSquare;
 	private ArrayList<Double> chiSquareValues;
-	// TODO Jesse - setup for Jim, statistical distance from uniform
 
 	private RawScores rawScores;
 	

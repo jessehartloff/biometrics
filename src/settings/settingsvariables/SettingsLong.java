@@ -25,7 +25,7 @@ public class SettingsLong extends SettingsVariable{
 	}
 	public SettingsLong(Long value){
 		if(this.numberBox == null){
-			this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000,1));
+			this.numberBox = new JSpinner(new SpinnerNumberModel(value.intValue(),0,1000000,1));
 		}
 		this.setValue(value);
 	}

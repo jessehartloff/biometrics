@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.matchingcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,26 +6,30 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
+import settings.coordinatorsettings.CoordinatorSettings;
+import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
+import settings.modalitysettings.AllModalitySettings;
 
-public class HistogramSettings extends CoordinatorSettings{
+public class DefaultTestingSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {
-		return "HISTOGRAM";
+		return "DEFAULTTESTING";
 	}
 
 	@Override
 	protected void addSettings() {
+		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 	}
 
 	
 	//Singleton
-	private static HistogramSettings instance;
-	private HistogramSettings(){
+	private static DefaultTestingSettings instance;
+	private DefaultTestingSettings(){
 	}
-	public static HistogramSettings getInstance(){
+	public static DefaultTestingSettings getInstance(){
 		if(instance == null){
-			instance = new HistogramSettings();
+			instance = new DefaultTestingSettings();
 		}
 		return instance;
 	}
@@ -39,6 +43,7 @@ public class HistogramSettings extends CoordinatorSettings{
 	
 	@Override
 	public String getLabel(){
-		return "Histogram";
+		return "Default Testing";
 	}
+
 }

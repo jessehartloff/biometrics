@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.testgeneratorsettings;
 
 public class TestGeneratorFVCTestsSettings extends TestGeneratorSettings{
 

@@ -2,7 +2,7 @@ package system.coordinator;
 
 import java.util.ArrayList;
 
-import settings.coordinatorsettings.MultipleEnrollmentSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.MultipleEnrollmentSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
@@ -12,7 +12,7 @@ import system.hasher.Hasher;
 
 public class MultipleEnrollment extends Coordinator{
 
-	//TODO Jesse - multiple enrollment all possible genuine tests
+	//LATER Jesse - multiple enrollment all possible genuine tests
 	public MultipleEnrollment(Hasher hasher, Users users) {
 		super(hasher, users);
 		this.prequantize();

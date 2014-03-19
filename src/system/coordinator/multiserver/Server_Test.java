@@ -59,7 +59,6 @@ public class Server_Test {
 		try {
 			new Thread((Runnable) new Server_Test()).start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}

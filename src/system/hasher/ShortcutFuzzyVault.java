@@ -138,7 +138,7 @@ public class ShortcutFuzzyVault extends Hasher{
 			rank = numberEnrolled;
 			
 		}
-		
+		// TODO advanced chaff points in shortcut fuzzy vault
 		return rank;
 	}
 

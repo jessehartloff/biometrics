@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.matchingcoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +12,8 @@ import settings.AllSettings;
 import settings.ComboBoxSettings;
 import settings.Settings;
 import settings.SettingsRenderer;
+import settings.coordinatorsettings.CoordinatorSettings;
+import settings.coordinatorsettings.NoCoordinator;
 import settings.settingsvariables.SettingsDouble;
 import settings.settingsvariables.SettingsString;
 
