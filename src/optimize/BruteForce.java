@@ -16,6 +16,13 @@ import system.allcommonclasses.commonstructures.Results;
 public class BruteForce {
 	FitnessFunction f;
 	
+	/**
+	 * Initialize brute force.
+	 * Hard code in objective method here
+	 * Hard code in training and testing databases here
+	 * 
+	 * @param fitness
+	 */
 	public BruteForce(FitnessFunction fitness){
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
@@ -27,6 +34,10 @@ public class BruteForce {
 	
 	
 	public static void main(String[] args){
+		/**
+		 * Define the "Fitness Function" inline to just be a regular run of the system
+		 * This returns a Results object, which will be passed into OptimizationResults for sorting
+		 */
 		FitnessFunction f = new FitnessFunction(){
 			@Override
 			public Results evaluateFitness(ArrayList<Chromosome> chromosomes) {
@@ -37,6 +48,7 @@ public class BruteForce {
 				return settings.runSystemAndGetResults();
 			}	
 		};
+		//initialize the system; hard code in databases, and fingerprint method in constructor above
 		BruteForce b = new BruteForce(f);
 		
 		ArrayList<Chromosome> chromosomes = BruteForce.getChromosomeList();
@@ -50,7 +62,8 @@ public class BruteForce {
 			e.printStackTrace();
 		}
 		for(Candidate c : allCandidates){
-			op.commitResult(c.evaluate(f));
+			c.evaluate(f);
+			op.commitResult(c);
 		}
 		op.displayTopNResults(8);
 		
@@ -82,7 +95,13 @@ public class BruteForce {
 	}
 
 	
+	/**
+	 * Define the "Chromosome List" as the set of ranges of values for the search space (I think)
+	 * NOTE: Hard code in particular functions parameters
+	 * @return
+	 */
 	
+	//TODO - Matt... it'd be really cool if you could put in even just a few comments
 	public static ArrayList<Chromosome> getChromosomeList(){
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 		PRINTSettings fpm = PRINTSettings.getInstance();
