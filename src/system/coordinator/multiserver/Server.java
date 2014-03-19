@@ -21,7 +21,21 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Server {
+public abstract class Server {
+	//base server class extends coordinator
+	
+	public Object receive(Object object){
+		return object;
+	}
+	
+	public void send(Object object){
+		
+	}
+	
+	
+	
+	
+	/*
 	public void RSA() throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, ClassNotFoundException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
 		
 		String encryptThis = "jacordar calculus";
@@ -74,6 +88,6 @@ public class Server {
 		Server server = new Server();
 		server.RSA();
 	
-	}
+	}*/
 	
 }

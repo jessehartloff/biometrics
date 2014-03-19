@@ -14,7 +14,6 @@ import system.allcommonclasses.transformations.Transformation;
 
 /**
  * Controls all the hashing details. Typically, this class is in charge of the security of the scheme.
- *
  */
 public abstract class Hasher {
 

@@ -40,7 +40,7 @@ public class OptimizationResults {
 		maxArraySize = maxArrSize;
 	}
 	/**
-	 * Display the top N results out of maxArraySize.
+	 * Display the top N results out of maxArraySize. 
 	 * Since results are stored in each list by descending order, it is just the first N
 	 */
 	public void displayTopNResults ( Integer N ) {

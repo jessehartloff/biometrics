@@ -66,7 +66,6 @@ public class BruteForce {
 			op.commitResult(c);
 		}
 		op.displayTopNResults(8);
-		
 	}
 	
 

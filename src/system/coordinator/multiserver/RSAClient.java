@@ -41,11 +41,12 @@ public class RSAClient {
 		
 		
 		Socket clnt_socket;
-		int port = 58196;
+		int port = 8000;
 		clnt_socket = new Socket(InetAddress.getLocalHost(),port);
 		ObjectOutputStream objOut = new ObjectOutputStream(clnt_socket.getOutputStream());
 		objOut.writeObject(publicKey);
 		
+		/*
 		byte[] inputBuffer = new byte[128];
 		BufferedInputStream inputStream = new BufferedInputStream(clnt_socket.getInputStream());
 		inputStream.read(inputBuffer,0,128);
@@ -60,6 +61,7 @@ public class RSAClient {
 		long finishTime = System.currentTimeMillis();
 		System.out.println("Time for Decryption is :" + (finishTime - startDecryption));
 		System.out.println("Time For RSA Key Exchange Was : " + (finishTime-startTime) + " milliseconds");
+		*/
 		
 	}
 	public Cipher getCipherInstance(String cipherType){
@@ -140,7 +142,7 @@ public class RSAClient {
 	public static void main ( String[] args){
 		RSAClient client = new RSAClient();
 		try {
-			client.testMethods();
+			client.RSAKeyExchange();
 			//client.RSAKeyExchange();
 		} catch (Exception e) {
 			e.printStackTrace();
