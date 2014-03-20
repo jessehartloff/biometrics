@@ -17,84 +17,125 @@ import system.coordinator.HistogramCoordinator;
 import system.coordinator.IndexTesting;
 import system.coordinator.MultipleEnrollment;
 import system.coordinator.testgenerators.TestGeneratorFactory;
+import system.coordinator.multiserver.*;
 import system.hasher.Hasher;
 import system.hasher.HasherFactory;
 
 public class CoordinatorFactory {
 	 	
-	public static Coordinator makeCoordinator(Users users){
+	public static Coordinator makeMultiserverCoordinator(Users users){
+
+		Hasher hasher = HasherFactory.makeHasher();
 		
 		switch(MultiserverCoordinatorEnumerator.valueOf(AllMultiserverCoordinatorSettings.getMultiserverCoordinator())){
 			case NONE:
-				break;
+				return null;
 			case SERVER1:
-				break;
+//				return new Server1(hasher, null);
 			case SERVER2:
-				break;
+//				return new Server2(null, null);
+			case CLIENT:
+//				return new Client(null, null);
 			case SUPERTESTINGMETACLIENT:
-//				return new 
-				break;
+				return new SuperTestingMetaClient(null, users);
 			default:
-				break;
+				return null;
 		}
+		
+	}
+	
+	public static Coordinator makeAllSingleServerCoordinators(Users users){
 		
 		Hasher hasher = HasherFactory.makeHasher();
 		
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
 		
-	
-		switch(MatchingCoordinatorEnumerator.valueOf(AllMatchingCoordinatorSettings.getMatchingCoordinator())){
-			case DEFAULTTESTING:
-				firstCoordinator = addToFront(new DefaultTesting(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
-				break;		
-			case DEFAULTTESTINGPREQUANTIZED:
-				firstCoordinator = addToFront(new DefaultTestingPrequantized(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
-				break;
-			case DEFAULTTESTINGPREQUANTIZEDMULTITHREADED:
-				firstCoordinator = addToFront(new DefaultTestingPrequantizedMultiThreaded(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
-				break;
-				
-			case MULTIPLEENROLLMENT:
-				firstCoordinator = addToFront(new MultipleEnrollment(hasher, users), firstCoordinator);
-				break;
-			case NONE:
-				break;				
-			default:
-				System.out.println("You didn't provide an appropriate matching coordinator");
-				break;
-		}		
+		Coordinator currentCoordinator = null;
 		
-		switch(IndexingCoordinatorEnumerator.valueOf(AllIndexingCoordinatorSettings.getIndexingCoordinator())){
-			case RAMINDEXING:
-				firstCoordinator = addToFront(new IndexTesting(hasher, users, new RAMStructure()), firstCoordinator);
-			break;	
-//			case SQLINDEXING:
-//				firstCoordinator = addToFront(new IndexTesting(hasher, users, new SQLStructure()), firstCoordinator);
-//			break;		
-			case NONE:
-				break;				
-			default:
-				System.out.println("You didn't provide an appropriate indexing coordinator");
-				break;
-		}	
+		currentCoordinator = CoordinatorFactory.makeMatchingCoordinator(users);
+		if(currentCoordinator != null){
+			firstCoordinator = addToFront(currentCoordinator, firstCoordinator);
+		}
 		
-		switch(HistogramCoordinatorEnumerator.valueOf(AllHistogramCoordinatorSettings.getHistogramCoordinator())){
-			case HISTOGRAM:
-				firstCoordinator = addToFront(new HistogramCoordinator(hasher, users), firstCoordinator);
-				break;		
-			case NONE:
-				break;				
-			default:
-				System.out.println("You didn't provide an appropriate histogram coordinator");
-				break;
-		}	
+		currentCoordinator = CoordinatorFactory.makeIndexingCoordinator(users);
+		if(currentCoordinator != null){
+			firstCoordinator = addToFront(currentCoordinator, firstCoordinator);
+		}
+		
+		currentCoordinator = CoordinatorFactory.makeHistogramCoordinator(users);
+		if(currentCoordinator != null){
+			firstCoordinator = addToFront(currentCoordinator, firstCoordinator);
+		}
+		
+		
+		
 		
 		
 		return firstCoordinator;
 	}
 	
 	
+	public static Coordinator makeMatchingCoordinator(Users users){
+
+		Hasher hasher = HasherFactory.makeHasher();
+		
+		switch(MatchingCoordinatorEnumerator.valueOf(AllMatchingCoordinatorSettings.getMatchingCoordinator())){
+			case DEFAULTTESTING:
+				return new DefaultTesting(hasher, users, TestGeneratorFactory.makeTestGenerator());		
+			case DEFAULTTESTINGPREQUANTIZED:
+				return new DefaultTestingPrequantized(hasher, users, TestGeneratorFactory.makeTestGenerator());
+			case DEFAULTTESTINGPREQUANTIZEDMULTITHREADED:
+				return new DefaultTestingPrequantizedMultiThreaded(hasher, users, TestGeneratorFactory.makeTestGenerator());
+			case MULTIPLEENROLLMENT:
+				return new MultipleEnrollment(hasher, users);
+			case NONE:
+				return null;				
+			default:
+				System.out.println("You didn't provide an appropriate matching coordinator");
+				return null;
+		}		
 	
+	}
+	
+	
+
+	public static Coordinator makeIndexingCoordinator(Users users){
+		
+		Hasher hasher = HasherFactory.makeHasher();
+		
+		switch(IndexingCoordinatorEnumerator.valueOf(AllIndexingCoordinatorSettings.getIndexingCoordinator())){
+		case RAMINDEXING:
+			return new IndexTesting(hasher, users, new RAMStructure());
+//		case SQLINDEXING:
+//			firstCoordinator = addToFront(new IndexTesting(hasher, users, new SQLStructure()), firstCoordinator);
+//		break;		
+		case NONE:
+			return null;				
+		default:
+			System.out.println("You didn't provide an appropriate indexing coordinator");
+			return null;
+	}	
+		
+	}
+	
+	
+
+	public static Coordinator makeHistogramCoordinator(Users users){
+
+		Hasher hasher = HasherFactory.makeHasher();
+		
+		switch(HistogramCoordinatorEnumerator.valueOf(AllHistogramCoordinatorSettings.getHistogramCoordinator())){
+		case HISTOGRAM:
+			return new HistogramCoordinator(hasher, users);		
+		case NONE:
+			return null;				
+		default:
+			System.out.println("You didn't provide an appropriate histogram coordinator");
+			return null;
+	}	
+	
+		
+	}
 	
 	private static Coordinator addToFront(Coordinator coordinatorToAdd, Coordinator frontCoordinator){
 		coordinatorToAdd.nextCoordinator = frontCoordinator;
@@ -114,7 +155,7 @@ public class CoordinatorFactory {
 	}
 	
 	public enum MultiserverCoordinatorEnumerator{
-		SUPERTESTINGMETACLIENT, SERVER1, SERVER2, NONE;
+		SUPERTESTINGMETACLIENT, SERVER1, SERVER2, CLIENT, NONE;
 	}
 	
 	

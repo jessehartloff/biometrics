@@ -38,7 +38,9 @@ public class BiometricSystem {
 		Double FTC = testingUsers.removeFailureToCapture();
 		System.out.println("Failure to Capture");
 
-		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
+		
+		RawScores rawScores = CoordinatorFactory.makeAllSingleServerCoordinators(testingUsers).run();
+
 		System.out.println(rawScores.toString());
 		Results results = EvaluatePerformance.processResults(rawScores);
 		results.setFailureToCapture(FTC);
@@ -55,7 +57,7 @@ public class BiometricSystem {
 		Users testingUsers = AllModalitySettings.getTestingUsers();
 		Double FTC = testingUsers.removeFailureToCapture();
 		
-		RawScores rawScores = CoordinatorFactory.makeCoordinator(testingUsers).run();
+		RawScores rawScores = CoordinatorFactory.makeAllSingleServerCoordinators(testingUsers).run();
 		
 		Results results = EvaluatePerformance.processResults(rawScores);
 		results.setFailureToCapture(FTC);
