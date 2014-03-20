@@ -40,7 +40,10 @@ public class AllSettings extends Settings{
 	//This block of code must be in all settings files (except settings variables) to enable serialization.
 	private static AllSettings instance;
 	
-	private AllSettings(){}
+	private AllSettings(){
+		//FIXME - Jesse: I changed this cause I couldn't figure out where this ever gets called and it seemed necessary...
+		//addSettings();
+	}
 	public static AllSettings getInstance(){
 		if(instance == null){
 			instance = new AllSettings();

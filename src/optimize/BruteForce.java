@@ -55,7 +55,7 @@ public class BruteForce {
 		ArrayList<Candidate> allCandidates = b.getAllParameterSets(chromosomes, new ArrayList<Chromosome>());
 		OptimizationResults op = new OptimizationResults(50);
 		try {
-			System.out.println("Size: "+allCandidates.size());
+			System.out.println("Number of Candidates: "+allCandidates.size());
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

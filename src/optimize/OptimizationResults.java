@@ -8,10 +8,7 @@ import java.util.PriorityQueue;
 import system.allcommonclasses.commonstructures.Results;
 
 /**
- * Keeps lists of all optimization results
- * Each optimization criteria is represented as an ArrayList of Results
- * When pushing a Results to the OptimizationResults object, it is analyzed within optimization result
- *  and added to the correct optimization criteria through sorting methods
+ * Keeps heaps of all optimization results
  *  
  * @author thomaseffland
  *
@@ -30,7 +27,7 @@ public class OptimizationResults {
 	//ArrayList< Results > bestEERZeroFARDiff;
 	Integer maxArraySize;
 	/**
-	 * Contructor
+	 * Constructor
 	 */
 	public OptimizationResults(Integer maxArrSize) {
 		bestEERs = new PriorityQueue< Candidate >(maxArrSize, new CompareResultEER());
@@ -77,7 +74,6 @@ public class OptimizationResults {
 //		tryBestAverageEERandZeroFARs( c );
 	}
 	
-	//TODO Tom - make result array searches binary instead of linear
 	/**
 	 * See if result is in bestEERs
 	 * If so, add to result, sort them, and remove the highest if it exceeds the maxArraySize

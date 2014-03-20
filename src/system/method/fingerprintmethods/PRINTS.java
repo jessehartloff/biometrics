@@ -70,7 +70,9 @@ public class PRINTS extends FingerprintMethod{
 		public BigInteger toBigInt(){
 			BigInteger featureBigInt = super.toBigInt();
 			//return PRINTS.appendRegionNumber(featureBigInt, this.getRegionNumber());
-			return Quantizer.getQuantizer().getRandomBigInt();
+			//return Quantizer.getQuantizer().getRandomBigInt();
+			//FIXME - Matt: Why was this returning a random big int?
+			return featureBigInt;
 		}
 		
 		public Long getRegionNumber(){
