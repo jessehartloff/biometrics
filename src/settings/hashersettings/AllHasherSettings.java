@@ -34,7 +34,7 @@ public class AllHasherSettings extends ComboBoxSettings{
 	@Override
 	protected void addSettings(){
 		this.variableString = "Hasher";
-		this.settingsVariables.put(this.variableString, FuzzyVaultSettings.getInstance());
+		this.settingsVariables.put(this.variableString, ShortcutFuzzyVaultSettings.getInstance());
 	}
 	
 	private static AllHasherSettings instance;
@@ -65,5 +65,6 @@ public class AllHasherSettings extends ComboBoxSettings{
 	protected void addALLOptions() {
 		this.addToOptions(StraightHasherSettings.getInstance());
 		this.addToOptions(FuzzyVaultSettings.getInstance());
+		this.addToOptions(ShortcutFuzzyVaultSettings.getInstance());
 	}
 }

@@ -119,11 +119,13 @@ public class AllSettings extends Settings {
 
 		Results results = system.go();
 
-		System.out.print(results.getRawScores());
-		System.out.println(results.toString());
+		if(results != null){
+			System.out.print(results.getRawScores());
+			System.out.println(results.toString());
 
-		@SuppressWarnings("unused")
-		ResultsGUI resultsGUI = new ResultsGUI(results);
+			@SuppressWarnings("unused")
+			ResultsGUI resultsGUI = new ResultsGUI(results);
+		}
 
 	}
 

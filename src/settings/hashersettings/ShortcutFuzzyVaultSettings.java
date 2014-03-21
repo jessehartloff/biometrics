@@ -11,18 +11,18 @@ import system.allcommonclasses.modalities.Biometric;
 import system.hasher.Hasher;
 import system.quantizer.Quantizer;
 
-public class FuzzyVaultSettings extends HasherSettings{
+public class ShortcutFuzzyVaultSettings extends HasherSettings{
 
 	private static final long serialVersionUID = 1L;
 
 	
 	//Singleton
-	private static FuzzyVaultSettings instance;
-	private FuzzyVaultSettings(){
+	private static ShortcutFuzzyVaultSettings instance;
+	private ShortcutFuzzyVaultSettings(){
 	}
-	public static FuzzyVaultSettings getInstance(){
+	public static ShortcutFuzzyVaultSettings getInstance(){
 		if(instance == null){
-			instance = new FuzzyVaultSettings();
+			instance = new ShortcutFuzzyVaultSettings();
 		}
 		return instance;
 	}
@@ -36,7 +36,7 @@ public class FuzzyVaultSettings extends HasherSettings{
 	@Override
 	protected void addSettings(){
 		this.settingsVariables.put("numberOfChaffPoints", new SettingsLong(100));
-		this.settingsVariables.put("numberOfTermsInPolynomial", new SettingsLong(5));
+//		this.settingsVariables.put("numberOfTermsInPolynomial", new SettingsLong(3));
 	}
 
 
@@ -44,24 +44,25 @@ public class FuzzyVaultSettings extends HasherSettings{
 		return (SettingsLong) this.settingsVariables.get("numberOfChaffPoints");
 	}
 
-	public SettingsLong numberOfTermsInPolynomial(){
-		return (SettingsLong) this.settingsVariables.get("numberOfTermsInPolynomial");
-	}
+//	public SettingsLong numberOfTermsInPolynomial(){
+//		return (SettingsLong) this.settingsVariables.get("numberOfTermsInPolynomial");
+//	}
 	
 
+
 	public Long getNumberOfBitsForTheField() {
-		return Quantizer.getQuantizer().getTotalBits();
+		return Quantizer.getQuantizer().getTotalBits(); 
 	}
 
 	@Override
 	public String getHasher() {
-		return "FUZZYVAULT";
+		return "SHORTCUTFUZZYVAULT";
 	}
 
 
 	@Override
 	public String getLabel(){
-		return "Fuzzy Vault";
+		return "Shortcut Fuzzy Vault";
 	}
 	
 	

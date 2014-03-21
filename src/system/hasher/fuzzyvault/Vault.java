@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import settings.hashersettings.FuzzyVaultSettings;
+import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.quantizer.Quantizer;
 
@@ -63,8 +64,9 @@ public class Vault {
 		}
 
 		// add chaff points
-		for (int i = 0; i < FuzzyVaultSettings.getInstance()
-				.numberOfChaffPoints().getValue().intValue(); i++) {
+
+		for (int i = 0; i < FuzzyVaultSettings.getInstance().numberOfChaffPoints().getValue().intValue(); i++) {
+
 			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
 
 			Double randomZ = Math.random() * totalBits.doubleValue();
@@ -116,8 +118,12 @@ public class Vault {
 	 * assumes input is a locked vault which was locked according to the current
 	 * settings
 	 * 
+<<<<<<< Vault.java
+	 * @param lockedVault a template representing a locked vault
+=======
 	 * @param lockedVault
 	 *            a locked vault
+>>>>>>> 1.8
 	 * @return
 	 */
 	public static ArrayList<FuzzyVaultPoint> getVaultPoints(Template lockedVault) {

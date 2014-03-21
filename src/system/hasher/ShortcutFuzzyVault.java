@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
-import settings.hashersettings.FuzzyVaultSettings;
+import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.indexingstructure.IndexingPoint;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
@@ -21,32 +21,38 @@ import system.allcommonclasses.modalities.Biometric;
  */
 public class ShortcutFuzzyVault extends Hasher {
 
-	FuzzyVaultSettings settings;
+	ShortcutFuzzyVaultSettings settings;
 	IndexingStructure indexingStructure;
+	
+	public ShortcutFuzzyVault(){
+		settings = ShortcutFuzzyVaultSettings.getInstance();
 
-	public ShortcutFuzzyVault() {
-		settings = FuzzyVaultSettings.getInstance();
 	}
 
 	@Override
 	public Template hashEnrollTemplate(Template template) {
-		for (BigInteger bigInt : template.getHashes()) {
-			bigInt = bigInt.shiftLeft(1);
+		Template toReturn = new Template();
+		for(BigInteger bigInt : template.getHashes()){
+			toReturn.getHashes().add(bigInt.shiftLeft(1));
+
 		}
-
-		this.addChaffPoints(template);
-
-		return template;
+		
+		this.addChaffPoints(toReturn);
+		
+		return toReturn;
 	}
 
 	@Override
 	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
-		for (Template template : templates) {
-			for (BigInteger bigInt : template.getHashes()) {
-				bigInt = bigInt.shiftLeft(1);
+		ArrayList<Template> toReturn = new ArrayList<Template>();
+		for(Template template : templates){
+			Template tempTemplate = new Template();
+			for(BigInteger bigInt : template.getHashes()){
+				tempTemplate.getHashes().add(bigInt.shiftLeft(1));
 			}
+			toReturn.add(tempTemplate);
 		}
-		return templates;
+		return toReturn;
 	}
 
 	@Override

@@ -160,11 +160,11 @@ public class PathsMethod extends FingerprintMethod {
 	}
 
 
-	@Override
-	public Long getTotalBits() {
-		Path p = new Path();
-		return p.getTotalBits();
-	}
+//	@Override
+//	public Long getTotalBits() {
+//		Path p = new Path();
+//		return p.getTotalBits();
+//	}
 
 	
 	@Override

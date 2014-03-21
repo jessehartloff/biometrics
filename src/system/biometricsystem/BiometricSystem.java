@@ -38,14 +38,22 @@ public class BiometricSystem {
 		Double FTC = testingUsers.removeFailureToCapture();
 		System.out.println("Failure to Capture");
 
+		Coordinator coordinator = CoordinatorFactory.makeMultiserverCoordinator(testingUsers);
 		
-		RawScores rawScores = CoordinatorFactory.makeAllSingleServerCoordinators(testingUsers).run();
+		if(coordinator == null){
+			coordinator = CoordinatorFactory.makeAllSingleServerCoordinators(testingUsers);
+		}
+		
+		RawScores rawScores = coordinator.run();
 
-		System.out.println(rawScores.toString());
-		Results results = EvaluatePerformance.processResults(rawScores);
-		results.setFailureToCapture(FTC);
+		if(rawScores != null){
+			System.out.println(rawScores.toString());
+			Results results = EvaluatePerformance.processResults(rawScores);
+			results.setFailureToCapture(FTC);
+			return results;
+		}
 		
-		return results;
+		return null;
 	}
 
 	public Results goNoOut(){

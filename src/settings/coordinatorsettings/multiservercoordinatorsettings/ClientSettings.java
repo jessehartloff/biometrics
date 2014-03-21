@@ -1,4 +1,4 @@
-package settings.coordinatorsettings;
+package settings.coordinatorsettings.multiservercoordinatorsettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,27 +6,32 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
-import settings.hashersettings.ShortcutFuzzyVaultSettings;
+import settings.coordinatorsettings.CoordinatorSettings;
+import settings.settingsvariables.SettingsLong;
 
-public class NoCoordinator extends CoordinatorSettings{
+public class ClientSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {
-		return "NONE";
+		return "CLIENT";
 	}
 
 	@Override
 	protected void addSettings() {
+		this.settingsVariables.put("Port Number", new SettingsLong(10000));
 	}
 
+	public SettingsLong portNumber(){
+		return (SettingsLong) this.settingsVariables.get("Port Number");
+	}
 	
 	//Singleton
-	private static NoCoordinator instance;
-	private NoCoordinator(){
+	private static ClientSettings instance;
+	private ClientSettings(){
 	}
-	public static NoCoordinator getInstance(){
+	public static ClientSettings getInstance(){
 		if(instance == null){
-			instance = new NoCoordinator();
+			instance = new ClientSettings();
 		}
 		return instance;
 	}
@@ -40,7 +45,7 @@ public class NoCoordinator extends CoordinatorSettings{
 	
 	@Override
 	public String getLabel(){
-		return "None";
+		return "Client";
 	}
-	
+
 }

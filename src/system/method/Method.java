@@ -37,10 +37,10 @@ public abstract class Method {
 	// return f1.distanceFrom(f2);
 	// }
 
-	public Long getTotalBits() {
-		Feature feature = this.getBlankFeatureForTraining();
-		return feature.getTotalBits();
-	}
+//	public Long getTotalBits() {
+//		Feature feature = this.getBlankFeatureForTraining();
+//		return feature.getTotalBits();
+//	}
 
 	public abstract Feature getBlankFeatureForTraining();
 

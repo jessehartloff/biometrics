@@ -91,11 +91,11 @@ public class MinutiaeMethod extends FingerprintMethod {
 //	}
 
 
-	@Override
-	public Long getTotalBits() {
-		InnerMinutia m = new InnerMinutia();
-		return m.getTotalBits();
-	}
+//	@Override
+//	public Long getTotalBits() {
+//		InnerMinutia m = new InnerMinutia();
+//		return m.getTotalBits();
+//	}
 	
 	@Override
 	public ArrayList<Feature> fingerprintToFeatures(Fingerprint fingerprint){

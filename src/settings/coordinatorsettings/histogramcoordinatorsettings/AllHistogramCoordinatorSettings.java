@@ -14,7 +14,7 @@ import settings.SettingsRenderer;
 import settings.coordinatorsettings.CoordinatorSettings;
 import settings.coordinatorsettings.NoCoordinator;
 import settings.hashersettings.HasherSettings;
-import settings.hashersettings.FuzzyVaultSettings;
+import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import settings.hashersettings.AllHasherSettings;
 import settings.hashersettings.StraightHasherSettings;
 import settings.settingsvariables.SettingsString;
