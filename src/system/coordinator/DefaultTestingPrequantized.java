@@ -13,8 +13,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 
 	// TODO Jen/Jim - SQL prequantizing
 	
-	public DefaultTestingPrequantized(Hasher hasher, Users users,
-			TestGenerator testGenerator) {
+	public DefaultTestingPrequantized(Hasher hasher, Users users, TestGenerator testGenerator) {
 		super(hasher, users, testGenerator);
 		this.prequantize();
 	}

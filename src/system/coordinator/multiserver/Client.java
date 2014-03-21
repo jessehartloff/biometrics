@@ -69,7 +69,7 @@ public class Client extends Server {
 				
 				objStream.writeObject(encryptedFingerprint);
 				S2Out.write(byteStream.toByteArray());
-				S1Out.write(publicKey.toString().getBytes());
+				S1Out.write(privateKey.getEncoded());
 				Double score = Double.valueOf(S1reader.read());
 				System.out.println("scores yaaaaay:"+score);
 			}
@@ -80,8 +80,7 @@ public class Client extends Server {
 		return null;
 	}
 
-	public void enroll(Biometric biometric) {
-		Template quantized = biometric.quantizeOne();
+	public void enroll(Template template) {
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification
@@ -90,8 +89,7 @@ public class Client extends Server {
 		// wait for server 1's response
 	}
 
-	public Double test(Biometric biometric) {
-		Template quantized = biometric.quantizeOne();
+	public Double test(Template template) {
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification

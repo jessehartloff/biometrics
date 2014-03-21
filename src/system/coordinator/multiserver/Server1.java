@@ -1,26 +1,20 @@
 package system.coordinator.multiserver;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.net.ServerSocket;
+import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.Socket;
-import java.net.SocketException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.Arrays;
+import java.util.ArrayList;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 
 import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
@@ -34,8 +28,65 @@ public class Server1 extends Server {
 
 	@Override
 	public RawScores run() {
-		return null;
+		int clientPort = 8000, S2Port = 8002;
+
+		try {
+			Socket client = new Socket("localhost", clientPort);
+			Socket S2 = new Socket("localhost", S2Port);
+			InputStream clientIn = client.getInputStream();
+			InputStream S2In = S2.getInputStream();
+			OutputStream S1Out = client.getOutputStream();
+			InputStreamReader clientReader = new InputStreamReader(clientIn); 
+			InputStreamReader S2reader = new InputStreamReader(S2In); 
 		
+			Cipher cipher = Cipher.getInstance("DH");
+	        
+	        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+	        int data = clientReader.read();
+	        while(data != -1){
+	        	buffer.write(data);
+	            data = clientReader.read();
+	        }
+	        buffer.flush();
+	        clientReader.close();  
+
+			ByteArrayInputStream byteStream = new ByteArrayInputStream(buffer.toByteArray());
+	        ObjectInputStream objStream = new ObjectInputStream(byteStream);
+	        PrivateKey pk = (PrivateKey) objStream.readObject();
+	        
+	        buffer = new ByteArrayOutputStream();
+	        data = S2reader.read();
+	        while(data != -1){
+	        	buffer.write(data);
+	            data = S2reader.read();
+	        }
+	        buffer.flush();
+	        
+	        
+	        byteStream = new ByteArrayInputStream(buffer.toByteArray());
+	        objStream = new ObjectInputStream(byteStream);
+	        ArrayList<Template> encryptedFingerprint = (ArrayList<Template>) objStream.readObject();       
+	        
+			cipher.init(Cipher.DECRYPT_MODE, pk);
+			
+			ArrayList<Template> decryptedFingerprint = new ArrayList<Template>();
+			for(Template template : encryptedFingerprint){
+				Template decryptedTemplate = new Template();
+				for(BigInteger bigInt : template.getHashes()){
+					decryptedTemplate.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));	
+				}
+				decryptedFingerprint.add(decryptedTemplate);
+			}
+			this.hasher.hashEnrollTemplate(template);
+
+			
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
+
 
 	}
 
