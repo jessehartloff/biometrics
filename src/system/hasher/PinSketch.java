@@ -8,7 +8,7 @@ import system.allcommonclasses.modalities.Biometric;
 /**
  * 
  * Does PinSketch.
- *
+ * 
  */
 public class PinSketch extends Hasher {
 
@@ -30,9 +30,5 @@ public class PinSketch extends Hasher {
 		// todo Auto-generated method stub
 		return null;
 	}
-	
-
-
-
 
 }

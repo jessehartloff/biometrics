@@ -5,10 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({
-	TestMethodVariableSettings.class
-})
-
+@SuiteClasses({ TestMethodVariableSettings.class })
 public class TestSettings {
 
 }

@@ -14,34 +14,35 @@ import system.allcommonclasses.modalities.Biometric;
 
 /**
  * 
- * This class tests the fuzzy vault, without actually implementing all the functionality of the
- * scheme. This should only be used to test matching scores.
- *
+ * This class tests the fuzzy vault, without actually implementing all the
+ * functionality of the scheme. This should only be used to test matching
+ * scores.
+ * 
  */
-public class ShortcutFuzzyVault extends Hasher{
+public class ShortcutFuzzyVault extends Hasher {
 
 	FuzzyVaultSettings settings;
 	IndexingStructure indexingStructure;
-	
-	public ShortcutFuzzyVault(){
+
+	public ShortcutFuzzyVault() {
 		settings = FuzzyVaultSettings.getInstance();
 	}
-	
+
 	@Override
 	public Template hashEnrollTemplate(Template template) {
-		for(BigInteger bigInt : template.getHashes()){
+		for (BigInteger bigInt : template.getHashes()) {
 			bigInt = bigInt.shiftLeft(1);
 		}
-		
+
 		this.addChaffPoints(template);
-		
+
 		return template;
 	}
 
 	@Override
 	public ArrayList<Template> hashTestTemplates(ArrayList<Template> templates) {
-		for(Template template : templates){
-			for(BigInteger bigInt : template.getHashes()){
+		for (Template template : templates) {
+			for (BigInteger bigInt : template.getHashes()) {
 				bigInt = bigInt.shiftLeft(1);
 			}
 		}
@@ -49,41 +50,46 @@ public class ShortcutFuzzyVault extends Hasher{
 	}
 
 	@Override
-	public Double compareTemplates(Template enrolledTemplate, ArrayList<Template> testTemplates) {
+	public Double compareTemplates(Template enrolledTemplate,
+			ArrayList<Template> testTemplates) {
 		Double maxScore = Double.NEGATIVE_INFINITY;
 		for (Template template : testTemplates) {
 			Double score = 0.0;
 			for (BigInteger hash : template.getHashes()) {
-				if(enrolledTemplate.getHashes().contains(hash)){
+				if (enrolledTemplate.getHashes().contains(hash)) {
 					score += 1.0;
-				}else if(enrolledTemplate.getHashes().contains(hash.add(BigInteger.valueOf(1)))){
+				} else if (enrolledTemplate.getHashes().contains(
+						hash.add(BigInteger.valueOf(1)))) {
 					score -= 1.0;
 				}
 			}
-			if(score > maxScore){
+			if (score > maxScore) {
 				maxScore = score;
 			}
 		}
 		return maxScore;
 	}
 
-	//not the best. Does not check if values are already in the set. could do this easy for existing chaff, 
-	//but to check for collisions with genuines would need to handle shifts that way this is set up.
-	private void addChaffPoints(Template template){
-		for(int i=0; i<settings.numberOfChaffPoints().getValue(); i++){
+	// not the best. Does not check if values are already in the set. could do
+	// this easy for existing chaff,
+	// but to check for collisions with genuines would need to handle shifts
+	// that way this is set up.
+	private void addChaffPoints(Template template) {
+		for (int i = 0; i < settings.numberOfChaffPoints().getValue(); i++) {
 			Random random = new Random();
-			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(),random);
+			BigInteger chaff = new BigInteger(settings
+					.getNumberOfBitsForTheField().intValue(), random);
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));
 			template.getHashes().add(chaff);
 		}
 	}
 
-	
 	@Override
-	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
+	public void addToIndexingStructure(Biometric enrollBiometric,
+			Long enrollID, IndexingStructure indexingStructure) {
 
 		Template template = this.makeEnrollTemplate(enrollBiometric);
-		for(BigInteger bigInt : template.getHashes()){
+		for (BigInteger bigInt : template.getHashes()) {
 			IndexingPoint pointToAdd = new IndexingPoint();
 			pointToAdd.setValue(BigInteger.ZERO);
 			pointToAdd.setUserID(enrollID);
@@ -92,51 +98,49 @@ public class ShortcutFuzzyVault extends Hasher{
 
 	}
 
-	
 	@Override
-	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
-		
+	public Long findIndexingRank(Biometric testBiometric, Long testID,
+			IndexingStructure indexingStructure, Long numberEnrolled) {
+
 		Template template = testBiometric.quantizeOne();
-		for(BigInteger bigInt : template.getHashes()){
+		for (BigInteger bigInt : template.getHashes()) {
 			bigInt = bigInt.shiftLeft(1);
 		}
-	
+
 		Long rank = 0L;
-		
+
 		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
-		
-		
-		for(BigInteger bigInt : template.getHashes()){
-			ArrayList<IndexingPoint> binPoints = indexingStructure.getBinContents(bigInt);
-			if(binPoints != null){
+
+		for (BigInteger bigInt : template.getHashes()) {
+			ArrayList<IndexingPoint> binPoints = indexingStructure
+					.getBinContents(bigInt);
+			if (binPoints != null) {
 				indexingPoints.addAll(binPoints);
 			}
 		}
-		
+
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();
-		
-		for(IndexingPoint indexingPoint : indexingPoints){
+
+		for (IndexingPoint indexingPoint : indexingPoints) {
 			Long id = indexingPoint.getUserID();
-			if(ranks.containsKey(id)){
-				ranks.put(id, ranks.get(id)+1);
-			}
-			else{
-				ranks.put(id,  1L);
+			if (ranks.containsKey(id)) {
+				ranks.put(id, ranks.get(id) + 1);
+			} else {
+				ranks.put(id, 1L);
 			}
 		}
-		
-		if(ranks.containsKey(testID)){
+
+		if (ranks.containsKey(testID)) {
 			Long genuineHits = ranks.get(testID);
 			Collection<Long> allValues = ranks.values();
-			for(Long value : allValues){
-				if(value >= genuineHits){
+			for (Long value : allValues) {
+				if (value >= genuineHits) {
 					rank++;
 				}
 			}
-		}
-		else{
+		} else {
 			rank = numberEnrolled;
-			
+
 		}
 		// TODO advanced chaff points in shortcut fuzzy vault
 		return rank;

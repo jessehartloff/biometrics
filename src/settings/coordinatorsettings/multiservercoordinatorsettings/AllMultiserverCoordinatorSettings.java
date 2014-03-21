@@ -14,37 +14,44 @@ import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPr
 import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingSettings;
 import settings.coordinatorsettings.matchingcoordinatorsettings.MultipleEnrollmentSettings;
 
-public class AllMultiserverCoordinatorSettings extends ComboBoxSettings{
+public class AllMultiserverCoordinatorSettings extends ComboBoxSettings {
 
-	
-	public static String getMultiserverCoordinator(){
-		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables.get(instance.variableString);
+	public static String getMultiserverCoordinator() {
+		CoordinatorSettings coordinatorSettings = (CoordinatorSettings) instance.settingsVariables
+				.get(instance.variableString);
 		return coordinatorSettings.getCoordinator();
 	}
-	
-	//Singleton
+
+	// Singleton
 	private static AllMultiserverCoordinatorSettings instance;
-	private AllMultiserverCoordinatorSettings() {}
-	public static AllMultiserverCoordinatorSettings getInstance(){
-		if(instance == null){
+
+	private AllMultiserverCoordinatorSettings() {
+	}
+
+	public static AllMultiserverCoordinatorSettings getInstance() {
+		if (instance == null) {
 			instance = new AllMultiserverCoordinatorSettings();
 		}
 		return instance;
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException{
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(instance.settingsVariables);
 		out.writeInt(instance.settingsBox.getSelectedIndex());
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
 		instance.currentIndex = in.readInt();
 	}
-
 
 	@Override
 	protected void addSettings() {
 		this.variableString = "multiserver";
-		this.settingsVariables.put(this.variableString, NoCoordinator.getInstance());
+		this.settingsVariables.put(this.variableString,
+				NoCoordinator.getInstance());
 	}
 
 	@Override
@@ -54,5 +61,5 @@ public class AllMultiserverCoordinatorSettings extends ComboBoxSettings{
 		this.addToOptions(ServerOneSettings.getInstance());
 		this.addToOptions(ServerTwoSettings.getInstance());
 	}
-	
+
 }

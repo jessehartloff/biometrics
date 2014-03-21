@@ -14,31 +14,31 @@ import settings.settingsvariables.SettingsString;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Minutia;
 
-public abstract class DatasetSettings extends ComboBoxSettings{
+public abstract class DatasetSettings extends ComboBoxSettings {
 
-
-	public String getDataset(){
-		SettingsDropDownItem dropDownItem = (SettingsDropDownItem) this.settingsVariables.get(this.variableString);
+	public String getDataset() {
+		SettingsDropDownItem dropDownItem = (SettingsDropDownItem) this.settingsVariables
+				.get(this.variableString);
 		return dropDownItem.getValue();
 	}
-	
-	
+
 	@Override
 	protected void addSettings() {
 		this.variableString = "dataset";
-		this.settingsVariables.put(this.variableString, new SettingsDropDownItem("no dataset!"));
+		this.settingsVariables.put(this.variableString,
+				new SettingsDropDownItem("no dataset!"));
 	}
-	
-	
 
-	private void writeObject(ObjectOutputStream out) throws IOException{
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(this.settingsVariables);
 		out.writeInt(this.settingsBox.getSelectedIndex());
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		this.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		this.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
 		this.currentIndex = in.readInt();
 	}
-	
-	
+
 }

@@ -1,6 +1,5 @@
 package settings.modalitysettings;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,34 +20,41 @@ import settings.settingsvariables.SettingsString;
 import system.allcommonclasses.commonstructures.Users;
 import system.method.Method;
 
-public class FingerprintSettings extends ModalitySettings{
+public class FingerprintSettings extends ModalitySettings {
 
 	private static final long serialVersionUID = 1L;
 
-
-
-	//Singleton
+	// Singleton
 	private static FingerprintSettings instance;
-	private FingerprintSettings() {}
-	public static FingerprintSettings getInstance(){
-		if(instance == null){
+
+	private FingerprintSettings() {
+	}
+
+	public static FingerprintSettings getInstance() {
+		if (instance == null) {
 			instance = new FingerprintSettings();
 		}
 		return instance;
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException{
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(instance.settingsVariables);
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
-	}
 
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
+	}
 
 	public FingerprintDatasetSettings trainingDataset() {
-		return (FingerprintDatasetSettings) this.settingsVariables.get("trainingDataset");
+		return (FingerprintDatasetSettings) this.settingsVariables
+				.get("trainingDataset");
 	}
+
 	public FingerprintDatasetSettings testingDataset() {
-		return (FingerprintDatasetSettings) this.settingsVariables.get("testingDataset");
+		return (FingerprintDatasetSettings) this.settingsVariables
+				.get("testingDataset");
 	}
 
 	public SettingsLong minimumMinutia() {
@@ -56,20 +62,19 @@ public class FingerprintSettings extends ModalitySettings{
 	}
 
 	@Override
-	public String getLabel(){
+	public String getLabel() {
 		return "Fingerprints";
 	}
-	
+
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("trainingDataset", new FingerprintDatasetSettings("FVC2002DB1.ser")); 
-		this.settingsVariables.put("testingDataset", new FingerprintDatasetSettings("FVC2002DB2.ser")); 
-		this.settingsVariables.put("minimumMinutia", new SettingsLong(10)); 
-		this.settingsVariables.put("FingerprintMethod", AllFingerprintMethodSettings.getInstance());
+		this.settingsVariables.put("trainingDataset",
+				new FingerprintDatasetSettings("FVC2002DB1.ser"));
+		this.settingsVariables.put("testingDataset",
+				new FingerprintDatasetSettings("FVC2002DB2.ser"));
+		this.settingsVariables.put("minimumMinutia", new SettingsLong(10));
+		this.settingsVariables.put("FingerprintMethod",
+				AllFingerprintMethodSettings.getInstance());
 	}
-
-
-
-	
 
 }

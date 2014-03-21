@@ -12,9 +12,9 @@ import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
 
 public class TestBinning {
-	
+
 	@Test
-	public void testGetRandomFeature(){
+	public void testGetRandomFeature() {
 
 	}
 

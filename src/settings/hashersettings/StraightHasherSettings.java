@@ -9,42 +9,46 @@ import settings.Settings;
 import settings.settingsvariables.SettingsLong;
 import system.hasher.Hasher;
 
-public class StraightHasherSettings extends HasherSettings{
+public class StraightHasherSettings extends HasherSettings {
 
 	private static final long serialVersionUID = 1L;
-	
-	
-	//Singleton
+
+	// Singleton
 	private static StraightHasherSettings instance;
-	private StraightHasherSettings(){
+
+	private StraightHasherSettings() {
 	}
-	public static StraightHasherSettings getInstance(){
-		if(instance == null){
+
+	public static StraightHasherSettings getInstance() {
+		if (instance == null) {
 			instance = new StraightHasherSettings();
 		}
 		return instance;
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException{
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(instance.settingsVariables);
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
 	}
-	
-	
+
 	@Override
 	public String getHasher() {
 		return "STRAIGHTHASHER";
 	}
 
-
 	@Override
-	public String getLabel(){
+	public String getLabel() {
 		return "Straight Hashing";
 	}
+
 	@Override
 	protected void addSettings() {
-		
+
 	}
-	
+
 }

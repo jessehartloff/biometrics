@@ -9,7 +9,7 @@ import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
 import settings.settingsvariables.SettingsLong;
 
-public class MultipleEnrollmentSettings extends CoordinatorSettings{
+public class MultipleEnrollmentSettings extends CoordinatorSettings {
 
 	@Override
 	public String getCoordinator() {
@@ -18,34 +18,40 @@ public class MultipleEnrollmentSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("readingsForEnrollment", new SettingsLong(4));
+		this.settingsVariables
+				.put("readingsForEnrollment", new SettingsLong(4));
 	}
 
-	
-	public SettingsLong readingsForEnrollment(){
-		return (SettingsLong) this.settingsVariables.get("readingsForEnrollment");
+	public SettingsLong readingsForEnrollment() {
+		return (SettingsLong) this.settingsVariables
+				.get("readingsForEnrollment");
 	}
-	
-	//Singleton
+
+	// Singleton
 	private static MultipleEnrollmentSettings instance;
-	private MultipleEnrollmentSettings(){
+
+	private MultipleEnrollmentSettings() {
 	}
-	public static MultipleEnrollmentSettings getInstance(){
-		if(instance == null){
+
+	public static MultipleEnrollmentSettings getInstance() {
+		if (instance == null) {
 			instance = new MultipleEnrollmentSettings();
 		}
 		return instance;
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException{
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(instance.settingsVariables);
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
 	}
-	
-	
+
 	@Override
-	public String getLabel(){
+	public String getLabel() {
 		return "Multiple Enrollment";
 	}
 

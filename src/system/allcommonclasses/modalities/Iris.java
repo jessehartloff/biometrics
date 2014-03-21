@@ -8,7 +8,7 @@ import system.method.feature.Feature;
 import system.method.fingerprintmethods.FingerprintMethod;
 import system.method.irismethods.IrisMethod;
 
-public class Iris extends Biometric{
+public class Iris extends Biometric {
 
 	private static IrisMethod irisMethod;
 
@@ -25,37 +25,36 @@ public class Iris extends Biometric{
 	@Override
 	public ArrayList<Feature> toFeatures() {
 		return Iris.irisMethod.irisToFeatures(this);
-	} 
+	}
 
 	@Override
 	public ArrayList<Feature> toQuantizedFeatures() {
 		return Iris.irisMethod.irisToQuantizedFeatures(this);
-	} 
-	
-	@Override
-	public boolean equals(Object other){
-	    if (other == null){
-	    	return false;
-	    }
-	    if (other == this){
-	    	return true;
-	    }
-	    if (!(other instanceof Iris)){
-	    	return false;
-	    }
-	    Iris otherIris = (Iris)other;
-
-	    // code for equals
-	    
-	    return true;
 	}
-	
+
 	@Override
-	public String toString(){
+	public boolean equals(Object other) {
+		if (other == null) {
+			return false;
+		}
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Iris)) {
+			return false;
+		}
+		Iris otherIris = (Iris) other;
+
+		// code for equals
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
 		return "Iris.toString()";
 	}
 
-	
 	public static IrisMethod getIrisMethod() {
 		return Iris.irisMethod;
 	}
@@ -65,13 +64,10 @@ public class Iris extends Biometric{
 		Biometric.method = irisMethod;
 	}
 
-	
 	@Override
 	public boolean isFailure() {
 		// used for failure to capture
 		return false;
 	}
 
-	
-	
 }

@@ -10,40 +10,38 @@ import system.allcommonclasses.commonstructures.Users;
 
 public class UsersIO {
 
-//	public static Users getUsersAndTrain(){
-//		
-//		Users traingingUsers = UsersIO.getUsers(training);
-//		Users testingUsers = UsersIO.getUsers(testing);
-//		
-//		traingingUsers.computeBins();
-//		return testingUsers;
-//	}
+	// public static Users getUsersAndTrain(){
+	//
+	// Users traingingUsers = UsersIO.getUsers(training);
+	// Users testingUsers = UsersIO.getUsers(testing);
+	//
+	// traingingUsers.computeBins();
+	// return testingUsers;
+	// }
 
-	
-	public static Users getUsers(String dataset){
-		
+	public static Users getUsers(String dataset) {
+
 		Users readUsers = null;
-		
-		try{
+
+		try {
 			String fileName = "datasets/fingerprint/" + dataset; // TODO iris
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			readUsers = (Users) in.readObject();
 			in.close();
 			fileIn.close();
-			
-			for(User user : readUsers.users){
+
+			for (User user : readUsers.users) {
 				user.prequantizedEnrolledTemplates = new ArrayList<Template>();
 				user.prequantizedTestTemplates = new ArrayList<ArrayList<Template>>();
 			}
-			
-		}catch(Exception exp){
+
+		} catch (Exception exp) {
 			exp.printStackTrace();
 		}
-		
+
 		return readUsers;
-		
+
 	}
-	
-	
+
 }

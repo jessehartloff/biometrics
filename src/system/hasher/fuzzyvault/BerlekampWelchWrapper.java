@@ -7,15 +7,17 @@ import java.util.Arrays;
 import system.hasher.fuzzyvault.bwdecoding.BWDecoder;
 import system.hasher.fuzzyvault.bwdecoding.BigPoly;
 
-public class BerlekampWelchWrapper implements RSDecoder{
+public class BerlekampWelchWrapper implements RSDecoder {
 
-	public BerlekampWelchWrapper(){}
+	public BerlekampWelchWrapper() {
+	}
 
 	@Override
-	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints, Integer k, BigInteger mod) {
+	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints,
+			Integer k, BigInteger mod) {
 		ArrayList<BigInteger> zValues = new ArrayList<BigInteger>();
 		ArrayList<BigInteger> gammaValues = new ArrayList<BigInteger>();
-		for(FuzzyVaultPoint vp : fuzzyVaultPoints){
+		for (FuzzyVaultPoint vp : fuzzyVaultPoints) {
 			zValues.add(vp.getZ());
 			gammaValues.add(vp.getGamma());
 		}
@@ -24,7 +26,9 @@ public class BerlekampWelchWrapper implements RSDecoder{
 		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, k, mod);
 		decoder.CalcPoly();
 		BigPoly polynomial = decoder.getSecretPolynomial();
-		return new SecretPolynomial(k.longValue(), mod.longValue(), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
+		return new SecretPolynomial(k.longValue(), mod.longValue(),
+				new ArrayList<BigInteger>(Arrays.asList(polynomial
+						.getCoefficients())));
 	}
-	
+
 }

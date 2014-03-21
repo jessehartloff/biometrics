@@ -11,7 +11,7 @@ import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingSe
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.settingsvariables.SettingsLong;
 
-public class ServerOneSettings extends CoordinatorSettings{
+public class ServerOneSettings extends CoordinatorSettings {
 
 	@Override
 	public String getCoordinator() {
@@ -23,30 +23,35 @@ public class ServerOneSettings extends CoordinatorSettings{
 		this.settingsVariables.put("Port Number", new SettingsLong(10000));
 	}
 
-	public SettingsLong portNumber(){
+	public SettingsLong portNumber() {
 		return (SettingsLong) this.settingsVariables.get("Port Number");
 	}
-	
-	//Singleton
+
+	// Singleton
 	private static ServerOneSettings instance;
-	private ServerOneSettings(){
+
+	private ServerOneSettings() {
 	}
-	public static ServerOneSettings getInstance(){
-		if(instance == null){
+
+	public static ServerOneSettings getInstance() {
+		if (instance == null) {
 			instance = new ServerOneSettings();
 		}
 		return instance;
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException{
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(instance.settingsVariables);
 	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
+
+	private void readObject(ObjectInputStream in) throws IOException,
+			ClassNotFoundException {
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
+				.readObject();
 	}
-	
-	
+
 	@Override
-	public String getLabel(){
+	public String getLabel() {
 		return "Server 1";
 	}
 

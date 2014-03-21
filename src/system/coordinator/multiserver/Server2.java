@@ -6,9 +6,8 @@ import system.hasher.Hasher;
 
 public class Server2 extends system.coordinator.Coordinator {
 
-	
 	Server2(Hasher hasher, Users enrollees) {
-		super(hasher, enrollees);	
+		super(hasher, enrollees);
 	}
 
 	@Override
