@@ -21,7 +21,7 @@ public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 	private TripletsOfTrianglesAllRotationsSettings settings;
 	
 	public TriplesOfTrianglesAllRotations() {
-		super();
+		super(TripletsOfTrianglesAllRotationsSettings.getInstance());
 		this.settings = TripletsOfTrianglesAllRotationsSettings.getInstance();
 	}
 	

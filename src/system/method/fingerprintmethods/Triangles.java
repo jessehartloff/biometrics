@@ -81,9 +81,13 @@ public class Triangles extends FingerprintMethod {
 	
 	}
 	
-	
+
 	public Triangles() {
-		settings = TriangleSettings.getInstance();
+		this.settings = TriangleSettings.getInstance();
+	}
+	
+	public Triangles(TriangleSettings settings) {
+		this.settings = settings;
 	}
 	
 	

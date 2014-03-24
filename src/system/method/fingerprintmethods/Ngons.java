@@ -19,7 +19,7 @@ import system.method.fingerprintmethods.Triangles.Triangle;
 
 public class Ngons extends FingerprintMethod{
 
-	protected NgonSettings settings;
+	private NgonSettings settings;
 	public Long N;
 
 	
@@ -99,6 +99,12 @@ public class Ngons extends FingerprintMethod{
 	}
 	public Ngons(){
 		this.settings = NgonSettings.getInstance();
+		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
+		this.N = this.settings.n().getValue(); 
+	}
+	
+	public Ngons(NgonSettings settings){
+		this.settings = settings;
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)
 		this.N = this.settings.n().getValue(); 
 	}

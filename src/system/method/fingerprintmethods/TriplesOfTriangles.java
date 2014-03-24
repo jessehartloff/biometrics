@@ -99,10 +99,14 @@ public class TriplesOfTriangles extends Triangles {
 	
 	
 	public TriplesOfTriangles() {
-		super();
+		super(TripletsOfTrianglesSettings.getInstance());
 		this.settings = TripletsOfTrianglesSettings.getInstance();
 	}
-	
+
+	public TriplesOfTriangles(TripletsOfTrianglesSettings settings) {
+		super(settings);
+		this.settings = settings;
+	}
 	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {

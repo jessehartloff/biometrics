@@ -15,8 +15,10 @@ public class NgonsAllRotations extends Ngons {
 	private NgonAllRotationsSettings settings;
 	
 	public NgonsAllRotations() {
-		super();
-		this.settings = NgonAllRotationsSettings.getInstance();
+		super(NgonAllRotationsSettings.getInstance());
+		this.settings = NgonAllRotationsSettings.getInstance();		
+		this.settings.setAllNumberOfBins();
+		this.N = this.settings.n().getValue(); 
 	}
 
 	@Override
