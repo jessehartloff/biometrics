@@ -4,6 +4,7 @@ import settings.hashersettings.AllHasherSettings;
 import system.hasher.Hasher;
 import system.hasher.ShortcutFuzzyVault;
 import system.hasher.StraightHasher;
+import system.hasher.fuzzyvault.FuzzyVault;
 
 public class HasherFactory {
 
@@ -13,6 +14,8 @@ public class HasherFactory {
 			return new StraightHasher();
 		case SHORTCUTFUZZYVAULT:
 			return new ShortcutFuzzyVault();
+		case FUZZYVAULT:
+			return new FuzzyVault();
 		default:
 			System.out.println("You didn't provide an appropriate hasher");
 			return new StraightHasher();
@@ -20,6 +23,6 @@ public class HasherFactory {
 	}
 
 	public enum HasherEnumerator {
-		STRAIGHTHASHER, SHORTCUTFUZZYVAULT;
+		FUZZYVAULT, STRAIGHTHASHER, SHORTCUTFUZZYVAULT;
 	}
 }

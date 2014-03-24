@@ -64,8 +64,7 @@ public class ShortcutFuzzyVault extends Hasher {
 			for (BigInteger hash : template.getHashes()) {
 				if (enrolledTemplate.getHashes().contains(hash)) {
 					score += 1.0;
-				} else if (enrolledTemplate.getHashes().contains(
-						hash.add(BigInteger.valueOf(1)))) {
+				} else if (enrolledTemplate.getHashes().contains(hash.add(BigInteger.valueOf(1)))){
 					score -= 1.0;
 				}
 			}

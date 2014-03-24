@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import settings.fingerprintmethodsettings.TriangleSettings;
+import settings.fingerprintmethodsettings.TripletsOfTrianglesAllRotationsSettings;
+import settings.fingerprintmethodsettings.TripletsOfTrianglesSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 
@@ -16,9 +18,11 @@ import system.allcommonclasses.modalities.Fingerprint;
  */
 public class TriplesOfTrianglesAllRotations extends TriplesOfTriangles {
 
+	private TripletsOfTrianglesAllRotationsSettings settings;
 	
 	public TriplesOfTrianglesAllRotations() {
-		super();	
+		super();
+		this.settings = TripletsOfTrianglesAllRotationsSettings.getInstance();
 	}
 	
 

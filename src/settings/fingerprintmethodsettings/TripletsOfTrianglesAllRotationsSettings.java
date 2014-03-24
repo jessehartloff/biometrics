@@ -25,12 +25,12 @@ public class TripletsOfTrianglesAllRotationsSettings extends TripletsOfTriangles
 		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
 	}
 	
-	
-	@Override
-	protected void addSettings() {
-		super.addSettings();
-	}
-	
+
+//	@Override
+//	protected void addSettings() {
+//		super.addSettings();
+//	}
+
 
 	@Override
 	public String getMethodString() {

@@ -18,7 +18,6 @@ public class NgonAllRotationsSettings extends NgonSettings{
 	public static NgonAllRotationsSettings getInstance(){
 		if(instance == null){
 			instance = new NgonAllRotationsSettings();
-			
 		}
 		return instance;
 	}
@@ -41,8 +40,9 @@ public class NgonAllRotationsSettings extends NgonSettings{
 	}
 	
 	
-	@Override
-	protected void addSettings() {
-		super.addSettings();
-	}
+//	@Override
+//	protected void addSettings() {
+//		super.addSettings();
+//	}
+	
 }
