@@ -78,6 +78,11 @@ public class Chromosome {
 		this.bounds = bounds; 
 	}
 	
+	@Override
+	public String toString() {
+		return this.name+": "+this.value;
+	}
+	
 	public void execute() {
 		try {
 			this.method.invoke(self, value);

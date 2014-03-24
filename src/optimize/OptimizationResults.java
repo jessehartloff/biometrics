@@ -45,20 +45,21 @@ public class OptimizationResults {
 		Candidate[] bestEERs = new Candidate[this.bestEERs.size()];
 		this.bestEERs.toArray(bestEERs);
 		Candidate[] bestZeroFARs = new Candidate[this.bestZeroFARs.size()];
-		this.bestEERs.toArray(bestEERs);
+		this.bestZeroFARs.toArray(bestZeroFARs);
 		Candidate[] bestAverageEERandZeroFARs = new Candidate[this.bestAverageEERandZeroFARs.size()];
-		this.bestEERs.toArray(bestEERs);
+		this.bestAverageEERandZeroFARs.toArray(bestAverageEERandZeroFARs);
 		
 		if (bestEERs.length < N ) {
 			N = bestEERs.length;
-			System.out.println("Not enough results... Displaying all " + N.toString() + " of them:");
+			System.out.println("\nNot enough results... Displaying all " + N.toString() + " of them:");
 		}
 		for (Integer i=1; i <= N; i++) {
-			System.out.println("\n====== Result #"+(i).toString()+" ======");
-			System.out.println("EER:"+ bestEERs[i-1].getFitness().getEer().toString());
-			System.out.println("FRR at ZeroFAR:"+ bestZeroFARs[i-1].getFitness().getZeroFAR().getFRR().toString());
-			System.out.println("ERR & ZeroFAR Avg:"+ bestAverageEERandZeroFARs[i-1].getFitness().getAverageEERandZeroFAR().toString());
+			System.out.println("\n======== RESULT #"+(i).toString()+" ========");
+			System.out.println("=== EER ===:\n"+ bestEERs[i-1]);
+			System.out.println("=== FRR at ZeroFAR ===:\n"+ bestZeroFARs[i-1]);
+			System.out.println("===ERR & ZeroFAR Avg ===:\n"+ bestAverageEERandZeroFARs[i-1]);
 		}
+		
 	}
 	
 	/**

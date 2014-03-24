@@ -67,7 +67,7 @@ public class Candidate implements Comparable<Candidate>{
 	@Override
 	public String toString(){
 		String s = "< ";
-		s += "Fitness: " + this.fitness+", ";
+		s += "Fitness: " + this.fitness.toFitnessString()+", ";
 		for(Chromosome c : this.chromosomes){
 			s += c.getName() + ": "+c.getValue()+", ";
 		}

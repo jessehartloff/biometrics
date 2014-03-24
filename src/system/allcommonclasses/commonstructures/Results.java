@@ -28,6 +28,7 @@ public class Results {
 	private Double totalLogOfBins;
 	private Double chiSquare;
 	private ArrayList<Double> chiSquareValues;
+	private Long runTime;
 
 	private RawScores rawScores;
 	
@@ -151,6 +152,29 @@ public class Results {
 				"min entropy: " + this.getMinEntropy() + "\n" + 
 				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n";
 		return toReturn;
+	}
+	public String toFitnessString() {
+		String toReturn = "\nResults:\n"+
+//				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
+//				this.getVariableHistograms().toString() + "\n" +
+//				"Variable Histogram Chi Square Values:" + this.getChiSquareValues().toString() + "\n"+
+//				"Field Histogram Chi Square: " + this.getChiSquare().toString() + "\n" +
+				"EER: " + this.getEer() + "\n" + 
+//				"FTC: " + this.getFailureToCapture() + "\n" + 
+				"FRR at ZeroFAR: " + this.getZeroFAR().getFRR() + "\n" +
+				"AverageEERandZeroFAR: " + this.getAverageEERandZeroFAR() + "\n" +
+//				"rates: " + this.getRates() + "\n" +
+//				"min entropy: " + this.getMinEntropy() + "\n" + 
+				"bin bits: " + this.getTotalLogOfBins() + "\n";
+		return toReturn;
+	}
+
+	public Long getRunTime() {
+		return runTime;
+	}
+
+	public void setRunTime(Long runTime) {
+		this.runTime = runTime;
 	}
 
 }

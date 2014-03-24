@@ -8,6 +8,7 @@ import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettin
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.fingerprintmethodsettings.TripletsOfTrianglesAllRotationsSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
@@ -22,9 +23,11 @@ public class BruteForce {
 	 * 
 	 * @param fitness
 	 */
+
 	public BruteForce(FitnessFunction fitness) {
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(
-				PRINTSettings.getInstance());
+				TripletsOfTrianglesAllRotationsSettings.getInstance());
+//				PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(
 				FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(
@@ -66,16 +69,34 @@ public class BruteForce {
 		ArrayList<Candidate> allCandidates = b.getAllParameterSets(chromosomes,
 				new ArrayList<Chromosome>());
 		OptimizationResults op = new OptimizationResults(50);
+		Integer total = allCandidates.size();
 		try {
-			System.out.println("Number of Candidates: " + allCandidates.size());
+
+			System.out.println("Number of Candidates: "+total.toString());
+			/*** NOTE: For PRINTs, 8500 tests ~ 71hrs ***/
+
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Candidate c : allCandidates) {
+
+		Integer numComplete = 1;
+		for(Candidate c : allCandidates){
+			long startTime = System.currentTimeMillis();
+			System.out.println("===== Test# "+numComplete.toString()+"/"+total.toString()+
+					   " ("+new Double(numComplete.doubleValue()/total.doubleValue()*100.).toString()+"%) =====");
+
+			System.out.println("Params: "+c.getChromosomes());
 			c.evaluate(f);
 			op.commitResult(c);
+			long stopTime = System.currentTimeMillis();
+			Long runTime = new Long((stopTime-startTime)/1000L);
+			c.getFitness().setRunTime(runTime);
+			System.out.println("Duration: "+ runTime.toString()+"sec");
+			numComplete++;
+			
+			
 		}
 		op.displayTopNResults(8);
 	}
@@ -91,8 +112,9 @@ public class BruteForce {
 			Chromosome c = chromosomesToOptimize.get(0);
 			chromosomesToCompute.add(c);
 			chromosomesToOptimize.remove(0);
-			ArrayList<Candidate> candidatesToReturn = new ArrayList<Candidate>();
-			for (Long i = c.getBounds().get(0); i <= c.getBounds().get(1); i++) {
+
+            ArrayList<Candidate> candidatesToReturn = new ArrayList<Candidate>();
+			for(Long i = c.getBounds().get(0); i <= c.getBounds().get(c.getBounds().size()-1); i++){
 				c.setValue(i);
 				ArrayList<Candidate> candidates = getAllParameterSets(
 						chromosomesToOptimize, chromosomesToCompute);
@@ -111,10 +133,9 @@ public class BruteForce {
 	 * @return
 	 */
 
-	// TODO - Matt... it'd be really cool if you could put in even just a few
-	// comments
 	public static ArrayList<Chromosome> getChromosomeList() {
 		ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+		/***** PRINTs Optimization ****
 		PRINTSettings fpm = PRINTSettings.getInstance();
 		try {
 			Long[] nbounds = { 3L, 11L };
@@ -139,22 +160,88 @@ public class BruteForce {
 					new ArrayList<Long>(Arrays.asList(distanceBinBounds))));
 
 			chromosomes.add(new Chromosome(fpm.sigmaBins(), 0L, "sigmaBins",
-					fpm.sigmaBins().getClass()
-							.getMethod("setValue", Long.class),
-					new ArrayList<Long>(Arrays.asList(sigmaBinBounds))));
+							fpm.sigmaBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(sigmaBinBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.phiBins(), 0L, "phiBins",
+							fpm.phiBins().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(phiBinBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.rotationRegions(), 0L, "rotationRegions",
+							fpm.rotationRegions().getClass().getMethod("setValue", Long.class),
+							new ArrayList<Long>(Arrays.asList(rotationRegionsBounds))));
+			
 
-			chromosomes.add(new Chromosome(fpm.phiBins(), 0L, "phiBins", fpm
-					.phiBins().getClass().getMethod("setValue", Long.class),
-					new ArrayList<Long>(Arrays.asList(phiBinBounds))));
-
-			chromosomes.add(new Chromosome(fpm.rotationRegions(), 0L,
-					"rotationRegions", fpm.rotationRegions().getClass()
-							.getMethod("setValue", Long.class),
-					new ArrayList<Long>(Arrays.asList(rotationRegionsBounds))));
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
+		
+		*/
+		//End PRINTs
+		
+		/***** TripletsOfTrianglesAllRotations Optimization ****/
+		TripletsOfTrianglesAllRotationsSettings fpm = TripletsOfTrianglesAllRotationsSettings.getInstance();
+		try {
+			
+			Long[] theta0Bounds = {7L, 8L};
+			Long[] theta1Bounds = {8L, 8L};
+			Long[] theta2Bounds = {8L, 8L};
+			Long[] y1Bounds = {8L, 8L};
+			Long[] y2Bounds = {8L, 8L};
+			Long[] x1Bounds = {8L, 8L};
+			Long[] x2Bounds = {8L, 8L};
+			Long[] kClosestTriangleBounds = {6L,6L};
+			//These below remain fixed for SPIE paper
+			Long[] kClosestMinutiaBounds = {3L};
+			Long[] minimumPointsForTripletOfTrianglesBounds = {7L};
+			
+			chromosomes.add(new Chromosome(fpm.theta0(), 0L,"theta0",
+							fpm.theta0().getClass().getMethod("setBins", Long.class),
+							new ArrayList<Long>(Arrays.asList(theta0Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.theta1(), 0L,"theta1", 
+							fpm.theta1().getClass().getMethod("setBins", Long.class), 
+							new ArrayList<Long>(Arrays.asList(theta1Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.theta2(), 0L,"theta2",
+							fpm.theta2().getClass().getMethod("setBins", Long.class),
+							new ArrayList<Long>(Arrays.asList(theta2Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.x1(), 0L,"x1", 
+							fpm.x1().getClass().getMethod("setBins", Long.class), 
+							new ArrayList<Long>(Arrays.asList(x1Bounds))));
+	
+			chromosomes.add(new Chromosome(fpm.x2(), 0L,"x2",
+							fpm.x2().getClass().getMethod("setBins", Long.class),
+							new ArrayList<Long>(Arrays.asList(x2Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.y1(), 0L,"y1", 
+							fpm.y1().getClass().getMethod("setBins", Long.class), 
+							new ArrayList<Long>(Arrays.asList(y1Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.y2(), 0L,"y2",
+							fpm.y2().getClass().getMethod("setBins", Long.class),
+							new ArrayList<Long>(Arrays.asList(y2Bounds))));
+			
+			chromosomes.add(new Chromosome(fpm.kClosestTriangles(), 0L,"kClosestTriangles",
+					fpm.kClosestTriangles().getClass().getMethod("setValue", Long.class),
+					new ArrayList<Long>(Arrays.asList(kClosestTriangleBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"kClosestMinutia",
+					fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class),
+					new ArrayList<Long>(Arrays.asList(kClosestMinutiaBounds))));
+			
+			chromosomes.add(new Chromosome(fpm.minimumPointsForTripletOfTriangles(), 0L,"minimumPointsForTripletOfTriangles",
+					fpm.minimumPointsForTripletOfTriangles().getClass().getMethod("setValue", Long.class),
+					new ArrayList<Long>(Arrays.asList(minimumPointsForTripletOfTrianglesBounds))));
+		
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		
 		return chromosomes;
 	}
 
