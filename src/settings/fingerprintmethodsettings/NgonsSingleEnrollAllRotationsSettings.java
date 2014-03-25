@@ -13,7 +13,7 @@ public class NgonsSingleEnrollAllRotationsSettings extends NgonAllRotationsSetti
 	
 	private static NgonsSingleEnrollAllRotationsSettings instance;
 	protected NgonsSingleEnrollAllRotationsSettings(){}
-	public static NgonAllRotationsSettings getInstance(){
+	public static NgonsSingleEnrollAllRotationsSettings getInstance(){ //TODO - Tom changed from NgonsAllRotations to NgonsSingleEnrollAllRotations
 		if(instance == null){
 			instance = new NgonsSingleEnrollAllRotationsSettings();
 		}

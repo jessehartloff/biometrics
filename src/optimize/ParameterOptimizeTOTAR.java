@@ -21,7 +21,7 @@ import system.allcommonclasses.commonstructures.Results;
  *
  */
 
-public class ParameterOptimize {
+public class ParameterOptimizeTOTAR {
 	
 	/**
 	 * Member Variables
@@ -49,7 +49,7 @@ public class ParameterOptimize {
 	/**
 	 * Constructor
 	 */
-	public ParameterOptimize( String trainData, String testData, int bMin, int bMax, int kMin, int kMax) {
+	public ParameterOptimizeTOTAR( String trainData, String testData, int bMin, int bMax, int kMin, int kMax) {
 		//set datasets
 		trainingDataset = trainData;
 		testDataset = testData;
@@ -107,7 +107,7 @@ public class ParameterOptimize {
 		//enumerate over values
 		Double numCandidates = Math.pow(new Double(binMax-binMin+1), 7.)*(kMax-kMin+1);
 		System.out.println("Testing "+numCandidates.longValue()+" Candidates");
-		Integer testCount = 1;
+		Integer testCount = 0;
 		/**
 		 * Calculating runtime:
 		 * on average, the runtime is exponentially effected by k:
@@ -148,10 +148,11 @@ public class ParameterOptimize {
 										testCount++;
 										System.out.println("Test #: "+testCount+"/"+numCandidates.longValue() +" ("+testCount/numCandidates*100+"%)");
 										//write out to file every 10 tests
-										if (testCount % 10 == 0) {
+										if (/*testCount % 10*/ 0 == 0) {
 											
 									        try {								      
-									        	String currentBest = "Tests Completed: "+testCount+"/"+numCandidates.longValue()
+									        	String currentBest = "Current Params:"+paramString
+									        					   + "\nTests Completed: "+testCount+"/"+numCandidates.longValue()
 									        					   + bestResults.displayTopNResults(10);
 									            String fileName = binMin+"_"+binMax+"_"+kMin+"_"+kMax+"_totar_optimize.txt";
 									            File newTextFile = new File(fileName);
@@ -198,9 +199,24 @@ public class ParameterOptimize {
 		int bMax = Integer.valueOf(args[1]).intValue();//8;
 		int kMi = Integer.valueOf(args[2]).intValue();//3;
 		int kMa = Integer.valueOf(args[3]).intValue();//6;
-		ParameterOptimize test = new ParameterOptimize(trainDB, testDB, bMin, bMax, kMi, kMa);
+		ParameterOptimizeTOTAR test = new ParameterOptimizeTOTAR(trainDB, testDB, bMin, bMax, kMi, kMa);
 		OptimizationResults optimumResults = test.optimize();
-		System.out.println(optimumResults.displayTopNResults(10));
+        try {								      
+        	String currentBest = "All tests completed - Final Best Results:\n";
+        	currentBest += optimumResults.displayTopNResults(10);
+            String fileName = "final_"+bMin+"_"+bMax+"_"+kMi+"_"+kMa+"_totar_optimize.txt";
+            File newTextFile = new File(fileName);
+
+            FileWriter fw = new FileWriter(newTextFile);
+            fw.write(currentBest);
+            fw.close();
+
+        } catch (Exception e) {
+            //do stuff with exception
+            e.printStackTrace();
+            System.out.println("FATAL ERROR: File writing didn't work...exiting");
+            System.exit(1);
+        }
 	}
 }//end Optimize class
 
