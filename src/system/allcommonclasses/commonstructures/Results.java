@@ -29,6 +29,7 @@ public class Results {
 	private Double chiSquare;
 	private ArrayList<Double> chiSquareValues;
 	private Long runTime;
+	private String paramString;
 
 	private RawScores rawScores;
 	
@@ -168,6 +169,28 @@ public class Results {
 				"bin bits: " + this.getTotalLogOfBins() + "\n";
 		return toReturn;
 	}
+	/**
+	 * Reutrns result represented as string with the parameters written as text
+	 * @return
+	 */
+	public String toResultString() {
+		String toReturn = "\nParameters:\n"+paramString+
+				"\nResults:\n"+
+//				this.getFieldHistogram().toString() + "\n" + //labels are part of the histogram's "toString" method
+//				this.getVariableHistograms().toString() + "\n" +
+//				"Variable Histogram Chi Square Values:" + this.getChiSquareValues().toString() + "\n"+
+//				"Field Histogram Chi Square: " + this.getChiSquare().toString() + "\n" +
+				"EER: " + this.getEer() + "\n" + 
+//				"FTC: " + this.getFailureToCapture() + "\n" + 
+				"FRR at ZeroFAR: " + this.getZeroFAR().getFRR() + "\n" +
+				"AverageEERandZeroFAR: " + this.getAverageEERandZeroFAR() + "\n" +
+//				"rates: " + this.getRates() + "\n" +
+//				"min entropy: " + this.getMinEntropy() + "\n" + 
+				"bin bits: " + this.getTotalLogOfBins() + "\n"+
+				"run time: " +this.runTime+" sec\n";
+				
+		return toReturn;
+	}
 
 	public Long getRunTime() {
 		return runTime;
@@ -175,6 +198,14 @@ public class Results {
 
 	public void setRunTime(Long runTime) {
 		this.runTime = runTime;
+	}
+
+	public String getParamString() {
+		return paramString;
+	}
+
+	public void setParamString(String paramString) {
+		this.paramString = paramString;
 	}
 
 }

@@ -35,7 +35,7 @@ public class DefaultTesting extends Coordinator {
 		this.testGenerator = testGenerator;
 	}
 
-	private void generateTests() {
+	protected void generateTests() {
 		this.tests = testGenerator.generateTests(users);
 	}
 

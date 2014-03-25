@@ -8,6 +8,7 @@ import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettin
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.fingerprintmethodsettings.TriangleSettings;
 import settings.fingerprintmethodsettings.TripletsOfTrianglesAllRotationsSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -26,7 +27,8 @@ public class BruteForce {
 
 	public BruteForce(FitnessFunction fitness) {
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(
-				TripletsOfTrianglesAllRotationsSettings.getInstance());
+				TriangleSettings.getInstance());
+//				TripletsOfTrianglesAllRotationsSettings.getInstance());
 //				PRINTSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(
 				FingerprintSettings.getInstance());
@@ -181,7 +183,8 @@ public class BruteForce {
 		//End PRINTs
 		
 		/***** TripletsOfTrianglesAllRotations Optimization ****/
-		TripletsOfTrianglesAllRotationsSettings fpm = TripletsOfTrianglesAllRotationsSettings.getInstance();
+//		TripletsOfTrianglesAllRotationsSettings fpm = TripletsOfTrianglesAllRotationsSettings.getInstance();
+		TriangleSettings fpm = TriangleSettings.getInstance();
 		try {
 			
 			Long[] theta0Bounds = {7L, 8L};
@@ -193,7 +196,7 @@ public class BruteForce {
 			Long[] x2Bounds = {8L, 8L};
 			Long[] kClosestTriangleBounds = {6L,6L};
 			//These below remain fixed for SPIE paper
-			Long[] kClosestMinutiaBounds = {3L};
+			Long[] kClosestMinutiaBounds = {2L};
 			Long[] minimumPointsForTripletOfTrianglesBounds = {7L};
 			
 			chromosomes.add(new Chromosome(fpm.theta0(), 0L,"theta0",
@@ -224,17 +227,17 @@ public class BruteForce {
 							fpm.y2().getClass().getMethod("setBins", Long.class),
 							new ArrayList<Long>(Arrays.asList(y2Bounds))));
 			
-			chromosomes.add(new Chromosome(fpm.kClosestTriangles(), 0L,"kClosestTriangles",
-					fpm.kClosestTriangles().getClass().getMethod("setValue", Long.class),
-					new ArrayList<Long>(Arrays.asList(kClosestTriangleBounds))));
+//			chromosomes.add(new Chromosome(fpm.kClosestTriangles(), 0L,"kClosestTriangles",
+//					fpm.kClosestTriangles().getClass().getMethod("setValue", Long.class),
+//					new ArrayList<Long>(Arrays.asList(kClosestTriangleBounds))));
 			
 			chromosomes.add(new Chromosome(fpm.kClosestMinutia(), 0L,"kClosestMinutia",
 					fpm.kClosestMinutia().getClass().getMethod("setValue", Long.class),
 					new ArrayList<Long>(Arrays.asList(kClosestMinutiaBounds))));
 			
-			chromosomes.add(new Chromosome(fpm.minimumPointsForTripletOfTriangles(), 0L,"minimumPointsForTripletOfTriangles",
-					fpm.minimumPointsForTripletOfTriangles().getClass().getMethod("setValue", Long.class),
-					new ArrayList<Long>(Arrays.asList(minimumPointsForTripletOfTrianglesBounds))));
+//			chromosomes.add(new Chromosome(fpm.minimumPointsForTripletOfTriangles(), 0L,"minimumPointsForTripletOfTriangles",
+//					fpm.minimumPointsForTripletOfTriangles().getClass().getMethod("setValue", Long.class),
+//					new ArrayList<Long>(Arrays.asList(minimumPointsForTripletOfTrianglesBounds))));
 		
 		} catch (Exception e) {
 

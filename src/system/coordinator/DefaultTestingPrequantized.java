@@ -25,6 +25,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	public void quantizeUserSet(ArrayList<User> users, boolean print){	
 		Long total = 0L;
 		Long completed = 0L;
+		Long totalNumHashes;
 		Double progress;
 		System.out.println("Prequantizing...");
 		for(User user : users){
@@ -33,14 +34,14 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 		for(User user : users){
 			int numberOfReadings = user.readings.size();
 			for(int i=0; i<numberOfReadings; i++){
-				user.prequantizedEnrolledTemplates.add(hasher.makeEnrollTemplate(user.readings.get(i)));
-				user.prequantizedTestTemplates.add(hasher.makeTestTemplates(user.readings.get(i)));
+				Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
+				ArrayList< Template > test = hasher.makeTestTemplates(user.readings.get(i));
+				user.prequantizedEnrolledTemplates.add(enroll);
+				user.prequantizedTestTemplates.add(test);
 				completed++;
 				progress = (completed.doubleValue()/total.doubleValue())*100.0;
-//				if(print){
-					System.out.format("prequantizing: %5.2f%%%n", progress);
-//				}
-				System.out.format("prequantizing: %5.2f%%%n", progress);
+
+//				System.out.format("prequantizing: %5.2f%%%n", progress);
 			}
 			progress = (completed.doubleValue()/total.doubleValue())*100.0;
 					System.out.format("prequantizing: %5.2f%%%n", progress);
