@@ -148,7 +148,7 @@ public class ParameterOptimize {
 										testCount++;
 										System.out.println("Test #: "+testCount+"/"+numCandidates.longValue() +" ("+testCount/numCandidates*100+"%)");
 										//write out to file every 10 tests
-										if (testCount % 2 == 0) {
+										if (testCount % 10 == 0) {
 											
 									        try {								      
 									        	String currentBest = "Tests Completed: "+testCount+"/"+numCandidates.longValue()
