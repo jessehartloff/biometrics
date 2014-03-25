@@ -2,6 +2,7 @@ package system.method.fingerprintmethods;
 
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
+import settings.fingerprintmethodsettings.NgonsSingleEnrollAllRotationsSettings;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.method.fingerprintmethods.MinutiaeMethod;
 import system.method.fingerprintmethods.Ngons;
@@ -42,6 +43,9 @@ public class FingerprintMethodFactory{
 			case PRINTS:
 				Fingerprint.setFingerprintMethod(new PRINTS());
 				break;
+			case NGONSSINGLEENROLLALLROTATIONS:
+				Fingerprint.setFingerprintMethod(new NgonsSingleEnrollAllRotations());
+				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
 				Fingerprint.setFingerprintMethod(new Triangles());
@@ -51,7 +55,7 @@ public class FingerprintMethodFactory{
 	
 	public enum FingerprintEnumerator{
 		MINUTIAEMETHOD,PATHSMETHOD,TRIANGLES,TRIPLESOFTRIANGLES,
-		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS; 
+		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS,NGONSSINGLEENROLLALLROTATIONS; 
 	}
 	
 }

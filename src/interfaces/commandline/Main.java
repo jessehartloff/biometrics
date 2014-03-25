@@ -1,40 +1,14 @@
 package interfaces.commandline;
 
-import java.awt.List;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
-import javax.swing.JComboBox;
-import javax.swing.event.ListSelectionEvent;
-
 import settings.AllSettings;
-import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
-import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedMultiThreadedSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
-import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.fingerprintmethodsettings.NgonsSingleEnrollAllRotationsSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
-import system.biometricsystem.BiometricSystem;
-import system.allcommonclasses.commonstructures.Results;
-import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.commonstructures.User;
-import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.modalities.*;
-import system.allcommonclasses.utilities.PrincipleComponentAnalysis;
-
-import java.sql.*;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
@@ -59,7 +33,7 @@ public class Main {
 
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(
-				PRINTSettings.getInstance());
+				NgonsSingleEnrollAllRotationsSettings.getInstance());
 		// AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(
 				FingerprintSettings.getInstance());
@@ -79,19 +53,19 @@ public class Main {
 				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		// //...
 		// set values for everything else
-		PRINTSettings.getInstance().rotationRegions().setValue(8);
-		PRINTSettings.getInstance().n().setValue(6);
-		PRINTSettings.getInstance().kClosestMinutia().setValue(7);
-		PRINTSettings.getInstance().distanceBins().setValue(6);// ...
-		PRINTSettings.getInstance().sigmaBins().setValue(6);// ...
-		PRINTSettings.getInstance().phiBins().setValue(6);// ...
-		// NgonSettings.getInstance().rotationRegions().setValue(8);
-		// NgonSettings.getInstance().n().setValue(4);
-		// NgonSettings.getInstance().kClosestMinutia().setValue(8);
-		// NgonSettings.getInstance().xBins().setValue(4);//...EER:
-		// 0.0581910403714915
-		// NgonSettings.getInstance().yBins().setValue(9);//...
-		// NgonSettings.getInstance().thetaBins().setValue(7);//...
+//		PRINTSettings.getInstance().rotationRegions().setValue(8);
+//		PRINTSettings.getInstance().n().setValue(3);
+//		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
+//		PRINTSettings.getInstance().distanceBins().setValue(6);// ...
+//		PRINTSettings.getInstance().sigmaBins().setValue(6);// ...
+//		PRINTSettings.getInstance().phiBins().setValue(6);// ...
+//		 NgonSettings.getInstance().rotationRegions().setValue(8);
+		NgonsSingleEnrollAllRotationsSettings.getInstance().n().setValue(3);
+		NgonsSingleEnrollAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
+		NgonsSingleEnrollAllRotationsSettings.getInstance().xBins().setValue(4);//...EER:
+//		 0.0581910403714915
+		NgonsSingleEnrollAllRotationsSettings.getInstance().yBins().setValue(9);//...
+		NgonsSingleEnrollAllRotationsSettings.getInstance().thetaBins().setValue(7);//...
 
 		// settings.runSystemAndMakeGraphs();
 		settings.runSystemAndGetResults();

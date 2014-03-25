@@ -21,6 +21,13 @@ public class NgonsAllRotations extends Ngons {
 		this.N = this.settings.n().getValue(); 
 	}
 
+	public NgonsAllRotations(NgonAllRotationsSettings settings) {
+		this.settings = settings;
+		//this.settings = NgonAllRotationsSettings.getInstance();		
+		this.settings.setAllNumberOfBins();
+		this.N = this.settings.n().getValue(); 
+	}
+	
 	@Override
 	public Template quantizeOne(Fingerprint fingerprint) {
 		return this.ngonsAllRotationsQuantizeOne(fingerprint);
@@ -44,7 +51,7 @@ public class NgonsAllRotations extends Ngons {
 		return this.ngonsAllRotationsQuantizeAll(fingerprint);
 	}
 
-	private ArrayList<Template> ngonsAllRotationsQuantizeAll(Fingerprint fingerprint) {
+	public ArrayList<Template> ngonsAllRotationsQuantizeAll(Fingerprint fingerprint) {
 		ArrayList<Template> template = new ArrayList<Template>();
 		template.add(this.ngonsAllRotationsQuantizeOne(fingerprint));
 		return template;
