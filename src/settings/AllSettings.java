@@ -40,9 +40,7 @@ public class AllSettings extends Settings {
 	private static AllSettings instance;
 
 	private AllSettings() {
-		// FIXME - Jesse: I changed this cause I couldn't figure out where this
-		// ever gets called and it seemed necessary...
-		// addSettings();
+//		 addSettings();
 	}
 
 	public static AllSettings getInstance() {
@@ -75,23 +73,13 @@ public class AllSettings extends Settings {
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Multiserver",
-				AllMultiserverCoordinatorSettings.getInstance()); // default to
-																	// all
-																	// prequantized
-		this.settingsVariables.put("Matching",
-				AllMatchingCoordinatorSettings.getInstance()); // default to all
-																// prequantized
-		this.settingsVariables.put("Indexing",
-				AllIndexingCoordinatorSettings.getInstance()); // default to
-																// none
-		this.settingsVariables.put("Histogram",
-				AllHistogramCoordinatorSettings.getInstance()); //
+		this.settingsVariables.put("Multiserver",AllMultiserverCoordinatorSettings.getInstance()); // default to all prequantized
+		this.settingsVariables.put("Matching",AllMatchingCoordinatorSettings.getInstance()); // default to all prequantized
+		this.settingsVariables.put("Indexing",AllIndexingCoordinatorSettings.getInstance()); // default to none
+		this.settingsVariables.put("Histogram",AllHistogramCoordinatorSettings.getInstance()); //
 		this.settingsVariables.put("Hasher", AllHasherSettings.getInstance());
-		this.settingsVariables.put("Quantizer",
-				AllQuantizerSettings.getInstance());
-		this.settingsVariables.put("Modality",
-				AllModalitySettings.getInstance());
+		this.settingsVariables.put("Quantizer",AllQuantizerSettings.getInstance());
+		this.settingsVariables.put("Modality",AllModalitySettings.getInstance());
 	}
 
 	public void updateGUI() {
@@ -100,8 +88,7 @@ public class AllSettings extends Settings {
 		}
 		// AllSettings.getInstance().panel.setBackground(BACKGROUNDCOLOR);
 		AllSettings.getInstance().panel.removeAll();
-		AllSettings.getInstance().panel.add(AllSettings.getInstance()
-				.makeJPanel());
+		AllSettings.getInstance().panel.add(AllSettings.getInstance().makeJPanel());
 		AllSettings.getInstance().panel.validate();
 		AllSettings.getInstance().panel.repaint();
 		AllSettings.getInstance().panel.updateUI();

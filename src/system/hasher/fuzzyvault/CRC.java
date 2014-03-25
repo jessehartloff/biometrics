@@ -6,15 +6,13 @@ import java.util.ArrayList;
 public class CRC {
 	// store chart of crc polynomials from wikipedia
 
-	static public boolean CheckCRC(ArrayList<BigInteger> poly,
-			ArrayList<BigInteger> CRCpoly) {
+	static public boolean CheckCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
 		BigInteger remainder;
 		remainder = ComputeCRC(poly, CRCpoly);
 		return remainder == BigInteger.ZERO;
 	}
 
-	public static BigInteger ComputeCRC(ArrayList<BigInteger> poly,
-			ArrayList<BigInteger> CRCpoly) {
+	public static BigInteger ComputeCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
 		int CRClength = CRCpoly.size();
 		int polyLength = poly.size();
 		BigInteger dummy = BigInteger.ZERO;

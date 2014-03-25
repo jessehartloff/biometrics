@@ -36,8 +36,7 @@ public class AllTestGeneratorSettings extends ComboBoxSettings {
 
 	private void readObject(ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
-		instance.settingsVariables = (LinkedHashMap<String, Settings>) in
-				.readObject();
+		instance.settingsVariables = (LinkedHashMap<String, Settings>) in.readObject();
 		instance.currentIndex = in.readInt();
 	}
 
@@ -50,8 +49,7 @@ public class AllTestGeneratorSettings extends ComboBoxSettings {
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(new TestGeneratorFVCTestsSettings()); // TODO
-																// Singleton
+		this.addToOptions(new TestGeneratorFVCTestsSettings()); // TODO Singleton
 		this.addToOptions(new TestGeneratorAllTestsSettings());
 	}
 

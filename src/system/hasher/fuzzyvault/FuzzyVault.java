@@ -64,13 +64,13 @@ public class FuzzyVault extends Hasher{
 
 	@Override
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
-		// todo =fv-indexing
+		// TODO fv-indexing
 		
 	}
 
 	@Override
 	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
-		// todo =fv-indexing
+		// TODO fv-indexing
 		return null;
 	}
 	

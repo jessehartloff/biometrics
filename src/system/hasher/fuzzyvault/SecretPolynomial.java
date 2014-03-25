@@ -16,29 +16,28 @@ public class SecretPolynomial {
 		this.generateRandomPolynomial();
 	}
 
-	public SecretPolynomial(Long termsInPoly, Long totalBits,
-			ArrayList<BigInteger> polynomialTerms) {
+	public SecretPolynomial(Long termsInPoly, Long totalBits, ArrayList<BigInteger> polynomialTerms) {
 		this.termsInPoly = termsInPoly;
 		this.totalBits = totalBits;
 		this.polynomialTerms = polynomialTerms;
 	}
 
 	private void generateRandomPolynomial() {
+		this.polynomialTerms = new ArrayList<BigInteger>();
 		for (int i = 0; i < this.termsInPoly; i++) {
-			BigInteger randomValue = new BigInteger(this.totalBits.intValue(),
-					new Random());
+			BigInteger randomValue = new BigInteger(this.totalBits.intValue(), new Random());
+			this.polynomialTerms.add(randomValue);
 		}
-		// TODO add CRC
+		// TODO CRC
+		// remove last term and add CRC
 	}
 
 	public BigInteger evaluateAt(BigInteger bigInt) {
 		BigInteger evaluatedInteger = BigInteger.valueOf(0);
 		for (int i = 0; i < this.polynomialTerms.size(); i++) {
-			BigInteger currentTerm = (bigInt.pow(i))
-					.multiply(this.polynomialTerms.get(i));
-			evaluatedInteger.add(currentTerm);
+			BigInteger currentTerm = (bigInt.pow(i)).multiply(this.polynomialTerms.get(i));
+			evaluatedInteger = evaluatedInteger.add(currentTerm);
 		}
-		// TODO Review me
 		return evaluatedInteger;
 	}
 

@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import settings.hashersettings.FuzzyVaultSettings;
-import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.quantizer.Quantizer;
 
@@ -16,17 +15,10 @@ public class Vault {
 
 	public Vault() {
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>();
-		this.termsInPoly = FuzzyVaultSettings.getInstance()
-				.numberOfTermsInPolynomial().getValue();
-		this.totalBits = Quantizer.getQuantizer().getTotalBits(); // FIXME this
-																	// has to
-																	// change to
-																	// handle
-																	// #bins
-																	// that are
-																	// not
-																	// powers of
-																	// 2
+		System.out.println();
+		
+		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
+		this.totalBits = Quantizer.getQuantizer().getTotalBits();
 	}
 
 	public Vault(Template lockedVault) {
@@ -50,8 +42,7 @@ public class Vault {
 																// making a
 																// vault more
 																// than once
-		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly,
-				totalBits);
+		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
 
 		// CRC on the end of polynomial
 		// add the genuine points to vaultPoints
@@ -101,9 +92,7 @@ public class Vault {
 		// loop through vault and extract points with matching z-value
 
 		RSDecoder decoder = new BerlekampWelchWrapper();
-		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault,
-				this.termsInPoly.intValue(), BigInteger.valueOf(new Double(Math
-						.pow(2, this.totalBits)).intValue()));
+		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(new Double(Math.pow(2, this.totalBits)).intValue()));
 		// BWDecoder decoder = new
 		// BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html
 		// for details
@@ -111,7 +100,12 @@ public class Vault {
 		// BW
 		// CRC
 
-		return false;
+		if(secret == null){
+			System.out.println("not enough points to try");
+			return false;
+		}
+		
+		return true;
 	}
 
 	/**
