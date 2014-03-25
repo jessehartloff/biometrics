@@ -40,34 +40,50 @@ public class OptimizationResults {
 	 * Display the top N results out of maxArraySize. 
 	 * Since results are stored in each list by descending order, it is just the first N
 	 */
-	public void displayTopNResults ( Integer N ) {
+	public String displayTopNResults ( Integer N ) {
+		String toReturn = "";
 		//make sure there are enough results to display
 		if (bestEERs.size()< N ) {
 			N = bestEERs.size();
-			System.out.println("\nNot enough results... Displaying all " + N.toString() + " of them:");
+//			System.out.println("\nNot enough results... Displaying all " + N.toString() + " of them:");
+			toReturn += "\nNot enough results... Displaying all " + N.toString() + " of them:";
 		}
 		Integer count = 1;
-		System.out.println("\n========= Top EERs =========");
+//		System.out.println("\n========= Top EERs =========");
+		toReturn += "\n========= Top EERs =========";
 		for (Results r : bestEERs) {
 			if (count > N) break;
-			System.out.println("===== RESULT #"+count+" =====");
-			System.out.println("EER: "+ r.getEer());
+			toReturn += "\n===== RESULT #"+count+" =====\n"
+					 +r.toResultString();
+			count++;
+//			System.out.println("===== RESULT #"+count+" =====");
+//			System.out.println("EER: "+ r.getEer());
 		}
 		count = 1;
-		System.out.println("\n========= Top FRRs at ZeroFAR =========");
+		toReturn += "\n========= Top FRRs at ZeroFAR =========";
+//		System.out.println("\n========= Top FRRs at ZeroFAR =========");
 		for (Results r : bestEERs) {
 			if (count > N) break;
-			System.out.println("===== RESULT #"+count+" =====");
-			System.out.println("ZeroFAR: "+ r.getZeroFAR().getFRR());
+			toReturn += "\n===== RESULT #"+count+" =====\n"
+					 + r.toResultString();
+			count++;
+
+//			System.out.println("===== RESULT #"+count+" =====");
+//			System.out.println("ZeroFAR: "+ r.getZeroFAR().getFRR());
 		}
 		count = 1;
-		System.out.println("\n========= Top Average =========");
+		toReturn += "\n========= Top Average =========";
+//		System.out.println("\n========= Top Average =========");
 		for (Results r : bestEERs) {
 			if (count > N) break;
-			System.out.println("===== RESULT #"+count+" =====");
-			System.out.println("EER: "+ r.getAverageEERandZeroFAR());
+			toReturn += "\n===== RESULT #"+count+" =====\n"
+					 + r.toResultString();
+			count++;
+
+//			System.out.println("===== RESULT #"+count+" =====");
+//			System.out.println("EER: "+ r.getAverageEERandZeroFAR());
 		}
-		
+		return toReturn;
 //		
 //		
 //		Results[] bestEERs = new Results[this.bestEERs.size()];

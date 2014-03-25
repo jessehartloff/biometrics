@@ -1,27 +1,15 @@
 package optimize;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
-
+import java.io.File;
+import java.io.FileWriter;
 import settings.AllSettings;
-import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
 import settings.coordinatorsettings.histogramcoordinatorsettings.HistogramSettings;
-import settings.coordinatorsettings.indexingcoordinatorsettings.AllIndexingCoordinatorSettings;
-import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
-import settings.fingerprintmethodsettings.FingerprintMethodSettings;
-import settings.fingerprintmethodsettings.PRINTSettings;
-import settings.fingerprintmethodsettings.TripletsOfTrianglesSettings;
 import settings.fingerprintmethodsettings.TripletsOfTrianglesAllRotationsSettings;
-import settings.hashersettings.AllHasherSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
-import settings.quantizersettings.AllQuantizerSettings;
 import settings.settingsvariables.SettingsDropDownItem;
 import system.allcommonclasses.commonstructures.Results;
 
@@ -119,7 +107,7 @@ public class ParameterOptimize {
 		//enumerate over values
 		Double numCandidates = Math.pow(new Double(binMax-binMin+1), 7.)*(kMax-kMin+1);
 		System.out.println("Testing "+numCandidates.longValue()+" Candidates");
-		Integer testCount = 0;
+		Integer testCount = 1;
 		/**
 		 * Calculating runtime:
 		 * on average, the runtime is exponentially effected by k:
@@ -159,18 +147,38 @@ public class ParameterOptimize {
 										bestResults.commitResult( result );
 										testCount++;
 										System.out.println("Test #: "+testCount+"/"+numCandidates.longValue() +" ("+testCount/numCandidates*100+"%)");
+										//write out to file every 10 tests
+										if (testCount % 2 == 0) {
+											
+									        try {								      
+									        	String currentBest = "Tests Completed: "+testCount+"/"+numCandidates.longValue()
+									        					   + bestResults.displayTopNResults(10);
+									            String fileName = binMin+"_"+binMax+"_"+kMin+"_"+kMax+"_totar_optimize.txt";
+									            File newTextFile = new File(fileName);
+
+									            FileWriter fw = new FileWriter(newTextFile);
+									            fw.write(currentBest);
+									            fw.close();
+
+									        } catch (Exception e) {
+									            //do stuff with exception
+									            e.printStackTrace();
+									            System.out.println("FATAL ERROR: File writing didn't work...exiting");
+									            System.exit(1);
+									        }
+										}
 									}
-								}
-								
+								}					
 							}
 						}
 					}
 				}
 			}
 		}
-
-		return bestResults;
 		
+		
+		
+		return bestResults;
 		
 	}
 	
@@ -192,7 +200,7 @@ public class ParameterOptimize {
 		int kMa = Integer.valueOf(args[3]).intValue();//6;
 		ParameterOptimize test = new ParameterOptimize(trainDB, testDB, bMin, bMax, kMi, kMa);
 		OptimizationResults optimumResults = test.optimize();
-		optimumResults.displayTopNResults(10);
+		System.out.println(optimumResults.displayTopNResults(10));
 	}
 }//end Optimize class
 
