@@ -22,6 +22,7 @@ public class NgonsAllRotations extends Ngons {
 	}
 
 	public NgonsAllRotations(NgonAllRotationsSettings settings) {
+		super(settings);
 		this.settings = settings;
 		//this.settings = NgonAllRotationsSettings.getInstance();		
 		this.settings.setAllNumberOfBins();
