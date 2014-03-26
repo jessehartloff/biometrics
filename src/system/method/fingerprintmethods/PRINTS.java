@@ -59,27 +59,20 @@ public class PRINTS extends FingerprintMethod {
 			this.setCenterX(0.0);
 			this.setCenterY(0.0);
 			for (Long i = 0L; i < N; i++) {
-				variables.put(makeKey("distance", i), new DistanceVariable(
-						settings.getMinutiaComponentVariable("distance", i)));
-				variables.put(
-						makeKey("sigma", i),
-						new SigmaVariable(settings.getMinutiaComponentVariable(
-								"sigma", i)));
-				variables.put(
-						makeKey("phi", i),
-						new PhiVariable(settings.getMinutiaComponentVariable(
-								"phi", i)));
+				variables.put(makeKey("distance", i), new DistanceVariable(settings.getMinutiaComponentVariable("distance", i)));
+				variables.put(makeKey("sigma", i), new SigmaVariable(settings.getMinutiaComponentVariable("sigma", i)));
+				variables.put(makeKey("phi", i), new PhiVariable(settings.getMinutiaComponentVariable("phi", i)));
 			}
 		}
 
 		@Override
 		public BigInteger toBigInt() {
 			BigInteger featureBigInt = super.toBigInt();
-			// return PRINTS.appendRegionNumber(featureBigInt,
-			// this.getRegionNumber());
+			return PRINTS.appendRegionNumber(featureBigInt,
+			this.getRegionNumber());
 			// return Quantizer.getQuantizer().getRandomBigInt();
 			// FIXME - Matt: Why was this returning a random big int?
-			return featureBigInt;
+			//return featureBigInt;
 		}
 
 		public Long getRegionNumber() {
@@ -168,15 +161,12 @@ public class PRINTS extends FingerprintMethod {
 
 			BigInteger quantizedPRINT = print.toBigInt();
 			Long regionNumber = PRINTS.getAppendedRegion(quantizedPRINT);
-			BigInteger PRINTNoRegion = PRINTS
-					.getPrintWithoutRegionNumber(quantizedPRINT);
+			BigInteger PRINTNoRegion = PRINTS.getPrintWithoutRegionNumber(quantizedPRINT);
 
-			BigInteger PRINTwithRegionPlusOne = PRINTS.appendRegionNumber(
-					PRINTNoRegion, (regionNumber + 1)
-							% settings.rotationRegions().getValue());
-			BigInteger PRINTwithRegionMinusOne = PRINTS.appendRegionNumber(
-					PRINTNoRegion, (regionNumber - 1)
-							% settings.rotationRegions().getValue());
+			BigInteger PRINTwithRegionPlusOne = PRINTS.appendRegionNumber(PRINTNoRegion, (regionNumber + 1)
+																		% settings.rotationRegions().getValue());
+			BigInteger PRINTwithRegionMinusOne = PRINTS.appendRegionNumber(PRINTNoRegion, (regionNumber - 1)
+																		% settings.rotationRegions().getValue());
 
 			// BigInteger nextRegion = regionNumber.add(BigInteger.valueOf(1))
 			// .mod(BigInteger.valueOf(settings.rotationRegions().getValue()));
@@ -195,6 +185,8 @@ public class PRINTS extends FingerprintMethod {
 			// templateMinusOne.hashes.add(PRINTwithRegionMinusOne);
 
 			template.getHashes().add(quantizedPRINT);
+			template.getHashes().add(PRINTwithRegionPlusOne);
+			template.getHashes().add(PRINTwithRegionMinusOne);
 			// template.hashes.add(PRINTwithRegionPlusOne);
 			// template.hashes.add(PRINTwithRegionMinusOne);
 			// 0.14138669183781966
@@ -211,26 +203,17 @@ public class PRINTS extends FingerprintMethod {
 
 	public static BigInteger appendRegionNumber(BigInteger print,
 			Long regionNumber) {
-		BigInteger toReturn = print.shiftLeft(SettingsMethodVariable
-				.binsToBits(
-						PRINTSettings.getInstance().rotationRegions()
-								.getValue()).intValue());
+		BigInteger toReturn = print.shiftLeft(SettingsMethodVariable.binsToBits(PRINTSettings.getInstance().rotationRegions().getValue()).intValue());
 		return toReturn.add(BigInteger.valueOf(regionNumber));
 	}
 
 	public static Long getAppendedRegion(BigInteger appendedPrint) {
-		Long numberOfBits = SettingsMethodVariable.binsToBits(PRINTSettings
-				.getInstance().rotationRegions().getValue());
-		return appendedPrint.and(
-				BigInteger.valueOf(2L).pow(numberOfBits.intValue())
-						.subtract(BigInteger.ONE)).longValue();
+		Long numberOfBits = SettingsMethodVariable.binsToBits(PRINTSettings.getInstance().rotationRegions().getValue());
+		return appendedPrint.and(BigInteger.valueOf(2L).pow(numberOfBits.intValue()).subtract(BigInteger.ONE)).longValue();
 	}
 
-	public static BigInteger getPrintWithoutRegionNumber(
-			BigInteger appendedPrint) {
-		return appendedPrint.shiftRight(SettingsMethodVariable.binsToBits(
-				PRINTSettings.getInstance().rotationRegions().getValue())
-				.intValue());
+	public static BigInteger getPrintWithoutRegionNumber(BigInteger appendedPrint) {
+		return appendedPrint.shiftRight(SettingsMethodVariable.binsToBits(PRINTSettings.getInstance().rotationRegions().getValue()).intValue());
 	}
 
 	// public BigInteger getRegionBigInteger(BigInteger integer){
@@ -271,8 +254,7 @@ public class PRINTS extends FingerprintMethod {
 		return this.recursivePRINTBuilder(minutiae, new ArrayList<Minutia>());
 	}
 
-	public ArrayList<PRINT> recursivePRINTBuilder(ArrayList<Minutia> minutiae,
-			ArrayList<Minutia> currentPRINT) {
+	public ArrayList<PRINT> recursivePRINTBuilder(ArrayList<Minutia> minutiae, ArrayList<Minutia> currentPRINT) {
 		if (currentPRINT.size() == settings.n().getValue()) {
 			ArrayList<PRINT> baseCaseList = new ArrayList<PRINT>();
 			baseCaseList.add(this.makePRINT(currentPRINT));
@@ -284,8 +266,7 @@ public class PRINTS extends FingerprintMethod {
 					return intermediaryPRINTs;
 				} else {
 					currentPRINT.add(minutia);
-					intermediaryPRINTs.addAll(recursivePRINTBuilder(minutiae,
-							currentPRINT));
+					intermediaryPRINTs.addAll(recursivePRINTBuilder(minutiae,currentPRINT));
 					currentPRINT.remove(currentPRINT.size() - 1);
 				}
 			}
@@ -317,8 +298,7 @@ public class PRINTS extends FingerprintMethod {
 
 		for (int i = 0; i < minutiaList.size(); i++) {
 			Minutia minutia = minutiaList.get(i);
-			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX()
-					.doubleValue(), minutia.getY().doubleValue());
+			Double distFromCenter = Minutia.distance(cx, cy, minutia.getX().doubleValue(), minutia.getY().doubleValue());
 			distances.add(distFromCenter);
 			indexMinutiaByDistance.put(distFromCenter, minutia);
 		}
@@ -329,8 +309,7 @@ public class PRINTS extends FingerprintMethod {
 		// System.out.println("M_0: "+m0);
 		// System.out.println("Center: "+cx+", "+cy);
 
-		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue() - cy,
-				m0.getX().doubleValue() - cx));
+		Double angle = Math.toDegrees(Math.atan2(m0.getY().doubleValue() - cy,m0.getX().doubleValue() - cx));
 		angle = (angle + 180) % 360; // wtf?
 
 		// System.out.println("center: "+cx+", "+cy);
@@ -351,8 +330,7 @@ public class PRINTS extends FingerprintMethod {
 			// System.out.println(cx+", "+cy);
 			// System.out.println(minutia+"\n");
 			if (!m0.equals(minutia)) {
-				Double intAngle = Minutia.computeInsideAngle(m0, cx, cy,
-						minutia);
+				Double intAngle = Minutia.computeInsideAngle(m0, cx, cy, minutia);
 				if (!isLeft(cx, cy, m0, minutia)) { // this is probably an issue
 					intAngle = 360 - intAngle;
 				}
@@ -415,33 +393,24 @@ public class PRINTS extends FingerprintMethod {
 		for (Long i = 0L; i < N; i++) {
 			// worth thinking about overloading setPrequantizedValue if Double
 			// has more bits than Long?
-			returnPRINT.variables.get(makeKey("distance", i))
-					.setPrequantizedValue(
-							distances.get(i.intValue()).doubleValue());
-			returnPRINT.variables.get(makeKey("sigma", i))
-					.setPrequantizedValue(
-							sigmas.get(i.intValue()).doubleValue());
-			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(
-					phis.get(i.intValue()).doubleValue());
+			returnPRINT.variables.get(makeKey("distance", i)).setPrequantizedValue(distances.get(i.intValue()).doubleValue());
+			returnPRINT.variables.get(makeKey("sigma", i)).setPrequantizedValue(sigmas.get(i.intValue()).doubleValue());
+			returnPRINT.variables.get(makeKey("phi", i)).setPrequantizedValue(phis.get(i.intValue()).doubleValue());
 		}
 		return returnPRINT;
 		// return (PRINT) Quantizer.getQuantizer().getRandomFeature();
 	}
 
-	public static boolean isLeft(Minutia center, Minutia linePoint,
-			Minutia pointToCheck) {
-		return PRINTS.isLeft(center.getX().doubleValue(), center.getY()
-				.doubleValue(), linePoint, pointToCheck);
+	public static boolean isLeft(Minutia center, Minutia linePoint,Minutia pointToCheck) {
+		return PRINTS.isLeft(center.getX().doubleValue(), center.getY().doubleValue(), linePoint, pointToCheck);
 		// returns true if pointToCheck is left of the line made by linePointA
 		// and linePointB
 		// note: returns true if pointTCheck is above the horizontal line made
 		// by A and B
 	}
 
-	public static boolean isLeft(Double centerX, Double centerY,
-			Minutia linePoint, Minutia pointToCheck) {
-		return ((linePoint.getX() - centerX) * (pointToCheck.getY() - centerY) - (linePoint
-				.getY() - centerY) * (pointToCheck.getX() - centerX)) > 0;
+	public static boolean isLeft(Double centerX, Double centerY,Minutia linePoint, Minutia pointToCheck) {
+		return ((linePoint.getX() - centerX) * (pointToCheck.getY() - centerY) - (linePoint.getY() - centerY) * (pointToCheck.getX() - centerX)) > 0;
 		// returns true if pointToCheck is left of the line made by linePointA
 		// and linePointB
 		// note: returns true if pointTCheck is above the horizontal line made

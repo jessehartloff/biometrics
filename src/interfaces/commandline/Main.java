@@ -4,8 +4,8 @@ import settings.AllSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
-import settings.fingerprintmethodsettings.NgonSettings;
 import settings.fingerprintmethodsettings.NgonsSingleEnrollAllRotationsSettings;
+import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
@@ -32,13 +32,10 @@ public class Main {
 															// default values
 
 		// set the values for any comboBox
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(
-				NgonsSingleEnrollAllRotationsSettings.getInstance());
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		// AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
-		AllModalitySettings.getInstance().manuallySetComboBox(
-				FingerprintSettings.getInstance());
-		AllTestGeneratorSettings.getInstance().manuallySetComboBox(
-				new TestGeneratorFVCTestsSettings());
+		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
+		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		// FingerprintSettings.getInstance().testingDataset(
 		// ).manuallySetComboBox(new SettingsDropDownItem("FVC20021Small.ser"));
 		// FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new
@@ -46,26 +43,26 @@ public class Main {
 		FingerprintSettings
 				.getInstance()
 				.testingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
 		FingerprintSettings
 				.getInstance()
 				.trainingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
 		// //...
 		// set values for everything else
-//		PRINTSettings.getInstance().rotationRegions().setValue(8);
-//		PRINTSettings.getInstance().n().setValue(3);
-//		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
-//		PRINTSettings.getInstance().distanceBins().setValue(6);// ...
-//		PRINTSettings.getInstance().sigmaBins().setValue(6);// ...
-//		PRINTSettings.getInstance().phiBins().setValue(6);// ...
+		PRINTSettings.getInstance().rotationRegions().setValue(8);
+		PRINTSettings.getInstance().n().setValue(3);
+		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
+		PRINTSettings.getInstance().distanceBins().setValue(6);// ...
+		PRINTSettings.getInstance().sigmaBins().setValue(6);// ...
+		PRINTSettings.getInstance().phiBins().setValue(6);// ...
 //		 NgonSettings.getInstance().rotationRegions().setValue(8);
-		NgonsSingleEnrollAllRotationsSettings.getInstance().n().setValue(3);
-		NgonsSingleEnrollAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
-		NgonsSingleEnrollAllRotationsSettings.getInstance().xBins().setValue(4);//...EER:
-//		 0.0581910403714915
-		NgonsSingleEnrollAllRotationsSettings.getInstance().yBins().setValue(9);//...
-		NgonsSingleEnrollAllRotationsSettings.getInstance().thetaBins().setValue(7);//...
+//		NgonsSingleEnrollAllRotationsSettings.getInstance().n().setValue(3);
+//		NgonsSingleEnrollAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
+//		NgonsSingleEnrollAllRotationsSettings.getInstance().xBins().setValue(4);//...EER:
+////		 0.0581910403714915
+//		NgonsSingleEnrollAllRotationsSettings.getInstance().yBins().setValue(9);//...
+//		NgonsSingleEnrollAllRotationsSettings.getInstance().thetaBins().setValue(7);//...
 
 		// settings.runSystemAndMakeGraphs();
 		settings.runSystemAndGetResults();
