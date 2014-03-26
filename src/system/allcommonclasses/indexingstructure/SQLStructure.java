@@ -11,19 +11,24 @@ import system.allcommonclasses.utilities.SQLFunctions;
 public class SQLStructure extends IndexingStructure{
 
 	{}// TODO Jen/Jim - SQL indexing
+	/*db and table are currently hard coded, as there is only 1 instance of an
+	 * indexing structure at this point -- we could have more and it could be a 
+	 * parameter chosen in gui or something
+	 */
+	private static String dbToUse = "fec";//"biometrics";
+	private static String tableToUse = "fingerprint";
 
-	private static String userName = "biometrics";
-	private static String password = "skewlIsCool";
-	private static Connection connection = null;
-
-
+	private SQLFunctions sqlFunctions;
+	
 	//this needs to be some sort of sql table, only used internally
 	HashMap<BigInteger, ArrayList<IndexingPoint>> indexingStructure;
 	
 	public SQLStructure(){
+		this.sqlFunctions = new SQLFunctions();
+		this.sqlFunctions.setDbURL(dbToUse);
 		//again, we won't use a hashmap here, but a table
 		indexingStructure = new HashMap<BigInteger, ArrayList<IndexingPoint>>();
-		SQLFunctions sqlf = new SQLFunctions();
+//		this.sqlFunctions.createTable(this.sqlFunctions.getDb(), "attributeOne", "attributeTwo");
 		System.exit(0);
 	}
 
@@ -31,7 +36,7 @@ public class SQLStructure extends IndexingStructure{
 	@Override
 	public void add(BigInteger bin, IndexingPoint pointToAdd) {
 		//  Auto-generated method stub
-		
+		String insertStatement = "insert into";
 	}
 
 	@Override
@@ -39,24 +44,10 @@ public class SQLStructure extends IndexingStructure{
 		//  Auto-generated method stub
 		//for item in (select * from table where bin = any(select bigInt from table)):
 		//set IndexingPoint.value = bin; set userID = ID
+		ArrayList<IndexingPoint> binContents = new ArrayList<IndexingPoint>();
+//		for(this.sqlFunctions.executeMyQuery("select tableBin,userID from fingerprint where bin = tableBin")
 		return null;
 	}
-	
-	public static Connection ConnectToDatabase(){
-//		try{
-//			OracleDataSource ds = new OracleDataSource();
-//	        ds.setUser(userName);
-//	        ds.setPassword(password);
-//	        ds.setURL("jdbc:oracle:thin:@aos.acsu.buffalo.edu:1521/aos.buffalo.edu");
-//	        connection = ds.getConnection();
-//			
-//		}catch(SQLException e){
-//			System.out.println("Cannot connect to database");
-//			e.printStackTrace();
-//	        System.exit(1);
-//		}
-		return null;
-		
-	}
+
 
 }

@@ -9,12 +9,42 @@ import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import system.hasher.fuzzyvault.CRC;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
+import system.hasher.fuzzyvault.Polynomial;
 
 public class Main {
 	public static void main(String[] args) {
+		int fieldSize = 25;
+		Polynomial crcPoly = new Polynomial();
+		crcPoly = crcPoly.createIrreducible(fieldSize);
+		System.out.println(crcPoly.toPolynomialString());
+		System.out.println(crcPoly.toDecimalString());
+		System.out.println(crcPoly.toBinaryString());
+		System.out.println(crcPoly.toArrayList().toString());
+		Polynomial myPoly = new Polynomial();
+		myPoly = myPoly.createIrreducible(fieldSize);
+		System.out.println(myPoly.toPolynomialString());
+		System.out.println(myPoly.toDecimalString());
+		System.out.println(myPoly.toBinaryString());
+		System.out.println(myPoly.toArrayList().toString());
+		System.out.println(CRC.CheckCRC(crcPoly.toArrayList(),myPoly.toArrayList()));
+		HashMap<Integer,ArrayList<BigInteger>> myMap = new HashMap<Integer,ArrayList<BigInteger>>();
+		for(int i = 1; i < 50; i++){
+			new Polynomial();
+			Polynomial ref = Polynomial.createIrreducible(i);
+			System.out.print(i);System.out.println(ref.toArrayList().toString());
+			myMap.put(i, ref.toArrayList());
+		}
+		System.exit(0);
+//		System.out.println(myMap.toString());
 		/*
 		 * private static Connection connection = null; if(connection == null){
 		 * try{ OracleDataSource ds = new OracleDataSource();

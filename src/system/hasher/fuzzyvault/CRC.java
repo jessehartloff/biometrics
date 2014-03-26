@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class CRC {
 	// store chart of crc polynomials from wikipedia
-
+	
 	static public boolean CheckCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
 		BigInteger remainder;
-		remainder = ComputeCRC(poly, CRCpoly);
-		return remainder == BigInteger.ZERO;
+		remainder = ComputeCRC(poly, CRCpoly);//.compareTo returns 0 if the values are equal
+		return remainder.compareTo(BigInteger.ZERO) == 0;//so return true if the values are equal
 	}
 
 	public static BigInteger ComputeCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
