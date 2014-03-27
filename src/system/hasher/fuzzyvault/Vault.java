@@ -15,7 +15,6 @@ public class Vault {
 
 	public Vault() {
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>();
-		System.out.println();
 		
 		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
 		this.totalBits = Quantizer.getQuantizer().getTotalBits();
@@ -92,7 +91,9 @@ public class Vault {
 		// loop through vault and extract points with matching z-value
 
 		RSDecoder decoder = new BerlekampWelchWrapper();
-		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(new Double(Math.pow(2, this.totalBits)).intValue()));
+//		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(2).pow(this.totalBits.intValue()));
+		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), FieldSizeMap.getPrime(this.totalBits));
+		
 		// BWDecoder decoder = new
 		// BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html
 		// for details

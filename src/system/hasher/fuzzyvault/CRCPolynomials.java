@@ -1,6 +1,6 @@
 package system.hasher.fuzzyvault;
 
-public class Polynomials {
+public class CRCPolynomials {
 		/**
 		 * Generates a handful of irreducible polynomials of the specified degree.
 		 */

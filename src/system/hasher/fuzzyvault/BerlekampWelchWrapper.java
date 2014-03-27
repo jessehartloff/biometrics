@@ -25,7 +25,7 @@ public class BerlekampWelchWrapper implements RSDecoder {
 
 		int numberOfPoints = fuzzyVaultPoints.size();
 		
-		if(numberOfPoints < k+2){
+		if(numberOfPoints < k+1){
 			return null;
 		}
 		

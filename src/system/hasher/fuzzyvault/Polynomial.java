@@ -66,7 +66,7 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	public static Polynomial createFromBytes(byte[] bytes, int degree) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (int i = 0; i < degree; i++) {
-			if (Polynomials.getBit(bytes, i))
+			if (CRCPolynomials.getBit(bytes, i))
 				dgrs.add(BigInteger.valueOf(i));
 		}
 		dgrs.add(BigInteger.valueOf(degree));
