@@ -24,18 +24,19 @@ public class SecretPolynomial {
 
 	private void generateRandomPolynomial() {
 		this.polynomialTerms = new ArrayList<BigInteger>();
-		for (int i = 0; i < this.termsInPoly; i++) {
+		for (int i = 0; i < this.termsInPoly-1; i++) {
 			BigInteger randomValue = new BigInteger(this.totalBits.intValue(), new Random());
 			this.polynomialTerms.add(randomValue);
 		}
-		// TODO CRC
-		// remove last term and add CRC
+		Polynomial crcPoly = new Polynomial();
+		crcPoly = Polynomial.createIrreducible(this.termsInPoly.intValue());
+		this.polynomialTerms.add(CRC.ComputeCRC(polynomialTerms, crcPoly.toArrayList()));
 	}
 
 	public BigInteger evaluateAt(BigInteger bigInt) {
 		BigInteger evaluatedInteger = BigInteger.valueOf(0);
 		for (int i = 0; i < this.polynomialTerms.size(); i++) {
-			BigInteger currentTerm = (bigInt.pow(i)).multiply(this.polynomialTerms.get(i));
+			BigInteger currentTerm = (bigInt.pow(this.polynomialTerms.size()-1-i)).multiply(this.polynomialTerms.get(i));
 			evaluatedInteger = evaluatedInteger.add(currentTerm);
 		}
 		return evaluatedInteger;

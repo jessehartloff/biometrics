@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class CRC {
-	// store chart of crc polynomials from wikipedia
 	
 	static public boolean CheckCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
 		BigInteger remainder;
