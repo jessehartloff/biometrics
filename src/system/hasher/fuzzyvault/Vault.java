@@ -112,12 +112,7 @@ public class Vault {
 	 * assumes input is a locked vault which was locked according to the current
 	 * settings
 	 * 
-<<<<<<< Vault.java
 	 * @param lockedVault a template representing a locked vault
-=======
-	 * @param lockedVault
-	 *            a locked vault
->>>>>>> 1.8
 	 * @return
 	 */
 	public static ArrayList<FuzzyVaultPoint> getVaultPoints(Template lockedVault) {

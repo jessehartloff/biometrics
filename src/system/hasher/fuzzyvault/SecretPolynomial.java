@@ -35,11 +35,12 @@ public class SecretPolynomial {
 
 	public BigInteger evaluateAt(BigInteger bigInt) {
 		BigInteger evaluatedInteger = BigInteger.valueOf(0);
+		BigInteger fieldSize = BigInteger.valueOf(2).pow(this.totalBits.intValue());
 		for (int i = 0; i < this.polynomialTerms.size(); i++) {
-			BigInteger currentTerm = (bigInt.pow(this.polynomialTerms.size()-1-i)).multiply(this.polynomialTerms.get(i));
+			BigInteger currentTerm = (bigInt.pow(this.polynomialTerms.size()-1-i)).multiply(this.polynomialTerms.get(i)).mod(fieldSize);
 			evaluatedInteger = evaluatedInteger.add(currentTerm);
 		}
-		return evaluatedInteger;
+		return evaluatedInteger.mod(fieldSize);
 	}
 
 	public Long getTermsInPoly() {
