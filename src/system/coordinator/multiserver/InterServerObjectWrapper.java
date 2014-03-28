@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class InterServerObjectWrapper implements Serializable{
 
+
+	private String origin;
 	private Object contents;
 	private boolean testing;
 	private boolean enrolling;
@@ -11,6 +13,13 @@ public class InterServerObjectWrapper implements Serializable{
 	
 	public InterServerObjectWrapper(){
 		
+	}
+	
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 	public Object getContents() {
 		return contents;

@@ -2,17 +2,21 @@ package system.coordinator.multiserver;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.Queue;
 
 import javax.crypto.Cipher;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
@@ -21,14 +25,42 @@ import system.hasher.Hasher;
 public class Server1 extends Server {
 	
 	public static void main(String[] args){
-		
+		try {
+            ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			while(true){
+				Runnable execute;
+				//Socket client = new Socket(ClientSettings.getInstance().ip().getValue(), ClientSettings.getInstance().portNumber().getValue().intValue());
+				Socket server = S1.accept();
+				ObjectInputStream in = new ObjectInputStream(server.getInputStream());
+				InterServerObjectWrapper obj = (InterServerObjectWrapper) in.readObject();
+				if(obj.isEnrolling() == true){
+					execute = new Runnable(){
+						@Override
+						public void run() {
+							enroll();
+						}
+					};
+				} else if(obj.isTesting() == true){
+					execute = new Runnable(){
+						@Override
+						public void run() {
+							test();
+						}
+					};
+				}
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
 	
 	
 	// FIXME EVERYONE EVER
-	Server1(Hasher hasher, Users enrollees) {
+	public Server1(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		
 	}
@@ -114,12 +146,12 @@ public class Server1 extends Server {
 		return object;
 	}
 
-	public void enroll() {
+	public static void enroll() {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
 		// 2.) Store that Template in RAM BECAUSE SQL JIM AND JEN!
 	}
 
-	public void test() {
+	public static void test() {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
@@ -177,15 +209,6 @@ public class Server1 extends Server {
 		 * System.currentTimeMillis()- finishEncryption));
 		 * System.out.println(new String (decryptedKey, "UTF-8"));
 		 */
-	}
-
-	public static void main(String[] args) {
-		try {
-			receivePrivateKey();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

@@ -122,7 +122,7 @@ public class Client extends Server {
 		toS1.setEnrolling(true);
 		toS1.setTesting(false);
 		toS1.setUserID(userID);
-		
+		toS1.setOrigin("client");
 		try{
 		   Cipher cipher = Cipher.getInstance("ECDH", "BC");
 
@@ -140,6 +140,7 @@ public class Client extends Server {
 		
 		toS2.setEnrolling(true);
 		toS2.setTesting(false);
+		toS1.setOrigin("client");
 		// 2a.) generate UUID for verification
 		toS2.setUserID(userID);
 		
