@@ -6,11 +6,10 @@ import system.coordinator.Coordinator;
 import system.hasher.Hasher;
 
 public class SuperTestingMetaClient extends Coordinator {
-	// TODO Matt write SuperTestingMetaClient constructor and run()
+	// TODO Jim write SuperTestingMetaClient constructor and run()
 
 	public SuperTestingMetaClient(Hasher hasher, Users users) {
 		super(hasher, users);
-
 	}
 
 	
@@ -19,6 +18,11 @@ public class SuperTestingMetaClient extends Coordinator {
 	
 	@Override
 	public RawScores run() {
+		//instantiate a client Client client = new Client()
+		//for each user in users
+			//enroll the fingerprint //client.enroll(...)
+		//for each user in users
+			//test the fingerprint  // client.test(...)
 		return null;
 	}
 
