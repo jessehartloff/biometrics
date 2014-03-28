@@ -28,9 +28,13 @@ public class SecretPolynomial {
 			BigInteger randomValue = new BigInteger(this.totalBits.intValue(), new Random());
 			this.polynomialTerms.add(randomValue);
 		}
-		CRCPolynomial crcPoly = new CRCPolynomial();
-		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
-		this.polynomialTerms.add(CRC.ComputeCRC(polynomialTerms, crcPoly.toArrayList()));
+//		CRCPolynomial crcPoly = new CRCPolynomial(); //createIrreducbile creates a random polynomial every call -- now hard coded into CRCPolyMap
+//		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
+//		this.polynomialTerms.add(CRC.ComputeCRC(polynomialTerms, crcPoly.toArrayList()));
+		System.out.println("Computing CRC for the secret polynomial");
+		System.out.println(CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
+		System.out.println(CRC.ComputeCRC(polynomialTerms, CRCPolyMap.getCRCPoly(this.termsInPoly.intValue())));
+		this.polynomialTerms.add(CRC.ComputeCRC(polynomialTerms, CRCPolyMap.getCRCPoly(this.termsInPoly.intValue())));
 	}
 
 	public BigInteger evaluateAt(BigInteger bigInt) {

@@ -25,28 +25,27 @@ import system.hasher.fuzzyvault.CRCPolynomial;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		
-		SQLStructure blah = new SQLStructure();
+//		SQLStructure blah = new SQLStructure();
 //		blah.getSqlFunctions().connectToDatabase();
-		System.exit(0);
-		int fieldSize = 13;
-		CRCPolynomial crcPoly = new CRCPolynomial();
-		crcPoly = CRCPolynomial.createIrreducible(fieldSize);
-		System.out.println(crcPoly.toPolynomialString());
-		System.out.println(crcPoly.toDecimalString());
-		System.out.println(crcPoly.toBinaryString());
-		CRCPolynomial myPoly = new CRCPolynomial();
-		myPoly = myPoly.createIrreducible(fieldSize);
-		System.out.println(myPoly.toPolynomialString());
-		System.out.println(myPoly.toDecimalString());
-		System.out.println(myPoly.toBinaryString());
-		System.out.println(myPoly.toArrayList().toString());
-		System.out.println(CRC.CheckCRC(crcPoly.toArrayList(),myPoly.toArrayList()));
-		HashMap<Integer,ArrayList<BigInteger>> myMap = new HashMap<Integer,ArrayList<BigInteger>>();
+//		int fieldSize = 13;
+//		CRCPolynomial crcPoly = new CRCPolynomial();
+//		crcPoly = CRCPolynomial.createIrreducible(fieldSize);
+//		System.out.println(crcPoly.toPolynomialString());
+//		System.out.println(crcPoly.toDecimalString());
+//		System.out.println(crcPoly.toBinaryString());
+//		CRCPolynomial myPoly = new CRCPolynomial();
+//		myPoly = myPoly.createIrreducible(fieldSize);
+//		System.out.println(myPoly.toPolynomialString());
+//		System.out.println(myPoly.toDecimalString());
+//		System.out.println(myPoly.toBinaryString());
+//		System.out.println(myPoly.toArrayList().toString());
+//		System.out.println(CRC.CheckCRC(crcPoly.toArrayList(),myPoly.toArrayList()));
+//		HashMap<Integer,ArrayList<BigInteger>> myMap = new HashMap<Integer,ArrayList<BigInteger>>();
 		for(int i = 1; i < 50; i++){
 			new CRCPolynomial();
 			CRCPolynomial ref = CRCPolynomial.createIrreducible(i);
 			System.out.print(i);System.out.println(ref.toArrayList().toString());
-			myMap.put(i, ref.toArrayList());
+//			myMap.put(i, ref.toArrayList());
 		}
 		System.exit(0);
 //		System.out.println(myMap.toString());

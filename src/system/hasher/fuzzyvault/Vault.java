@@ -100,15 +100,17 @@ public class Vault {
 		// BW
 		
 		if(secret == null){
-			System.out.println("not enough points to try");
 			return false;
 		}
 		
 		// CRC
-		CRCPolynomial crcPoly = new CRCPolynomial();
-		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
-//		return CRC.CheckCRC(secret.getPolynomialTerms(), crcPoly.toArrayList());
-		return true;
+//		CRCPolynomial crcPoly = new CRCPolynomial();
+//		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
+		System.out.println("Checking if CRC's return 0");
+		System.out.println(CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
+		System.out.println(CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue())));
+		return CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
+//		return true;
 	}
 
 	/**
