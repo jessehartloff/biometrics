@@ -38,56 +38,57 @@ import system.hasher.Hasher;
 
 public class Client extends Server {
 	// extends server
-
+	private OutputStream S1Out;
+	private OutputStream S2Out;
+	private InputStreamReader S1Reader;
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
-			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 			Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
 			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
-			OutputStream S1Out = S1.getOutputStream();
-			OutputStream S2Out = S2.getOutputStream();
+			S1Out = S1.getOutputStream();
+			S2Out = S2.getOutputStream();
 			InputStream S1In = S1.getInputStream();
-			InputStreamReader S1reader = new InputStreamReader(S1In); 
-			
-
-		  
-			
-	        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-	        ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
-
-			
-		
+			S1Reader = new InputStreamReader(S1In); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-		
 	}
-	
-	
+
+
 	public KeyPair getKeyPair(){
-		  KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
-		    EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
-		        "fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
+		try{
+			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
-		    ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
+			EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
+					"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
+							"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+									"fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
 
-		    keyGen.initialize(ecSpec, new SecureRandom());
+			ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
+					"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+							"fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
+									"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
 
-		    KeyPair keyPair = keyGen.generateKeyPair();
+			keyGen.initialize(ecSpec, new SecureRandom());
+			return keyGen.generateKeyPair();
+		} catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
 
-			return keyPair;
 	}
-	
-	
+
+
 	@Override
 	public RawScores run() {
+
+		  
+		
+//        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+//        ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
+//        
 //		for (User user : this.users.users) {
 //			KeyPair dhKeys = keyGenerator.generateKeyPair();
 //			PublicKey publicKey = dhKeys.getPublic();
@@ -112,6 +113,7 @@ public class Client extends Server {
 //			Double score = Double.valueOf(S1reader.read());
 //			System.out.println("scores yaaaaay:"+score);
 //		}
+		return null;
 	
 	}
 
