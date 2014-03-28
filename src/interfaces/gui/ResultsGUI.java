@@ -58,6 +58,9 @@ public class ResultsGUI {
         //fieldFrame.setVisible(true);
         
         //plots = new ArrayList<JPanel>();
+	    
+	    /*** Print out rates for python plotting ***/
+	    System.out.println(results.toRatesString());
 		
 		
 		

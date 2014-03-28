@@ -1,0 +1,106 @@
+Current Params:n: 6
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Tests Completed: 3/2
+Not enough results... Displaying all 2 of them:
+========= Top EERs =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.11394905011446366
+FRR at ZeroFAR: 0.4858575008950949
+AverageEERandZeroFAR: 0.29990327550477924
+bin bits: 39.0
+run time: 208 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 6
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2936141218847986
+FRR at ZeroFAR: 0.7726459004654493
+AverageEERandZeroFAR: 0.5331300111751239
+bin bits: 48.0
+run time: 127 sec
+
+========= Top FRRs at ZeroFAR =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.11394905011446366
+FRR at ZeroFAR: 0.4858575008950949
+AverageEERandZeroFAR: 0.29990327550477924
+bin bits: 39.0
+run time: 208 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 6
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2936141218847986
+FRR at ZeroFAR: 0.7726459004654493
+AverageEERandZeroFAR: 0.5331300111751239
+bin bits: 48.0
+run time: 127 sec
+
+========= Top Average =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.11394905011446366
+FRR at ZeroFAR: 0.4858575008950949
+AverageEERandZeroFAR: 0.29990327550477924
+bin bits: 39.0
+run time: 208 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 6
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2936141218847986
+FRR at ZeroFAR: 0.7726459004654493
+AverageEERandZeroFAR: 0.5331300111751239
+bin bits: 48.0
+run time: 127 sec

@@ -24,6 +24,7 @@ public class BerlekampWelchWrapper implements RSDecoder {
 //		BigInteger[] gammaValueArray = (BigInteger[]) gammaValues.toArray();
 
 		int numberOfPoints = fuzzyVaultPoints.size();
+//		if(numberOfPoints == 0)System.out.println("empty vault");
 		
 		if(numberOfPoints < k+1){
 			System.out.println("not enough points to try");

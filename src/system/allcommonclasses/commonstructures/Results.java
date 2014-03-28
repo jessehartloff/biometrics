@@ -191,6 +191,15 @@ public class Results {
 				
 		return toReturn;
 	}
+	
+	public String toRatesString() {
+		String toReturn = "([ ";
+		for (RatesPoint r : rates) {
+			toReturn += "["+r.getFar()+", "+r.getFrr()+"],";
+		}
+		toReturn += "])";
+		return toReturn;
+	}
 
 	public Long getRunTime() {
 		return runTime;

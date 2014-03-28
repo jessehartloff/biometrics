@@ -1,9 +1,8 @@
 package optimize;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 import system.allcommonclasses.commonstructures.Results;
 
@@ -42,47 +41,55 @@ public class OptimizationResults {
 	 */
 	public String displayTopNResults ( Integer N ) {
 		String toReturn = "";
+		PriorityQueue< Results > temp = new PriorityQueue< Results >(maxArraySize, new CompareResultEER());
 		//make sure there are enough results to display
 		if (bestEERs.size()< N ) {
 			N = bestEERs.size();
 //			System.out.println("\nNot enough results... Displaying all " + N.toString() + " of them:");
 			toReturn += "\nNot enough results... Displaying all " + N.toString() + " of them:";
 		}
-		Integer count = 1;
 //		System.out.println("\n========= Top EERs =========");
+		
+		/*** EERs ***/
 		toReturn += "\n========= Top EERs =========";
-		for (Results r : bestEERs) {
-			if (count > N) break;
+		for (Integer count =1;count <= N; count++) {
+			Results r = bestEERs.poll();
+			temp.add(r);
 			toReturn += "\n===== RESULT #"+count+" =====\n"
 					 +r.toResultString();
-			count++;
 //			System.out.println("===== RESULT #"+count+" =====");
 //			System.out.println("EER: "+ r.getEer());
 		}
-		count = 1;
-		toReturn += "\n========= Top FRRs at ZeroFAR =========";
-//		System.out.println("\n========= Top FRRs at ZeroFAR =========");
-		for (Results r : bestEERs) {
-			if (count > N) break;
-			toReturn += "\n===== RESULT #"+count+" =====\n"
-					 + r.toResultString();
-			count++;
+		bestEERs.addAll(temp);
+		temp.removeAll(temp);
 
+		temp = new PriorityQueue< Results >(maxArraySize, new CompareResultZeroFAR());
+		/*** Zero FARs ***/
+		toReturn += "\n========= Top FRRs at ZeroFAR =========";
+		for (Integer count =1;count <= N; count++) {
+			Results r = bestZeroFARs.poll();
+			temp.add(r);
+			toReturn += "\n===== RESULT #"+count+" =====\n"
+					 +r.toResultString();
 //			System.out.println("===== RESULT #"+count+" =====");
-//			System.out.println("ZeroFAR: "+ r.getZeroFAR().getFRR());
+//			System.out.println("EER: "+ r.getEer());
 		}
-		count = 1;
+		bestZeroFARs.addAll(temp);
+		temp.removeAll(temp);
+		temp = new PriorityQueue< Results >(maxArraySize, new CompareResultAvgEERandZeroFAR());
+		/*** Averages ***/
 		toReturn += "\n========= Top Average =========";
 //		System.out.println("\n========= Top Average =========");
-		for (Results r : bestEERs) {
-			if (count > N) break;
+		for (Integer count =1;count <= N; count++) {
+			Results r = bestAverageEERandZeroFARs.poll();
+			temp.add(r);
 			toReturn += "\n===== RESULT #"+count+" =====\n"
-					 + r.toResultString();
-			count++;
-
+					 +r.toResultString();
 //			System.out.println("===== RESULT #"+count+" =====");
-//			System.out.println("EER: "+ r.getAverageEERandZeroFAR());
+//			System.out.println("EER: "+ r.getEer());
 		}
+		bestAverageEERandZeroFARs.addAll(temp);
+		temp.removeAll(temp);
 		return toReturn;
 //		
 //		

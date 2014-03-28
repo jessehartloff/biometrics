@@ -1,0 +1,58 @@
+Current Params:n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Tests Completed: 1/3
+Not enough results... Displaying all 1 of them:
+========= Top EERs =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 82 sec
+
+========= Top FRRs at ZeroFAR =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 82 sec
+
+========= Top Average =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+theta: 8
+x: 8
+y: 8
+kClosestMinutia: 6
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 82 sec

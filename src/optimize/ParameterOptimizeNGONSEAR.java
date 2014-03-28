@@ -131,6 +131,9 @@ public class ParameterOptimizeNGONSEAR {
 						for ( int k=kMin; k <=kMax; k++ ){
 							//to prevent ngons from erroring out when k is less than n
 							if ( k < n) k = n;
+							//make FTC work
+							FingerprintSettings.getInstance().minimumMinutia().setValue(k+1);
+							modality.manuallySetComboBox(FingerprintSettings.getInstance());
 							long startTime = System.currentTimeMillis();
 							ngonsear.n().setValue(n);
 							ngonsear.thetaBins().setValue(t);

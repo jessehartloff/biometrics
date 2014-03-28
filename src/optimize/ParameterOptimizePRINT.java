@@ -8,7 +8,10 @@ import settings.coordinatorsettings.histogramcoordinatorsettings.HistogramSettin
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
+import settings.fingerprintmethodsettings.NgonAllRotationsSettings;
+import settings.fingerprintmethodsettings.NgonsSingleEnrollAllRotationsSettings;
 import settings.fingerprintmethodsettings.NgonSettings;
+import settings.fingerprintmethodsettings.PRINTSettings;
 import settings.fingerprintmethodsettings.TripletsOfTrianglesAllRotationsSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
@@ -24,7 +27,7 @@ import system.allcommonclasses.commonstructures.Results;
  * @author thomaseffland
  *
  */
-public class ParameterOptimizeNGON {
+public class ParameterOptimizePRINT {
 	
 	/**
 	 * Member Variables
@@ -42,18 +45,19 @@ public class ParameterOptimizeNGON {
 	
 	AllModalitySettings modality;
 	AllFingerprintMethodSettings method;
-	NgonSettings ngon; //stands for Triplets Of Triangles All Rotations
+	PRINTSettings ngonsear; //stands for Triplets Of Triangles All Rotations
 	AllTestGeneratorSettings testGenerator;
 	HistogramSettings histogram;
 	
 	int nMin, nMax;
 	int binMin, binMax;
 	int kMin, kMax;
+	int rMin, rMax;
 
 	/**
 	 * Constructor
 	 */
-	public ParameterOptimizeNGON( String trainData, String testData, int bMin, int bMax, int kMin, int kMax, int nMin, int nMax) {
+	public ParameterOptimizePRINT( String trainData, String testData, int bMin, int bMax, int kMin, int kMax, int nMin, int nMax, int rMin, int rMax) {
 		//set datasets
 		trainingDataset = trainData;
 		testDataset = testData;
@@ -62,6 +66,7 @@ public class ParameterOptimizeNGON {
 		binMin = bMin; binMax = bMax;
 		this.kMin = kMin; this.kMax = kMax;
 		this.nMin = nMin; this.nMax = nMax;
+		this.rMin = rMin; this.rMax = rMax;
 		
 		//set settings variables to their class singletons so we don't have to type getInstance a million times
 		settings = AllSettings.getInstance(); // loads all the default values
@@ -71,12 +76,11 @@ public class ParameterOptimizeNGON {
 		method = AllFingerprintMethodSettings.getInstance();
 		
 		//Optimizing on Triplets of Triangles All Rotations
-		method.manuallySetComboBox(NgonSettings.getInstance());
-		ngon = NgonSettings.getInstance();
+		method.manuallySetComboBox(PRINTSettings.getInstance());
+		ngonsear = PRINTSettings.getInstance();
 		
 		//Test on fingerprints
 		modality.manuallySetComboBox(FingerprintSettings.getInstance());
-
 		
 		//Use FVC style tests
 		testGenerator.manuallySetComboBox(new TestGeneratorFVCTestsSettings());
@@ -84,7 +88,6 @@ public class ParameterOptimizeNGON {
 		//Set training and test datasets
 		FingerprintSettings.getInstance().trainingDataset().manuallySetComboBox(new SettingsDropDownItem(trainingDataset));
 		FingerprintSettings.getInstance().testingDataset( ).manuallySetComboBox(new SettingsDropDownItem(testDataset));
-		
 		
 	}
 	
@@ -109,7 +112,7 @@ public class ParameterOptimizeNGON {
 		System.out.println("Running...");
 	
 		//enumerate over values
-		Double numCandidates = Math.pow(new Double(binMax-binMin+1), 3.)*(kMax-kMin+1)*(nMax-nMin+1);
+		Double numCandidates = Math.pow(new Double(binMax-binMin+1), 3.)*(kMax-kMin+1)*(nMax-nMin+1)*(rMax-rMin+1);
 		System.out.println("Testing "+numCandidates.longValue()+" Candidates");
 		Integer testCount = 0;
 		/**
@@ -125,55 +128,59 @@ public class ParameterOptimizeNGON {
 //		this.settingsVariables.put("rotationStart", new SettingsDouble(-50.0));
 //		this.settingsVariables.put("rotationStop", new SettingsDouble(50.0));
 		for( int n = nMin; n <=nMax; n++ ) {
-			for( int t = binMin; t <=binMax; t++ ){
-				for( int x = binMin; x <=binMax; x++ ){
-					for( int y = binMin; y <=binMax; y++ ){
+			for( int d = binMin; d <=binMax; d++ ){
+				for( int s = binMin; s <=binMax; s++ ){
+					for( int p = binMin; p <=binMax; p++ ){
 						for ( int k=kMin; k <=kMax; k++ ){
-							//to prevent ngons from erroring out when k is less than n
-							if ( k < n) k = n;
-							//make FTC work
-							FingerprintSettings.getInstance().minimumMinutia().setValue(k+1);
-							modality.manuallySetComboBox(FingerprintSettings.getInstance());
-							long startTime = System.currentTimeMillis();
-							ngon.n().setValue(n);
-							ngon.thetaBins().setValue(t);
-							ngon.xBins().setValue(x);
-							ngon.yBins().setValue(y);
-							ngon.kClosestMinutia().setValue(k);
-							
-							Results result = settings.runSystemAndGetResults();
-							long stopTime = System.currentTimeMillis();
-							String paramString = "n: "+new Integer(n)+"\n"
-									+"theta: "+new Integer(t)+"\n"
-									+"x: "+new Integer(x)+"\n"
-									+"y: "+new Integer(y)+"\n"
-									+"kClosestMinutia: " +new Integer(k)+"\n";
-							result.setParamString(paramString);
-							result.setRunTime((stopTime - startTime)/1000L);
-							//System.out.println( result.getAverageEERandZeroFAR() );
-							bestResults.commitResult( result );
-							testCount++;
-							System.out.println("Test #: "+testCount+"/"+numCandidates.longValue() +" ("+testCount/numCandidates*100+"%)");
-							//write out to file every 10 tests
-							if (/*testCount % 10*/0 == 0) {
+							for (int r=rMin; r<=rMax; r++){
+								//to prevent ngons from erroring out when k is less than n
+								if ( k < n) k = n;
+								//make FTC work
+								FingerprintSettings.getInstance().minimumMinutia().setValue(k+1);
+								modality.manuallySetComboBox(FingerprintSettings.getInstance());
+								long startTime = System.currentTimeMillis();
+								ngonsear.n().setValue(n);
+								ngonsear.distanceBins().setValue(d);
+								ngonsear.sigmaBins().setValue(s);
+								ngonsear.phiBins().setValue(p);
+								ngonsear.kClosestMinutia().setValue(k);
 								
-						        try {								      
-						        	String currentBest = "Current Params:"+paramString
-						        					   + "\nTests Completed: "+testCount+"/"+numCandidates.longValue()
-						        					   + bestResults.displayTopNResults(10);
-						            String fileName = binMin+"_"+binMax+"_"+kMin+"_"+kMax+"_"+nMin+"_"+nMax+"_"+ "_ngon_optimize.txt";
-						            File newTextFile = new File(fileName);
-	
-						            FileWriter fw = new FileWriter(newTextFile);
-						            fw.write(currentBest);
-						            fw.close();
-	
-						        } catch (Exception e) {
-						            //do stuff with exception
-						            e.printStackTrace();
-						            System.out.println("FATAL ERROR: File writing didn't work...exiting");
-						            System.exit(1);
-						        }
+								Results result = settings.runSystemAndGetResults();
+								long stopTime = System.currentTimeMillis();
+								String paramString = "n: "+new Integer(n)+"\n"
+										+"distance: "+new Integer(d)+"\n"
+										+"sigma: "+new Integer(s)+"\n"
+										+"phi: "+new Integer(p)+"\n"
+										+"kClosestMinutia: " +new Integer(k)+"\n"
+										+"rotationRegions: " +new Integer(r)+"\n";
+
+								result.setParamString(paramString);
+								result.setRunTime((stopTime - startTime)/1000L);
+								//System.out.println( result.getAverageEERandZeroFAR() );
+								bestResults.commitResult( result );
+								testCount++;
+								System.out.println("Test #: "+testCount+"/"+numCandidates.longValue() +" ("+testCount/numCandidates*100+"%)");
+								//write out to file every 10 tests
+								if (/*testCount % 10*/ 0 == 0) {
+									
+							        try {								      
+							        	String currentBest = "Current Params:"+paramString
+							        					   + "\nTests Completed: "+testCount+"/"+numCandidates.longValue()
+							        					   + bestResults.displayTopNResults(10);
+							            String fileName = binMin+"_"+binMax+"_"+kMin+"_"+kMax+"_"+nMin+"_"+nMax+"_"+rMin+"_"+rMax+ "_print_optimize.txt";
+							            File newTextFile = new File(fileName);
+		
+							            FileWriter fw = new FileWriter(newTextFile);
+							            fw.write(currentBest);
+							            fw.close();
+		
+							        } catch (Exception e) {
+							            //do stuff with exception
+							            e.printStackTrace();
+							            System.out.println("FATAL ERROR: File writing didn't work...exiting");
+							            System.exit(1);
+							        }
+								}
 							}
 						}
 					}
@@ -204,13 +211,15 @@ public class ParameterOptimizeNGON {
 		int kMa = Integer.valueOf(args[3]).intValue();//6;
 		int nMin = Integer.valueOf(args[4]).intValue();//6;
 		int nMax = Integer.valueOf(args[5]).intValue();//8;
+		int rMin = Integer.valueOf(args[6]).intValue();//6;
+		int rMax = Integer.valueOf(args[7]).intValue();//8;
 		
-		ParameterOptimizeNGON test = new ParameterOptimizeNGON(trainDB, testDB, bMin, bMax, kMi, kMa, nMin, nMax);
+		ParameterOptimizePRINT test = new ParameterOptimizePRINT(trainDB, testDB, bMin, bMax, kMi, kMa, nMin, nMax, rMin, rMax);
 		OptimizationResults optimumResults = test.optimize();
         try {								      
         	String currentBest = "All tests completed - Final Best Results:\n";
         	currentBest += optimumResults.displayTopNResults(10);
-            String fileName = "final_"+bMin+"_"+bMax+"_"+kMi+"_"+kMa+"_"+nMin+"_"+nMax+"_ngon_optimize.txt";
+            String fileName = "final_"+bMin+"_"+bMax+"_"+kMi+"_"+kMa+"_"+nMin+"_"+nMax+"_"+rMin+"_"+rMax+"_print_optimize.txt";
             File newTextFile = new File(fileName);
 
             FileWriter fw = new FileWriter(newTextFile);

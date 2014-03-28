@@ -11,11 +11,19 @@ import system.coordinator.testgenerators.Test;
 import system.hasher.Hasher;
 
 public class MultipleEnrollment extends Coordinator{
-
+	private Long totalEnrollHashCount;
+	private Long numEnrollTemplates;
+	private Long totalTestHashCount;
+	private Long numTestTemplates;
+	
 	//LATER Jesse - multiple enrollment all possible genuine tests
 	public MultipleEnrollment(Hasher hasher, Users users) {
 		super(hasher, users);
 		this.prequantize();
+		totalEnrollHashCount = 0L;
+		numEnrollTemplates = 0L;
+		totalTestHashCount = 0L;
+		numTestTemplates = 0L;
 	}
 	
 	
@@ -74,12 +82,19 @@ public class MultipleEnrollment extends Coordinator{
 			
 			//run tests
 			for(int j=0; j<numberOfUsers; j++){
+				//edit the global vars we actually care about
+				numEnrollTemplates++;
+				totalEnrollHashCount += enrolledTemplate.getHashes().size();
 				for(ArrayList<Template> testTemplates : this.users.users.get(j).prequantizedTestTemplates){
 					if(i==j){ //genuine test
 						scores.genuineScores.add(hasher.compareTemplates(enrolledTemplate, testTemplates));
 					}
 					else{ // impostor test
 						scores.imposterScores.add(hasher.compareTemplates(enrolledTemplate, testTemplates));
+					}
+					for (Template t : testTemplates){
+						numTestTemplates++;
+						totalTestHashCount += t.getHashes().size();
 					}
 				}
 			}//end tests for current user
@@ -89,7 +104,10 @@ public class MultipleEnrollment extends Coordinator{
 			System.out.println("");
 			
 		}// end all tests
-		
+		System.out.println("Total Enroll Samples: "+ numEnrollTemplates);
+		System.out.println("Average Number of Hashes per Enroll Sample: "+ totalEnrollHashCount.doubleValue()/numEnrollTemplates.doubleValue());
+		System.out.println("Total Test Samples: "+ numTestTemplates);
+		System.out.println("Average Number of Hashes per Test Sample: "+ totalTestHashCount.doubleValue()/numTestTemplates.doubleValue());
 			
 		return scores; 
 	}

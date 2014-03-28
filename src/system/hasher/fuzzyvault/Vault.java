@@ -79,14 +79,25 @@ public class Vault {
 	public boolean unlock(Template testTemplate) {
 		ArrayList<FuzzyVaultPoint> hashesInFuzzyVault = new ArrayList<FuzzyVaultPoint>();
 
+//		for (FuzzyVaultPoint point : vaultPoints) {
+//			for (BigInteger hash : testTemplate.getHashes()) {
+//				System.out.println("z:"+point.getZ());
+//				System.out.println("hash:"+hash);
+//
+//				if (point.getZ().equals(hash)) {
+//					System.out.println("z:"+point.getZ());
+//					hashesInFuzzyVault.add(point);
+//					break;
+//				}
+//			}
+//		}
 		for (FuzzyVaultPoint point : vaultPoints) {
-			for (BigInteger hash : testTemplate.getHashes()) {
-				if (point.getZ().equals(hash)) {
+			System.out.println("z:"+point.getZ());
+				if(testTemplate.getHashes().contains(point.getZ())) {
+					System.out.println("z:"+point.getZ());
 					hashesInFuzzyVault.add(point);
 				}
-			}
 		}
-
 		// loop through vault and extract points with matching z-value
 
 		RSDecoder decoder = new BerlekampWelchWrapper();

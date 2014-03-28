@@ -1,0 +1,158 @@
+All tests completed - Final Best Results:
+
+Not enough results... Displaying all 3 of them:
+========= Top EERs =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 10
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 79 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 11
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 85 sec
+
+===== RESULT #3 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 12
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 98 sec
+
+========= Top FRRs at ZeroFAR =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 10
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 79 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 11
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 85 sec
+
+===== RESULT #3 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 12
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 98 sec
+
+========= Top Average =========
+===== RESULT #1 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 10
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 79 sec
+
+===== RESULT #2 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 11
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 85 sec
+
+===== RESULT #3 =====
+
+Parameters:
+n: 5
+distance: 8
+sigma: 8
+phi: 8
+kClosestMinutia: 6
+rotationRegions: 12
+
+Results:
+EER: 0.2333387445887446
+FRR at ZeroFAR: 0.6432142857142857
+AverageEERandZeroFAR: 0.43827651515151517
+bin bits: 45.0
+run time: 98 sec
