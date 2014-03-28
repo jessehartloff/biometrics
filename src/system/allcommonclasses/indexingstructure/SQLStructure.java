@@ -19,15 +19,21 @@ public class SQLStructure extends IndexingStructure{
 	private static String tableToUse = "fingerprint";
 
 	private SQLFunctions sqlFunctions;
-	
+
 	//this needs to be some sort of sql table, only used internally
 	HashMap<BigInteger, ArrayList<IndexingPoint>> indexingStructure;
 	
-	public SQLStructure(){
-		this.sqlFunctions = new SQLFunctions();
+	public SQLStructure() throws ClassNotFoundException{
+		this.sqlFunctions = new SQLFunctions(null);
 		this.sqlFunctions.setDbURL(dbToUse);
+		this.sqlFunctions.connectToDatabase();
+		this.sqlFunctions.createTable("fingerprint", "BigInteger", "IndexingPoint");
+		IndexingPoint hey = new IndexingPoint();
+		hey.setUserID(23243L);
+		hey.setValue(BigInteger.TEN);
+		this.add(hey.getValue(), hey);
 		//again, we won't use a hashmap here, but a table
-		indexingStructure = new HashMap<BigInteger, ArrayList<IndexingPoint>>();
+//		indexingStructure = new HashMap<BigInteger, ArrayList<IndexingPoint>>();
 //		this.sqlFunctions.createTable(this.sqlFunctions.getDb(), "attributeOne", "attributeTwo");
 		System.exit(0);
 	}
@@ -36,7 +42,8 @@ public class SQLStructure extends IndexingStructure{
 	@Override
 	public void add(BigInteger bin, IndexingPoint pointToAdd) {
 		//  Auto-generated method stub
-		String insertStatement = "insert into";
+		//sqlFunctions.addToTable
+		this.sqlFunctions.executeMyQuery("insert into blah(\"Venu\",10000);");
 	}
 
 	@Override
@@ -49,5 +56,7 @@ public class SQLStructure extends IndexingStructure{
 		return null;
 	}
 
-
+	public SQLFunctions getSqlFunctions() {
+		return sqlFunctions;
+	}
 }

@@ -1,6 +1,10 @@
 package system.coordinator.multiserver;
 
+import java.util.ArrayList;
+
 import system.allcommonclasses.commonstructures.RawScores;
+import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.Coordinator;
 import system.hasher.Hasher;
@@ -13,17 +17,23 @@ public class SuperTestingMetaClient extends Coordinator {
 	}
 
 	
-	
-	
-	
 	@Override
 	public RawScores run() {
-		//instantiate a client Client client = new Client()
-		//for each user in users
-			//enroll the fingerprint //client.enroll(...)
-		//for each user in users
-			//test the fingerprint  // client.test(...)
-		return null;
+		RawScores scores = new RawScores();
+		Client client = new Client(hasher, users);
+		for(User user: this.users.users){
+			for(Template template: user.prequantizedEnrolledTemplates){
+				client.enroll(template);
+			}
+		}
+		for(User user:this.users.users){
+			for(ArrayList<Template> alTemplate: user.prequantizedTestTemplates){
+				for(Template template: alTemplate){
+					Double testResult = client.test(template);
+				}
+			}
+		}
+		return scores;
 	}
 
 }

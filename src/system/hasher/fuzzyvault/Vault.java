@@ -43,7 +43,6 @@ public class Vault {
 																// than once
 		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
 
-		// CRC on the end of polynomial
 		// add the genuine points to vaultPoints
 		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
@@ -99,20 +98,22 @@ public class Vault {
 		// for details
 
 		// BW
-		// CRC
-
+		
 		if(secret == null){
 			System.out.println("not enough points to try");
 			return false;
 		}
 		
+		// CRC
+		CRCPolynomial crcPoly = new CRCPolynomial();
+		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
+		return CRC.CheckCRC(secret.getPolynomialTerms(), crcPoly.toArrayList());
 		return true;
 	}
 
 	/**
 	 * assumes input is a locked vault which was locked according to the current
 	 * settings
-	 * 
 	 * @param lockedVault a template representing a locked vault
 	 * @return
 	 */

@@ -11,16 +11,16 @@ import java.util.TreeSet;
  * 
  * Supports standard arithmetic in the field, as well as reducibility tests.
  */
-public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynomial > {
+public class CRCPolynomial implements Arithmetic< CRCPolynomial >, Comparable< CRCPolynomial > {
 
 	/** number of elements in the finite field GF(2^k) */
 	public static final BigInteger Q = BigInteger.valueOf(2L);
 
 	/** the polynomial "x" */
-	public static final Polynomial X = Polynomial.createFromLong(2L);
+	public static final CRCPolynomial X = CRCPolynomial.createFromLong(2L);
 
 	/** the polynomial "1" */
-	public static final Polynomial ONE = Polynomial.createFromLong(1L);
+	public static final CRCPolynomial ONE = CRCPolynomial.createFromLong(1L);
 
 	/** a reverse comparator so that polynomials are printed out correctly */
 	private static final class ReverseComparator implements Comparator<BigInteger> {
@@ -33,16 +33,16 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * Constructs a polynomial using the bits from a long. Note that Java does
 	 * not support unsigned longs.
 	 */
-	public static Polynomial createFromLong(long l) {
+	public static CRCPolynomial createFromLong(long l) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (int i = 0; i < 64; i++) {
 			if (((l >> i) & 1) == 1)
 				dgrs.add(BigInteger.valueOf(i));
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
-	public static Polynomial createFromBytes(byte[] bytes) {
+	public static CRCPolynomial createFromBytes(byte[] bytes) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		int degree = 0;
 		for (int i = bytes.length - 1; i >= 0; i--) {
@@ -53,7 +53,7 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 				degree++;
 			}
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
@@ -63,20 +63,20 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * We set the final degree to ensure a monic polynomial of the correct
 	 * degree.
 	 */
-	public static Polynomial createFromBytes(byte[] bytes, int degree) {
+	public static CRCPolynomial createFromBytes(byte[] bytes, int degree) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (int i = 0; i < degree; i++) {
 			if (CRCPolynomials.getBit(bytes, i))
 				dgrs.add(BigInteger.valueOf(i));
 		}
 		dgrs.add(BigInteger.valueOf(degree));
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Constructs a random polynomial of degree "degree"
 	 */
-	public static Polynomial createRandom(int degree) {
+	public static CRCPolynomial createRandom(int degree) {
 		Random random = new Random();
 		byte[] bytes = new byte[(degree / 8) + 1];
 		random.nextBytes(bytes);
@@ -86,9 +86,9 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Finds a random irreducible polynomial of degree "degree"
 	 */
-	public static Polynomial createIrreducible(int degree) {
+	public static CRCPolynomial createIrreducible(int degree) {
 		while (true) {
-			Polynomial p = createRandom(degree);
+			CRCPolynomial p = createRandom(degree);
 			if (p.getReducibility() == Reducibility.IRREDUCIBLE)
 				return p;
 		}
@@ -118,14 +118,14 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Construct a new, empty polynomial
 	 */
-	public Polynomial() {
+	public CRCPolynomial() {
 		this.degrees = createDegreesCollection();
 	}
 
 	/**
 	 * Construct a new polynomial copy of the input argument
 	 */
-	public Polynomial(Polynomial p) {
+	public CRCPolynomial(CRCPolynomial p) {
 		this(p.degrees);
 	}
 
@@ -133,7 +133,7 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * Construct a new polynomial from a collection of degrees
 	 */
 	@SuppressWarnings("unchecked")
-	protected Polynomial(TreeSet<BigInteger> degrees) {
+	protected CRCPolynomial(TreeSet<BigInteger> degrees) {
 		this.degrees = (TreeSet<BigInteger>) degrees.clone();
 	}
 
@@ -171,21 +171,21 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Computes (this + that) in GF(2^k)
 	 */
-	public Polynomial add(Polynomial that) {
+	public CRCPolynomial add(CRCPolynomial that) {
 		return xor(that);
 	}
 
 	/**
 	 * Computes (this - that) in GF(2^k)
 	 */
-	public Polynomial subtract(Polynomial that) {
+	public CRCPolynomial subtract(CRCPolynomial that) {
 		return xor(that);
 	}
 
 	/**
 	 * Computes (this * that) in GF(2^k)
 	 */
-	public Polynomial multiply(Polynomial that) {
+	public CRCPolynomial multiply(CRCPolynomial that) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (BigInteger pa : this.degrees) {
 			for (BigInteger pb : that.degrees) {
@@ -197,49 +197,49 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 					dgrs.add(sum);
 			}
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Computes (this & that) in GF(2^k)
 	 */
-	public Polynomial and(Polynomial that) {
+	public CRCPolynomial and(CRCPolynomial that) {
 		TreeSet<BigInteger> dgrs = this.createDegreesCollectionCopy();
 		dgrs.retainAll(that.degrees);
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Computes (this | that) in GF(2^k)
 	 */
-	public Polynomial or(Polynomial that) {
+	public CRCPolynomial or(CRCPolynomial that) {
 		TreeSet<BigInteger> dgrs = this.createDegreesCollectionCopy();
 		dgrs.addAll(that.degrees);
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Computes (this ^ that) in GF(2^k)
 	 */
-	public Polynomial xor(Polynomial that) {
+	public CRCPolynomial xor(CRCPolynomial that) {
 		TreeSet<BigInteger> dgrs0 = this.createDegreesCollectionCopy();
 		dgrs0.removeAll(that.degrees);
 		TreeSet<BigInteger> dgrs1 = that.createDegreesCollectionCopy();
 		dgrs1.removeAll(this.degrees);
 		dgrs1.addAll(dgrs0);
-		return new Polynomial(dgrs1);
+		return new CRCPolynomial(dgrs1);
 	}
 
 	/**
 	 * Computes (this mod that) in GF(2^k) using synthetic division
 	 */
-	public Polynomial mod(Polynomial that) {
+	public CRCPolynomial mod(CRCPolynomial that) {
 		BigInteger da = this.degree();
 		BigInteger db = that.degree();
-		Polynomial register = new Polynomial(this.degrees);
+		CRCPolynomial register = new CRCPolynomial(this.degrees);
 		for (BigInteger i = da.subtract(db); i.compareTo(BigInteger.ZERO) >= 0; i = i.subtract(BigInteger.ONE)) {
 			if (register.hasDegree(i.add(db))) {
-				Polynomial shifted = that.shiftLeft(i);
+				CRCPolynomial shifted = that.shiftLeft(i);
 				register = register.xor(shifted);
 			}
 		}
@@ -249,19 +249,19 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Computes (this << shift) in GF(2^k)
 	 */
-	public Polynomial shiftLeft(BigInteger shift) {
+	public CRCPolynomial shiftLeft(BigInteger shift) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (BigInteger degree : degrees) {
 			BigInteger shifted = degree.add(shift);
 			dgrs.add(shifted);
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Computes (this >> shift) in GF(2^k)
 	 */
-	public Polynomial shiftRight(BigInteger shift) {
+	public CRCPolynomial shiftRight(BigInteger shift) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		for (BigInteger degree : degrees) {
 			BigInteger shifted = degree.subtract(shift);
@@ -269,7 +269,7 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 				continue;
 			dgrs.add(shifted);
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
@@ -282,27 +282,27 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Sets the coefficient of the term with degree k to 1
 	 */
-	public Polynomial setDegree(BigInteger k) {
+	public CRCPolynomial setDegree(BigInteger k) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		dgrs.addAll(this.degrees);
 		dgrs.add(k);
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Sets the coefficient of the term with degree k to 0
 	 */
-	public Polynomial clearDegree(BigInteger k) {
+	public CRCPolynomial clearDegree(BigInteger k) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		dgrs.addAll(this.degrees);
 		dgrs.remove(k);
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
 	 * Toggles the coefficient of the term with degree k
 	 */
-	public Polynomial toggleDegree(BigInteger k) {
+	public CRCPolynomial toggleDegree(BigInteger k) {
 		TreeSet<BigInteger> dgrs = createDegreesCollection();
 		dgrs.addAll(this.degrees);
 		if (dgrs.contains(k)) {
@@ -310,7 +310,7 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 		} else {
 			dgrs.add(k);
 		}
-		return new Polynomial(dgrs);
+		return new CRCPolynomial(dgrs);
 	}
 
 	/**
@@ -320,9 +320,9 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * 
 	 * http://en.wikipedia.org/wiki/Modular_exponentiation
 	 */
-	public Polynomial modPow(BigInteger e, Polynomial m) {
-		Polynomial result = Polynomial.ONE;
-		Polynomial b = new Polynomial(this);
+	public CRCPolynomial modPow(BigInteger e, CRCPolynomial m) {
+		CRCPolynomial result = CRCPolynomial.ONE;
+		CRCPolynomial b = new CRCPolynomial(this);
 		while (e.bitCount() != 0) {
 			if (e.testBit(0)) {
 				result = result.multiply(b).mod(m);
@@ -339,10 +339,10 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * 
 	 * http://en.wikipedia.org/wiki/Euclids_algorithm
 	 */
-	public Polynomial gcd(Polynomial that) {
-		Polynomial a = new Polynomial(this);
+	public CRCPolynomial gcd(CRCPolynomial that) {
+		CRCPolynomial a = new CRCPolynomial(this);
 		while (!that.isEmpty()) {
-			Polynomial t = new Polynomial(that);
+			CRCPolynomial t = new CRCPolynomial(that);
 			that = a.mod(that);
 			a = t;
 		}
@@ -460,9 +460,9 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 */
 	public Reducibility getReducibility() {
 		// test trivial cases
-		if (this.compareTo(Polynomial.ONE) == 0)
+		if (this.compareTo(CRCPolynomial.ONE) == 0)
 			return Reducibility.REDUCIBLE;
-		if (this.compareTo(Polynomial.X) == 0)
+		if (this.compareTo(CRCPolynomial.X) == 0)
 			return Reducibility.REDUCIBLE;
 
 		// do full-on reducibility test
@@ -480,9 +480,9 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	protected Reducibility getReducibilityBenOr() {
 		final long degree = this.degree().longValue();
 		for (int i = 1; i <= (int) (degree / 2); i++) {
-			Polynomial b = reduceExponent(i);
-			Polynomial g = this.gcd(b);
-			if (g.compareTo(Polynomial.ONE) != 0)
+			CRCPolynomial b = reduceExponent(i);
+			CRCPolynomial g = this.gcd(b);
+			if (g.compareTo(CRCPolynomial.ONE) != 0)
 				return Reducibility.REDUCIBLE;
 		}
 
@@ -499,13 +499,13 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 		int degree = (int) degree().longValue();
 		for (int i = 0; i < factors.length; i++) {
 			int n_i = factors[i];
-			Polynomial b = reduceExponent(n_i);
-			Polynomial g = this.gcd(b);
-			if (g.compareTo(Polynomial.ONE) != 0)
+			CRCPolynomial b = reduceExponent(n_i);
+			CRCPolynomial g = this.gcd(b);
+			if (g.compareTo(CRCPolynomial.ONE) != 0)
 				return Reducibility.REDUCIBLE;
 		}
 
-		Polynomial g = reduceExponent(degree);
+		CRCPolynomial g = reduceExponent(degree);
 		if (!g.isEmpty())
 			return Reducibility.REDUCIBLE;
 
@@ -517,10 +517,10 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	 * 
 	 * This function is useful for computing the reducibility of the polynomial
 	 */
-	private Polynomial reduceExponent(final int p) {
+	private CRCPolynomial reduceExponent(final int p) {
 		// compute (x^q^p mod f)
 		BigInteger q_to_p = Q.pow(p);
-		Polynomial x_to_q_to_p = X.modPow(q_to_p, this);
+		CRCPolynomial x_to_q_to_p = X.modPow(q_to_p, this);
 
 		// subtract (x mod f)
 		return x_to_q_to_p.xor(X).mod(this);
@@ -529,11 +529,11 @@ public class Polynomial implements Arithmetic< Polynomial >, Comparable< Polynom
 	/**
 	 * Compares this polynomial to the other
 	 */
-	public int compareTo(Polynomial o) {
+	public int compareTo(CRCPolynomial o) {
 		int cmp = degree().compareTo(o.degree());
 		if (cmp != 0) return cmp;
 		// get first degree difference
-		Polynomial x = this.xor(o);
+		CRCPolynomial x = this.xor(o);
 		if (x.isEmpty()) return 0;
 		return this.hasDegree(x.degree()) ? 1 : -1;
 	}

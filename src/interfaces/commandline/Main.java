@@ -14,22 +14,27 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.hasher.fuzzyvault.CRC;
+import java.lang.*;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
-import system.hasher.fuzzyvault.Polynomial;
+import system.hasher.fuzzyvault.CRCPolynomial;
 
 public class Main {
-	public static void main(String[] args) {
-		int fieldSize = 25;
-		Polynomial crcPoly = new Polynomial();
-		crcPoly = crcPoly.createIrreducible(fieldSize);
+	public static void main(String[] args) throws Exception {
+		
+		SQLStructure blah = new SQLStructure();
+//		blah.getSqlFunctions().connectToDatabase();
+		System.exit(0);
+		int fieldSize = 13;
+		CRCPolynomial crcPoly = new CRCPolynomial();
+		crcPoly = CRCPolynomial.createIrreducible(fieldSize);
 		System.out.println(crcPoly.toPolynomialString());
 		System.out.println(crcPoly.toDecimalString());
 		System.out.println(crcPoly.toBinaryString());
-		System.out.println(crcPoly.toArrayList().toString());
-		Polynomial myPoly = new Polynomial();
+		CRCPolynomial myPoly = new CRCPolynomial();
 		myPoly = myPoly.createIrreducible(fieldSize);
 		System.out.println(myPoly.toPolynomialString());
 		System.out.println(myPoly.toDecimalString());
@@ -38,8 +43,8 @@ public class Main {
 		System.out.println(CRC.CheckCRC(crcPoly.toArrayList(),myPoly.toArrayList()));
 		HashMap<Integer,ArrayList<BigInteger>> myMap = new HashMap<Integer,ArrayList<BigInteger>>();
 		for(int i = 1; i < 50; i++){
-			new Polynomial();
-			Polynomial ref = Polynomial.createIrreducible(i);
+			new CRCPolynomial();
+			CRCPolynomial ref = CRCPolynomial.createIrreducible(i);
 			System.out.print(i);System.out.println(ref.toArrayList().toString());
 			myMap.put(i, ref.toArrayList());
 		}

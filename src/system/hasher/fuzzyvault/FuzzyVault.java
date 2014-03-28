@@ -11,7 +11,6 @@ import system.hasher.Hasher;
 
 /**
  * Implements fuzzy vault.
- *
  */
 public class FuzzyVault extends Hasher{
 	

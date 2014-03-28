@@ -6,7 +6,7 @@ public class CRCPolynomials {
 		 */
 		public static void printIrreducibles(final int degree) {
 			for (int i = 0; i < 10; i++) {
-				Polynomial p = Polynomial.createIrreducible(degree);
+				CRCPolynomial p = CRCPolynomial.createIrreducible(degree);
 				System.out.println(p.toPolynomialString());
 			}
 		}
@@ -16,7 +16,7 @@ public class CRCPolynomials {
 		 * representation in ascii and hex.
 		 */
 		public static void printLargeIrreducible() {
-			Polynomial p = Polynomial.createIrreducible(127);
+			CRCPolynomial p = CRCPolynomial.createIrreducible(127);
 			System.out.println(p.toPolynomialString());
 			System.out.println(p.toHexString());
 		}

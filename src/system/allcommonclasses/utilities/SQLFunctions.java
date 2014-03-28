@@ -11,26 +11,27 @@ public class SQLFunctions {
 	private Statement stmt;
 	private Connection dbCon;
 	private ResultSet rs;
-	private String dbURL = "jdbc:mysql://localhost:3306/";//change '/fec' to '/biometrics'
+	private String dbURL = "jdbc:mysql://localhost:3306;DatabaseName=";//change to '/biometrics'
 	private String username ="root";
     private String password = "biometrics";
     
-	public SQLFunctions(){
+	public SQLFunctions(String databaseName){
         dbCon = null;
         stmt = null;
         rs = null;
 	}
 	
-	public void connectToDatabase(){
+	public void connectToDatabase() throws ClassNotFoundException{
 		try {
+			Class.forName("Connector/J");
             dbCon = DriverManager.getConnection(dbURL, username, password);	     
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void createTable(String tableName, String attributeOne, String attributeTwo){
-		String createTableStatement = "create table "+tableName+"("+attributeOne+" string ,"+attributeTwo+" string);";
+	public void createTable(String tableName, Object attributeOne, Object attributeTwo){
+		String createTableStatement = "create table "+tableName+"("+attributeOne+' '+' '+attributeTwo+' '+attributeOne.getClass().toString()+";";
 		try {
 			this.stmt = this.dbCon.prepareStatement(createTableStatement);
 			this.rs = this.stmt.executeQuery(createTableStatement);
@@ -38,6 +39,7 @@ public class SQLFunctions {
 			e.printStackTrace();
 		}
 	}
+	//add to table
 	
 	public void dropTable(String tableName){
 		String createTableStatement = "drop table "+tableName+";";
