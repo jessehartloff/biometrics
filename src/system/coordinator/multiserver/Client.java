@@ -41,10 +41,6 @@ public class Client extends Server {
 
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
-	}
-	
-	@Override
-	public RawScores run() {
 		try {
 			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 			Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
@@ -55,7 +51,23 @@ public class Client extends Server {
 			InputStreamReader S1reader = new InputStreamReader(S1In); 
 			
 
-		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
+		  
+			
+	        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+	        ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
+
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	
+	public KeyPair getKeyPair(){
+		  KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
 		    EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
 		        "fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
@@ -68,62 +80,39 @@ public class Client extends Server {
 
 		    keyGen.initialize(ecSpec, new SecureRandom());
 
-		    KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
-		    KeyPair aPair = keyGen.generateKeyPair();
-		    KeyAgreement bKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
-		    KeyPair bPair = keyGen.generateKeyPair();
+		    KeyPair keyPair = keyGen.generateKeyPair();
 
-		    aKeyAgree.init(aPair.getPrivate());
-		    bKeyAgree.init(bPair.getPrivate());
-
-		    aKeyAgree.doPhase(bPair.getPublic(), true);
-		    bKeyAgree.doPhase(aPair.getPublic(), true);
-
-		    MessageDigest hash = MessageDigest.getInstance("SHA1", "BC");
-
-		    System.out.println(new String(hash.digest(aKeyAgree.generateSecret())));
-		    System.out.println(new String(hash.digest(bKeyAgree.generateSecret())));
-			
-			
-			
-			
-			KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("DH");
-			keyGenerator.initialize(1024);
-			Cipher cipher = Cipher.getInstance("DH");
-			
-	        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-	        ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
-
-			
-			for (User user : this.users.users) {
-				KeyPair dhKeys = keyGenerator.generateKeyPair();
-				PublicKey publicKey = dhKeys.getPublic();
-				//String publicKeyString = publicKey.toString();
-				PrivateKey privateKey = dhKeys.getPrivate();
-				cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-				S2Out.write(privateKey.getEncoded());
-
-
-				ArrayList<Template> encryptedFingerprint = new ArrayList<Template>();
-				for (Biometric b : user.readings) {
-					Template encryptedBiometric = new Template();
-					for (BigInteger bigInt : b.quantizeOne().getHashes()) {
-						encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
-					}
-					encryptedFingerprint.add(encryptedBiometric);
-				}
-				
-				objStream.writeObject(encryptedFingerprint);
-				S2Out.write(byteStream.toByteArray());
-				S1Out.write(privateKey.getEncoded());
-				Double score = Double.valueOf(S1reader.read());
-				System.out.println("scores yaaaaay:"+score);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+			return keyPair;
+	}
+	
+	
+	@Override
+	public RawScores run() {
+//		for (User user : this.users.users) {
+//			KeyPair dhKeys = keyGenerator.generateKeyPair();
+//			PublicKey publicKey = dhKeys.getPublic();
+//			//String publicKeyString = publicKey.toString();
+//			PrivateKey privateKey = dhKeys.getPrivate();
+//			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+//			S2Out.write(privateKey.getEncoded());
+//
+//
+//			ArrayList<Template> encryptedFingerprint = new ArrayList<Template>();
+//			for (Biometric b : user.readings) {
+//				Template encryptedBiometric = new Template();
+//				for (BigInteger bigInt : b.quantizeOne().getHashes()) {
+//					encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
+//				}
+//				encryptedFingerprint.add(encryptedBiometric);
+//			}
+//			
+//			objStream.writeObject(encryptedFingerprint);
+//			S2Out.write(byteStream.toByteArray());
+//			S1Out.write(privateKey.getEncoded());
+//			Double score = Double.valueOf(S1reader.read());
+//			System.out.println("scores yaaaaay:"+score);
+//		}
+	
 	}
 
 	public void enroll(Template template) {
