@@ -90,8 +90,7 @@ public class ShortcutFuzzyVault extends Hasher {
 	}
 
 	@Override
-	public void addToIndexingStructure(Biometric enrollBiometric,
-			Long enrollID, IndexingStructure indexingStructure) {
+	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
 
 		Template template = this.makeEnrollTemplate(enrollBiometric);
 		for (BigInteger bigInt : template.getHashes()) {
@@ -104,8 +103,7 @@ public class ShortcutFuzzyVault extends Hasher {
 	}
 
 	@Override
-	public Long findIndexingRank(Biometric testBiometric, Long testID,
-			IndexingStructure indexingStructure, Long numberEnrolled) {
+	public Long findIndexingRank(Biometric testBiometric, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
 
 		Template template = testBiometric.quantizeOne();
 		for (BigInteger bigInt : template.getHashes()) {
@@ -117,13 +115,12 @@ public class ShortcutFuzzyVault extends Hasher {
 		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
 
 		for (BigInteger bigInt : template.getHashes()) {
-			ArrayList<IndexingPoint> binPoints = indexingStructure
-					.getBinContents(bigInt);
+			ArrayList<IndexingPoint> binPoints = indexingStructure.getBinContents(bigInt);
 			if (binPoints != null) {
 				indexingPoints.addAll(binPoints);
 			}
 		}
-
+// FIXME !!! make sure this indexing makes sense
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();
 
 		for (IndexingPoint indexingPoint : indexingPoints) {

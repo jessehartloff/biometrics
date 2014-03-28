@@ -115,6 +115,7 @@ public class Vault {
 		}
 		
 		// CRC
+
 //		CRCPolynomial crcPoly = new CRCPolynomial();
 //		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
 		System.out.println("Checking if CRC's return 0");

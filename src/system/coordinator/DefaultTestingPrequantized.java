@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
 
+import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
@@ -26,9 +27,8 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 	
 	public void quantizeUserSet(ArrayList<User> users, boolean print){	
+
 		SHA2 sha = new SHA2();
-		int keySize = 80;
-		
 		Long total = 0L;
 		Long completed = 0L;
 		Long totalNumHashes;
@@ -39,6 +39,7 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 		}
 		for(User user : users){
 			
+			int keySize = DefaultTestingPrequantizedSettings.getInstance().keySize().getValue().intValue();
 			BigInteger userKey = new BigInteger(keySize, new Random());
 			
 			int numberOfReadings = user.readings.size();
@@ -46,24 +47,28 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 				Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
 				ArrayList<Template> test = hasher.makeTestTemplates(user.readings.get(i));
 				
-				//keyed system
-				Template enrollKeyed = new Template();
-				ArrayList<Template> testKeyed = new ArrayList<Template>();
-				for(BigInteger templatePoint : enroll.getHashes()){
-					enrollKeyed.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
-				}
-				for(Template currentTemplate : test){
-					Template t = new Template();
-					for(BigInteger templatePoint : currentTemplate.getHashes()){
-						t.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
+				if(keySize != 0){
+					//keyed system
+					Template enrollKeyed = new Template();
+					ArrayList<Template> testKeyed = new ArrayList<Template>();
+					for(BigInteger templatePoint : enroll.getHashes()){
+						enrollKeyed.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
 					}
-					testKeyed.add(t);
+					for(Template currentTemplate : test){
+						Template t = new Template();
+						for(BigInteger templatePoint : currentTemplate.getHashes()){
+							t.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
+						}
+						testKeyed.add(t);
+					}
+					user.prequantizedEnrolledTemplates.add(enrollKeyed);
+					user.prequantizedTestTemplates.add(testKeyed);
+				}else{
+					//non-keyed system
+					user.prequantizedEnrolledTemplates.add(enroll);
+					user.prequantizedTestTemplates.add(test);
 				}
-
-				user.prequantizedEnrolledTemplates.add(enrollKeyed);
-				user.prequantizedTestTemplates.add(testKeyed);
-//				user.prequantizedEnrolledTemplates.add(enroll);
-//				user.prequantizedTestTemplates.add(test);
+			
 				
 				completed++;
 				progress = (completed.doubleValue()/total.doubleValue())*100.0;

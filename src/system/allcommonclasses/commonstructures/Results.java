@@ -1,9 +1,6 @@
 package system.allcommonclasses.commonstructures;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import system.biometricsystem.RatesPoint;
 import system.biometricsystem.ZeroFAR;
@@ -22,7 +19,8 @@ public class Results {
 	private ArrayList<RatesPoint> rates;
 	private Histogram fieldHistogram;
 	private ArrayList<Histogram> variableHistograms;
-	private ArrayList<Long> indexingResults;
+	private ArrayList<Double> hitRates;
+	private Double penetrationCoefficient;
 	private Double minEntropy;
 	private Double failureToCapture;
 	private Double totalLogOfBins;
@@ -33,6 +31,14 @@ public class Results {
 
 	private RawScores rawScores;
 	
+	
+	public Double getPenetrationCoefficient() {
+		return penetrationCoefficient;
+	}
+	public void setPenetrationCoefficient(Double penetrationCoefficient) {
+		this.penetrationCoefficient = penetrationCoefficient;
+	}
+
 	public ArrayList<RatesPoint> getRates() {
 		return rates;
 	}
@@ -81,12 +87,12 @@ public class Results {
 		this.variableHistograms = variableHistograms;
 	}
 
-	public ArrayList<Long> getIndexingResults() {
-		return indexingResults;
+	public ArrayList<Double> getHitRates() {
+		return hitRates;
 	}
 
-	public void setIndexingResults(ArrayList<Long> indexingResults) {
-		this.indexingResults = indexingResults;
+	public void setHitRates(ArrayList<Double> hitRates) {
+		this.hitRates = hitRates;
 	}
 	
 	public Double getMinEntropy() {
@@ -151,7 +157,9 @@ public class Results {
 				"ZeroFAR: " + this.getZeroFAR() + "\n" +
 				"rates: " + this.getRates() + "\n" +
 				"min entropy: " + this.getMinEntropy() + "\n" + 
-				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n";
+				"bits (sum of the logs of bins): " + this.getTotalLogOfBins() + "\n" + 
+				"hit rates: " + this.hitRates + "\n" + 
+				"penetration coefficient: " + this.penetrationCoefficient;
 		return toReturn;
 	}
 	public String toFitnessString() {
@@ -188,7 +196,7 @@ public class Results {
 //				"min entropy: " + this.getMinEntropy() + "\n" + 
 				"bin bits: " + this.getTotalLogOfBins() + "\n"+
 				"run time: " +this.runTime+" sec\n";
-				
+		
 		return toReturn;
 	}
 	
@@ -218,3 +226,4 @@ public class Results {
 	}
 
 }
+

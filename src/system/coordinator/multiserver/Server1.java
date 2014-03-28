@@ -116,7 +116,7 @@ public class Server1 extends Server {
 				}
 				decryptedFingerprint.add(decryptedTemplate);
 			}
-			this.hasher.hashEnrollTemplate(template);
+//			this.hasher.hashEnrollTemplate(template); // TODO I commented this out
 
 			
 			

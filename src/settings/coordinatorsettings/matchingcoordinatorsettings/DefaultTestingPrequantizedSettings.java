@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
+import settings.settingsvariables.SettingsLong;
 
 public class DefaultTestingPrequantizedSettings extends CoordinatorSettings{
 
@@ -19,8 +20,12 @@ public class DefaultTestingPrequantizedSettings extends CoordinatorSettings{
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
+		this.settingsVariables.put("KeySize", new SettingsLong(0));
 	}
 
+	public SettingsLong keySize(){
+		return (SettingsLong) this.settingsVariables.get("KeySize");
+	}
 	
 	//Singleton
 	private static DefaultTestingPrequantizedSettings instance;

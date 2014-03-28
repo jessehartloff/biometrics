@@ -23,7 +23,8 @@ public class EvaluatePerformance {
 		results.setVariableHistograms(EvaluatePerformance.computeVariableHistograms(rawScores));
 		results.setChiSquare(EvaluatePerformance.computeChiSquare(results));
 		results.setChiSquareValues(EvaluatePerformance.computeChiSquareValues(results));
-		results.setIndexingResults(EvaluatePerformance.computeIndexingResults(rawScores));
+		results.setHitRates(EvaluatePerformance.computeIndexingResults(rawScores));
+		results.setPenetrationCoefficient(EvaluatePerformance.computePenetrationCoefficient(results.getHitRates()));
 
 		results.setMinEntropy(results.getFieldHistogram().getMinEntropy());
 		results.setZeroFAR(EvaluatePerformance.computeZeroFAR(results));
@@ -38,6 +39,14 @@ public class EvaluatePerformance {
 		return results;
 	}
 	
+	private static Double computePenetrationCoefficient(ArrayList<Double> hitRates) {
+		Double sum = 0.0;
+		for(Double d : hitRates){
+			sum += d;
+		}
+		return sum/new Double(hitRates.size());
+	}
+
 	/**  VARIABLE HISTO CHI SQUARED
 	 * Calculate chi squared such that we are uniform in sample set
 	 * This particular method assumes an uniform reference distribution
@@ -101,9 +110,26 @@ public class EvaluatePerformance {
 	}
 
 
-	private static ArrayList<Long> computeIndexingResults(RawScores rawScores) {
-		// TODO Jesse - compute indexing results
-		return null;
+	private static ArrayList<Double> computeIndexingResults(RawScores rawScores) {
+		ArrayList<Double> hitRates = new ArrayList<Double>();
+		ArrayList<Long> rankings = rawScores.indexRankings;
+		Collections.sort(rankings);
+//		Long min = rankings.get(0);
+		Integer totalRankings = rankings.size();
+		if(totalRankings.equals(0)){
+			return hitRates;
+		}
+		Long max = rankings.get(totalRankings-1);
+		
+		Integer currentIndex = 0;
+		for(int i=0; i<=max.intValue(); i++){
+			while(currentIndex < totalRankings && rankings.get(currentIndex) <= i){
+				currentIndex++;
+			}
+			hitRates.add(currentIndex.doubleValue()/totalRankings.doubleValue());
+		}
+		
+		return hitRates;
 	}
 
 	private static ArrayList<Histogram> computeVariableHistograms(RawScores rawScores) {
