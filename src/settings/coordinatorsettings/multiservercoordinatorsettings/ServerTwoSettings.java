@@ -10,6 +10,7 @@ import settings.coordinatorsettings.CoordinatorSettings;
 import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.settingsvariables.SettingsLong;
+import settings.settingsvariables.SettingsString;
 
 public class ServerTwoSettings extends CoordinatorSettings{
 
@@ -20,13 +21,18 @@ public class ServerTwoSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+		this.settingsVariables.put("Port Number", new SettingsLong(8002));
+		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+
 	}
 
 	public SettingsLong portNumber(){
 		return (SettingsLong) this.settingsVariables.get("Port Number");
 	}
 
+	public SettingsString ip(){
+		return (SettingsString) this.settingsVariables.get("IP Address");
+	}
 	
 	//Singleton
 	private static ServerTwoSettings instance;

@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
 import settings.settingsvariables.SettingsLong;
+import settings.settingsvariables.SettingsString;
 
 public class ClientSettings extends CoordinatorSettings{
 
@@ -18,11 +19,17 @@ public class ClientSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+		this.settingsVariables.put("Port Number", new SettingsLong(8000));
+		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+
 	}
 
 	public SettingsLong portNumber(){
 		return (SettingsLong) this.settingsVariables.get("Port Number");
+	}
+	
+	public SettingsString ip(){
+		return (SettingsString) this.settingsVariables.get("IP Address");
 	}
 	
 	//Singleton
