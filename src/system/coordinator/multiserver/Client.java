@@ -117,7 +117,16 @@ public class Client extends Server {
 	
 	}
 
-	public void enroll(Template template) {
+	public void enroll(Template template, Long userID) {
+		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
+		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
+		
+		KeyPair pair = this.getKeyPair();
+		PublicKey publicKey = pair.getPublic();
+		PrivateKey privateKey = pair.getPrivate();
+
+		toS1.setContents(privateKey);
+		
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification
@@ -126,7 +135,7 @@ public class Client extends Server {
 		// wait for server 1's response
 	}
 
-	public Double test(Template template) {
+	public Double test(Template template,  Long userID) {
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification
