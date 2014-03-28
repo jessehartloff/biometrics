@@ -1,10 +1,13 @@
 package system.coordinator;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Random;
 
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
+import system.allcommonclasses.transformations.SHA2;
 import system.coordinator.testgenerators.Test;
 import system.coordinator.testgenerators.TestGenerator;
 import system.hasher.Hasher;
@@ -23,6 +26,9 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 	
 	public void quantizeUserSet(ArrayList<User> users, boolean print){	
+		SHA2 sha = new SHA2();
+		int keySize = 80;
+		
 		Long total = 0L;
 		Long completed = 0L;
 		Long totalNumHashes;
@@ -32,12 +38,33 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 			total += user.readings.size();
 		}
 		for(User user : users){
+			
+			BigInteger userKey = new BigInteger(keySize, new Random());
+			
 			int numberOfReadings = user.readings.size();
 			for(int i=0; i<numberOfReadings; i++){
 				Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
-				ArrayList< Template > test = hasher.makeTestTemplates(user.readings.get(i));
-				user.prequantizedEnrolledTemplates.add(enroll);
-				user.prequantizedTestTemplates.add(test);
+				ArrayList<Template> test = hasher.makeTestTemplates(user.readings.get(i));
+				
+				//keyed system
+				Template enrollKeyed = new Template();
+				ArrayList<Template> testKeyed = new ArrayList<Template>();
+				for(BigInteger templatePoint : enroll.getHashes()){
+					enrollKeyed.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
+				}
+				for(Template currentTemplate : test){
+					Template t = new Template();
+					for(BigInteger templatePoint : currentTemplate.getHashes()){
+						t.getHashes().add(sha.transform(templatePoint.shiftLeft(keySize).add(userKey)));
+					}
+					testKeyed.add(t);
+				}
+
+				user.prequantizedEnrolledTemplates.add(enrollKeyed);
+				user.prequantizedTestTemplates.add(testKeyed);
+//				user.prequantizedEnrolledTemplates.add(enroll);
+//				user.prequantizedTestTemplates.add(test);
+				
 				completed++;
 				progress = (completed.doubleValue()/total.doubleValue())*100.0;
 
