@@ -1,53 +1,45 @@
 package system.coordinator.multiserver;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Security;
 import java.security.spec.ECFieldFp;
-import java.security.spec.EllipticCurve;
-import java.util.ArrayList;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyAgreement;
-import java.security.spec.ECFieldFp;
 import java.security.spec.ECParameterSpec;
 import java.security.spec.ECPoint;
 import java.security.spec.EllipticCurve;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.modalities.Biometric;
 import system.hasher.Hasher;
 
 public class Client extends Server {
 	// extends server
-	private OutputStream S1Out;
-	private OutputStream S2Out;
+	private ObjectOutputStream S1Out;
+	private ObjectOutputStream S2Out;
 	private InputStreamReader S1Reader;
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
 			Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
 			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
-			S1Out = S1.getOutputStream();
-			S2Out = S2.getOutputStream();
+			S1Out = new ObjectOutputStream (S1.getOutputStream());
+			S2Out = new ObjectOutputStream (S2.getOutputStream());
 			InputStream S1In = S1.getInputStream();
 			S1Reader = new InputStreamReader(S1In); 
 		} catch (Exception e) {
@@ -120,19 +112,44 @@ public class Client extends Server {
 	public void enroll(Template template, Long userID) {
 		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
-		
+		// 1.) generate key pair
 		KeyPair pair = this.getKeyPair();
 		PublicKey publicKey = pair.getPublic();
 		PrivateKey privateKey = pair.getPrivate();
-
-		toS1.setContents(privateKey);
 		
-		// 1.) generate key pair
-		// 2.) encrypt Template with public key e(u) [public key] from 1.)
-		// 2a.) generate UUID for verification
-		// 3.) send d(u) [private key] to Server_1
+		// 2.) send d(u) [private key] to Server_1
+		toS1.setContents(privateKey.getEncoded());
+		toS1.setEnrolling(true);
+		toS1.setTesting(false);
+		toS1.setUserID(userID);
+		
+		try{
+		   Cipher cipher = Cipher.getInstance("ECDH", "BC");
+
+		   cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
+		// 3.) encrypt Template with public key e(u) [public key] from 1.)
+
+		Template encryptedBiometric = new Template();
+		for (BigInteger bigInt : template.getHashes()) {
+			encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
+		}
 		// 4.) sent e(Template) to Server_2
-		// wait for server 1's response
+		toS2.setContents(encryptedBiometric);
+
+		}catch(Exception e){}
+		
+		toS2.setEnrolling(true);
+		toS2.setTesting(false);
+		// 2a.) generate UUID for verification
+		toS2.setUserID(userID);
+		
+		try{	
+			S1Out.writeObject(toS1);
+			S2Out.writeObject(toS2);
+			
+		} catch (Exception e){}
+
+		//5.) wait for server 1's response
 	}
 
 	public Double test(Template template,  Long userID) {
@@ -147,23 +164,11 @@ public class Client extends Server {
 
 	@Override
 	public Object receive(Object object) {
-		try {
-			Socket socket = new Socket("kq6py", 4321);
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void send(Object object) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
