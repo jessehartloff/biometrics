@@ -107,7 +107,7 @@ public class Vault {
 		// CRC
 		CRCPolynomial crcPoly = new CRCPolynomial();
 		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
-		return CRC.CheckCRC(secret.getPolynomialTerms(), crcPoly.toArrayList());
+//		return CRC.CheckCRC(secret.getPolynomialTerms(), crcPoly.toArrayList());
 		return true;
 	}
 

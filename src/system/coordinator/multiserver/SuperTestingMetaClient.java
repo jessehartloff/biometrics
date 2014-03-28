@@ -15,7 +15,6 @@ public class SuperTestingMetaClient extends Coordinator {
 	public SuperTestingMetaClient(Hasher hasher, Users users) {
 		super(hasher, users);
 	}
-
 	
 	@Override
 	public RawScores run() {
@@ -23,13 +22,13 @@ public class SuperTestingMetaClient extends Coordinator {
 		Client client = new Client(hasher, users);
 		for(User user: this.users.users){
 			for(Template template: user.prequantizedEnrolledTemplates){
-				client.enroll(template);
+				client.enroll(template,user.id);
 			}
 		}
 		for(User user:this.users.users){
 			for(ArrayList<Template> alTemplate: user.prequantizedTestTemplates){
 				for(Template template: alTemplate){
-					Double testResult = client.test(template);
+					Double testResult = client.test(template,user.id);
 				}
 			}
 		}
