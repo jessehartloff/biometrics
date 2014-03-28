@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
+import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
@@ -30,13 +32,13 @@ public class Client extends Server {
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 	}
-
+	
 	@Override
 	public RawScores run() {
 		int S1Port = 8001, S2Port = 8002;
 		try {
-			Socket S1 = new Socket("localhost", S1Port);
-			Socket S2 = new Socket("localhost", S2Port);
+			Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
 			OutputStream S1Out = S1.getOutputStream();
 			OutputStream S2Out = S2.getOutputStream();
 			InputStream S1In = S1.getInputStream();

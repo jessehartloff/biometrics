@@ -19,7 +19,14 @@ import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
 public class Server1 extends Server {
-
+	
+	public static void main(String[] args){
+		
+		
+		
+	}
+	
+	
 	// FIXME EVERYONE EVER
 	Server1(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
