@@ -21,15 +21,14 @@ public class SuperTestingMetaClient extends Coordinator {
 		RawScores scores = new RawScores();
 		Client client = new Client(hasher, users);
 		for(User user: this.users.users){
-			for(Template template: user.prequantizedEnrolledTemplates){
-				client.enroll(template,user.id);
+			for(int i = 0; i < user.readings.size(); i++){
+				client.enroll(hasher.makeEnrollTemplate(user.readings.get(i)),user.id);
 			}
 		}
-		for(User user:this.users.users){
-			for(ArrayList<Template> alTemplate: user.prequantizedTestTemplates){
-				for(Template template: alTemplate){
-					Double testResult = client.test(template,user.id);
-				}
+		for(User user: this.users.users){
+			for(int i = 0; i < user.readings.size(); i++){
+				ArrayList<Template> testTemplates = hasher.makeTestTemplates(user.readings.get(i));
+				Double testResult = client.test(testTemplates,user.id);
 			}
 		}
 		return scores;

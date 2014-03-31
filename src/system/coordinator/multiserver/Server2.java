@@ -16,11 +16,13 @@ import java.util.Collection;
 
 import javax.crypto.Cipher;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
+
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -51,11 +53,10 @@ public class Server2 extends system.coordinator.Coordinator {
 	
 	
 
-	public static BigInteger encrypt(Key key, BigInteger minutia){
+	public static BigInteger encrypt(Key key, BigInteger minutia, Cipher cipher){
 		
 		BigInteger encryptedMinutia = null;
 		try{
-			Cipher cipher = Cipher.getInstance("ECDH", "BC");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			encryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
 		
@@ -96,48 +97,60 @@ public class Server2 extends system.coordinator.Coordinator {
 	public static void main( String[] args ) throws Exception{
 		
 		_privateKey = generateKeyPair().getPrivate();
-		
+
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
-		//Socket S1 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+		Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		ServerSocket serv_socket = null;
 		Socket client = null;
 		serv_socket = new ServerSocket(port);
-		//port = serv_socket.getLocalPort();
-		client = serv_socket.accept();
-		
-		
-		
-		ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
-		_receivedObject = (InterServerObjectWrapper)objInput.readObject();
-		if (_receivedObject.isEnrolling()){
-			enroll();
-		}else{
-			test();
+		while(true){
+			//port = serv_socket.getLocalPort();
+			client = serv_socket.accept();
+
+			ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
+			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper)objInput.readObject();
+
+			Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
+			Cipher cipher = Cipher.getInstance("ECDH", "BC");
+			for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
+			}
+			InterServerObjectWrapper objectToSend = receivedObject;
+			objectToSend.setContents(receivedEncryptedFP);
+			objectToSend.setOrigin("server 2");
+
+
+			//		ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
+			//		_receivedObject = (InterServerObjectWrapper)objInput.readObject();
+			//		if (_receivedObject.isEnrolling()){
+			//			enroll();
+			//		}else{
+			//			test();
+			//		}
+
+			// THIS NEEDS TO BE FIXED. I WILL DO THIS TOMORROW ie. Friday Morning
+			// In short, this will be accidentally trying to send out data to the same 
+			// file descriptor that it just received from ie. the client which is not what we
+			// want //fixed
+			ObjectOutputStream objOutput = new ObjectOutputStream(S1.getOutputStream());
+			objOutput.writeObject(objectToSend);
 		}
-		
-		// THIS NEEDS TO BE FIXED. I WILL DO THIS TOMORROW ie. Friday Morning
-		// In short, this will be accidentally trying to send out data to the same 
-		// file descriptor that it just received from ie. the client which is not what we
-		// want
-		ObjectOutputStream objOutput = new ObjectOutputStream(client.getOutputStream());
-		objOutput.writeObject(_objectToSend);
-		
-		
+
 		
 	}
 	
-	public static void enroll(){
-		test();
-	}
-	
-	public static void test(){
-		Template receivedEncryptedFP = (Template)_receivedObject.getContents(); 
-		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-			minutiaPoint = encrypt(_privateKey, minutiaPoint);
-		}
-		_objectToSend = new InterServerObjectWrapper();
-		_objectToSend.setContents(receivedEncryptedFP);
-	}
+//	public static void enroll(){
+//		test();
+//	}
+//	
+//	public static void test(){
+//		Template receivedEncryptedFP = (Template)_receivedObject.getContents(); 
+//		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+//			minutiaPoint = encrypt(_privateKey, minutiaPoint);
+//		}
+//		_objectToSend = new InterServerObjectWrapper();
+//		_objectToSend.setContents(receivedEncryptedFP);
+//	}
 
 
 

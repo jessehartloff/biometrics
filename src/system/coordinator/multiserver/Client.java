@@ -1,12 +1,13 @@
 package system.coordinator.multiserver;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.Socket;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
@@ -17,9 +18,9 @@ import java.security.spec.ECFieldFp;
 import java.security.spec.ECParameterSpec;
 import java.security.spec.ECPoint;
 import java.security.spec.EllipticCurve;
+import java.util.ArrayList;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyAgreement;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
@@ -28,11 +29,14 @@ import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
-public class Client extends Server {
+public class Client extends Server{
 	// extends server
 	private ObjectOutputStream S1Out;
 	private ObjectOutputStream S2Out;
+	private ObjectInputStream S1In;
 	private InputStreamReader S1Reader;
+	
+
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
@@ -40,8 +44,7 @@ public class Client extends Server {
 			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
 			S1Out = new ObjectOutputStream (S1.getOutputStream());
 			S2Out = new ObjectOutputStream (S2.getOutputStream());
-			InputStream S1In = S1.getInputStream();
-			S1Reader = new InputStreamReader(S1In); 
+			ObjectInputStream S1In = new ObjectInputStream(S1.getInputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +54,7 @@ public class Client extends Server {
 	public KeyPair getKeyPair(){
 		try{
 			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-
+			//TODO figure out what this ECDH stuff does
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
 			EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
 					"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
@@ -72,41 +75,9 @@ public class Client extends Server {
 
 	}
 
-
 	@Override
 	public RawScores run() {
-
-		  
-		
-//        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-//        ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
-//        
-//		for (User user : this.users.users) {
-//			KeyPair dhKeys = keyGenerator.generateKeyPair();
-//			PublicKey publicKey = dhKeys.getPublic();
-//			//String publicKeyString = publicKey.toString();
-//			PrivateKey privateKey = dhKeys.getPrivate();
-//			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-//			S2Out.write(privateKey.getEncoded());
-//
-//
-//			ArrayList<Template> encryptedFingerprint = new ArrayList<Template>();
-//			for (Biometric b : user.readings) {
-//				Template encryptedBiometric = new Template();
-//				for (BigInteger bigInt : b.quantizeOne().getHashes()) {
-//					encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
-//				}
-//				encryptedFingerprint.add(encryptedBiometric);
-//			}
-//			
-//			objStream.writeObject(encryptedFingerprint);
-//			S2Out.write(byteStream.toByteArray());
-//			S1Out.write(privateKey.getEncoded());
-//			Double score = Double.valueOf(S1reader.read());
-//			System.out.println("scores yaaaaay:"+score);
-//		}
 		return null;
-	
 	}
 
 	public void enroll(Template template, Long userID) {
@@ -150,10 +121,16 @@ public class Client extends Server {
 			
 		} catch (Exception e){}
 
+		
 		//5.) wait for server 1's response
+		try{
+			InterServerObjectWrapper result = (InterServerObjectWrapper) S1In.readObject();
+			
+		} catch(Exception e){}
+		
 	}
 
-	public Double test(Template template,  Long userID) {
+	public Double test(ArrayList<Template> testTemplates,  Long userID) {
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification

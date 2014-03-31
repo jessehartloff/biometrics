@@ -2,20 +2,21 @@ package system.coordinator.multiserver;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
-import java.util.Queue;
 
 import javax.crypto.Cipher;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
@@ -23,31 +24,65 @@ import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
 public class Server1 extends Server {
+
+	public abstract class ServerOperation{
+		InterServerObjectWrapper fromClient;
+		InterServerObjectWrapper fromS2;
+		public abstract Double run();
+	}
+	
+	public class Test extends ServerOperation{
+
+		@Override
+		public Double run() {
+			return null;
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	public class Enroll extends ServerOperation{
+
+		@Override
+		public Double run() {
+			return null;
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	
 	public static void main(String[] args){
 		try {
             ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+            Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
+            ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
+            Server1 s = new Server1(null, null);
 			while(true){
-				Runnable execute;
-				//Socket client = new Socket(ClientSettings.getInstance().ip().getValue(), ClientSettings.getInstance().portNumber().getValue().intValue());
-				Socket server = S1.accept();
-				ObjectInputStream in = new ObjectInputStream(server.getInputStream());
-				InterServerObjectWrapper obj = (InterServerObjectWrapper) in.readObject();
-				if(obj.isEnrolling() == true){
-					execute = new Runnable(){
-						@Override
-						public void run() {
-							enroll();
-						}
-					};
-				} else if(obj.isTesting() == true){
-					execute = new Runnable(){
-						@Override
-						public void run() {
-							test();
-						}
-					};
+				ServerOperation e;
+				Socket serverA = S1.accept();
+				ObjectInputStream inA = new ObjectInputStream(serverA.getInputStream());
+				InterServerObjectWrapper A = (InterServerObjectWrapper) inA.readObject();
+				Socket serverB = S1.accept();
+				ObjectInputStream inB = new ObjectInputStream(serverB.getInputStream());
+				InterServerObjectWrapper B = (InterServerObjectWrapper) inB.readObject();
+				boolean isEnrolling = A.isEnrolling() && B.isEnrolling();
+				if(isEnrolling){
+					e = s.new Enroll();
+				} else {
+					e = s.new Test();
+				} 
+				if(A.getOrigin() == "client"){
+					e.fromClient = A;
+					e.fromS2 = B;
+				} else{
+					e.fromClient = B;
+					e.fromS2 = A;
 				}
+				
+				Double result = e.run();
+				toClient.writeDouble(result);
 			}
 
 			
