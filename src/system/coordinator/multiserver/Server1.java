@@ -56,8 +56,8 @@ public class Server1 extends Server {
 	public static void main(String[] args){
 		try {
             ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
-            Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
-            ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
+            //Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
+            //ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
             Server1 s = new Server1(null, null);
 			while(true){
 				ServerOperation e;
@@ -82,7 +82,7 @@ public class Server1 extends Server {
 				}
 				
 				Double result = e.run();
-				toClient.writeDouble(result);
+				//toClient.writeDouble(result);
 			}
 
 			
