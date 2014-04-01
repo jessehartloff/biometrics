@@ -28,6 +28,7 @@ public class BerlekampWelchWrapper implements RSDecoder {
 		
 		if(numberOfPoints < k+1){
 			System.out.println("not enough points to try");
+			System.out.println("need: " + (k+1) + "  have: "+ numberOfPoints);
 			return null;
 		}
 		
@@ -42,7 +43,7 @@ public class BerlekampWelchWrapper implements RSDecoder {
 		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, k, mod);
 		decoder.CalcPoly();
 		BigPoly polynomial = decoder.getSecretPolynomial();
-		return new SecretPolynomial(k.longValue(), mod.longValue(), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
+		return new SecretPolynomial(k.longValue()+1, FieldSizeMap.getBitsFromPrime(mod), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
 	}
 
 	

@@ -2,7 +2,9 @@ package system.hasher;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -120,7 +122,8 @@ public class ShortcutFuzzyVault extends Hasher {
 				indexingPoints.addAll(binPoints);
 			}
 		}
-// FIXME !!! make sure this indexing makes sense
+		
+		//.107
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();
 
 		for (IndexingPoint indexingPoint : indexingPoints) {
@@ -135,17 +138,30 @@ public class ShortcutFuzzyVault extends Hasher {
 		if (ranks.containsKey(testID)) {
 			Long genuineHits = ranks.get(testID);
 			Collection<Long> allValues = ranks.values();
-			for (Long value : allValues) {
-				if (value >= genuineHits) {
-					rank++;
-				}
+			int n = allValues.size();
+			long[] allValuesArray = new long[n];
+			int i=0;
+			for(Long l : allValues){
+				allValuesArray[i] = l;
+				i++;
 			}
-		} else {
-			rank = numberEnrolled;
-
+			Arrays.sort(allValuesArray);
+			int j=0;
+			while(j<n && allValuesArray[j] < genuineHits){
+				j++;
+			}
+			int q=j;
+			while(q<n && allValuesArray[q] < genuineHits+1){
+				q++;
+			}
+			rank = new Long((j+q)/2);
+		}else{
+			rank = (ranks.size()+numberEnrolled)/2;
 		}
-		// TODO advanced chaff points in shortcut fuzzy vault
+		
 		return rank;
 	}
 
 }
+
+// TODO advanced chaff points in shortcut fuzzy vault

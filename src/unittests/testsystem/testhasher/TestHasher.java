@@ -7,7 +7,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	TestStraightHashing.class
+	TestStraightHashing.class,
+	TestFuzzyVault.class
 })
 
 public class TestHasher {

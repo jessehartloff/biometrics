@@ -19,6 +19,7 @@ public class RawScores {
 	
 	public ArrayList<BigInteger> fieldHistogramValues;
 	public LinkedHashMap<String, ArrayList<Long>> variableHistogramValues;
+	public int numberOfUsers;
 	
 	public RawScores(){
 		genuineScores = new ArrayList<Double>();

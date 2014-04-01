@@ -171,7 +171,9 @@ public class CoordinatorFactory {
 
 		@Override
 		public RawScores run() {
-			return new RawScores();
+			RawScores rawScores = new RawScores();
+			rawScores.numberOfUsers = this.users.users.size();
+			return rawScores;
 		}
 
 	}

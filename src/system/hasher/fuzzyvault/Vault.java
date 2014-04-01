@@ -12,6 +12,7 @@ public class Vault {
 	private ArrayList<FuzzyVaultPoint> vaultPoints;
 	private Long termsInPoly;
 	private Long totalBits;
+	private BigInteger hashOfPolynomial;
 
 	public Vault() {
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>();
@@ -42,7 +43,8 @@ public class Vault {
 																// vault more
 																// than once
 		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
-
+		this.hashOfPolynomial = secretPoly.computeHash();
+		
 		// add the genuine points to vaultPoints
 		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
@@ -92,37 +94,39 @@ public class Vault {
 //			}
 //		}
 		for (FuzzyVaultPoint point : vaultPoints) {
-			System.out.println("z:"+point.getZ());
+//			System.out.println("z:"+point.getZ());
 				if(testTemplate.getHashes().contains(point.getZ())) {
-					System.out.println("z:"+point.getZ());
+//					System.out.println("z:"+point.getZ());
 					hashesInFuzzyVault.add(point);
 				}
 		}
 		// loop through vault and extract points with matching z-value
 
+//		return hashesInFuzzyVault.size() >= this.termsInPoly.intValue() ? true : false;
+//		
 		RSDecoder decoder = new BerlekampWelchWrapper();
-//		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), BigInteger.valueOf(2).pow(this.totalBits.intValue()));
 		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), FieldSizeMap.getPrime(this.totalBits));
-		
-		// BWDecoder decoder = new
-		// BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html
-		// for details
-
-		// BW
-		
-		if(secret == null){
-			return false;
-		}
-		
-		// CRC
-
-//		CRCPolynomial crcPoly = new CRCPolynomial();
-//		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
-		System.out.println("Checking if CRC's return 0");
-		System.out.println(CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
-		System.out.println(CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue())));
-		return CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
-//		return true;
+//		
+		return hashesInFuzzyVault.size() >= this.termsInPoly.intValue() ? true : false;
+//		// BWDecoder decoder = new
+//		// BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html
+//		// for details
+//
+//		// BW
+//		
+//		if(secret == null){
+//			return false;
+//		}
+//		
+//		// CRC
+//
+////		CRCPolynomial crcPoly = new CRCPolynomial();
+////		crcPoly = CRCPolynomial.createIrreducible(this.termsInPoly.intValue());
+////		System.out.println("Checking if CRC's return 0");
+////		System.out.println(CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
+////		System.out.println(CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue())));
+//		return CRC.CheckCRC(secret.getPolynomialTerms(), CRCPolyMap.getCRCPoly(this.termsInPoly.intValue()));
+////		return true;
 	}
 
 	/**
@@ -136,6 +140,7 @@ public class Vault {
 		for (BigInteger bigInt : lockedVault.getHashes()) {
 			vaultPoints.add(new FuzzyVaultPoint(bigInt));
 		}
+//		TODO hash stuff
 		return vaultPoints;
 	}
 
@@ -144,6 +149,7 @@ public class Vault {
 		for (FuzzyVaultPoint point : this.vaultPoints) {
 			toReturn.getHashes().add(point.toBigInt());
 		}
+//		toReturn.getHashes().add(this.hashOfPolynomial);
 		return toReturn;
 	}
 

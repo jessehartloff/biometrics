@@ -4,16 +4,25 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
-
 import java.util.List;
+import java.util.Map.Entry;
 
 
 public class FieldSizeMap {
-	
+
 	public static BigInteger getPrime(Long numberOfBits){
 		return FieldSizeMap.daMap.get(numberOfBits.intValue());
 	}
+	
+	public static Long getBitsFromPrime(BigInteger prime){
+		for(Entry<Integer, BigInteger> entry : daMap.entrySet()){
+			if(entry.getValue().equals(prime)){
+				return entry.getKey().longValue();
+			}
+		}
+		return (long) Math.floor((Math.log(prime.doubleValue())/Math.log(2.0)) +0.5);
+	}
+	
 	/**
 	 * maps the number of bits in the field to next higher prime number that works with it.
 	 */

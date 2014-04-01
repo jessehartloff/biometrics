@@ -8,6 +8,7 @@ public class CRC {
 	static public boolean CheckCRC(ArrayList<BigInteger> poly, ArrayList<BigInteger> CRCpoly) {
 		BigInteger remainder;
 		remainder = ComputeCRC(poly, CRCpoly);//.compareTo returns 0 if the values are equal
+		System.out.println("remainder: " + remainder);
 		return remainder.compareTo(BigInteger.ZERO) == 0;//so return true if the values are equal
 	}
 

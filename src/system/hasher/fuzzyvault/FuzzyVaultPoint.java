@@ -83,4 +83,12 @@ public class FuzzyVaultPoint {
 		this.chaff = chaff;
 	}
 
+	@Override
+	public String toString() {
+		return "FuzzyVaultPoint [z=" + z + ", gamma=" + gamma + ", chaff="
+				+ chaff + "]";
+	}
+
+	
+	
 }

@@ -24,7 +24,7 @@ public class EvaluatePerformance {
 		results.setChiSquare(EvaluatePerformance.computeChiSquare(results));
 		results.setChiSquareValues(EvaluatePerformance.computeChiSquareValues(results));
 		results.setHitRates(EvaluatePerformance.computeIndexingResults(rawScores));
-		results.setPenetrationCoefficient(EvaluatePerformance.computePenetrationCoefficient(results.getHitRates()));
+		results.setPenetrationCoefficient(EvaluatePerformance.computePenetrationCoefficient(rawScores));
 
 		results.setMinEntropy(results.getFieldHistogram().getMinEntropy());
 		results.setZeroFAR(EvaluatePerformance.computeZeroFAR(results));
@@ -39,12 +39,12 @@ public class EvaluatePerformance {
 		return results;
 	}
 	
-	private static Double computePenetrationCoefficient(ArrayList<Double> hitRates) {
+	private static Double computePenetrationCoefficient(RawScores rawScores) {
 		Double sum = 0.0;
-		for(Double d : hitRates){
-			sum += d;
+		for(Long l : rawScores.indexRankings){
+			sum += l;
 		}
-		return sum/new Double(hitRates.size());
+		return new Double(sum)/ new Double(rawScores.numberOfUsers);
 	}
 
 	/**  VARIABLE HISTO CHI SQUARED
