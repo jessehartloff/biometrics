@@ -98,7 +98,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		    
 	}
 	
-	public void initialize(  ) throws Exception{
+	public void initialize() throws Exception{
 		
 		_privateKey = generateKeyPair().getPrivate();
 
@@ -150,6 +150,32 @@ public class Server2 extends system.coordinator.Coordinator {
 		_objectToSend.setOrigin("server 2");
 		
 	}
+	
+	
+	public void testEnroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
+		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
+		}
+		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
+		objectToSend.setContents(receivedEncryptedFP);
+		objectToSend.setOrigin("server 2");
+	}
+	
+	public void testTest(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH","BH");
+		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
+		for (Template fingerprint : fingerprintList){
+			for (BigInteger minutiaPoint : fingerprint.getHashes()){
+				minutiaPoint = encrypt(privateKey, minutiaPoint,cipher);
+			}
+		}
+		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
+		objectToSend.setContents(fingerprintList);
+		objectToSend.setOrigin("server 2");
+		
+	}
 
 
 
@@ -159,8 +185,13 @@ public class Server2 extends system.coordinator.Coordinator {
 	@Override
 	public RawScores run() {
 		// TODO Auto-generated method stub
-		
-		
+		// call intitialize 
+		try {
+			initialize();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
 
@@ -29,6 +30,8 @@ import system.hasher.Hasher;
 import system.hasher.HasherFactory.HasherEnumerator;
 
 public class Server1 extends Server {
+	
+	private HashMap<Long,Template> _map;
 
 	public abstract class ServerOperation{
 		InterServerObjectWrapper fromClient;
@@ -120,7 +123,7 @@ public class Server1 extends Server {
 			InputStreamReader clientReader = new InputStreamReader(clientIn); 
 			InputStreamReader S2reader = new InputStreamReader(S2In); 
 		
-			Cipher cipher = Cipher.getInstance("DH");
+			Cipher cipher = Cipher.getInstance("ECDH","BC");
 	        
 	        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 	        int data = clientReader.read();
@@ -158,7 +161,7 @@ public class Server1 extends Server {
 				}
 				decryptedFingerprint.add(decryptedTemplate);
 			}
-//			this.hasher.hashEnrollTemplate(template); // TODO I commented this out
+//			this.hasher.hashEnrollTemplate(template); // TODO I commented this out   //YOU DON'T SAY
 
 			
 			
@@ -189,24 +192,32 @@ public class Server1 extends Server {
 		return object;
 	}
 
-	public static void enroll() {
+	public void enroll(InterServerObjectWrapper objectIn) {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
 		// 2.) Store that Template in RAM BECAUSE SQL JIM AND JEN!
+		Template template = (Template)objectIn.getContents();
+		Template fuzzyVault = hasher.hashEnrollTemplate(template);
+		long ID = objectIn.getUserID();
+		_map.put(ID,fuzzyVault);
 	}
 
-	public static void test() {
+	public void test(InterServerObjectWrapper objectIn) {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
 		//
+		long ID = objectIn.getUserID();
+		ArrayList<Template> testTemplates = hasher.hashTestTemplates((ArrayList<Template>)objectIn.getContents()); 
+		Template enrolledTemplate = _map.get(ID);
+		Double result=  hasher.compareTemplates(enrolledTemplate, testTemplates);
 	}
 
 	@Override
 	public void send(Object object) {
-		// Send that bitch back to the client
+		// Send back to the client
 	}
 
-	public static void receivePrivateKey() throws Exception {
+	public void receivePrivateKey() throws Exception {
 
 		/*
 		 * int port = 0; ServerSocket serv_socket = null; Socket client = null;
