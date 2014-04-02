@@ -16,12 +16,17 @@ import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 
+import settings.AllSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
+import settings.hashersettings.AllHasherSettings;
+import settings.hashersettings.HasherSettings;
+import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
+import system.hasher.HasherFactory.HasherEnumerator;
 
 public class Server1 extends Server {
 
@@ -37,7 +42,7 @@ public class Server1 extends Server {
 		public Double run() {
 			return null;
 			// TODO Auto-generated method stub
-			
+			//ArrayList<Template> test = hasher.makeTestTemplates(user.readings.get(i));			
 		}
 		
 	}
@@ -46,19 +51,22 @@ public class Server1 extends Server {
 
 		@Override
 		public Double run() {
-			return null;
+			return null;			
+			//Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
 			// TODO Auto-generated method stub
 			
 		}
 		
 	}
 	
-	public static void main(String[] args){
+	public void initialize(){
 		try {
             ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+            AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
             //Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
             //ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
             Server1 s = new Server1(null, null);
+            System.out.println();
 			while(true){
 				ServerOperation e;
 				Socket serverA = S1.accept();
@@ -92,7 +100,6 @@ public class Server1 extends Server {
 		
 		
 	}
-	
 	
 	// FIXME EVERYONE EVER
 	public Server1(Hasher hasher, Users enrollees) {

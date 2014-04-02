@@ -10,11 +10,14 @@ import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
@@ -38,22 +41,23 @@ import javax.crypto.KeyAgreement;
 
 public class Server2 extends system.coordinator.Coordinator {
 
-	private PublicKey _publicKey;
-	private static PrivateKey _privateKey;
-	private KeyAgreement _keyAgreement;
-	private static InterServerObjectWrapper _receivedObject;
-	private static InterServerObjectWrapper _objectToSend;
+	
+	private PrivateKey _privateKey;
+	private InterServerObjectWrapper _receivedObject;
+	private InterServerObjectWrapper _objectToSend;
 	
 	Server2(Hasher hasher, Users enrollees) {
+		
 		super(hasher, enrollees);
 	}
 
 
-
+	// FIX SERVER2 and DO THE HASHMAP FOR FUZZY VAULT 
+	// testing 
 	
 	
 
-	public static BigInteger encrypt(Key key, BigInteger minutia, Cipher cipher){
+	public BigInteger encrypt(Key key, BigInteger minutia, Cipher cipher){
 		
 		BigInteger encryptedMinutia = null;
 		try{
@@ -68,7 +72,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		return encryptedMinutia;
 	}
 	
-	public static KeyPair generateKeyPair() throws Exception{
+	public KeyPair generateKeyPair() throws Exception{
 	
 		    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
@@ -94,7 +98,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		    
 	}
 	
-	public static void main( String[] args ) throws Exception{
+	public void initialize(  ) throws Exception{
 		
 		_privateKey = generateKeyPair().getPrivate();
 
@@ -108,49 +112,44 @@ public class Server2 extends system.coordinator.Coordinator {
 			client = serv_socket.accept();
 
 			ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
-			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper)objInput.readObject();
-
-			Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
-			Cipher cipher = Cipher.getInstance("ECDH", "BC");
-			for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
+			_receivedObject = (InterServerObjectWrapper)objInput.readObject();
+			
+			if (_receivedObject.isEnrolling()){
+					enroll();
+			}else{
+					test();
 			}
-			InterServerObjectWrapper objectToSend = receivedObject;
-			objectToSend.setContents(receivedEncryptedFP);
-			objectToSend.setOrigin("server 2");
-
-
-			//		ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
-			//		_receivedObject = (InterServerObjectWrapper)objInput.readObject();
-			//		if (_receivedObject.isEnrolling()){
-			//			enroll();
-			//		}else{
-			//			test();
-			//		}
-
-			// THIS NEEDS TO BE FIXED. I WILL DO THIS TOMORROW ie. Friday Morning
-			// In short, this will be accidentally trying to send out data to the same 
-			// file descriptor that it just received from ie. the client which is not what we
-			// want //fixed
 			ObjectOutputStream objOutput = new ObjectOutputStream(S1.getOutputStream());
-			objOutput.writeObject(objectToSend);
+			objOutput.writeObject(_objectToSend);
 		}
 
 		
 	}
 	
-//	public static void enroll(){
-//		test();
-//	}
-//	
-//	public static void test(){
-//		Template receivedEncryptedFP = (Template)_receivedObject.getContents(); 
-//		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-//			minutiaPoint = encrypt(_privateKey, minutiaPoint);
-//		}
-//		_objectToSend = new InterServerObjectWrapper();
-//		_objectToSend.setContents(receivedEncryptedFP);
-//	}
+	public void enroll() throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		Template receivedEncryptedFP = (Template)_receivedObject.getContents(); 
+		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+			minutiaPoint = encrypt(_privateKey, minutiaPoint, cipher);
+		}
+		_objectToSend = new InterServerObjectWrapper();
+		_objectToSend.setContents(receivedEncryptedFP);
+		_objectToSend.setOrigin("server 2");
+	}
+	
+	public void test() throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH","BH");
+		ArrayList<Template> fingerprintList = (ArrayList<Template>)_receivedObject.getContents();
+		for (Template fingerprint : fingerprintList){
+			for (BigInteger minutiaPoint : fingerprint.getHashes()){
+				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
+			}
+		}
+		_objectToSend = new InterServerObjectWrapper();
+		_objectToSend.setContents(fingerprintList);
+		_objectToSend.setOrigin("server 2");
+		
+	}
 
 
 
@@ -160,6 +159,8 @@ public class Server2 extends system.coordinator.Coordinator {
 	@Override
 	public RawScores run() {
 		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 

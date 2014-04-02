@@ -64,7 +64,6 @@ public class Main {
 		 */
 		AllSettings settings = AllSettings.getInstance(); // loads all the
 															// default values
-
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
 		// AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
