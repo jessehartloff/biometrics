@@ -337,7 +337,6 @@ public void intitialize() throws Exception{
 	
 	switch(state){
 		case 1:
-			
 			client = S1.accept();
 			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
         	_receivedObject= (InterServerObjectWrapper) objIn.readObject();
@@ -348,7 +347,6 @@ public void intitialize() throws Exception{
         	}
         	break;
 		case 2:
-			
 			setClientKey (_receivedObject);
 			ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
 			objOut.write(0);
@@ -362,20 +360,15 @@ public void intitialize() throws Exception{
 				double result = test(_receivedObject);
 				ObjectOutputStream objTestOut = new ObjectOutputStream(client.getOutputStream());
 				objTestOut.writeDouble(result);
-				
-				
+				state = 1;
 			}
 			break;
 		case 4 :
 			ObjectOutputStream objEnrollOut = new ObjectOutputStream(client.getOutputStream());
 			objEnrollOut.write(1);
 			state = 1;
-		
 			break;
-	
-	
 	}
-
 	}
 }
 

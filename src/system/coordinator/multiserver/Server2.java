@@ -98,6 +98,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		    
 	}
 	
+	/*
 	public void initialize() throws Exception{
 		
 		_privateKey = generateKeyPair().getPrivate();
@@ -125,34 +126,11 @@ public class Server2 extends system.coordinator.Coordinator {
 
 		
 	}
-	
-	public void enroll() throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH", "BC");
-		Template receivedEncryptedFP = (Template)_receivedObject.getContents(); 
-		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-			minutiaPoint = encrypt(_privateKey, minutiaPoint, cipher);
-		}
-		_objectToSend = new InterServerObjectWrapper();
-		_objectToSend.setContents(receivedEncryptedFP);
-		_objectToSend.setOrigin("server 2");
-	}
-	
-	public void test() throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH","BH");
-		ArrayList<Template> fingerprintList = (ArrayList<Template>)_receivedObject.getContents();
-		for (Template fingerprint : fingerprintList){
-			for (BigInteger minutiaPoint : fingerprint.getHashes()){
-				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
-			}
-		}
-		_objectToSend = new InterServerObjectWrapper();
-		_objectToSend.setContents(fingerprintList);
-		_objectToSend.setOrigin("server 2");
-		
-	}
+	*/
 	
 	
-	public void testEnroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+	
+	public InterServerObjectWrapper testEnroll(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
 		Cipher cipher = Cipher.getInstance("ECDH", "BC");
 		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
 		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
@@ -161,9 +139,74 @@ public class Server2 extends system.coordinator.Coordinator {
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
 		objectToSend.setContents(receivedEncryptedFP);
 		objectToSend.setOrigin("server 2");
+		return objectToSend;
 	}
 	
-	public void testTest(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+	public InterServerObjectWrapper testTest(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH","BH");
+		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
+		for (Template fingerprint : fingerprintList){
+			for (BigInteger minutiaPoint : fingerprint.getHashes()){
+				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
+			}
+		}
+		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
+		objectToSend.setContents(fingerprintList);
+		objectToSend.setOrigin("server 2");
+		return objectToSend;
+	}
+	
+	public void initialize() throws Exception{
+		_privateKey = generateKeyPair().getPrivate();
+
+		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
+		Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+		ServerSocket serv_socket = new ServerSocket(port);
+		Socket client = null;
+		
+		int state = 1; 
+		while (true) {
+			switch (state){
+			case 1:
+				client = serv_socket.accept();
+				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
+				if (_receivedObject.isEnrolling()){
+					state = 2;
+				}else {
+					state = 3;
+				}
+				break;
+			case 2:
+				enroll(_receivedObject, _privateKey);
+				ObjectOutputStream objOutputEnroll = new ObjectOutputStream(S1.getOutputStream());
+				objOutputEnroll.writeObject(_objectToSend);
+				state = 1;
+				break;
+			case 3:
+				test(_receivedObject, _privateKey);
+				ObjectOutputStream objOutputTest = new ObjectOutputStream(S1.getOutputStream());
+				objOutputTest.writeObject(_objectToSend);
+				state = 1;
+				break;
+			}
+				
+		}
+		
+	}
+	
+	public void enroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
+		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
+		}
+		_objectToSend = new InterServerObjectWrapper();
+		_objectToSend.setContents(receivedEncryptedFP);
+		_objectToSend.setOrigin("server 2");
+	}
+	
+	public void test(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
 		Cipher cipher = Cipher.getInstance("ECDH","BH");
 		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
 		for (Template fingerprint : fingerprintList){
@@ -171,9 +214,9 @@ public class Server2 extends system.coordinator.Coordinator {
 				minutiaPoint = encrypt(privateKey, minutiaPoint,cipher);
 			}
 		}
-		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
-		objectToSend.setContents(fingerprintList);
-		objectToSend.setOrigin("server 2");
+		_objectToSend = new InterServerObjectWrapper();
+		_objectToSend.setContents(fingerprintList);
+		_objectToSend.setOrigin("server 2");
 		
 	}
 

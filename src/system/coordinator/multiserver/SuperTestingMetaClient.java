@@ -11,7 +11,8 @@ import system.hasher.Hasher;
 
 public class SuperTestingMetaClient extends Coordinator {
 	// TODO Jim write SuperTestingMetaClient constructor and run()
-
+	// THIS IS RIDICULOUSLY NOT CORRECT
+	
 	public SuperTestingMetaClient(Hasher hasher, Users users) {
 		super(hasher, users);
 	}
