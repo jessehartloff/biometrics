@@ -16,6 +16,7 @@ public class Template implements Serializable{
 	private static final long serialVersionUID = 6938186447187369796L;
 
 	private HashSet<BigInteger> hashes;
+	private BigInteger extraHash;
 	
 	public Template(){
 		hashes = new HashSet<BigInteger>();
@@ -32,6 +33,14 @@ public class Template implements Serializable{
 
 	public void setHashes(HashSet<BigInteger> hashes) {
 		this.hashes = hashes;
+	}
+
+	public BigInteger getExtraHash() {
+		return extraHash;
+	}
+
+	public void setExtraHash(BigInteger extraHash) {
+		this.extraHash = extraHash;
 	}
 
 	

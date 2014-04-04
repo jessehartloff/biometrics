@@ -16,16 +16,15 @@ public class Vault {
 
 	public Vault() {
 		this.vaultPoints = new ArrayList<FuzzyVaultPoint>();
-		
 		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
 		this.totalBits = Quantizer.getQuantizer().getTotalBits();
 	}
 
 	public Vault(Template lockedVault) {
 		this.vaultPoints = Vault.getVaultPoints(lockedVault);
-		this.termsInPoly = FuzzyVaultSettings.getInstance()
-				.numberOfTermsInPolynomial().getValue();
+		this.termsInPoly = FuzzyVaultSettings.getInstance().numberOfTermsInPolynomial().getValue();
 		this.totalBits = Quantizer.getQuantizer().getTotalBits();
+		this.hashOfPolynomial = Vault.getPolynomialHash(lockedVault);
 	}
 
 	public ArrayList<FuzzyVaultPoint> getVaultPoints() {
@@ -105,9 +104,24 @@ public class Vault {
 //		return hashesInFuzzyVault.size() >= this.termsInPoly.intValue() ? true : false;
 //		
 		RSDecoder decoder = new BerlekampWelchWrapper();
+		
+		long startMillis = System.currentTimeMillis();
 		SecretPolynomial secret = decoder.decode(hashesInFuzzyVault, this.termsInPoly.intValue(), FieldSizeMap.getPrime(this.totalBits));
-//		
-		return hashesInFuzzyVault.size() >= this.termsInPoly.intValue() ? true : false;
+		long endMillis = System.currentTimeMillis();
+		
+		System.out.println("Decoded in " + (endMillis - startMillis)/1000.0 + " seconds with " + hashesInFuzzyVault.size() + " points as input");
+		
+		if(secret == null){
+			return false;
+		}
+		
+		String output = secret.computeHash().equals(this.hashOfPolynomial) ? "unlocked!!" : "failure";
+		
+		System.out.println(output);
+
+		return secret.computeHash().equals(this.hashOfPolynomial) ? true : false;
+		
+//		return hashesInFuzzyVault.size() >= this.termsInPoly.intValue() ? true : false;
 //		// BWDecoder decoder = new
 //		// BWDecoder(...);//http://nssl.eew.technion.ac.il/files/Projects/thresholddsaimporvement/doc/javadoc/BWDecoder.html
 //		// for details
@@ -140,17 +154,25 @@ public class Vault {
 		for (BigInteger bigInt : lockedVault.getHashes()) {
 			vaultPoints.add(new FuzzyVaultPoint(bigInt));
 		}
-//		TODO hash stuff
 		return vaultPoints;
 	}
 
+	public static BigInteger getPolynomialHash(Template lockedVault) {
+		return lockedVault.getExtraHash();
+	}
+	
 	public Template toTemplate() {
 		Template toReturn = new Template();
 		for (FuzzyVaultPoint point : this.vaultPoints) {
 			toReturn.getHashes().add(point.toBigInt());
 		}
-//		toReturn.getHashes().add(this.hashOfPolynomial);
+		toReturn.setExtraHash(this.hashOfPolynomial);
 		return toReturn;
 	}
 
+	
+	public BigInteger getHashOfPolynomial() {
+		return hashOfPolynomial;
+	}
+	
 }
