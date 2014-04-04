@@ -31,79 +31,129 @@ import system.hasher.HasherFactory.HasherEnumerator;
 
 public class Server1 extends Server {
 	
+	public Server1(Hasher hasher, Users users) {
+		super(hasher, users);
+		// TODO Auto-generated constructor stub
+	}
+
 	private HashMap<Long,Template> _map;
+	private PrivateKey _clientKey;
 
-	public abstract class ServerOperation{
-		InterServerObjectWrapper fromClient;
-		InterServerObjectWrapper fromS2;
-		public abstract Double run();
-	}
-	
-	public class Test extends ServerOperation{
-
-		@Override
-		public Double run() {
-			return null;
-			// TODO Auto-generated method stub
-			//ArrayList<Template> test = hasher.makeTestTemplates(user.readings.get(i));			
+	//MUMBO JUMBO
+	/* 
+		public abstract class ServerOperation{
+			InterServerObjectWrapper fromClient;
+			InterServerObjectWrapper fromS2;
+			public abstract Double run();
 		}
 		
-	}
+		public class Test extends ServerOperation{
 	
-	public class Enroll extends ServerOperation{
-
-		@Override
-		public Double run() {
-			return null;			
-			//Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
-	public void initialize(){
-		try {
-            ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
-            AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
-            //Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
-            //ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
-            Server1 s = new Server1(null, null);
-            System.out.println();
-			while(true){
-				ServerOperation e;
-				Socket serverA = S1.accept();
-				ObjectInputStream inA = new ObjectInputStream(serverA.getInputStream());
-				InterServerObjectWrapper A = (InterServerObjectWrapper) inA.readObject();
-				Socket serverB = S1.accept();
-				ObjectInputStream inB = new ObjectInputStream(serverB.getInputStream());
-				InterServerObjectWrapper B = (InterServerObjectWrapper) inB.readObject();
-				boolean isEnrolling = A.isEnrolling() && B.isEnrolling();
-				if(isEnrolling){
-					e = s.new Enroll();
-				} else {
-					e = s.new Test();
-				} 
-				if(A.getOrigin() == "client"){
-					e.fromClient = A;
-					e.fromS2 = B;
-				} else{
-					e.fromClient = B;
-					e.fromS2 = A;
-				}
-				
-				Double result = e.run();
-				//toClient.writeDouble(result);
+			@Override
+			public Double run() {
+				return null;
+				// TODO Auto-generated method stub
+				//ArrayList<Template> test = hasher.makeTestTemplates(user.readings.get(i));			
 			}
-
 			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		
+		public class Enroll extends ServerOperation{
+	
+			@Override
+			public Double run() {
+				return null;			
+				//Template enroll = hasher.makeEnrollTemplate(user.readings.get(i));
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
+		
+	*/
+	
+	// THIS IS HORSE
+	/*
+		public void initialize(){
+			try {
+	            ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+	            AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
+	            //Socket client = new Socket(ClientSettings.getInstance().ip().getValue(),ClientSettings.getInstance().portNumber().getValue().intValue());
+	            //ObjectOutputStream toClient = new ObjectOutputStream(client.getOutputStream());
+	            //Server1 s = new Server1(null, null);
+	            System.out.println();
+				while(true){
+					//ServerOperation e;
+					Socket serverA = S1.accept();
+					ObjectInputStream inA = new ObjectInputStream(serverA.getInputStream());
+					InterServerObjectWrapper A = (InterServerObjectWrapper) inA.readObject();
+					Socket serverB = S1.accept();
+					ObjectInputStream inB = new ObjectInputStream(serverB.getInputStream());
+					InterServerObjectWrapper B = (InterServerObjectWrapper) inB.readObject();
+					boolean isEnrolling = A.isEnrolling() && B.isEnrolling();
+					if(isEnrolling){
+						e = s.new Enroll();
+					} else {
+						e = s.new Test();
+					} 
+					if(A.getOrigin() == "client"){
+						e.fromClient = A;
+						e.fromS2 = B;
+					} else{
+						e.fromClient = B;
+						e.fromS2 = A;
+					}
+					
+					Double result = e.run();
+					//toClient.writeDouble(result);
+				}
+	
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	*/
+	/*
+	public void initialize(){
+		try{
+		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+        AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
+        Socket client = null;
+        while ( true ){
+        	client = S1.accept();
+        	ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+        	InterServerObjectWrapper receivedObject= (InterServerObjectWrapper) objIn.readObject();
+        	if (receivedObject.getOrigin() == "client"){
+        		setClientKey(receivedObject);
+        	}else{
+        		
+        	}
+        }
+		
+		}catch ( Exception e ){
+			
+		}
+	}
+	
+	*/ 
+	
+	
+                     	
+	public void setClientKey (InterServerObjectWrapper clientObject){
+		_clientKey = (PrivateKey)clientObject.getContents();
 		
 		
 	}
 	
+	public PrivateKey getClientKey (){
+		return _clientKey;
+	}
+	
+	
+	/*
 	// FIXME EVERYONE EVER
 	public Server1(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
@@ -174,6 +224,7 @@ public class Server1 extends Server {
 
 
 	}
+	*/ 
 
 	// put all four of these functions in Server
 	@Override
@@ -201,7 +252,7 @@ public class Server1 extends Server {
 		_map.put(ID,fuzzyVault);
 	}
 
-	public void test(InterServerObjectWrapper objectIn) {
+	public double test(InterServerObjectWrapper objectIn) {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
@@ -210,6 +261,7 @@ public class Server1 extends Server {
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates((ArrayList<Template>)objectIn.getContents()); 
 		Template enrolledTemplate = _map.get(ID);
 		Double result=  hasher.compareTemplates(enrolledTemplate, testTemplates);
+		return result;
 	}
 
 	@Override
@@ -264,5 +316,98 @@ public class Server1 extends Server {
 		 * System.out.println(new String (decryptedKey, "UTF-8"));
 		 */
 	}
+
+	@Override
+	public RawScores run() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+private InterServerObjectWrapper _receivedObject;
+
+public void intitialize() throws Exception{
+	ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+    AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
+    Socket client = null;
+  
+	int state = 1;
+	while ( true ) {
+	
+	switch(state){
+		case 1:
+			
+			client = S1.accept();
+			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+        	_receivedObject= (InterServerObjectWrapper) objIn.readObject();
+        	if (_receivedObject.getOrigin() == "client"){
+        		state = 2;
+        	}else{
+        		state = 3;
+        	}
+        	break;
+		case 2:
+			
+			setClientKey (_receivedObject);
+			ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
+			objOut.write(0);
+			state = 1; 
+			break;
+		case 3:
+			if (_receivedObject.isEnrolling()){
+				enroll(_receivedObject);
+				state = 4;
+			}else{
+				double result = test(_receivedObject);
+				ObjectOutputStream objTestOut = new ObjectOutputStream(client.getOutputStream());
+				objTestOut.writeDouble(result);
+				
+				
+			}
+			break;
+		case 4 :
+			ObjectOutputStream objEnrollOut = new ObjectOutputStream(client.getOutputStream());
+			objEnrollOut.write(1);
+			state = 1;
+		
+			break;
+	
+	
+	}
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
