@@ -70,7 +70,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
 
 		    ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+		    		"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
 

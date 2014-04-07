@@ -7,8 +7,31 @@ import java.util.HashMap;
 
 public class CRCPolyMap {
 
-	public static ArrayList<BigInteger> getCRCPoly(int termsInPoly){
-		return CRCPolyMap.crcMap.get(termsInPoly);
+	public static int getPolyInteger(int totalBits){
+		ArrayList<BigInteger> bigIntPoly = CRCPolyMap.getCRCPoly(totalBits);
+		
+		if(totalBits != bigIntPoly.size()){
+			System.out.println("Something went wrong");
+			return 0;
+		}
+		
+		BigInteger bigOne = BigInteger.ONE;
+		
+		int n = bigIntPoly.size();
+		int intPoly = 0;
+		
+		for(int i=n-1; i>=0; i++){
+			intPoly <<= 1;
+			if(bigIntPoly.get(i).equals(bigOne)){
+				intPoly++;
+			}
+		}
+		
+		return intPoly;
+	}
+	
+	public static ArrayList<BigInteger> getCRCPoly(int totalBits){
+		return CRCPolyMap.crcMap.get(totalBits-1);
 	}
 	static BigInteger[] crc1 = { BigInteger.ONE, BigInteger.ONE };
 	static BigInteger[] crc2 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };

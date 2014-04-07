@@ -84,8 +84,7 @@ public class ShortcutFuzzyVault extends Hasher {
 	private void addChaffPoints(Template template) {
 		for (int i = 0; i < settings.numberOfChaffPoints().getValue(); i++) {
 			Random random = new Random();
-			BigInteger chaff = new BigInteger(settings
-					.getNumberOfBitsForTheField().intValue(), random);
+			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(), random);
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));
 			template.getHashes().add(chaff);
 		}
@@ -123,7 +122,6 @@ public class ShortcutFuzzyVault extends Hasher {
 			}
 		}
 		
-		//.107
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();
 
 		for (IndexingPoint indexingPoint : indexingPoints) {

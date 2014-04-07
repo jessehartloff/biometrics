@@ -2,6 +2,7 @@ package system.hasher.fuzzyvault;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Random;
 
 import settings.hashersettings.FuzzyVaultSettings;
 import system.allcommonclasses.commonstructures.Template;
@@ -51,6 +52,8 @@ public class Vault {
 			genuinePoint.setGamma(secretPoly.evaluateAt(bigInt));
 			genuinePoint.setChaff(false);
 			this.vaultPoints.add(genuinePoint);
+
+//			System.out.println(genuinePoint);
 		}
 
 		// add chaff points
@@ -59,14 +62,13 @@ public class Vault {
 
 			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
 
-			Double randomZ = Math.random() * totalBits.doubleValue();
-			chaffPoint.setZ(BigInteger.valueOf(randomZ.longValue()));
-
-			Double randomGamma = Math.random() * totalBits.doubleValue();
-			chaffPoint.setGamma(BigInteger.valueOf(randomGamma.longValue()));
+			chaffPoint.setZ(new BigInteger(this.totalBits.intValue(), new Random()));
+			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random()));
 
 			chaffPoint.setChaff(true);
 			this.vaultPoints.add(chaffPoint);
+			
+//			System.out.println(chaffPoint);
 		}
 
 	}

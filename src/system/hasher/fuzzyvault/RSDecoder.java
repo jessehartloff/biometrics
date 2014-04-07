@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 public interface RSDecoder {
-	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints,
-			Integer k, BigInteger mod);
+	
+	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints, Integer termsInPoly, BigInteger mod);
+	
 }

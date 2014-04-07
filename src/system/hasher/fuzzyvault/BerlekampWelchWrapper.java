@@ -13,7 +13,7 @@ public class BerlekampWelchWrapper implements RSDecoder {
 	}
 
 	@Override
-	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints, Integer k, BigInteger mod) {
+	public SecretPolynomial decode(ArrayList<FuzzyVaultPoint> fuzzyVaultPoints, Integer termsInPoly, BigInteger mod) {
 //		ArrayList<BigInteger> zValues = new ArrayList<BigInteger>();
 //		ArrayList<BigInteger> gammaValues = new ArrayList<BigInteger>();
 //		for (FuzzyVaultPoint vp : fuzzyVaultPoints) {
@@ -26,9 +26,9 @@ public class BerlekampWelchWrapper implements RSDecoder {
 		int numberOfPoints = fuzzyVaultPoints.size();
 //		if(numberOfPoints == 0)System.out.println("empty vault");
 		
-		if(numberOfPoints < k+1){
+		if(numberOfPoints < termsInPoly+1){
 			System.out.println("not enough points to try");
-			System.out.println("need: " + (k+1) + "  have: "+ numberOfPoints);
+			System.out.println("need: " + (termsInPoly+1) + "  have: "+ numberOfPoints);
 			return null;
 		}
 		
@@ -40,10 +40,10 @@ public class BerlekampWelchWrapper implements RSDecoder {
 			gammaValueArray[i] = fuzzyVaultPoints.get(i).getGamma();
 		}
 		
-		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, k, mod);
+		BWDecoder decoder = new BWDecoder(zValueArray, gammaValueArray, termsInPoly, mod);
 		decoder.CalcPoly();
 		BigPoly polynomial = decoder.getSecretPolynomial();
-		return new SecretPolynomial(k.longValue()+1, FieldSizeMap.getBitsFromPrime(mod), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
+		return new SecretPolynomial(termsInPoly.longValue()+1, FieldSizeMap.getBitsFromPrime(mod), new ArrayList<BigInteger>(Arrays.asList(polynomial.getCoefficients())));
 	}
 
 	
