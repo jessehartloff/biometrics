@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -40,8 +41,8 @@ public class Client extends Server{
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
-			Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
-			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+			Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			Socket S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
 			S1Out = new ObjectOutputStream (S1.getOutputStream());
 			S2Out = new ObjectOutputStream (S2.getOutputStream());
 			S1In = new ObjectInputStream(S1.getInputStream());
