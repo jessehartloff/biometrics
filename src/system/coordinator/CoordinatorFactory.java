@@ -7,8 +7,10 @@ import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoord
 import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserverCoordinatorSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.RAMStructure;
+import system.coordinator.multiserver.Server1;
+import system.coordinator.multiserver.Server2;
+import system.coordinator.multiserver.SuperTestingMetaClient;
 import system.allcommonclasses.indexingstructure.SQLStructure;
 //import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.coordinator.Coordinator;
@@ -18,9 +20,9 @@ import system.coordinator.HistogramCoordinator;
 import system.coordinator.IndexTesting;
 import system.coordinator.MultipleEnrollment;
 import system.coordinator.testgenerators.TestGeneratorFactory;
-import system.coordinator.multiserver.*;
 import system.hasher.Hasher;
 import system.hasher.HasherFactory;
+//import system.allcommonclasses.indexingstructure.SQLStructure;
 
 public class CoordinatorFactory {
 	 	
@@ -32,13 +34,13 @@ public class CoordinatorFactory {
 			case NONE:
 				return null;
 			case SERVER1:
-//				return new Server1(hasher, null);
+				return new Server1(hasher, null);
 			case SERVER2:
-//				return new Server2(null, null);
+				return new Server2(hasher, null);
 			case CLIENT:
 //				return new Client(null, null);
 			case SUPERTESTINGMETACLIENT:
-				return new SuperTestingMetaClient(null, users);
+				return new SuperTestingMetaClient(hasher, users);
 			default:
 				return null;
 		}

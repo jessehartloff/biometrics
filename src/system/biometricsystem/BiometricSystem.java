@@ -38,6 +38,7 @@ public class BiometricSystem {
 		Double FTC = testingUsers.removeFailureToCapture();
 		System.out.println("Failure to Capture");
 
+		
 		Coordinator coordinator = CoordinatorFactory.makeMultiserverCoordinator(testingUsers);
 		
 		if(coordinator == null){

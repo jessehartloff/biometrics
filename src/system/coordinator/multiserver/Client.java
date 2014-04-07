@@ -41,11 +41,19 @@ public class Client extends Server{
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
+			System.out.println("Connecting to Socket 1...");
 			Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			System.out.println("Connecting to Socket 2...");
 			Socket S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+			System.out.println("Getting Socket 1 Outputstream...");
+
 			S1Out = new ObjectOutputStream (S1.getOutputStream());
+			System.out.println("Getting Socket 2 Outputstream...");
+
 			S2Out = new ObjectOutputStream (S2.getOutputStream());
-			S1In = new ObjectInputStream(S1.getInputStream());
+			System.out.println("Getting Socket 2 Inputstream...");
+
+			//S1In = new ObjectInputStream(S1.getInputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,7 +66,7 @@ public class Client extends Server{
 		try{
 			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 			//TODO figure out what this ECDH stuff does
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
 			EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
 					"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
 							"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
@@ -92,15 +100,15 @@ public class Client extends Server{
 		PrivateKey privateKey = pair.getPrivate();
 
 		// 2.) send d(u) [private key] to Server_1
-		toS1.setContents(privateKey.getEncoded());
+		toS1.setContents(publicKey.getEncoded());
 		toS1.setEnrolling(true);
 		toS1.setTesting(false);
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
 		try{
-			Cipher cipher = Cipher.getInstance("ECDH", "BC");
+			Cipher cipher = Cipher.getInstance("ECIES","BC");
 
-			cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
+			cipher.init(Cipher.ENCRYPT_MODE,publicKey);
 			// 3.) encrypt Template with public key e(u) [public key] from 1.)
 
 			Template encryptedBiometric = new Template();
@@ -110,7 +118,9 @@ public class Client extends Server{
 			// 4.) sent e(Template) to Server_2
 			toS2.setContents(encryptedBiometric);
 
-		}catch(Exception e){}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 		toS2.setEnrolling(true);
 		toS2.setTesting(false);
@@ -148,7 +158,7 @@ public class Client extends Server{
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
 		try{
-			Cipher cipher = Cipher.getInstance("ECDH", "BC");
+			Cipher cipher = Cipher.getInstance("ECIES", "BC");
 
 			cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
 			// 3.) encrypt each Template in ArrayList<Template> with public key e(u) [public key] from 1.)

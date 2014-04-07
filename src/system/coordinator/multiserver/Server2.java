@@ -3,6 +3,7 @@ package system.coordinator.multiserver;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.Key;
@@ -20,6 +21,20 @@ import java.util.HashMap;
 
 import javax.crypto.Cipher;
 
+import java.math.BigInteger;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.spec.ECFieldFp;
+import java.security.spec.ECParameterSpec;
+import java.security.spec.ECPoint;
+import java.security.spec.EllipticCurve;
+
+
+
+
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
@@ -35,9 +50,10 @@ public class Server2 extends system.coordinator.Coordinator {
 	private InterServerObjectWrapper _objectToSend;
 	private HashMap<Long, Key> keyMap;
 	
-	Server2(Hasher hasher, Users enrollees) {
+	public Server2(Hasher hasher, Users enrollees) {
 		
 		super(hasher, enrollees);
+
 	}
 
 
@@ -51,8 +67,9 @@ public class Server2 extends system.coordinator.Coordinator {
 		BigInteger encryptedMinutia = null;
 		try{
 			cipher.init(Cipher.ENCRYPT_MODE, key);
+			
 			encryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
-		
+		    System.out.println("Encrypted!");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +80,8 @@ public class Server2 extends system.coordinator.Coordinator {
 	
 	public KeyPair generateKeyPair() throws Exception{
 		    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
+		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
+		    System.out.println("Generated key pair");
 		    EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
 		        "fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
@@ -118,7 +136,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	
 	
 	public InterServerObjectWrapper testEnroll(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		Cipher cipher = Cipher.getInstance("ECIES", "BC");
 		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
 		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
 			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
@@ -130,7 +148,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public InterServerObjectWrapper testTest(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH","BH");
+		Cipher cipher = Cipher.getInstance("ECIES","BH");
 		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
 		for (Template fingerprint : fingerprintList){
 			for (BigInteger minutiaPoint : fingerprint.getHashes()){
@@ -145,9 +163,10 @@ public class Server2 extends system.coordinator.Coordinator {
 	
 	public void initialize() throws Exception{
 		_privateKey = generateKeyPair().getPrivate();
-
+		keyMap = new HashMap<Long, Key>();
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
-		Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+		Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
+								ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		ServerSocket serv_socket = new ServerSocket(port);
 		Socket client = null;
 		
@@ -155,6 +174,8 @@ public class Server2 extends system.coordinator.Coordinator {
 		while (true) {
 			switch (state){
 			case 1:
+				System.out.println("Server 2 listening....");
+
 				client = serv_socket.accept();
 				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
@@ -193,9 +214,14 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public void enroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+		System.out.println("adding bouncy castle");
+		Cipher cipher = Cipher.getInstance("ECIES", "BC");
+		System.out.println("got the cipher!");
+		System.out.println(receivedObject.getUserID());
+		System.out.println(privateKey);
 		this.keyMap.put(receivedObject.getUserID(), privateKey);
-		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
+		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
 		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
 			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
 		}
@@ -205,7 +231,9 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public void test(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
-		Cipher cipher = Cipher.getInstance("ECDH","BH");
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+
+		Cipher cipher = Cipher.getInstance("ECIES","BC");
 		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
 		for (Template fingerprint : fingerprintList){
 			for (BigInteger minutiaPoint : fingerprint.getHashes()){

@@ -29,11 +29,14 @@ public class Users implements Serializable{
 	
 	public Double removeFailureToCapture() {
 		Long total = 0L;
+		Long id = 0L;
 		Long numberOfFailures = 0L;
 		ArrayList<User> usersToRemove = new ArrayList<User>();
 		for(User user : this.users){
 			ArrayList<Biometric> readingsToRemove = new ArrayList<Biometric>();
+			user.id = id;
 			for(Biometric biometric : user.readings){
+				user.id = total;
 				total++;
 				if(biometric.isFailure()){
 					numberOfFailures++;
@@ -46,6 +49,7 @@ public class Users implements Serializable{
 			if(user.readings.isEmpty()){
 				usersToRemove.add(user);
 			}
+			id++;
 		}
 		for(User user : usersToRemove){
 			this.users.remove(user);

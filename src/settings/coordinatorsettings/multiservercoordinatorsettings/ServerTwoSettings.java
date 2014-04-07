@@ -22,7 +22,7 @@ public class ServerTwoSettings extends CoordinatorSettings{
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10002));
-		this.settingsVariables.put("IP Address", new SettingsString("127.0.0.1"));
+		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
 
 	}
 

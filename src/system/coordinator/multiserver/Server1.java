@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.security.PrivateKey;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,6 +34,8 @@ public class Server1 extends Server {
 
 	public Server1(Hasher hasher, Users users) {
 		super(hasher, users);
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -256,7 +259,7 @@ public class Server1 extends Server {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
-		//
+		
 		long ID = objectIn.getUserID();
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates((ArrayList<Template>)objectIn.getContents()); 
 		Template enrolledTemplate = _map.get(ID);
@@ -320,6 +323,13 @@ public class Server1 extends Server {
 	@Override
 	public RawScores run() {
 		// TODO Auto-generated method stub
+		// call intitialize 
+		try {
+			initialize();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -327,7 +337,7 @@ public class Server1 extends Server {
 
 	private InterServerObjectWrapper _receivedObject;
 
-	public void intitialize() throws Exception{
+	public void initialize() throws Exception{
 		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
 		Socket client = null;
@@ -337,6 +347,7 @@ public class Server1 extends Server {
 
 			switch(state){
 			case 1:
+				System.out.println("Server 1 listening....");
 				client = S1.accept();
 				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 				_receivedObject= (InterServerObjectWrapper) objIn.readObject();

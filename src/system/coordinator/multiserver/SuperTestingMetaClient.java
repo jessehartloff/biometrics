@@ -19,8 +19,15 @@ public class SuperTestingMetaClient extends Coordinator {
 	@Override
 	public RawScores run(){
 		Client client = new Client(hasher, users);
+		System.out.println("connected!!");
+		System.out.println(users.users.size());
+		System.out.println(users.users.get(0).readings.size());
+		System.out.println(users.users.get(0).id);
+		System.out.println(hasher.toString());
 		client.enroll(hasher.makeEnrollTemplate(users.users.get(0).readings.get(0)), users.users.get(0).id);
+		System.out.println("enrolled!!");
 		client.test(hasher.makeTestTemplates(users.users.get(0).readings.get(0)), users.users.get(0).id);
+		System.out.println("tested!!");
 
 		System.exit(0);
 		return null;
