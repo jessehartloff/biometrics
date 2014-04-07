@@ -35,7 +35,7 @@ public class Client extends Server{
 	private ObjectOutputStream S2Out;
 	private ObjectInputStream S1In;
 	private InputStreamReader S1Reader;
-	
+
 
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
@@ -44,11 +44,13 @@ public class Client extends Server{
 			Socket S2 = new Socket(ServerTwoSettings.getInstance().ip().getValue(), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
 			S1Out = new ObjectOutputStream (S1.getOutputStream());
 			S2Out = new ObjectOutputStream (S2.getOutputStream());
-			ObjectInputStream S1In = new ObjectInputStream(S1.getInputStream());
+			S1In = new ObjectInputStream(S1.getInputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+
 
 
 	public KeyPair getKeyPair(){
@@ -87,7 +89,7 @@ public class Client extends Server{
 		KeyPair pair = this.getKeyPair();
 		PublicKey publicKey = pair.getPublic();
 		PrivateKey privateKey = pair.getPrivate();
-		
+
 		// 2.) send d(u) [private key] to Server_1
 		toS1.setContents(privateKey.getEncoded());
 		toS1.setEnrolling(true);
@@ -95,48 +97,102 @@ public class Client extends Server{
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
 		try{
-		   Cipher cipher = Cipher.getInstance("ECDH", "BC");
+			Cipher cipher = Cipher.getInstance("ECDH", "BC");
 
-		   cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
-		// 3.) encrypt Template with public key e(u) [public key] from 1.)
+			cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
+			// 3.) encrypt Template with public key e(u) [public key] from 1.)
 
-		Template encryptedBiometric = new Template();
-		for (BigInteger bigInt : template.getHashes()) {
-			encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
-		}
-		// 4.) sent e(Template) to Server_2
-		toS2.setContents(encryptedBiometric);
+			Template encryptedBiometric = new Template();
+			for (BigInteger bigInt : template.getHashes()) {
+				encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
+			}
+			// 4.) sent e(Template) to Server_2
+			toS2.setContents(encryptedBiometric);
 
 		}catch(Exception e){}
-		
+
 		toS2.setEnrolling(true);
 		toS2.setTesting(false);
 		toS1.setOrigin("client");
 		// 2a.) generate UUID for verification
 		toS2.setUserID(userID);
-		
+
 		try{	
 			S1Out.writeObject(toS1);
 			S2Out.writeObject(toS2);
-			
+
 		} catch (Exception e){}
 
-		
+
 		//5.) wait for server 1's response
 		try{
 			InterServerObjectWrapper result = (InterServerObjectWrapper) S1In.readObject();
-			
+
 		} catch(Exception e){}
-		
+
 	}
 
 	public Double test(ArrayList<Template> testTemplates,  Long userID) {
+		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
+		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
+		// 1.) generate key pair
+		KeyPair pair = this.getKeyPair();
+		PublicKey publicKey = pair.getPublic();
+		PrivateKey privateKey = pair.getPrivate();
+
+		// 2.) send d(u) [private key] to Server_1
+		toS1.setContents(privateKey.getEncoded());
+		toS1.setEnrolling(true);
+		toS1.setTesting(false);
+		toS1.setUserID(userID);
+		toS1.setOrigin("client");
+		try{
+			Cipher cipher = Cipher.getInstance("ECDH", "BC");
+
+			cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
+			// 3.) encrypt each Template in ArrayList<Template> with public key e(u) [public key] from 1.)
+
+			ArrayList<Template> encryptedTestTemplate = new ArrayList<Template>();
+			for(Template template : testTemplates){
+				Template encryptedTemplate = new Template();
+				for (BigInteger bigInt : template.getHashes()) {
+					encryptedTemplate.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
+				}
+				encryptedTestTemplate.add(encryptedTemplate);
+			}  
+			// 4.) sent e(Template) to Server_2
+			toS2.setContents(encryptedTestTemplate);
+
+		}catch(Exception e){}
+
+		toS2.setEnrolling(true);
+		toS2.setTesting(false);
+		toS1.setOrigin("client");
+		// 2a.) generate UUID for verification
+		toS2.setUserID(userID);
+
+		try{	
+			S1Out.writeObject(toS1);
+			S2Out.writeObject(toS2);
+
+		} catch (Exception e){}
+
+
+		//5.) wait for server 1's response
+		try{
+			InterServerObjectWrapper result = (InterServerObjectWrapper) S1In.readObject();
+
+		} catch(Exception e){}
+
+
+
+
+
+
 		// 1.) generate key pair
 		// 2.) encrypt Template with public key e(u) [public key] from 1.)
 		// 2a.) generate UUID for verification
 		// 3.) send d(u) [private key] to Server_1
-		// 4.) sent e(Template) to Server_2
-		// wait for server 1's response
 		return null;
 	}
 

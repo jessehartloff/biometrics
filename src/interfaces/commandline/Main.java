@@ -4,23 +4,16 @@ import settings.AllSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
-import settings.fingerprintmethodsettings.NgonsSingleEnrollAllRotationsSettings;
+import settings.fingerprintmethodsettings.NgonAllRotationsSettings;
 import settings.fingerprintmethodsettings.PRINTSettings;
+import settings.hashersettings.HasherSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import system.allcommonclasses.indexingstructure.SQLStructure;
-import system.hasher.fuzzyvault.CRC;
-import java.lang.*;
+import system.method.fingerprintmethods.NgonsAllRotations;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
-import system.hasher.fuzzyvault.CRCPolynomial;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -41,13 +34,13 @@ public class Main {
 //		System.out.println(myPoly.toArrayList().toString());
 //		System.out.println(CRC.CheckCRC(crcPoly.toArrayList(),myPoly.toArrayList()));
 //		HashMap<Integer,ArrayList<BigInteger>> myMap = new HashMap<Integer,ArrayList<BigInteger>>();
-		for(int i = 1; i < 50; i++){
-			new CRCPolynomial();
-			CRCPolynomial ref = CRCPolynomial.createIrreducible(i);
-			System.out.print(i);System.out.println(ref.toArrayList().toString());
-//			myMap.put(i, ref.toArrayList());
-		}
-		System.exit(0);
+//		for(int i = 1; i < 50; i++){
+//			new CRCPolynomial();`
+//			CRCPolynomial ref = CRCPolynomial.createIrreducible(i);
+//			System.out.print(i);System.out.println(ref.toArrayList().toString());
+////			myMap.put(i, ref.toArrayList());
+//		}
+//		System.exit(0);
 //		System.out.println(myMap.toString());
 		/*
 		 * private static Connection connection = null; if(connection == null){
@@ -65,7 +58,7 @@ public class Main {
 		AllSettings settings = AllSettings.getInstance(); // loads all the
 															// default values
 		// set the values for any comboBox
-		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(PRINTSettings.getInstance());
+		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonAllRotationsSettings.getInstance());
 		// AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
@@ -76,19 +69,19 @@ public class Main {
 		FingerprintSettings
 				.getInstance()
 				.testingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB2Training.ser"));
 		FingerprintSettings
 				.getInstance()
 				.trainingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC20022Small.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		// //...
 		// set values for everything else
-		PRINTSettings.getInstance().rotationRegions().setValue(8);
-		PRINTSettings.getInstance().n().setValue(3);
-		PRINTSettings.getInstance().kClosestMinutia().setValue(4);
-		PRINTSettings.getInstance().distanceBins().setValue(6);// ...
-		PRINTSettings.getInstance().sigmaBins().setValue(6);// ...
-		PRINTSettings.getInstance().phiBins().setValue(6);// ...
+		//NgonAllRotationsSettings.getInstance().rotationRegions().setValue(8);
+		NgonAllRotationsSettings.getInstance().n().setValue(4);
+		NgonAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
+		NgonAllRotationsSettings.getInstance().xBins().setValue(6);// ...
+		NgonAllRotationsSettings.getInstance().yBins().setValue(7);// ...
+		NgonAllRotationsSettings.getInstance().thetaBins().setValue(8);// ...
 //		 NgonSettings.getInstance().rotationRegions().setValue(8);
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().n().setValue(3);
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);

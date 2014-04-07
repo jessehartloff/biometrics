@@ -1,6 +1,5 @@
 package system.coordinator.multiserver;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
@@ -9,15 +8,17 @@ import java.net.Socket;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.spec.ECFieldFp;
+import java.security.spec.ECParameterSpec;
+import java.security.spec.ECPoint;
+import java.security.spec.EllipticCurve;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
@@ -26,25 +27,13 @@ import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
 
-import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.security.spec.ECFieldFp;
-import java.security.spec.ECParameterSpec;
-import java.security.spec.ECPoint;
-import java.security.spec.EllipticCurve;
-
-import javax.crypto.KeyAgreement;
-
 public class Server2 extends system.coordinator.Coordinator {
 
 	
 	private PrivateKey _privateKey;
 	private InterServerObjectWrapper _receivedObject;
 	private InterServerObjectWrapper _objectToSend;
+	private HashMap<Long, Key> keyMap;
 	
 	Server2(Hasher hasher, Users enrollees) {
 		
@@ -73,9 +62,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public KeyPair generateKeyPair() throws Exception{
-	
 		    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-
 		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDH", "BC");
 		    EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
 		        "fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
@@ -89,7 +76,7 @@ public class Server2 extends system.coordinator.Coordinator {
 
 		    keyGen.initialize(ecSpec, new SecureRandom());
 
-		    KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
+		    //KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
 		    KeyPair keyPair = keyGen.generateKeyPair();
 		    
 		    return keyPair;
@@ -193,10 +180,21 @@ public class Server2 extends system.coordinator.Coordinator {
 				
 		}
 		
+		// THIS NEEDS TO BE FIXED. I WILL DO THIS TOMORROW ie. Friday Morning 
+		// In short, this will be accidentally trying to send out data to the same 
+		// file descriptor that it just received from ie. the client which is not what we
+		// want
+//		ObjectOutputStream objOutput = new ObjectOutputStream(client.getOutputStream());
+//		objOutput.writeObject(_objectToSend);
+		
+		
+		
+
 	}
 	
 	public void enroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
 		Cipher cipher = Cipher.getInstance("ECDH", "BC");
+		this.keyMap.put(receivedObject.getUserID(), privateKey);
 		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
 		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
 			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
