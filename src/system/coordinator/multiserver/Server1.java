@@ -337,20 +337,24 @@ public class Server1 extends Server {
 
 	private InterServerObjectWrapper _receivedObject;
 
-	public void initialize() throws Exception{
+	public void initialize() {
+		try{
 		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
 		Socket client = null;
 
 		int state = 1;
 		while ( true ) {
-
+			System.out.println("State:"+state);
 			switch(state){
 			case 1:
 				System.out.println("Server 1 listening....");
 				client = S1.accept();
 				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
-				_receivedObject= (InterServerObjectWrapper) objIn.readObject();
+				System.out.println("GOT SHIT FROM THE CLIENT");
+
+				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
+				System.out.println("shit"+_receivedObject.getOrigin());
 				if (_receivedObject.getOrigin() == "client"){
 					state = 2;
 				}else{
@@ -358,12 +362,15 @@ public class Server1 extends Server {
 				}
 				break;
 			case 2:
+				System.out.println("Got to case 2");
 				setClientKey (_receivedObject);
 				ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
 				objOut.write(0);
 				state = 1; 
 				break;
 			case 3:
+				System.out.println("Got to case 3");
+
 				if (_receivedObject.isEnrolling()){
 					enroll(_receivedObject);
 					state = 4;
@@ -380,6 +387,9 @@ public class Server1 extends Server {
 				state = 1;
 				break;
 			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 

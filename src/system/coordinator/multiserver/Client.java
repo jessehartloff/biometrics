@@ -5,10 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
@@ -23,6 +21,7 @@ import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
@@ -105,6 +104,9 @@ public class Client extends Server{
 		toS1.setTesting(false);
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
+		
+
+		
 		try{
 			Cipher cipher = Cipher.getInstance("ECIES","BC");
 
@@ -114,8 +116,8 @@ public class Client extends Server{
 			Template encryptedBiometric = new Template();
 			for (BigInteger bigInt : template.getHashes()) {
 				encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
+				
 			}
-			// 4.) sent e(Template) to Server_2
 			toS2.setContents(encryptedBiometric);
 
 		}catch(Exception e){
@@ -124,22 +126,35 @@ public class Client extends Server{
 
 		toS2.setEnrolling(true);
 		toS2.setTesting(false);
-		toS1.setOrigin("client");
+		toS2.setOrigin("client");
 		// 2a.) generate UUID for verification
 		toS2.setUserID(userID);
 
 		try{	
 			S1Out.writeObject(toS1);
+			ServerSocket client = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+			System.out.println("before first accept");
+			Socket c = client.accept();
+			System.out.println("first accept!");
+			S1In = new ObjectInputStream(c.getInputStream());
+			int check =  S1In.read();
+			// 4.) sent e(Template) to Server_2
 			S2Out.writeObject(toS2);
+			
+			//5.) wait for server 1's response
+			c = client.accept();
+			System.out.println("second accept!");
+			
+			S1In = new ObjectInputStream(c.getInputStream());
+			InterServerObjectWrapper result  = (InterServerObjectWrapper)  S1In.readObject();
 
-		} catch (Exception e){}
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 
 
-		//5.) wait for server 1's response
-		try{
-			InterServerObjectWrapper result = (InterServerObjectWrapper) S1In.readObject();
 
-		} catch(Exception e){}
 
 	}
 

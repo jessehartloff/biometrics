@@ -9,7 +9,10 @@ import java.net.Socket;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Security;
 import java.security.spec.ECFieldFp;
@@ -20,20 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.crypto.Cipher;
-
-import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.security.spec.ECFieldFp;
-import java.security.spec.ECParameterSpec;
-import java.security.spec.ECPoint;
-import java.security.spec.EllipticCurve;
-
-
-
+import javax.crypto.NoSuchPaddingException;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
@@ -45,7 +35,7 @@ import system.hasher.Hasher;
 public class Server2 extends system.coordinator.Coordinator {
 
 	
-	private PrivateKey _privateKey;
+	private PublicKey publicKey;
 	private InterServerObjectWrapper _receivedObject;
 	private InterServerObjectWrapper _objectToSend;
 	private HashMap<Long, Key> keyMap;
@@ -152,7 +142,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
 		for (Template fingerprint : fingerprintList){
 			for (BigInteger minutiaPoint : fingerprint.getHashes()){
-				minutiaPoint = encrypt(_privateKey, minutiaPoint,cipher);
+				minutiaPoint = encrypt(publicKey, minutiaPoint,cipher);
 			}
 		}
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
@@ -162,7 +152,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public void initialize() throws Exception{
-		_privateKey = generateKeyPair().getPrivate();
+		publicKey = generateKeyPair().getPublic();
 		keyMap = new HashMap<Long, Key>();
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
 		Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
@@ -172,6 +162,8 @@ public class Server2 extends system.coordinator.Coordinator {
 		
 		int state = 1; 
 		while (true) {
+			System.out.println("State:"+state);
+
 			switch (state){
 			case 1:
 				System.out.println("Server 2 listening....");
@@ -186,13 +178,13 @@ public class Server2 extends system.coordinator.Coordinator {
 				}
 				break;
 			case 2:
-				enroll(_receivedObject, _privateKey);
+				enroll(_receivedObject, publicKey);
 				ObjectOutputStream objOutputEnroll = new ObjectOutputStream(S1.getOutputStream());
 				objOutputEnroll.writeObject(_objectToSend);
 				state = 1;
 				break;
 			case 3:
-				test(_receivedObject, _privateKey);
+				test(_receivedObject, publicKey);
 				ObjectOutputStream objOutputTest = new ObjectOutputStream(S1.getOutputStream());
 				objOutputTest.writeObject(_objectToSend);
 				state = 1;
@@ -213,36 +205,49 @@ public class Server2 extends system.coordinator.Coordinator {
 
 	}
 	
-	public void enroll(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+	public void enroll(InterServerObjectWrapper receivedObject, PublicKey publicKey) throws Exception{
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		System.out.println("adding bouncy castle");
 		Cipher cipher = Cipher.getInstance("ECIES", "BC");
 		System.out.println("got the cipher!");
-		System.out.println(receivedObject.getUserID());
-		System.out.println(privateKey);
-		this.keyMap.put(receivedObject.getUserID(), privateKey);
+		this.keyMap.put(receivedObject.getUserID(), publicKey);
 		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
+		System.out.println(receivedEncryptedFP);
 		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
+			minutiaPoint = encrypt(publicKey, minutiaPoint, cipher);
 		}
 		_objectToSend = new InterServerObjectWrapper();
 		_objectToSend.setContents(receivedEncryptedFP);
 		_objectToSend.setOrigin("server 2");
 	}
 	
-	public void test(InterServerObjectWrapper receivedObject, Key privateKey) throws Exception{
+	public void test(InterServerObjectWrapper receivedObject, PublicKey publicKey){
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
-		Cipher cipher = Cipher.getInstance("ECIES","BC");
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("ECIES","BC");
+		
 		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
 		for (Template fingerprint : fingerprintList){
 			for (BigInteger minutiaPoint : fingerprint.getHashes()){
-				minutiaPoint = encrypt(privateKey, minutiaPoint,cipher);
+				minutiaPoint = encrypt(publicKey, minutiaPoint,cipher);
 			}
 		}
 		_objectToSend = new InterServerObjectWrapper();
 		_objectToSend.setContents(fingerprintList);
 		_objectToSend.setOrigin("server 2");
+		
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
