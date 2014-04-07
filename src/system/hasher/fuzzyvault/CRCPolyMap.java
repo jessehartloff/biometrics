@@ -33,15 +33,15 @@ public class CRCPolyMap {
 	public static ArrayList<BigInteger> getCRCPoly(int totalBits){
 		return CRCPolyMap.crcMap.get(totalBits-1);
 	}
-	static BigInteger[] crc1 = { BigInteger.ONE, BigInteger.ONE };
-	static BigInteger[] crc2 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };
-	static BigInteger[] crc3 = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE };
-	static BigInteger[] crc4 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };
-	static BigInteger[] crc5 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE };
-	static BigInteger[] crc6 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
-	static BigInteger[] crc7 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
-	static BigInteger[] crc8 = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
-	static BigInteger[] crc9 = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
+	static BigInteger[] crc1  = { BigInteger.ONE, BigInteger.ONE };
+	static BigInteger[] crc2  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };
+	static BigInteger[] crc3  = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE };
+	static BigInteger[] crc4  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };
+	static BigInteger[] crc5  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE };
+	static BigInteger[] crc6  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
+	static BigInteger[] crc7  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
+	static BigInteger[] crc8  = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
+	static BigInteger[] crc9  = { BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
 	static BigInteger[] crc10 = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE };
 	static BigInteger[] crc11 = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ONE };
 	static BigInteger[] crc12 = { BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ONE };

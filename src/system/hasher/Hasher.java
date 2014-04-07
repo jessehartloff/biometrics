@@ -4,6 +4,7 @@
 package system.hasher;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;

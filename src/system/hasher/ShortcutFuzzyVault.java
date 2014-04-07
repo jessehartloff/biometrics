@@ -1,6 +1,7 @@
 package system.hasher;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -116,9 +117,15 @@ public class ShortcutFuzzyVault extends Hasher {
 		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
 
 		for (BigInteger bigInt : template.getHashes()) {
-			ArrayList<IndexingPoint> binPoints = indexingStructure.getBinContents(bigInt);
-			if (binPoints != null) {
-				indexingPoints.addAll(binPoints);
+			ArrayList<IndexingPoint> binPoints;
+			try {
+				binPoints = indexingStructure.getBinContents(bigInt);
+				if (binPoints != null) {
+					indexingPoints.addAll(binPoints);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		

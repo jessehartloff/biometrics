@@ -1,5 +1,6 @@
 package system.coordinator;
 
+import java.sql.SQLException;
 import java.util.Collections;
 
 import system.allcommonclasses.commonstructures.RawScores;

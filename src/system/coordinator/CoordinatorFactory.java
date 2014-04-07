@@ -9,6 +9,7 @@ import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.indexingstructure.RAMStructure;
+import system.allcommonclasses.indexingstructure.SQLStructure;
 //import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.coordinator.Coordinator;
 import system.coordinator.DefaultTesting;
@@ -108,9 +109,12 @@ public class CoordinatorFactory {
 		switch(IndexingCoordinatorEnumerator.valueOf(AllIndexingCoordinatorSettings.getIndexingCoordinator())){
 		case RAMINDEXING:
 			return new IndexTesting(hasher, users, new RAMStructure());
-//		case SQLINDEXING:
-//			firstCoordinator = addToFront(new IndexTesting(hasher, users, new SQLStructure()), firstCoordinator);
-//		break;		
+		case SQLINDEXING:
+			try {
+				return new IndexTesting(hasher, users, new SQLStructure());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		case NONE:
 			return null;				
 		default:

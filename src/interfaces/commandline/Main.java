@@ -10,6 +10,16 @@ import settings.hashersettings.HasherSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
+
+import java.math.BigInteger;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import system.allcommonclasses.indexingstructure.SQLStructure;
+import system.allcommonclasses.utilities.SQLFunctions;
+import system.hasher.fuzzyvault.CRC;
+import java.lang.*;
 import system.method.fingerprintmethods.NgonsAllRotations;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
@@ -17,9 +27,28 @@ import system.method.fingerprintmethods.NgonsAllRotations;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		
-//		SQLStructure blah = new SQLStructure();
-//		blah.getSqlFunctions().connectToDatabase();
+		SQLFunctions myfs = new SQLFunctions("mysql");
+		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
+		myfs.executeMyQueryNoReturn("use temp_database;");
+		myfs.executeMyQueryNoReturn("create table if not exists watch (company text, owner text);");
+//		myfs.executeMyQueryNoReturn("insert into watch values (\"Rolex\", \"Jim\");");
+		ResultSet rs2 = myfs.executeMyQuery("select * from watch;");
+		while(rs2.next()){
+			System.out.println(rs2.getString(1) + ' ' + rs2.getString(2));
+		}
+		myfs.executeMyQueryNoReturn("use fec;");
+		ResultSet rs = myfs.executeMyQuery("select * from blah");
+		while(rs.next()){
+			System.out.println(rs.getString(1)+' '+rs.getString(2));
+//			System.out.println(rs.toString());
+		}
+//		myfs.executeMyQueryNoReturn("create table plastics (length int);");
+//		myfs.executeMyQueryNoReturn("insert into plastics value (55);");
+		ResultSet rs1 = myfs.executeMyQuery("select * from plastics where length < 55");
+		while(rs1.next()){
+			System.out.println(rs1.getString("length"));
+		}
+		System.exit(0);
 //		int fieldSize = 13;
 //		CRCPolynomial crcPoly = new CRCPolynomial();
 //		crcPoly = CRCPolynomial.createIrreducible(fieldSize);

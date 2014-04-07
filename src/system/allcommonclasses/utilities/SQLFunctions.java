@@ -3,54 +3,29 @@ package system.allcommonclasses.utilities;
 import java.sql.*;
 import java.util.ArrayList;
 
-//very basic sql stuff, quering database
-//creating tables, anywhere where we use sql, put it in her
-//hide all sql details--don't want to worry about eg details of connection
 public class SQLFunctions {
 
 	private Statement stmt;
 	private Connection dbCon;
 	private ResultSet rs;
-	private String dbURL = "jdbc:mysql://localhost:3306;DatabaseName=";//change to '/biometrics'
+	private int rsNR;//"result set no return
+	private String dbURL = "jdbc:mysql://localhost:3306/";
 	private String username ="root";
     private String password = "biometrics";
     
-	public SQLFunctions(String databaseName){
+	public SQLFunctions(String database){
+		this.dbURL += database;	
         dbCon = null;
-        stmt = null;
-        rs = null;
-	}
-	
-	public void connectToDatabase() throws ClassNotFoundException{
 		try {
-			Class.forName("Connector/J");
             dbCon = DriverManager.getConnection(dbURL, username, password);	     
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+        stmt = null;
+        rs = null;
 	}
-	
-	public void createTable(String tableName, Object attributeOne, Object attributeTwo){
-		String createTableStatement = "create table "+tableName+"("+attributeOne+' '+' '+attributeTwo+' '+attributeOne.getClass().toString()+";";
-		try {
-			this.stmt = this.dbCon.prepareStatement(createTableStatement);
-			this.rs = this.stmt.executeQuery(createTableStatement);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	//add to table
-	
-	public void dropTable(String tableName){
-		String createTableStatement = "drop table "+tableName+";";
-		try {
-			this.stmt = this.dbCon.prepareStatement(createTableStatement);
-			this.rs = this.stmt.executeQuery(createTableStatement);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
+	//Use this whenever we want to return something
 	public ResultSet executeMyQuery(String query){
 		try {
 			this.stmt = this.dbCon.prepareStatement(query);
@@ -61,6 +36,16 @@ public class SQLFunctions {
 		return rs;
 	}
 	
+	/*Use this for statements like "insert", "delete", "update"
+	 */
+	public void executeMyQueryNoReturn(String query){
+		try {
+			this.stmt = this.dbCon.prepareStatement(query);
+			this.rsNR = this.stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
     public String getDbURL() {
 		return dbURL;
@@ -69,4 +54,5 @@ public class SQLFunctions {
 	public void setDbURL(String db) {
 		this.dbURL += db;
 	}
+	
 }

@@ -1,6 +1,7 @@
 package system.hasher;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class IndexingFunctions {
 
 	
 
-	public Long findIndexingRank(Template template, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) {
+	public Long findIndexingRank(Template template, Long testID, IndexingStructure indexingStructure, Long numberEnrolled) throws SQLException {
 	
 		Long rank = 0L;
 		

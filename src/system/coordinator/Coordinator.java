@@ -1,4 +1,5 @@
 package system.coordinator;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import system.allcommonclasses.*;
@@ -34,6 +35,7 @@ public abstract class Coordinator {
 	 * Runs the tests to evaluate the system.
 	 * 
 	 * @return The relevant scores from the tests. Could be FAR/FRR, rankings, histogram, etc.
+	 * @throws SQLException 
 	 */
 	public abstract RawScores run();
 	
