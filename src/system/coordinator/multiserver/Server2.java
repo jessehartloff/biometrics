@@ -38,6 +38,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	private PublicKey publicKey;
 	private InterServerObjectWrapper _receivedObject;
 	private InterServerObjectWrapper _objectToSend;
+	private Socket S1;
 	private HashMap<Long, Key> keyMap;
 	
 	public Server2(Hasher hasher, Users enrollees) {
@@ -155,8 +156,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		publicKey = generateKeyPair().getPublic();
 		keyMap = new HashMap<Long, Key>();
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
-		Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
-								ServerOneSettings.getInstance().portNumber().getValue().intValue());
+		
 		ServerSocket serv_socket = new ServerSocket(port);
 		Socket client = null;
 		
@@ -169,8 +169,17 @@ public class Server2 extends system.coordinator.Coordinator {
 				System.out.println("Server 2 listening....");
 
 				client = serv_socket.accept();
+				System.out.println("Server 2 has accepted the client");
 				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+				System.out.println("S2 inStream made");
 				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
+				System.out.println("S2 object read");
+				System.out.println(_receivedObject.getOrigin());
+				System.out.println(_receivedObject.getContents());
+
+				System.out.println(_receivedObject.isEnrolling());
+				System.out.println(_receivedObject.getUserID());
+
 				if (_receivedObject.isEnrolling()){
 					state = 2;
 				}else {
@@ -178,15 +187,21 @@ public class Server2 extends system.coordinator.Coordinator {
 				}
 				break;
 			case 2:
+				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
+						ServerOneSettings.getInstance().portNumber().getValue().intValue());
 				enroll(_receivedObject, publicKey);
 				ObjectOutputStream objOutputEnroll = new ObjectOutputStream(S1.getOutputStream());
 				objOutputEnroll.writeObject(_objectToSend);
+				S1.close();
 				state = 1;
 				break;
 			case 3:
+				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
+						ServerOneSettings.getInstance().portNumber().getValue().intValue());
 				test(_receivedObject, publicKey);
 				ObjectOutputStream objOutputTest = new ObjectOutputStream(S1.getOutputStream());
 				objOutputTest.writeObject(_objectToSend);
+				S1.close();
 				state = 1;
 				break;
 			}
@@ -219,6 +234,8 @@ public class Server2 extends system.coordinator.Coordinator {
 		_objectToSend = new InterServerObjectWrapper();
 		_objectToSend.setContents(receivedEncryptedFP);
 		_objectToSend.setOrigin("server 2");
+		_objectToSend.setEnrolling(true);
+		_objectToSend.setUserID(receivedObject.getUserID());
 	}
 	
 	public void test(InterServerObjectWrapper receivedObject, PublicKey publicKey){
@@ -237,6 +254,8 @@ public class Server2 extends system.coordinator.Coordinator {
 		_objectToSend = new InterServerObjectWrapper();
 		_objectToSend.setContents(fingerprintList);
 		_objectToSend.setOrigin("server 2");
+		_objectToSend.setTesting(true);
+		_objectToSend.setUserID(receivedObject.getUserID());
 		
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block

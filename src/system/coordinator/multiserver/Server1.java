@@ -338,6 +338,7 @@ public class Server1 extends Server {
 	private InterServerObjectWrapper _receivedObject;
 
 	public void initialize() {
+		_map = new HashMap<Long,Template>();
 		try{
 		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
@@ -351,11 +352,14 @@ public class Server1 extends Server {
 				System.out.println("Server 1 listening....");
 				client = S1.accept();
 				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+				
 				System.out.println("GOT SHIT FROM THE CLIENT");
 
 				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
+				System.out.println(System.currentTimeMillis());
+
 				System.out.println("shit"+_receivedObject.getOrigin());
-				if (_receivedObject.getOrigin() == "client"){
+				if (_receivedObject.getOrigin().equals("client")){
 					state = 2;
 				}else{
 					state = 3;
@@ -366,10 +370,19 @@ public class Server1 extends Server {
 				setClientKey (_receivedObject);
 				ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
 				objOut.write(0);
+				objOut.flush();
+				System.out.println("Sent received response to Client");
 				state = 1; 
 				break;
 			case 3:
 				System.out.println("Got to case 3");
+				client.close();
+				client = new Socket(ClientSettings.getInstance().ip().getValue(), ClientSettings.getInstance().portNumber().getValue().intValue());
+				System.out.println(_receivedObject.getOrigin());
+				System.out.println(_receivedObject.getContents());
+
+				System.out.println(_receivedObject.isEnrolling());
+				System.out.println(_receivedObject.getUserID());
 
 				if (_receivedObject.isEnrolling()){
 					enroll(_receivedObject);
@@ -384,6 +397,8 @@ public class Server1 extends Server {
 			case 4 :
 				ObjectOutputStream objEnrollOut = new ObjectOutputStream(client.getOutputStream());
 				objEnrollOut.write(1);
+				objEnrollOut.flush();
+				System.out.println("Enrolled that ish");
 				state = 1;
 				break;
 			}

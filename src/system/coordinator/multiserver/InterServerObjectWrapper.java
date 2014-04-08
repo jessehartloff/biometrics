@@ -1,19 +1,40 @@
 package system.coordinator.multiserver;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class InterServerObjectWrapper implements Serializable{
 
 
-	private String origin;
+	protected String origin;
 	private Object contents;
-	private boolean testing;
-	private boolean enrolling;
-	private Long userID;
+	protected boolean testing;
+	protected boolean enrolling;
+	protected Long userID;
 	
 	public InterServerObjectWrapper(){
 		
 	}
+	
+	protected void writeObject(ObjectOutputStream out) throws IOException {	
+		out.writeBoolean(testing);
+		out.writeBoolean(enrolling);
+		out.writeLong(userID);
+		out.writeObject(origin);
+		out.writeObject(contents);
+	}
+	protected void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		testing = in.readBoolean();
+		enrolling = in.readBoolean();
+		userID = in.readLong();
+		origin = (String) in.readObject();
+		System.out.println("My ID "+userID);
+		contents = in.readObject();
+	}
+	
+	
 	
 	public String getOrigin() {
 		return origin;

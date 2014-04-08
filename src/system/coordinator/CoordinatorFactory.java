@@ -8,6 +8,7 @@ import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserve
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.RAMStructure;
+import system.coordinator.multiserver.Client;
 import system.coordinator.multiserver.Server1;
 import system.coordinator.multiserver.Server2;
 import system.coordinator.multiserver.SuperTestingMetaClient;
@@ -38,7 +39,7 @@ public class CoordinatorFactory {
 			case SERVER2:
 				return new Server2(hasher, null);
 			case CLIENT:
-//				return new Client(null, null);
+				return new Client(hasher, users);
 			case SUPERTESTINGMETACLIENT:
 				return new SuperTestingMetaClient(hasher, users);
 			default:

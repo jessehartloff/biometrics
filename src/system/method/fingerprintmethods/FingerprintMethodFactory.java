@@ -46,6 +46,9 @@ public class FingerprintMethodFactory{
 			case NGONSSINGLEENROLLALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new NgonsSingleEnrollAllRotations());
 				break;
+			case STARS:
+				Fingerprint.setFingerprintMethod(new Stars());
+				break;
 			default:
 				System.out.println("Hey, you didn't choose a fingerprint method");
 				Fingerprint.setFingerprintMethod(new Triangles());
@@ -55,7 +58,7 @@ public class FingerprintMethodFactory{
 	
 	public enum FingerprintEnumerator{
 		MINUTIAEMETHOD,PATHSMETHOD,TRIANGLES,TRIPLESOFTRIANGLES,
-		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS,NGONSSINGLEENROLLALLROTATIONS; 
+		TRIPLESOFTRIANGLESALLROTATIONS,NGONS,NGONSALLROTATIONS, PRINTS,NGONSSINGLEENROLLALLROTATIONS,STARS; 
 	}
 	
 }

@@ -35,24 +35,26 @@ public class Client extends Server{
 	private ObjectOutputStream S2Out;
 	private ObjectInputStream S1In;
 	private InputStreamReader S1Reader;
+	private Socket S1;
+	private Socket S2;
 
 
 	public Client(Hasher hasher, Users enrollees) {
 		super(hasher, enrollees);
 		try {
 			System.out.println("Connecting to Socket 1...");
-			Socket S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
-			System.out.println("Connecting to Socket 2...");
-			Socket S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
-			System.out.println("Getting Socket 1 Outputstream...");
+			S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+//			System.out.println("Connecting to Socket 2...");
+//			Socket S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
 
 			S1Out = new ObjectOutputStream (S1.getOutputStream());
-			System.out.println("Getting Socket 2 Outputstream...");
+			System.out.println("Got Socket 1 Outputstream...");
+			
 
-			S2Out = new ObjectOutputStream (S2.getOutputStream());
-			System.out.println("Getting Socket 2 Inputstream...");
 
-			//S1In = new ObjectInputStream(S1.getInputStream());
+
+			//System.out.println("Getting Socket 2 Inputstream...");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,6 +89,14 @@ public class Client extends Server{
 
 	@Override
 	public RawScores run() {
+		long start = System.currentTimeMillis();
+		enroll(hasher.makeEnrollTemplate(users.users.get(0).readings.get(0)), users.users.get(0).id);
+		long stop = System.currentTimeMillis();
+		System.out.println("enrolled in "+ (stop-start) + "sec");
+		test(hasher.makeTestTemplates(users.users.get(0).readings.get(0)), users.users.get(0).id);
+		System.out.println("tested!!");
+
+		System.exit(0);
 		return null;
 	}
 
@@ -99,7 +109,7 @@ public class Client extends Server{
 		PrivateKey privateKey = pair.getPrivate();
 
 		// 2.) send d(u) [private key] to Server_1
-		toS1.setContents(publicKey.getEncoded());
+		toS1.setContents(privateKey);
 		toS1.setEnrolling(true);
 		toS1.setTesting(false);
 		toS1.setUserID(userID);
@@ -131,22 +141,32 @@ public class Client extends Server{
 		toS2.setUserID(userID);
 
 		try{	
+			System.out.println(System.currentTimeMillis());
 			S1Out.writeObject(toS1);
-			ServerSocket client = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
-			System.out.println("before first accept");
-			Socket c = client.accept();
-			System.out.println("first accept!");
-			S1In = new ObjectInputStream(c.getInputStream());
+//			S1Out.flush();
+			System.out.println("Sent shit to S1");
+//			S1Out.close();
+			S1In = new ObjectInputStream(S1.getInputStream());
+			System.out.println("Made input S1 steam and am waiting on response");
 			int check =  S1In.read();
+			System.out.println("Sent encryption to S1?" + check);
+//			S1In.close();
+			S1.close();
 			// 4.) sent e(Template) to Server_2
+			S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+			S2Out = new ObjectOutputStream (S2.getOutputStream());
 			S2Out.writeObject(toS2);
-			
+			System.out.println("Sent shizz to server 2 Outputstream...");
 			//5.) wait for server 1's response
-			c = client.accept();
-			System.out.println("second accept!");
+			S2.close();
+			ServerSocket client = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+//			System.out.println("before first accept");
+			System.out.println("Waiting for S1's decision");
+			Socket c = client.accept();
 			
 			S1In = new ObjectInputStream(c.getInputStream());
-			InterServerObjectWrapper result  = (InterServerObjectWrapper)  S1In.readObject();
+			int result  =  S1In.read();
+			System.out.println("Successfully Enrolled... bitches!");
 
 
 		} catch (Exception e){
