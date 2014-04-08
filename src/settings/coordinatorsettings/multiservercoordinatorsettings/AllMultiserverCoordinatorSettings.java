@@ -58,6 +58,7 @@ public class AllMultiserverCoordinatorSettings extends ComboBoxSettings {
 	protected void addALLOptions() {
 		this.addToOptions(NoCoordinator.getInstance());
 		this.addToOptions(SuperTestingMetaClientSettings.getInstance());
+		this.addToOptions(TestingSTMCSettings.getInstance());
 		this.addToOptions(ServerOneSettings.getInstance());
 		this.addToOptions(ServerTwoSettings.getInstance());
 		this.addToOptions(ClientSettings.getInstance());

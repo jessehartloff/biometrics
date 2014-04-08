@@ -12,6 +12,7 @@ import system.coordinator.multiserver.Client;
 import system.coordinator.multiserver.Server1;
 import system.coordinator.multiserver.Server2;
 import system.coordinator.multiserver.SuperTestingMetaClient;
+import system.coordinator.multiserver.TestingSTMC;
 import system.allcommonclasses.indexingstructure.SQLStructure;
 //import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.coordinator.Coordinator;
@@ -39,9 +40,11 @@ public class CoordinatorFactory {
 			case SERVER2:
 				return new Server2(hasher, null);
 			case CLIENT:
-				return new Client(hasher, users);
+				return new Client();
 			case SUPERTESTINGMETACLIENT:
-				return new SuperTestingMetaClient(hasher, users);
+				return new SuperTestingMetaClient(hasher, users, TestGeneratorFactory.makeTestGenerator());
+			case TESTINGSTMC:
+				return new TestingSTMC(hasher, users);
 			default:
 				return null;
 		}
@@ -160,7 +163,7 @@ public class CoordinatorFactory {
 	}
 	
 	public enum MultiserverCoordinatorEnumerator{
-		SUPERTESTINGMETACLIENT, SERVER1, SERVER2, CLIENT, NONE;
+		SUPERTESTINGMETACLIENT, TESTINGSTMC, SERVER1, SERVER2, CLIENT, NONE;
 	}
 	
 	

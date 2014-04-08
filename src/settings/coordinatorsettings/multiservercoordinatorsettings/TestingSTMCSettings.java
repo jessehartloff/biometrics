@@ -7,21 +7,18 @@ import java.util.LinkedHashMap;
 
 import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
-import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingSettings;
-import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.settingsvariables.SettingsLong;
 
-public class SuperTestingMetaClientSettings extends CoordinatorSettings{
+public class TestingSTMCSettings extends CoordinatorSettings{
 
 	@Override
 	public String getCoordinator() {
-		return "SUPERTESTINGMETACLIENT";
+		return "TESTINGSTMC";
 	}
 
 	@Override
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10000));
-		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 	}
 
 	public SettingsLong portNumber(){
@@ -30,12 +27,12 @@ public class SuperTestingMetaClientSettings extends CoordinatorSettings{
 
 	
 	//Singleton
-	private static SuperTestingMetaClientSettings instance;
-	private SuperTestingMetaClientSettings(){
+	private static TestingSTMCSettings instance;
+	private TestingSTMCSettings(){
 	}
-	public static SuperTestingMetaClientSettings getInstance(){
+	public static TestingSTMCSettings getInstance(){
 		if(instance == null){
-			instance = new SuperTestingMetaClientSettings();
+			instance = new TestingSTMCSettings();
 		}
 		return instance;
 	}
@@ -49,7 +46,7 @@ public class SuperTestingMetaClientSettings extends CoordinatorSettings{
 	
 	@Override
 	public String getLabel(){
-		return "SuperTestingMetaClient";
+		return "TestingSTMC";
 	}
 
 }

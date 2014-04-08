@@ -63,10 +63,9 @@ public class Server2 extends system.coordinator.Coordinator {
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			
 			encryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
-		    System.out.println("Encrypted!");
+//		    System.out.println("Encrypted!");
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
@@ -74,6 +73,7 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public KeyPair generateKeyPair() throws Exception{
+		
 		    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
 		    System.out.println("Generated key pair");
@@ -83,7 +83,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
 
 		    ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-		    		"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+		    	"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
 		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
 
@@ -93,8 +93,6 @@ public class Server2 extends system.coordinator.Coordinator {
 		    KeyPair keyPair = keyGen.generateKeyPair();
 		    
 		    return keyPair;
-		    
-		    
 		    
 	}
 	
@@ -272,14 +270,7 @@ public class Server2 extends system.coordinator.Coordinator {
 		_objectToSend.setTesting(true);
 		_objectToSend.setUserID(receivedObject.getUserID());
 		
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

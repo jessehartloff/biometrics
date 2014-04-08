@@ -39,8 +39,8 @@ public class Client extends Server{
 	private Socket S2;
 
 
-	public Client(Hasher hasher, Users enrollees) {
-		super(hasher, enrollees);
+	public Client() {
+		super(null, null);
 		try {
 			System.out.println("Connecting to Socket 1...");
 			S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
@@ -89,12 +89,12 @@ public class Client extends Server{
 
 	@Override
 	public RawScores run() {
-		long start = System.currentTimeMillis();
-		enroll(hasher.makeEnrollTemplate(users.users.get(0).readings.get(0)), users.users.get(0).id);
-		long stop = System.currentTimeMillis();
-		System.out.println("enrolled in "+ (stop-start) + "sec");
-		test(hasher.makeTestTemplates(users.users.get(0).readings.get(0)), users.users.get(0).id);
-		System.out.println("tested!!");
+//		long start = System.currentTimeMillis();
+//		enroll(hasher.makeEnrollTemplate(users.users.get(0).readings.get(0)), users.users.get(0).id);
+//		long stop = System.currentTimeMillis();
+//		System.out.println("enrolled in "+ (stop-start) + "sec");
+//		test(hasher.makeTestTemplates(users.users.get(0).readings.get(0)), users.users.get(0).id);
+//		System.out.println("tested!!");
 
 		System.exit(0);
 		return null;
@@ -115,8 +115,6 @@ public class Client extends Server{
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
 		
-
-		
 		try{
 			Cipher cipher = Cipher.getInstance("ECIES","BC");
 
@@ -126,7 +124,6 @@ public class Client extends Server{
 			Template encryptedBiometric = new Template();
 			for (BigInteger bigInt : template.getHashes()) {
 				encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
-				
 			}
 			toS2.setContents(encryptedBiometric);
 
