@@ -114,10 +114,8 @@ public class Binning extends Quantizer {
 		Feature toReturn = Biometric.method.getBlankFeatureForTraining();
 		for (Entry<String, Variable> entry : toReturn.variables.entrySet()) {
 			Variable variable = entry.getValue();
-			Double randomBinValue = Math.floor(Math.random()
-					* variable.variableSettings.getBins().doubleValue());
-			toReturn.quantizedValues.put(entry.getKey(),
-					randomBinValue.longValue());
+			Double randomBinValue = Math.floor(Math.random() * variable.variableSettings.getBins().doubleValue());
+			toReturn.quantizedValues.put(entry.getKey(), randomBinValue.longValue());
 		}
 		// TODO fart
 		return toReturn;
@@ -128,13 +126,9 @@ public class Binning extends Quantizer {
 		BigInteger toReturn = BigInteger.ZERO;
 		int i = 0;
 		for (String varName : randomFeature.variables.keySet()) {
-			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits()
-					.intValue());
+			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
 			// FIXME - Matt: getPrequantizedValue() returns NULL
-			Long quantizedValue = variableSettings.get(i)
-					.findBin(
-							randomFeature.variables.get(varName)
-									.getPrequantizedValue());
+			Long quantizedValue = variableSettings.get(i).findBin(randomFeature.variables.get(varName).getPrequantizedValue());
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 			i++;
 		}
