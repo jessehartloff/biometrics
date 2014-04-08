@@ -10,10 +10,9 @@ public abstract class IndexingStructure {
 	
 	public abstract void add(BigInteger bin, IndexingPoint pointToAdd);
 	
-	public abstract ArrayList<IndexingPoint> getBinContents(BigInteger bin) throws SQLException;
+	public abstract ArrayList<IndexingPoint> getBinContents(BigInteger bin);
 
-	//destroy table functionality
-	// remove point?
-	// remember enrollees or number of enrollees?
+	public abstract void add(ArrayList<IndexingPoint> indexingPoints);
 	
+	public abstract ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins);	
 }

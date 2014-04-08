@@ -34,9 +34,29 @@ public class SQLStructure extends IndexingStructure{
 	public void add(BigInteger bin, IndexingPoint pointToAdd) {
 		this.sqlFunctions.executeMyQueryNoReturn("insert into indexing values("+pointToAdd.getValue().toString()+", "+pointToAdd.getUserID().toString()+");");
 	}
+	
+	@Override
+	public void add(ArrayList<IndexingPoint> indexingPoints){
+		int arraySize = indexingPoints.size();
+		while(arraySize != 0){
+			int sizeOfQuery = 0;
+			String query = "insert into indexing values ";
+			for(IndexingPoint pointToAdd : indexingPoints){
+				query += "("+pointToAdd.getValue().toString()+", "+pointToAdd.getUserID().toString()+"),";
+				sizeOfQuery += 1;
+				if(sizeOfQuery == 1000 || sizeOfQuery == arraySize){
+					arraySize -= sizeOfQuery;
+					continue;
+				}
+			}
+	        query = query.substring(0, query.length()-1);
+			query += ";";
+			this.sqlFunctions.executeMyQueryNoReturn(query);
+		}
+	}
 
 	@Override
-	public ArrayList<IndexingPoint> getBinContents(BigInteger bin) throws SQLException {
+	public ArrayList<IndexingPoint> getBinContents(BigInteger bin) {
 		ArrayList<IndexingPoint> binContents = new ArrayList<IndexingPoint>();
 		try{
 			ResultSet rs = this.sqlFunctions.executeMyQuery("select * from indexing where BI = "+bin.toString()+";");
@@ -52,6 +72,12 @@ public class SQLStructure extends IndexingStructure{
 			e.printStackTrace();
 		}
 		return binContents;
+	}
+	
+	@Override
+	public ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins){
+		
+		return null;
 	}
 
 }

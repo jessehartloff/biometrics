@@ -27,4 +27,13 @@ public class RAMStructure extends IndexingStructure {
 		return indexingStructure.get(bin);
 	}
 
+	@Override
+	public void add(ArrayList<IndexingPoint> indexingPoints) {
+	}
+
+	@Override
+	public ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins) {
+		return null;
+	}
+
 }

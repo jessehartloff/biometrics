@@ -93,13 +93,15 @@ public class ShortcutFuzzyVault extends Hasher {
 	public void addToIndexingStructure(Biometric enrollBiometric, Long enrollID, IndexingStructure indexingStructure) {
 
 		Template template = this.makeEnrollTemplate(enrollBiometric);
+		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
 		for (BigInteger bigInt : template.getHashes()) {
 			IndexingPoint pointToAdd = new IndexingPoint();
 			pointToAdd.setValue(bigInt);
 			pointToAdd.setUserID(enrollID);
-			indexingStructure.add(bigInt, pointToAdd);
+//			indexingStructure.add(bigInt, pointToAdd);
+			indexingPoints.add(pointToAdd);
 		}
-
+		indexingStructure.add(indexingPoints);
 	}
 
 	@Override
@@ -116,15 +118,15 @@ public class ShortcutFuzzyVault extends Hasher {
 
 		for (BigInteger bigInt : template.getHashes()) {
 			ArrayList<IndexingPoint> binPoints;
-			try {
 				binPoints = indexingStructure.getBinContents(bigInt);
+				//Jim
+//				ArrayList<BigInteger> bins = new ArrayList<BigInteger>();
+//				bins.add(bigInt);
+//				binPoints = indexingStructure.getBinContents(bins);
+				//end Jim
 				if (binPoints != null) {
 					indexingPoints.addAll(binPoints);
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();

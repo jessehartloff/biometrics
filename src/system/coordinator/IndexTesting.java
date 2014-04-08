@@ -45,6 +45,7 @@ public class IndexTesting extends Coordinator {
 //				scores.indexRankings.add(hasher.findIndexingRank(user.readings.get(i), new Long(user.id), indexingStructure, numberEnrolled));
 			}
 			indexID++;
+			System.out.println("Checking indexing structure: " + (indexID * 100.0) / (total * 1.0) + "%");
 		}
 
 		Collections.sort(scores.indexRankings);
