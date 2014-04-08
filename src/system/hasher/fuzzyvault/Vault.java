@@ -38,23 +38,8 @@ public class Vault {
 	 *            set of BigIntegers representing z-values only
 	 */
 	public void lock(Template enrollingTemplate) {
-		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against
-																// making a
-																// vault more
-																// than once
-		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
-		this.hashOfPolynomial = secretPoly.computeHash();
-		
-		// add the genuine points to vaultPoints
-		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
-			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
-			genuinePoint.setZ(bigInt);
-			genuinePoint.setGamma(secretPoly.evaluateAt(bigInt));
-			genuinePoint.setChaff(false);
-			this.vaultPoints.add(genuinePoint);
 
-//			System.out.println(genuinePoint);
-		}
+		this.addGenuinePoints(enrollingTemplate);
 
 		// add chaff points
 
@@ -70,9 +55,63 @@ public class Vault {
 			
 //			System.out.println(chaffPoint);
 		}
-
 	}
 
+	
+	public void lockWithChaffInjection(Template enrollingTemplate) {
+		
+		Template genuinePointsTemplate = new Template();
+		ArrayList<BigInteger> chaffPointsToInject = new ArrayList<BigInteger>();
+		
+		for(BigInteger point : enrollingTemplate.getHashes()){
+			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){
+				//chaff
+				chaffPointsToInject.add(point.shiftRight(1));
+			}else{
+				//genuine
+				genuinePointsTemplate.getHashes().add(point.shiftRight(1));
+			}
+		}
+		
+		this.addGenuinePoints(genuinePointsTemplate);
+		
+		
+		//add chaff
+		for (BigInteger chaffZ : chaffPointsToInject){
+
+			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
+
+			chaffPoint.setZ(chaffZ);
+			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random())); //FIXME bits should be the size of an encryption
+
+			chaffPoint.setChaff(true);
+			this.vaultPoints.add(chaffPoint);
+			
+		}
+	}
+	
+	
+	private void addGenuinePoints(Template enrollingTemplate){
+		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against
+		// making a
+		// vault more
+		// than once
+		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
+		this.hashOfPolynomial = secretPoly.computeHash();
+
+		// add the genuine points to vaultPoints
+		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
+			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
+			genuinePoint.setZ(bigInt);
+			genuinePoint.setGamma(secretPoly.evaluateAt(bigInt));
+			genuinePoint.setChaff(false);
+			this.vaultPoints.add(genuinePoint);
+
+			//System.out.println(genuinePoint);
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * @param testTemplate
@@ -176,5 +215,7 @@ public class Vault {
 	public BigInteger getHashOfPolynomial() {
 		return hashOfPolynomial;
 	}
+
+
 	
 }

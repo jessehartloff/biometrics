@@ -250,6 +250,16 @@ public class Server1 extends Server {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
 		// 2.) Store that Template in RAM BECAUSE SQL JIM AND JEN!
 		Template template = (Template)objectIn.getContents();
+		
+		for(BigInteger point : template.getHashes()){
+			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){ //chaff
+			}else{ //genuine
+				point = point.shiftRight(1);
+				//FIXME decrypt!
+				point = point.shiftLeft(1);
+			}
+		}
+		
 		Template fuzzyVault = hasher.hashEnrollTemplate(template);
 		long ID = objectIn.getUserID();
 		_map.put(ID,fuzzyVault);
@@ -261,7 +271,15 @@ public class Server1 extends Server {
 		// Hasher.compareTemplates
 		
 		long ID = objectIn.getUserID();
-		ArrayList<Template> testTemplates = hasher.hashTestTemplates((ArrayList<Template>)objectIn.getContents()); 
+		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
+		for(Template template : templates){
+			for(BigInteger point : template.getHashes()){
+				//FIXME decrypt!
+				point = point.shiftLeft(1);
+			}
+		}
+		
+		ArrayList<Template> testTemplates = hasher.hashTestTemplates(templates); 
 		Template enrolledTemplate = _map.get(ID);
 		Double result=  hasher.compareTemplates(enrolledTemplate, testTemplates);
 		return result;

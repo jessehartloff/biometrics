@@ -27,10 +27,13 @@ import javax.crypto.NoSuchPaddingException;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
+import settings.hashersettings.AllHasherSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
 import system.hasher.Hasher;
+import system.hasher.HasherFactory.HasherEnumerator;
+import system.quantizer.Quantizer;
 
 public class Server2 extends system.coordinator.Coordinator {
 
@@ -61,6 +64,7 @@ public class Server2 extends system.coordinator.Coordinator {
 			
 			encryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
 		    System.out.println("Encrypted!");
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -228,9 +232,20 @@ public class Server2 extends system.coordinator.Coordinator {
 		this.keyMap.put(receivedObject.getUserID(), publicKey);
 		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
 		System.out.println(receivedEncryptedFP);
-		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
+		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
+		
+		for(BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
 			minutiaPoint = encrypt(publicKey, minutiaPoint, cipher);
+			minutiaPoint = minutiaPoint.shiftLeft(1); //mark the genuines for chaff injection
 		}
+		
+		for(int i=0; i<numberOfChaffPoints; i++){
+			BigInteger point = Quantizer.getQuantizer().getRandomBigInt();
+			point = encrypt(publicKey, point, cipher);
+			point = point.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
+			receivedEncryptedFP.getHashes().add(point);
+		}
+		
 		_objectToSend = new InterServerObjectWrapper();
 		_objectToSend.setContents(receivedEncryptedFP);
 		_objectToSend.setOrigin("server 2");

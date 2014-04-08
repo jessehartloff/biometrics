@@ -14,11 +14,24 @@ import system.hasher.Hasher;
  */
 public class FuzzyVault extends Hasher{
 	
+	private boolean chaffInjection;
+	
+	public FuzzyVault(){
+		this.chaffInjection = false;
+	}
+	
+	public FuzzyVault(boolean chaffInjection){
+		this.chaffInjection = true;
+	}
 	
 	@Override
 	public Template hashEnrollTemplate(Template template) {
 		Vault vault = new Vault();
-		vault.lock(template);
+		if(this.chaffInjection){
+			vault.lockWithChaffInjection(template);
+		}else{
+			vault.lock(template);
+		}
 		return vault.toTemplate();
 	}
 	

@@ -29,7 +29,6 @@ public class ShortcutFuzzyVault extends Hasher {
 	
 	public ShortcutFuzzyVault(){
 		settings = ShortcutFuzzyVaultSettings.getInstance();
-
 	}
 
 	@Override
@@ -37,7 +36,6 @@ public class ShortcutFuzzyVault extends Hasher {
 		Template toReturn = new Template();
 		for(BigInteger bigInt : template.getHashes()){
 			toReturn.getHashes().add(bigInt.shiftLeft(1));
-
 		}
 		
 		this.addChaffPoints(toReturn);

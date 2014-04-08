@@ -113,11 +113,7 @@ public class CoordinatorFactory {
 		case RAMINDEXING:
 			return new IndexTesting(hasher, users, new RAMStructure());
 		case SQLINDEXING:
-			try {
-				return new IndexTesting(hasher, users, new SQLStructure());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			return new IndexTesting(hasher, users, new SQLStructure());
 		case NONE:
 			return null;				
 		default:

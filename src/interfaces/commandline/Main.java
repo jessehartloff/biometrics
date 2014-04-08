@@ -27,9 +27,15 @@ import system.method.fingerprintmethods.NgonsAllRotations;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		SQLFunctions myfs = new SQLFunctions("mysql");
+		SQLFunctions myfs = new SQLFunctions("test");
 		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
 		myfs.executeMyQueryNoReturn("use temp_database;");
+		for(int i = 0; i < 100000; i++){
+			BigInteger big = new BigInteger("5");
+			
+		}
+		System.out.println("We just did stuff--ain't that neat?");
+		System.exit(0);
 		myfs.executeMyQueryNoReturn("create table if not exists watch (company text, owner text);");
 		SQLFunctions sqlFunctions = new SQLFunctions("fec");
 		sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");

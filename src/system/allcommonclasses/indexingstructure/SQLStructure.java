@@ -16,7 +16,7 @@ public class SQLStructure extends IndexingStructure{
 	 */
 	private SQLFunctions sqlFunctions;
 
-	public SQLStructure() throws ClassNotFoundException{
+	public SQLStructure(){
 		this.sqlFunctions = new SQLFunctions("test");
 		this.sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");
 		this.sqlFunctions.executeMyQueryNoReturn("use biometrics;");

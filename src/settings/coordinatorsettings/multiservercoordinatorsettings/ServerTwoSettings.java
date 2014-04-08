@@ -23,11 +23,16 @@ public class ServerTwoSettings extends CoordinatorSettings{
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10002));
 		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+		this.settingsVariables.put("Chaff Points", new SettingsLong(0));
 
 	}
 
 	public SettingsLong portNumber(){
 		return (SettingsLong) this.settingsVariables.get("Port Number");
+	}
+	
+	public SettingsLong chaffPoints(){
+		return (SettingsLong) this.settingsVariables.get("Chaff Points");
 	}
 
 	public SettingsString ip(){
