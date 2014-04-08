@@ -31,6 +31,11 @@ public class Main {
 		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
 		myfs.executeMyQueryNoReturn("use temp_database;");
 		myfs.executeMyQueryNoReturn("create table if not exists watch (company text, owner text);");
+		SQLFunctions sqlFunctions = new SQLFunctions("fec");
+		sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");
+		sqlFunctions.executeMyQueryNoReturn("use biometrics;");
+		sqlFunctions.executeMyQueryNoReturn("create table if not exists indexing (bi text, userid text;");
+		System.exit(0);
 //		myfs.executeMyQueryNoReturn("insert into watch values (\"Rolex\", \"Jim\");");
 		ResultSet rs2 = myfs.executeMyQuery("select * from watch;");
 		while(rs2.next()){

@@ -97,7 +97,7 @@ public class ShortcutFuzzyVault extends Hasher {
 		Template template = this.makeEnrollTemplate(enrollBiometric);
 		for (BigInteger bigInt : template.getHashes()) {
 			IndexingPoint pointToAdd = new IndexingPoint();
-			pointToAdd.setValue(BigInteger.ZERO);
+			pointToAdd.setValue(bigInt);
 			pointToAdd.setUserID(enrollID);
 			indexingStructure.add(bigInt, pointToAdd);
 		}

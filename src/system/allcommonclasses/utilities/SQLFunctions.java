@@ -24,7 +24,7 @@ public class SQLFunctions {
         stmt = null;
         rs = null;
 	}
-
+	
 	//Use this whenever we want to return something
 	public ResultSet executeMyQuery(String query){
 		try {
@@ -45,14 +45,6 @@ public class SQLFunctions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-    public String getDbURL() {
-		return dbURL;
-	}
-
-	public void setDbURL(String db) {
-		this.dbURL += db;
 	}
 	
 }

@@ -20,7 +20,7 @@ public class SQLStructure extends IndexingStructure{
 		this.sqlFunctions = new SQLFunctions("fec");
 		this.sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");
 		this.sqlFunctions.executeMyQueryNoReturn("use biometrics;");
-		this.sqlFunctions.executeMyQueryNoReturn("create table if not exists indexing (bi bigint, userid bigint");
+		this.sqlFunctions.executeMyQueryNoReturn("create table if not exists indexing (bi text, userid text);");
 	}
 
 	/* There should be a table in biometrics called "indexing"
@@ -32,7 +32,7 @@ public class SQLStructure extends IndexingStructure{
 	 */
 	@Override
 	public void add(BigInteger bin, IndexingPoint pointToAdd) {
-		this.sqlFunctions.executeMyQueryNoReturn("insert into indexing values("+pointToAdd.getValue()+", "+pointToAdd.getUserID()+");");
+		this.sqlFunctions.executeMyQueryNoReturn("insert into indexing values("+pointToAdd.getValue().toString()+", "+pointToAdd.getUserID().toString()+");");
 	}
 
 	@Override
@@ -41,9 +41,11 @@ public class SQLStructure extends IndexingStructure{
 		try{
 			ResultSet rs = this.sqlFunctions.executeMyQuery("select * from indexing where BI = "+bin.toString()+";");
 			while(rs.next()){
-				IndexingPoint pointToReturn = new IndexingPoint();//constructor that takes value, and id
-				pointToReturn.setValue(BigInteger.valueOf(rs.getLong(1)));
-				pointToReturn.setUserID(BigInteger.valueOf(rs.getLong(2)).longValue());
+				IndexingPoint pointToReturn = new IndexingPoint();
+				BigInteger value = new BigInteger(rs.getString(1));
+				pointToReturn.setValue(value);
+				Long userID = new Long(rs.getString(2));
+				pointToReturn.setUserID(userID);
 				binContents.add(pointToReturn);
 			}
 		} catch (SQLException e){
