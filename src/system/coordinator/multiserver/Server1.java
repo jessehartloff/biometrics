@@ -35,16 +35,19 @@ import system.hasher.Hasher;
 import system.hasher.HasherFactory.HasherEnumerator;
 
 public class Server1 extends Server {
+	private HashMap<Long,Template> map;
+	private PrivateKey clientKey;
+	private InterServerObjectWrapper receivedObject;
 
+	
 	public Server1(Hasher hasher, Users users) {
 		super(hasher, users);
-		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+//		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
 		// TODO Auto-generated constructor stub
 	}
 
-	private HashMap<Long,Template> _map;
-	private PrivateKey _clientKey;
+
 
 	//MUMBO JUMBO
 	/* 
@@ -147,17 +150,17 @@ public class Server1 extends Server {
 
 	 */ 
 
-
-
-	public void setClientKey (InterServerObjectWrapper clientObject){
-		_clientKey = (PrivateKey)clientObject.getContents();
-
-
-	}
-
-	public PrivateKey getClientKey (){
-		return _clientKey;
-	}
+//
+//
+//	public void setClientKey (InterServerObjectWrapper clientObject){
+//		clientKey = (PrivateKey)clientObject.getContents();
+//
+//
+//	}
+//
+//	public PrivateKey getClientKey (){
+//		return clientKey;
+//	}
 
 
 	/*
@@ -252,125 +255,125 @@ public class Server1 extends Server {
 //	}
 
 	
-	public BigInteger decrypt(Key key, BigInteger minutia, Cipher cipher){
-		
-		BigInteger decryptedMinutia = null;
-		try{
-			cipher.init(Cipher.DECRYPT_MODE, key);
-			
-			decryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
-//		    System.out.println("Encrypted!");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-		return decryptedMinutia;
-	}
+//	public BigInteger decrypt(Key key, BigInteger minutia, Cipher cipher){
+//		
+//		BigInteger decryptedMinutia = null;
+//		try{
+//			cipher.init(Cipher.DECRYPT_MODE, key);
+//			
+//			decryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
+////		    System.out.println("Encrypted!");
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//		
+//		return decryptedMinutia;
+//	}
 
 
 	public void enroll(InterServerObjectWrapper objectIn) {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
 		// 2.) Store that Template in RAM BECAUSE SQL JIM AND JEN!
-		Cipher cipher = null;;
-		try {
-			cipher = Cipher.getInstance("ECIES","BH");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		Template template = (Template)objectIn.getContents();
+//		Cipher cipher = null;;
+//		try {
+//			cipher = Cipher.getInstance("ECIES","BH");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+		Template template = (Template) objectIn.getContents();
 		
 		for(BigInteger point : template.getHashes()){
 			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){ //chaff
 			}else{ //genuine
 				point = point.shiftRight(1);
 				
-				point = decrypt(_clientKey, point,cipher);
+				point = encryptionScheme.decrypt(clientKey, point);
 				point = point.shiftLeft(1);
 			}
 		}
 		
 		Template fuzzyVault = hasher.hashEnrollTemplate(template);
 		long ID = objectIn.getUserID();
-		_map.put(ID,fuzzyVault);
+		map.put(ID,fuzzyVault);
 	}
 
 	public double test(InterServerObjectWrapper objectIn) {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
-		Cipher cipher = null;;
-		try {
-			cipher = Cipher.getInstance("ECIES","BH");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+//		Cipher cipher = null;;
+//		try {
+//			cipher = Cipher.getInstance("ECIES","BH");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
 		long ID = objectIn.getUserID();
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		for(Template template : templates){
 			for(BigInteger point : template.getHashes()){
-				point = decrypt(_clientKey, point,cipher);
+				point = encryptionScheme.decrypt(clientKey, point);
 				point = point.shiftLeft(1);
 			}
 		}
 		
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates(templates); 
-		Template enrolledTemplate = _map.get(ID);
-		Double result=  hasher.compareTemplates(enrolledTemplate, testTemplates);
+		Template enrolledTemplate = map.get(ID);
+		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
 		return result;
 	}
 
 
 
-	public void receivePrivateKey() throws Exception {
-
-		/*
-		 * int port = 0; ServerSocket serv_socket = null; Socket client = null;
-		 * serv_socket = new ServerSocket(8000);
-		 * serv_socket.setReuseAddress(true); port = serv_socket.getLocalPort();
-		 * System.out.println(port); client = serv_socket.accept();
-		 * 
-		 * ObjectInputStream objInput = new
-		 * ObjectInputStream(client.getInputStream()); PublicKey pk =
-		 * (PublicKey) objInput.readObject(); System.out.println(pk.toString());
-		 * 
-		 * long startTime = System.currentTimeMillis(); String password =
-		 * "ThisIsMyPassword"; //Symmetric Key Distribution Using Asymmetric
-		 * Encryption KeyPairGenerator keyGenerator =
-		 * KeyPairGenerator.getInstance("RSA"); keyGenerator.initialize(1024);
-		 * KeyPair rsaKeys = keyGenerator.generateKeyPair(); PublicKey publicKey
-		 * = rsaKeys.getPublic(); String publicKeyString = publicKey.toString();
-		 * PrivateKey privateKey = rsaKeys.getPrivate();
-		 * 
-		 * long keyGenTime = System.currentTimeMillis() - startTime;
-		 * System.out.println("Took "+ keyGenTime +
-		 * " milliseconds to generate key pair "); //long startEncryption =
-		 * System.currentTimeMillis();
-		 * 
-		 * Cipher cipher = Cipher.getInstance("RSA"); long startEncryption =
-		 * System.currentTimeMillis(); byte[] encryptedKey = null;
-		 * System.out.println("BEFORE WE ENCRYPT");
-		 * 
-		 * for ( int i= 0; i<5; i++){
-		 * 
-		 * cipher.init(Cipher.ENCRYPT_MODE,publicKey); encryptedKey =
-		 * cipher.doFinal(password.getBytes()); //cipher.update(encryptedKey);
-		 * System.out.println(new String(encryptedKey, "UTF-8")); }
-		 * System.out.println("AFTER WE ENCRYPT"); long finishEncryption =
-		 * System.currentTimeMillis();
-		 * 
-		 * System.out.println("Time to encrypt is : " + (finishEncryption -
-		 * startEncryption));
-		 * 
-		 * cipher.init(Cipher.DECRYPT_MODE, privateKey); byte[] decryptedKey =
-		 * cipher.doFinal(encryptedKey);
-		 * System.out.println("Time to decrypt is : " + (
-		 * System.currentTimeMillis()- finishEncryption));
-		 * System.out.println(new String (decryptedKey, "UTF-8"));
-		 */
-	}
+//	public void receivePrivateKey() throws Exception {
+//
+//		/*
+//		 * int port = 0; ServerSocket serv_socket = null; Socket client = null;
+//		 * serv_socket = new ServerSocket(8000);
+//		 * serv_socket.setReuseAddress(true); port = serv_socket.getLocalPort();
+//		 * System.out.println(port); client = serv_socket.accept();
+//		 * 
+//		 * ObjectInputStream objInput = new
+//		 * ObjectInputStream(client.getInputStream()); PublicKey pk =
+//		 * (PublicKey) objInput.readObject(); System.out.println(pk.toString());
+//		 * 
+//		 * long startTime = System.currentTimeMillis(); String password =
+//		 * "ThisIsMyPassword"; //Symmetric Key Distribution Using Asymmetric
+//		 * Encryption KeyPairGenerator keyGenerator =
+//		 * KeyPairGenerator.getInstance("RSA"); keyGenerator.initialize(1024);
+//		 * KeyPair rsaKeys = keyGenerator.generateKeyPair(); PublicKey publicKey
+//		 * = rsaKeys.getPublic(); String publicKeyString = publicKey.toString();
+//		 * PrivateKey privateKey = rsaKeys.getPrivate();
+//		 * 
+//		 * long keyGenTime = System.currentTimeMillis() - startTime;
+//		 * System.out.println("Took "+ keyGenTime +
+//		 * " milliseconds to generate key pair "); //long startEncryption =
+//		 * System.currentTimeMillis();
+//		 * 
+//		 * Cipher cipher = Cipher.getInstance("RSA"); long startEncryption =
+//		 * System.currentTimeMillis(); byte[] encryptedKey = null;
+//		 * System.out.println("BEFORE WE ENCRYPT");
+//		 * 
+//		 * for ( int i= 0; i<5; i++){
+//		 * 
+//		 * cipher.init(Cipher.ENCRYPT_MODE,publicKey); encryptedKey =
+//		 * cipher.doFinal(password.getBytes()); //cipher.update(encryptedKey);
+//		 * System.out.println(new String(encryptedKey, "UTF-8")); }
+//		 * System.out.println("AFTER WE ENCRYPT"); long finishEncryption =
+//		 * System.currentTimeMillis();
+//		 * 
+//		 * System.out.println("Time to encrypt is : " + (finishEncryption -
+//		 * startEncryption));
+//		 * 
+//		 * cipher.init(Cipher.DECRYPT_MODE, privateKey); byte[] decryptedKey =
+//		 * cipher.doFinal(encryptedKey);
+//		 * System.out.println("Time to decrypt is : " + (
+//		 * System.currentTimeMillis()- finishEncryption));
+//		 * System.out.println(new String (decryptedKey, "UTF-8"));
+//		 */
+//	}
 
 	@Override
 	public RawScores run() {
@@ -387,75 +390,98 @@ public class Server1 extends Server {
 
 
 
-	private InterServerObjectWrapper _receivedObject;
 
 	public void initialize() {
-		_map = new HashMap<Long,Template>();
+		map = new HashMap<Long,Template>();
 		
 		try{
-		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
-		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
-		Socket client = null;
-
-		int state = 1;
-		while ( true ) {
-			System.out.println("State:"+state);
-			switch(state){
-			case 1:
-				System.out.println("Server 1 listening....");
-				client = S1.accept();
-				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
-				
-				System.out.println("GOT SHIT FROM THE CLIENT");
-
-				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
-				System.out.println(System.currentTimeMillis());
-				
-				System.out.println("shit"+_receivedObject.getOrigin());
-				if (_receivedObject.getOrigin().equals("client")){
-					state = 2;
-				}else{
-					state = 3;
-				}
-				break;
-			case 2:
-				System.out.println("Got to case 2");
-				setClientKey (_receivedObject);
-				ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-				objOut.write(0);
-				objOut.flush();
-				System.out.println("Sent received response to Client");
-				state = 1; 
-				break;
-			case 3:
-				System.out.println("Got to case 3");
-				client.close();
-				client = new Socket(ClientSettings.getInstance().ip().getValue(), ClientSettings.getInstance().portNumber().getValue().intValue());
-				System.out.println(_receivedObject.getOrigin());
-				System.out.println(_receivedObject.getContents());
-
-				System.out.println(_receivedObject.isEnrolling());
-				System.out.println(_receivedObject.getUserID());
-
-				if (_receivedObject.isEnrolling()){
-					enroll(_receivedObject);
-					state = 4;
-				}else{
-					double result = test(_receivedObject);
-					ObjectOutputStream objTestOut = new ObjectOutputStream(client.getOutputStream());
-					objTestOut.writeDouble(result);
+			ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
+	//		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
+			Socket client = null;
+	
+			int state = 1;
+			while ( true ) {
+				System.out.println("State:"+state);
+				switch(state){
+				case 1:
+					System.out.println("Server 1 listening....");
+	//				client = S1.accept();
+	//				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+	//				
+	//				System.out.println("GOT SHIT FROM THE CLIENT");
+	
+					receivedObject = receive(S1);
+	//				System.out.println(System.currentTimeMillis());
+					
+					System.out.println("Received data from "+receivedObject.getOrigin());
+					if (receivedObject.getOrigin().equals("client")){
+						state = 2;
+					}else if (receivedObject.isEnrolling()){
+						state = 3;
+					}else {
+						state = 4;
+					}
+					
+					break;
+				/**
+				 * receiving from the client
+				 */
+				case 2:
+	//				System.out.println("Got to case 2");
+					clientKey = (PrivateKey) receivedObject.getContents();
+					InterServerObjectWrapper response = new InterServerObjectWrapper();
+					response.setContents("Server 1 has successfully received client decryption key");
+					//send back the decision
+//					System.out.println(ClientSettings.getInstance().ip().getValue());
+					send(ClientSettings.getInstance().ip().getValue(),
+							ClientSettings.getInstance().portNumber().getValue().intValue(),
+							response);
+					state = 1; 
+					break;
+				/**
+				 * receiving enroll from server 2
+				 */
+				case 3:
+	//				System.out.println("Got to case 3");
+	//				client.close();
+	//				client = new Socket(ClientSettings.getInstance().ip().getValue(), ClientSettings.getInstance().portNumber().getValue().intValue());
+	//				System.out.println(receivedObject.getOrigin());
+	//				System.out.println(receivedObject.getContents());
+	//
+	//				System.out.println(receivedObject.isEnrolling());
+	//				System.out.println(receivedObject.getUserID());
+					enroll(receivedObject);
 					state = 1;
+	//				
+	//	
+	//				if (receivedObject.isEnrolling()){
+	//					enroll(receivedObject);
+	//					state = 4;
+	//				}else{
+	//					double result = test(receivedObject);
+	//					ObjectOutputStream objTestOut = new ObjectOutputStream(client.getOutputStream());
+	//					objTestOut.writeDouble(result);
+	//					state = 1;
+	//				}
+					break;
+				/**
+				 * receiving test from server 2
+				 */
+				case 4 :
+	//				ObjectOutputStream objEnrollOut = new ObjectOutputStream(client.getOutputStream());
+	//				objEnrollOut.write(1);
+	//				objEnrollOut.flush();
+	//				System.out.println("Enrolled that ish");
+					Double score = test(receivedObject);
+					
+					InterServerObjectWrapper matchScore = new InterServerObjectWrapper();
+					send(ClientSettings.getInstance().ip().getValue(),
+							ClientSettings.getInstance().portNumber().getValue().intValue(),
+							matchScore);
+					state = 1;
+					break;
 				}
-				break;
-			case 4 :
-				ObjectOutputStream objEnrollOut = new ObjectOutputStream(client.getOutputStream());
-				objEnrollOut.write(1);
-				objEnrollOut.flush();
-				System.out.println("Enrolled that ish");
-				state = 1;
-				break;
 			}
-		}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

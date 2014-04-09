@@ -13,15 +13,18 @@ import system.coordinator.Coordinator;
 import system.hasher.Hasher;
 
 public abstract class Server extends Coordinator {
+	protected EncryptionScheme encryptionScheme;
 	
 	public Server(Hasher hasher, Users users) {
 		super(hasher, users);
+		encryptionScheme = new EncryptionScheme();
 	}
 
 	// base server class extends coordinator
 
 	protected InterServerObjectWrapper receive(ServerSocket serverSocket){
 		try{
+			
 			Socket client = serverSocket.accept();
 			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper) objIn.readObject();
@@ -33,9 +36,9 @@ public abstract class Server extends Coordinator {
 		return null;
 	}
 
-	protected void send(String ip, Long port, InterServerObjectWrapper message){
+	protected void send(String ip, int port, InterServerObjectWrapper message){
 		try {
-			Socket socket = new Socket(InetAddress.getByName(ip), port.intValue());
+			Socket socket = new Socket(InetAddress.getByName(ip), port);
 			ObjectOutputStream objOutput = new ObjectOutputStream(socket.getOutputStream());
 			objOutput.writeObject(message);
 			socket.close();
