@@ -282,7 +282,7 @@ public class Server1 extends Server {
 			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){ //chaff
 			}else{ //genuine
 				point = point.shiftRight(1);
-				//FIXME decrypt!
+				
 				point = decrypt(_clientKey, point,cipher);
 				point = point.shiftLeft(1);
 			}
@@ -297,12 +297,18 @@ public class Server1 extends Server {
 		// 1.) Get test Templates from Hasher with Hasher.hashTestTemplates
 		// 2.) Compare the test Templates and the enrolled Templates with
 		// Hasher.compareTemplates
-		
+		Cipher cipher = null;;
+		try {
+			cipher = Cipher.getInstance("ECIES","BH");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		long ID = objectIn.getUserID();
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		for(Template template : templates){
 			for(BigInteger point : template.getHashes()){
-				//FIXME decrypt!
+				point = decrypt(_clientKey, point,cipher);
 				point = point.shiftLeft(1);
 			}
 		}
