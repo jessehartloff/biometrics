@@ -73,27 +73,27 @@ public class Server2 extends system.coordinator.Coordinator {
 	}
 	
 	public KeyPair generateKeyPair() throws Exception{
-		
-		    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-		    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
-		    System.out.println("Generated key pair");
-		    EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
-		        "fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
 
-		    ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-		    	"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
-		        "fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
+		System.out.println("Generated key pair");
+		EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
+				"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
+						"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+								"fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
 
-		    keyGen.initialize(ecSpec, new SecureRandom());
+		ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
+				"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
+						"fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
+								"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
 
-		    //KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
-		    KeyPair keyPair = keyGen.generateKeyPair();
-		    
-		    return keyPair;
-		    
+		keyGen.initialize(ecSpec, new SecureRandom());
+
+		//KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
+		KeyPair keyPair = keyGen.generateKeyPair();
+
+		return keyPair;
+
 	}
 	
 	/*

@@ -16,10 +16,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.indexingstructure.SQLStructure;
 import system.allcommonclasses.utilities.SQLFunctions;
 import system.hasher.fuzzyvault.CRC;
+
 import java.lang.*;
+
 import system.method.fingerprintmethods.NgonsAllRotations;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
@@ -27,6 +30,20 @@ import system.method.fingerprintmethods.NgonsAllRotations;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
+		
+		Template t = new Template();
+
+		t.getHashes().add(BigInteger.valueOf(56L));
+		t.getHashes().add(BigInteger.valueOf(12L));
+		t.getHashes().add(BigInteger.valueOf(4L));
+		t.getHashes().add(BigInteger.valueOf(12L));
+
+		System.out.println("size: " + t.getHashes().size());
+		System.out.println("contents: " + t.getHashes());
+		
+		System.exit(0);
+		
+		
 		SQLFunctions myfs = new SQLFunctions("test");
 		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
 		myfs.executeMyQueryNoReturn("use temp_database;");

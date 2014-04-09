@@ -23,4 +23,5 @@ public class TestingSTMC extends Coordinator {
 		System.exit(0);
 		return null;
 	}
+	
 }

@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-//	unittests.testsystem.testcoordinator.testmultiserver.TestMultiserver.class,
+	unittests.testsystem.testcoordinator.testmultiserver.TestMultiserver.class,
 //	unittests.testsystem.testcoordinator.testtestgenerators.TestTestGenreator.class
 	})
 

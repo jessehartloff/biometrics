@@ -1,19 +1,48 @@
 package system.coordinator.multiserver;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.Coordinator;
 import system.hasher.Hasher;
 
 public abstract class Server extends Coordinator {
+	
 	public Server(Hasher hasher, Users users) {
 		super(hasher, users);
 	}
 
 	// base server class extends coordinator
 
-	public abstract Object receive(Object object);
+	protected InterServerObjectWrapper receive(ServerSocket serverSocket){
+		try{
+			Socket client = serverSocket.accept();
+			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
+			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper) objIn.readObject();
+			client.close();
+			return receivedObject;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-	public abstract void send(Object object);
+	protected void send(String ip, Long port, InterServerObjectWrapper message){
+		try {
+			Socket socket = new Socket(InetAddress.getByName(ip), port.intValue());
+			ObjectOutputStream objOutput = new ObjectOutputStream(socket.getOutputStream());
+			objOutput.writeObject(message);
+			socket.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * public void RSA() throws NoSuchAlgorithmException, IOException,

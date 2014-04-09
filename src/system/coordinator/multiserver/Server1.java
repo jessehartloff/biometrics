@@ -234,8 +234,8 @@ public class Server1 extends Server {
 	 */ 
 
 	// put all four of these functions in Server
-	@Override
-	public Object receive(Object object) {
+//	@Override
+//	public Object receive(Object object) {
 		// make an ID class to handle uuid per transaction, server2 and client
 		// origin and user id, plus enrollment/testing boolean
 		// 0.) if it's the first time S1 has seen the user id, then it must be
@@ -247,8 +247,10 @@ public class Server1 extends Server {
 		// 2a.) Making an external thread to handle this process
 		// 3.) if there's a match, then call other functions that handle each
 		// case( from client or serve 2); these functions then call send(..)
-		return object;
-	}
+
+//		return object;
+//	}
+
 	
 	public BigInteger decrypt(Key key, BigInteger minutia, Cipher cipher){
 		
@@ -265,6 +267,7 @@ public class Server1 extends Server {
 		
 		return decryptedMinutia;
 	}
+
 
 	public void enroll(InterServerObjectWrapper objectIn) {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
@@ -319,10 +322,7 @@ public class Server1 extends Server {
 		return result;
 	}
 
-	@Override
-	public void send(Object object) {
-		// Send back to the client
-	}
+
 
 	public void receivePrivateKey() throws Exception {
 

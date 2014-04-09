@@ -239,13 +239,6 @@ public class Client extends Server{
 		return null;
 	}
 
-	@Override
-	public Object receive(Object object) {
-		return null;
-	}
 
-	@Override
-	public void send(Object object) {
-	}
 
 }
