@@ -11,12 +11,16 @@ import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 
 import settings.AllSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
@@ -245,10 +249,33 @@ public class Server1 extends Server {
 		// case( from client or serve 2); these functions then call send(..)
 		return object;
 	}
+	
+	public BigInteger decrypt(Key key, BigInteger minutia, Cipher cipher){
+		
+		BigInteger decryptedMinutia = null;
+		try{
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			
+			decryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
+//		    System.out.println("Encrypted!");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return decryptedMinutia;
+	}
 
 	public void enroll(InterServerObjectWrapper objectIn) {
 		// 1.) Call Hasher.hashEnrollTemplate on enrolling Templates
 		// 2.) Store that Template in RAM BECAUSE SQL JIM AND JEN!
+		Cipher cipher = null;;
+		try {
+			cipher = Cipher.getInstance("ECIES","BH");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		Template template = (Template)objectIn.getContents();
 		
 		for(BigInteger point : template.getHashes()){
@@ -256,6 +283,7 @@ public class Server1 extends Server {
 			}else{ //genuine
 				point = point.shiftRight(1);
 				//FIXME decrypt!
+				point = decrypt(_clientKey, point,cipher);
 				point = point.shiftLeft(1);
 			}
 		}
@@ -357,6 +385,7 @@ public class Server1 extends Server {
 
 	public void initialize() {
 		_map = new HashMap<Long,Template>();
+		
 		try{
 		ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
@@ -375,7 +404,7 @@ public class Server1 extends Server {
 
 				_receivedObject = (InterServerObjectWrapper) objIn.readObject();
 				System.out.println(System.currentTimeMillis());
-
+				
 				System.out.println("shit"+_receivedObject.getOrigin());
 				if (_receivedObject.getOrigin().equals("client")){
 					state = 2;

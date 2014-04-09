@@ -105,7 +105,7 @@ public class Client extends Server{
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
 		// 1.) generate key pair
 		KeyPair pair = this.getKeyPair();
-		PublicKey publicKey = pair.getPublic();
+		PublicKey publicKey = pair.getPublic();                            
 		PrivateKey privateKey = pair.getPrivate();
 
 		// 2.) send d(u) [private key] to Server_1
