@@ -53,6 +53,10 @@ public class StarSettings extends FingerprintMethodSettings{
 	public SettingsLong rotationRegions(){
 		return (SettingsLong) this.settingsVariables.get("rotationRegions");
 	}
+	public SettingsLong neighboringRegions(){
+		return (SettingsLong) this.settingsVariables.get("neighboringRegions");
+
+	}
 	
 	@Override
 	public String getMethodString() {
@@ -99,6 +103,7 @@ public class StarSettings extends FingerprintMethodSettings{
 		this.settingsVariables.put("sigmaBins", new SettingsLong(8));
 		this.settingsVariables.put("phiBins", new SettingsLong(8));
 		this.settingsVariables.put("rotationRegions", new SettingsLong(5));
+		this.settingsVariables.put("neighboringRegions", new SettingsLong(1));//this is symmetric
 	}
 
 

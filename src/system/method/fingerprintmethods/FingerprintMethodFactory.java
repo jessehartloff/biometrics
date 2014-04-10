@@ -46,11 +46,11 @@ public class FingerprintMethodFactory{
 			case NGONSSINGLEENROLLALLROTATIONS:
 				Fingerprint.setFingerprintMethod(new NgonsSingleEnrollAllRotations());
 				break;
-//			case STARS:
-//				Fingerprint.setFingerprintMethod(new Stars());
-//				break;
+			case STARS:
+				Fingerprint.setFingerprintMethod(new Stars());
+				break;
 			default:
-				System.out.println("Hey, you didn't choose a fingerprint method");
+				System.out.println("FingerprintMethodSettings says \"Hey, you didn't choose a fingerprint method\"");
 				Fingerprint.setFingerprintMethod(new Triangles());
 				break;
 		}
