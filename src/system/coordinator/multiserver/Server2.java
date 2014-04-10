@@ -38,11 +38,11 @@ import system.quantizer.Quantizer;
 public class Server2 extends Server {
 
 	
-	private PublicKey publicKey;
+	private BigInteger publicKey;
 	private InterServerObjectWrapper receivedObject;
 //	private InterServerObjectWrapper objectToSend;
 //	private Socket S1;
-	private HashMap<Long, Key> keyMap;
+	private HashMap<Long, BigInteger> keyMap;
 	
 	public Server2(Hasher hasher, Users enrollees) {
 		
@@ -155,9 +155,9 @@ public class Server2 extends Server {
 //	}
 	
 	public void initialize() throws Exception{
-		KeyPair keyPair = encryptionScheme.generateKeyPair();
+		SimpleKeyPair keyPair = encryptionScheme.generateKeyPair();
 		publicKey = keyPair.getPublic();
-		keyMap = new HashMap<Long, Key>(); //userID to encryption key
+		keyMap = new HashMap<Long, BigInteger>(); //userID to encryption key
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
 		
 		ServerSocket serverSocket = new ServerSocket(port);
@@ -223,7 +223,7 @@ public class Server2 extends Server {
 
 	}
 	
-	public InterServerObjectWrapper enroll(InterServerObjectWrapper receivedObject, PublicKey publicKey) throws Exception{
+	public InterServerObjectWrapper enroll(InterServerObjectWrapper receivedObject, BigInteger publicKey) throws Exception{
 //		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 //		System.out.println("adding bouncy castle");
 //		Cipher cipher = Cipher.getInstance("ECIES", "BC");
@@ -257,7 +257,7 @@ public class Server2 extends Server {
 		return objectToSend;
 	}
 	
-	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject, PublicKey publicKey){
+	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject, BigInteger publicKey){
 		
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		for (Template template : templates){

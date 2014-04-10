@@ -219,7 +219,7 @@ public class Client extends Server{
 		
 		System.out.println("Sending Decryption Key to S1...");
 		//generate key pair
-		KeyPair pair = encryptionScheme.generateKeyPair();
+		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 
 		/**
 		 * send d(u) [private key] to Server_1
@@ -284,7 +284,7 @@ public class Client extends Server{
 
 	public Double test(ArrayList<Template> testTemplates,  Long userID) {
 		//generate key pair
-		KeyPair pair = encryptionScheme.generateKeyPair();
+		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 
 		/**
 		 * send d(u) [private key] to Server_1

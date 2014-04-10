@@ -36,7 +36,7 @@ import system.hasher.HasherFactory.HasherEnumerator;
 
 public class Server1 extends Server {
 	private HashMap<Long,Template> map;
-	private PrivateKey clientKey;
+	private BigInteger clientKey;
 	private InterServerObjectWrapper receivedObject;
 
 	
@@ -428,7 +428,7 @@ public class Server1 extends Server {
 				 */
 				case 2:
 	//				System.out.println("Got to case 2");
-					clientKey = (PrivateKey) receivedObject.getContents();
+					clientKey = (BigInteger) receivedObject.getContents();
 					InterServerObjectWrapper response = new InterServerObjectWrapper();
 					response.setContents("Server 1 has successfully received client decryption key");
 					//send back the decision
