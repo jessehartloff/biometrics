@@ -1,11 +1,9 @@
 package system.hasher;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -114,24 +112,22 @@ public class ShortcutFuzzyVault extends Hasher {
 
 		Long rank = 0L;
 
-		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
-
+//		ArrayList<IndexingPoint> indexingPoints = new ArrayList<IndexingPoint>();
+		ArrayList<BigInteger> bins = new ArrayList<BigInteger>();
+		ArrayList<IndexingPoint> finalIndexingPoints = new ArrayList<IndexingPoint>();
 		for (BigInteger bigInt : template.getHashes()) {
-			ArrayList<IndexingPoint> binPoints;
-				binPoints = indexingStructure.getBinContents(bigInt);
-				//Jim
-//				ArrayList<BigInteger> bins = new ArrayList<BigInteger>();
-//				bins.add(bigInt);
-//				binPoints = indexingStructure.getBinContents(bins);
-				//end Jim
-				if (binPoints != null) {
-					indexingPoints.addAll(binPoints);
-				}
+			bins.add(bigInt);
+//			ArrayList<IndexingPoint> binPoints;
+//				binPoints = indexingStructure.getBinContents(bigInt);
+//				if (binPoints != null) {
+//					indexingPoints.addAll(binPoints);
+//				}
 		}
+		finalIndexingPoints = indexingStructure.getBinContents(bins);
 		
 		HashMap<Long, Long> ranks = new HashMap<Long, Long>();
-
-		for (IndexingPoint indexingPoint : indexingPoints) {
+//		for (IndexingPoint indexingPoint : indexingPoints) {
+		for (IndexingPoint indexingPoint : finalIndexingPoints) {
 			Long id = indexingPoint.getUserID();
 			if (ranks.containsKey(id)) {
 				ranks.put(id, ranks.get(id) + 1);
@@ -165,6 +161,10 @@ public class ShortcutFuzzyVault extends Hasher {
 		}
 		
 		return rank;
+	}
+	
+	public void destroyIndexingStructure(IndexingStructure indexingStructure){
+		indexingStructure.destroy();
 	}
 
 }

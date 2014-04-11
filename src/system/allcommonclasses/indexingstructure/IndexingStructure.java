@@ -1,12 +1,9 @@
 package system.allcommonclasses.indexingstructure;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public abstract class IndexingStructure {
-
-	
 	
 	public abstract void add(BigInteger bin, IndexingPoint pointToAdd);
 	
@@ -14,5 +11,8 @@ public abstract class IndexingStructure {
 
 	public abstract void add(ArrayList<IndexingPoint> indexingPoints);
 	
-	public abstract ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins);	
+	public abstract ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins);
+
+	public abstract void destroy() ;
+
 }

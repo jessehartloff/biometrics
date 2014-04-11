@@ -2,7 +2,6 @@ package system.allcommonclasses.indexingstructure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -56,28 +55,98 @@ public class SQLStructure extends IndexingStructure{
 	}
 
 	@Override
-	public ArrayList<IndexingPoint> getBinContents(BigInteger bin) {
+	public ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins){
+//		select bi,group_concat(userid) from indexing where bi in (1152747,115277,1152779,1152805) group by bi;		
 		ArrayList<IndexingPoint> binContents = new ArrayList<IndexingPoint>();
-		try{
-			ResultSet rs = this.sqlFunctions.executeMyQuery("select * from indexing where BI = "+bin.toString()+";");
-			while(rs.next()){
-				IndexingPoint pointToReturn = new IndexingPoint();
-				BigInteger value = new BigInteger(rs.getString(1));
-				pointToReturn.setValue(value);
-				Long userID = new Long(rs.getString(2));
-				pointToReturn.setUserID(userID);
-				binContents.add(pointToReturn);
+		try {
+			String in = "(";
+			for( BigInteger bi : bins){
+				in += bi.toString() + ",";
 			}
-		} catch (SQLException e){
+			in = in.substring(0, in.length()-1);
+			in += ")";
+	//			System.out.println(bin.toString());
+//			System.out.println("select bi,group_concat(userid) from indexing where bi in " + in + " group by bi;");
+			ResultSet rs1 = this.sqlFunctions.executeMyQuery("select bi,group_concat(userid) from indexing where bi in " + in + " group by bi;"); 
+			while(rs1.next()){
+				IndexingPoint pointToReturn = new IndexingPoint();
+//				System.out.println(rs1.getString(1) + rs1.getString(2));
+				String myBigInt = rs1.getString(1);
+				if (myBigInt == null){
+					pointToReturn.setValue(null);
+					pointToReturn.setUserID(null);					
+				} else {
+					BigInteger value = new BigInteger(myBigInt);
+					String userIDs = rs1.getString(2);
+					String[] userIDParts = userIDs.split(",");
+					for(String userID: userIDParts){
+						pointToReturn.setValue(value);
+						Long userIDL = new Long(userID);
+						pointToReturn.setUserID(userIDL);
+					}
+				}
+				binContents.add(pointToReturn);
+//				System.out.println("Just added a point");
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return binContents;
 	}
 	
 	@Override
-	public ArrayList<IndexingPoint> getBinContents(ArrayList<BigInteger> bins){
-		
-		return null;
+	public ArrayList<IndexingPoint> getBinContents(BigInteger bin) {
+		//select bi,group_concat(userid) from indexing group by bi order by bi;
+		ArrayList<IndexingPoint> binContents = new ArrayList<IndexingPoint>();
+		try{
+//			System.out.println(bin.toString());
+			ResultSet rs1 = this.sqlFunctions.executeMyQuery("select bi,group_concat(userid) from indexing where bi = " + bin.toString() + ";");
+			while(rs1.next()){
+				IndexingPoint pointToReturn = new IndexingPoint();
+//				System.out.println(rs1.getString(1));
+				String myBigInt = rs1.getString(1);
+				if (myBigInt == null){
+					pointToReturn.setValue(null);
+					pointToReturn.setUserID(null);					
+				} else {
+					BigInteger value = new BigInteger(myBigInt);
+	//				pointToReturn.setValue(value);
+					String userIDs = rs1.getString(2);
+					String[] userIDParts = userIDs.split(",");
+					for(String userID: userIDParts){
+//						IndexingPoint pointToReturn = new IndexingPoint();
+	//					BigInteger value = new BigInteger(rs1.getString(1));
+						pointToReturn.setValue(value);
+						Long userIDL = new Long(userID);
+						pointToReturn.setUserID(userIDL);
+					}
+	//				System.out.println(rs1.getString(2));
+	//				Long userID = new Long(rs1.getString(2));
+	//				pointToReturn.setUserID(userID);
+				}
+//				System.out.println(pointToReturn.toString());
+				binContents.add(pointToReturn);
+			}
+//			System.out.println(binContents);
+//			System.exit(0);
+//			ResultSet rs = this.sqlFunctions.executeMyQuery("select * from indexing where BI = "+bin.toString()+";");
+//			while(rs.next()){
+//				IndexingPoint pointToReturn = new IndexingPoint();
+//				BigInteger value = new BigInteger(rs.getString(1));
+//				pointToReturn.setValue(value);
+//				Long userID = new Long(rs.getString(2));
+//				pointToReturn.setUserID(userID);
+//				binContents.add(pointToReturn);
+//			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return binContents;
+	}
+
+	@Override
+	public void destroy() {
+		this.sqlFunctions.executeMyQueryNoReturn("drop table if exists indexing;");
 	}
 
 }

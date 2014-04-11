@@ -47,7 +47,7 @@ public class IndexTesting extends Coordinator {
 			indexID++;
 			System.out.println("Checking indexing structure: " + (indexID * 100.0) / (total * 1.0) + "%");
 		}
-
+		indexingStructure.destroy();
 		Collections.sort(scores.indexRankings);
 		return scores;
 	}

@@ -1,14 +1,12 @@
 package system.allcommonclasses.utilities;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class SQLFunctions {
 
 	private Statement stmt;
 	private Connection dbCon;
 	private ResultSet rs;
-	private int rsNR;//"result set no return
 	private String dbURL = "jdbc:mysql://localhost:3306/";
 	private String username ="root";
     private String password = "biometrics";
@@ -41,7 +39,7 @@ public class SQLFunctions {
 	public void executeMyQueryNoReturn(String query){
 		try {
 			this.stmt = this.dbCon.prepareStatement(query);
-			this.rsNR = this.stmt.executeUpdate(query);
+			this.stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
