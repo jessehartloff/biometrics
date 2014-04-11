@@ -221,6 +221,15 @@ public class Client extends Server{
 		//generate key pair
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 
+//		//create socket for when server 1 responds
+//		ServerSocket feedBack = null;
+//		try {
+//			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+//		} catch (IOException e) {
+//			System.out.println("Couldn't make server socket...");
+//			e.printStackTrace();
+//		}
+
 		/**
 		 * send d(u) [private key] to Server_1
 		 */
@@ -242,12 +251,21 @@ public class Client extends Server{
 		 */
 		//encrypt the template
 		System.out.println("Encrypting template with e_u...");
+//		long start = System.currentTimeMillis();
 		Template encryptedBiometric = new Template();
-		for (BigInteger bigInt : template.getHashes()) {
-			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
-			encryptedBiometric.getHashes().add(encryptedPoint);
-		}
-		
+//		for (BigInteger bigInt : template.getHashes()) {
+//			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
+//			encryptedBiometric.getHashes().add(encryptedPoint);
+//		}
+//		long stop = System.currentTimeMillis();
+//		System.out.println("Single time = " +(stop - start));
+//		
+//		start = System.currentTimeMillis();
+		encryptedBiometric = new Template();
+		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
+//		stop = System.currentTimeMillis();
+//		System.out.println("Multi time = " +(stop - start));
+
 		//setup object to send
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
 		toS2.setEnrolling(true);
@@ -262,23 +280,19 @@ public class Client extends Server{
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
 				toS2);
 		
-		/**
-		 * wait for decision from server1
-		 */
-		System.out.println("Waiting for enroll response from S1...");
-		InterServerObjectWrapper decision = new InterServerObjectWrapper();
-		decision.setContents("No decision was received");
-		try {
-			ServerSocket feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
-			decision = receive(feedBack);
-
-		} catch (IOException e) {
-			System.out.println("Couldn't create client server socket");
-			e.printStackTrace();
-		}
-		
-		//print out the received decision
-		System.out.println(decision.getContents().toString());
+//		/**
+//		 * wait for decision from server1
+//		 */
+//		System.out.println("Waiting for enroll response from S1...");
+//		InterServerObjectWrapper decision = receive(feedBack);
+//		try {
+//			feedBack.close();
+//		} catch (IOException e) {
+//			System.out.println("Failed to close client server socket");
+//			e.printStackTrace();
+//		}
+//		//print out the received decision
+//		System.out.println(decision.getContents().toString());
 		
 	}
 
@@ -286,6 +300,14 @@ public class Client extends Server{
 		//generate key pair
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 
+		//create socket for when server 1 responds
+		ServerSocket feedBack = null;
+		try {
+			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+		} catch (IOException e) {
+			System.out.println("Couldn't make server socket...");
+			e.printStackTrace();
+		}
 		/**
 		 * send d(u) [private key] to Server_1
 		 */
@@ -339,17 +361,16 @@ public class Client extends Server{
 		 * wait for decision from server1
 		 */
 		System.out.println("Waiting for test score from S1...");
-		InterServerObjectWrapper decision = new InterServerObjectWrapper();
-		decision.setContents("No decision was received");
-		try {
-			ServerSocket feedBack = new ServerSocket();
-			decision = receive(feedBack);
+		InterServerObjectWrapper decision = receive(feedBack);
+		System.out.println(decision.getContents().toString());
+		System.out.println(feedBack);
 
+		try {
+			feedBack.close();
 		} catch (IOException e) {
-			System.out.println("Couldn't create client server socket");
+			System.out.println("Failed to close client server socket");
 			e.printStackTrace();
 		}
-		
 		//print out the received decision
 		return (Double) decision.getContents();
 	
@@ -358,7 +379,7 @@ public class Client extends Server{
 
 	@Override
 	public RawScores run() {
-		System.out.println("Cleint run should never be called... so somethings wrong");
+		System.out.println("Client run should never be called... so somethings wrong");
 		System.exit(0);
 		return null;
 	}

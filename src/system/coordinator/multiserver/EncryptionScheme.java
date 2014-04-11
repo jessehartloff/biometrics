@@ -33,6 +33,10 @@ public class EncryptionScheme {
 		this.initialize();
 	}
 	
+	public EncryptionScheme(BigInteger prime) {
+		this.prime = prime;
+	}
+	
 	private void initialize() {
 		this.prime = BigInteger.probablePrime(200, new Random());
 	                            

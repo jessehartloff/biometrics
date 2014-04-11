@@ -427,15 +427,15 @@ public class Server1 extends Server {
 				 * receiving from the client
 				 */
 				case 2:
-	//				System.out.println("Got to case 2");
+					System.out.println("Got to case 2");
 					clientKey = (BigInteger) receivedObject.getContents();
-					InterServerObjectWrapper response = new InterServerObjectWrapper();
-					response.setContents("Server 1 has successfully received client decryption key");
-					//send back the decision
-//					System.out.println(ClientSettings.getInstance().ip().getValue());
-					send(ClientSettings.getInstance().ip().getValue(),
-							ClientSettings.getInstance().portNumber().getValue().intValue(),
-							response);
+//					InterServerObjectWrapper response = new InterServerObjectWrapper();
+//					response.setContents("Server 1 has successfully received client decryption key");
+//					//send back the decision
+////					System.out.println(ClientSettings.getInstance().ip().getValue());
+//					send(ClientSettings.getInstance().ip().getValue(),
+//							ClientSettings.getInstance().portNumber().getValue().intValue(),
+//							response);
 					state = 1; 
 					break;
 				/**
@@ -473,8 +473,9 @@ public class Server1 extends Server {
 	//				objEnrollOut.flush();
 	//				System.out.println("Enrolled that ish");
 					Double score = test(receivedObject);
-					
+					System.out.println(score);
 					InterServerObjectWrapper matchScore = new InterServerObjectWrapper();
+					matchScore.setContents(score);
 					send(ClientSettings.getInstance().ip().getValue(),
 							ClientSettings.getInstance().portNumber().getValue().intValue(),
 							matchScore);

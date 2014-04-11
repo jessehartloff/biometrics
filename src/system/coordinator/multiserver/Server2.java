@@ -25,6 +25,8 @@ import java.util.HashMap;
 //import javax.crypto.Cipher;
 //import javax.crypto.NoSuchPaddingException;
 
+import java.util.HashSet;
+
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 //import settings.hashersettings.AllHasherSettings;
@@ -234,21 +236,29 @@ public class Server2 extends Server {
 //		System.out.println(receivedEncryptedFP);
 		
 		//encrypt genuines and mark with a 0 at the end
-		for(BigInteger feature : receivedEncryptedFP.getHashes() ){
-			feature = encryptionScheme.encrypt(publicKey, feature);
-			feature = feature.shiftLeft(1); //mark the genuines for chaff injection
-		}
+//		for(BigInteger feature : receivedEncryptedFP.getHashes() ){
+//			feature = encryptionScheme.encrypt(publicKey, feature);
+//			feature = feature.shiftLeft(1); //mark the genuines for chaff injection
+//		}
+		
+		HashSet<BigInteger> outGoingFV = new HashSet<BigInteger>();
+		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0));
 		
 		//add in chaff points (need to be encrypted at S2)
+		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		//chaff points are marked with a 1 as the least significant bit
 		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
 		for(int i=0; i<numberOfChaffPoints; i++){
-			BigInteger chaff = Quantizer.getQuantizer().getRandomBigInt();
-			chaff = encryptionScheme.encrypt(publicKey, chaff);
-			chaff = chaff.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
-			receivedEncryptedFP.getHashes().add(chaff);
+			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
+//			BigInteger chaff = Quantizer.getQuantizer().getRandomBigInt();
+//			chaff = encryptionScheme.encrypt(publicKey, chaff);
+//			chaff = chaff.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
+//			receivedEncryptedFP.getHashes().add(chaff);
 		}
-		
+		//encrypt the chaff
+		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 1));
+		receivedEncryptedFP.setHashes(outGoingFV);
+		//send out the fv
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
 		objectToSend.setContents(receivedEncryptedFP);
 		objectToSend.setOrigin("server 2");
@@ -261,9 +271,13 @@ public class Server2 extends Server {
 		
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		for (Template template : templates){
-			for (BigInteger feature : template.getHashes()){
-				feature = encryptionScheme.encrypt(publicKey, feature);
-			}
+			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
+			hashes.addAll(multiEncrypt(publicKey, template.getHashes()));
+			template.setHashes(hashes);
+			
+//			for (BigInteger feature : template.getHashes()){
+//				feature = encryptionScheme.encrypt(publicKey, feature);
+//			}
 		}
 		
 		
