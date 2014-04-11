@@ -29,24 +29,40 @@ public abstract class Server extends Coordinator {
 	// base server class extends coordinator
 
 	protected InterServerObjectWrapper receive(ServerSocket serverSocket){
+		long t0 = System.currentTimeMillis();
 		try{
-			
+			long start = System.currentTimeMillis();
 			Socket client = serverSocket.accept();
+			long stop = System.currentTimeMillis();
+			System.out.println("Receive accept time = " + (stop-start)+ " ms");
+			start = System.currentTimeMillis();
 			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper) objIn.readObject();
+			stop = System.currentTimeMillis();
+			System.out.println("Receive object stream & read time = " + (stop-start)+ " ms");
+
 			client.close();
 			return receivedObject;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		long t1 = System.currentTimeMillis();
+		System.out.println("Total receive time = "+ (t1 -t0)+ " ms");
 		return null;
 	}
 
 	protected void send(String ip, int port, InterServerObjectWrapper message){
+		long t0 = System.currentTimeMillis();
 		try {
+			long start = System.currentTimeMillis();
 			Socket socket = new Socket(InetAddress.getByName(ip), port);
+			long stop = System.currentTimeMillis();
+			System.out.println("Send connect time = " + (stop-start)+ " ms");
+			start = System.currentTimeMillis();
 			ObjectOutputStream objOutput = new ObjectOutputStream(socket.getOutputStream());
 			objOutput.writeObject(message);
+			stop = System.currentTimeMillis();
+			System.out.println("Send stream & write time = " + (stop-start)+ " ms");
 			socket.close();
 		}catch(ConnectException e){
 			e.printStackTrace();
@@ -54,6 +70,8 @@ public abstract class Server extends Coordinator {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		long t1 = System.currentTimeMillis();
+		System.out.println("Total send time = "+ (t1 -t0)+ " ms");
 	}
 	
 	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet) {
@@ -74,15 +92,26 @@ public abstract class Server extends Coordinator {
 			t.start();
 			threads.add(t);
 		}
-		//pull out the encryptions
-		synchronized(encryptions){
-			for (int i=0; i < threads.size()-1; i++) {
-				EncryptThread thread = threads.get(i);
-				ArrayList<BigInteger> these = thread.getEncryptions();
-				encryptions.addAll(these);
-				thread.finish();
+		
+		for( EncryptThread thread: threads) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		//pull out the encryptions
+		for (int i=0; i < threads.size()-1; i++) {
+			EncryptThread thread = threads.get(i);
+			ArrayList<BigInteger> these = thread.getEncryptions();
+			encryptions.addAll(these);
+//			thread.finish();
+//			while(!thread.isAlive());
+			System.out.println("Am I alive? "+thread.isAlive());
+
+		}
+		
 		
 		
 		return encryptions;
@@ -106,14 +135,20 @@ public abstract class Server extends Coordinator {
 			EncryptThread t = new EncryptThread(encryptionScheme.getPrime(), key, subList, shiftVal);
 			t.start();
 			threads.add(t);
+			
+		}
+		//wait for them to finish
+		for( EncryptThread thread: threads) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		//pull out the encryptions
-		synchronized(encryptions){
 		for (int i=0; i < threads.size()-1; i++) {
 			EncryptThread thread = threads.get(i);
 			encryptions.addAll(thread.getEncryptions());
-			thread.finish();
-		}
 		}
 		
 		
@@ -138,13 +173,20 @@ public abstract class Server extends Coordinator {
 			t.start();
 			threads.add(t);
 		}
+		for( DecryptThread thread: threads) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		//pull out the decryptions
-		synchronized(decryptions){
 		for (int i=0; i < threads.size()-1; i++) {
 			DecryptThread thread = threads.get(i);
 			decryptions.addAll(thread.getDecryptions());
-			thread.finish();
-		}
+//			thread.finish();
+//			System.out.println("Am I alive? "+thread.isAlive());
 		}
 		return decryptions;
 		
@@ -169,13 +211,20 @@ public abstract class Server extends Coordinator {
 			t.start();
 			threads.add(t);
 		}
+		for( DecryptThread thread: threads) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		//pull out the decryptions
-		synchronized(decryptions){
 		for (int i=0; i < threads.size()-1; i++) {
 			DecryptThread thread = threads.get(i);
 			decryptions.addAll(thread.getDecryptions());
-			thread.finish();
-		}
+//			thread.finish();
+//			System.out.println("Am I alive? "+thread.isAlive());
 		}
 		return decryptions;
 		

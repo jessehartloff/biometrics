@@ -12,8 +12,8 @@ public class EncryptThread extends Thread{
 	private ArrayList<BigInteger> encryptions;
 	private BigInteger key;
 	private List<BigInteger> messages;
-	private boolean wait;
-	private boolean lock;
+//	private boolean wait;
+//	private boolean lock;
 	private boolean shift; //marks points at server 2
 	private int shiftVal;
 	
@@ -26,7 +26,7 @@ public class EncryptThread extends Thread{
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
-		wait = true;
+//		wait = true;
 		shift = false;
 	}
 	
@@ -36,7 +36,7 @@ public class EncryptThread extends Thread{
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
-		wait = true;
+//		wait = true;
 		this.shift = true;
 		this.shiftVal = shiftVal;
 		
@@ -44,9 +44,9 @@ public class EncryptThread extends Thread{
 
 	@Override
 	public void run() {
-		System.out.println("Yo I'm ready to encrypt stuff");
+//		System.out.println("Yo I'm ready to encrypt stuff");
 		encryptMessages(key, messages);
-		while(wait);
+//		while(wait);
 	}
 	
 	
@@ -57,8 +57,8 @@ public class EncryptThread extends Thread{
 	 * @return
 	 */
 	public void encryptMessages(BigInteger key, List<BigInteger> messages) {
-		System.out.println("Encrypting stuff");
-		lock = true;
+//		System.out.println("Encrypting stuff");
+//		lock = true;
 		for (BigInteger m : messages) {
 			BigInteger em = encryptionScheme.encrypt(key, m);
 			//deals with when we have to mark chaff at S2
@@ -68,14 +68,14 @@ public class EncryptThread extends Thread{
 			}
 			encryptions.add(m);
 		}
-		lock = false;
+//		lock = false;
 	}
 
 	public ArrayList<BigInteger> getEncryptions() {
-		while(lock);
+//		while(lock);
 		return encryptions;
 	}
-	public void finish() {
-		wait = false;
-	}
+//	public void finish() {
+//		wait = false;
+//	}
 }

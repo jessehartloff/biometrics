@@ -217,9 +217,12 @@ public class Client extends Server{
 
 	public void enroll(Template template, Long userID) {
 		
-		System.out.println("Sending Decryption Key to S1...");
+//		System.out.println("\tSending Decryption Key to S1...");
 		//generate key pair
+		long start = System.currentTimeMillis();
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
+		long stop = System.currentTimeMillis();
+		System.out.println("KeyGen time = "+ (stop - start) + " ms");
 
 //		//create socket for when server 1 responds
 //		ServerSocket feedBack = null;
@@ -234,14 +237,18 @@ public class Client extends Server{
 		 * send d(u) [private key] to Server_1
 		 */
 		//wrap up decryption key to send
+		start = System.currentTimeMillis();
 		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
 		toS1.setContents(pair.getPrivate());
 		toS1.setEnrolling(true);
 		toS1.setTesting(false);
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
+		stop = System.currentTimeMillis();
+		System.out.println("Decrypt object wrapup time = "+ (stop - start) + " ms");
 		
 		//sendDecryptiontoServerOne(userID, pair);
+		System.out.println("Sending decrypt key...");
 		send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
 				toS1);
@@ -250,7 +257,7 @@ public class Client extends Server{
 		 * send e_u(T) [user encrypted template] to Server_2
 		 */
 		//encrypt the template
-		System.out.println("Encrypting template with e_u...");
+		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
 		Template encryptedBiometric = new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
@@ -260,22 +267,24 @@ public class Client extends Server{
 //		long stop = System.currentTimeMillis();
 //		System.out.println("Single time = " +(stop - start));
 //		
-//		start = System.currentTimeMillis();
+		start = System.currentTimeMillis();
 		encryptedBiometric = new Template();
 		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
-//		stop = System.currentTimeMillis();
-//		System.out.println("Multi time = " +(stop - start));
+		stop = System.currentTimeMillis();
+		System.out.println("MultiEncrypt time = " +(stop - start));
 
 		//setup object to send
+		start = System.currentTimeMillis();
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
 		toS2.setEnrolling(true);
 		toS2.setTesting(false);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
 		toS2.setContents(encryptedBiometric);
-
+		stop = System.currentTimeMillis();
+		System.out.println("Encrypted template wrapup time = "+ (stop - start) + " ms");
 		//send it to S2
-		System.out.println("Sending e_u(T) to S2...");
+		System.out.println("\tSending e_u(T) to S2...");
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
 				toS2);
@@ -311,7 +320,7 @@ public class Client extends Server{
 		/**
 		 * send d(u) [private key] to Server_1
 		 */
-		System.out.println("Sending Decryption Key to S1...");
+		System.out.println("\tSending Decryption Key to S1...");
 		//wrap up decryption key to send
 		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
 		toS1.setContents(pair.getPrivate());
@@ -330,7 +339,7 @@ public class Client extends Server{
 		 */
 		//encrypt the template
 		//for all testing templates
-		System.out.println("Encrypting templates with e_u...");
+		System.out.println("\tEncrypting templates with e_u...");
 		ArrayList<Template> encryptedTemplates = new ArrayList<Template>();
 		for ( Template template : testTemplates) {
 			Template encryptedBiometric = new Template();
@@ -352,7 +361,7 @@ public class Client extends Server{
 		toS2.setContents(encryptedTemplates);
 
 		//send it to S2
-		System.out.println("Sending e_u({T}) to S2...");
+		System.out.println("\tSending e_u({T}) to S2...");
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
 				toS2);
@@ -360,10 +369,10 @@ public class Client extends Server{
 		/**
 		 * wait for decision from server1
 		 */
-		System.out.println("Waiting for test score from S1...");
+		System.out.println("\tWaiting for test score from S1...");
 		InterServerObjectWrapper decision = receive(feedBack);
 		System.out.println(decision.getContents().toString());
-		System.out.println(feedBack);
+//		System.out.println(feedBack);
 
 		try {
 			feedBack.close();

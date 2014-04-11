@@ -12,8 +12,8 @@ public class DecryptThread extends Thread{
 	private ArrayList<BigInteger> decryptions;
 	private BigInteger key;
 	private List<BigInteger> messages;
-	private boolean wait;
-	private boolean lock;
+//	private boolean wait;
+//	private boolean lock;
 	private boolean shift;
 	
 	/**
@@ -25,7 +25,7 @@ public class DecryptThread extends Thread{
 		decryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
-		wait = true;
+//		wait = true;
 		shift = false;
 	}
 	public DecryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages, boolean shift) {
@@ -34,16 +34,16 @@ public class DecryptThread extends Thread{
 		decryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
-		wait = true;
+//		wait = true;
 		this.shift = shift;
 	}
 	
 
 	@Override
 	public void run() {
-		System.out.println("Yo I'm ready to decrypt stuff");
+//		System.out.println("Yo I'm ready to decrypt stuff");
 		decryptMessages(key, messages);
-		while(wait);
+//		while(wait);
 	}
 
 	
@@ -55,21 +55,21 @@ public class DecryptThread extends Thread{
 	 */
 	//NOTE IF WE ARE SHIFTING THEY WILL ONLY BE GENUINES SINCE WE DON'T DECRYPT CHAFF
 	public void decryptMessages(BigInteger key, List<BigInteger> messages) {
-		System.out.println("Decrypting stuff");
-		lock = true;
+//		System.out.println("Decrypting stuff");
+//		lock = true;
 		for (BigInteger dm : messages) {
 			if(shift) dm.shiftRight(1);
 			BigInteger m = encryptionScheme.decrypt(key, dm);
 			if(shift) m.shiftLeft(1);
 			decryptions.add(m);
 		}
-		lock = false;
+//		lock = false;
 	}
 	public ArrayList<BigInteger> getDecryptions() {
-		while(lock);
+//		while(lock);
 		return decryptions;
 	}
-	public void finish() {
-		wait = false;
-	}
+//	public void finish() {
+//		wait = false;
+//	}
 }
