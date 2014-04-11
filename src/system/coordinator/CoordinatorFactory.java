@@ -31,20 +31,21 @@ public class CoordinatorFactory {
 	public static Coordinator makeMultiserverCoordinator(Users users){
 
 		Hasher hasher = HasherFactory.makeHasher();
+		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);
 		
 		switch(MultiserverCoordinatorEnumerator.valueOf(AllMultiserverCoordinatorSettings.getMultiserverCoordinator())){
 			case NONE:
 				return null;
 			case SERVER1:
-				return new Server1(hasher, null);
+				return addToFront(new Server1(hasher, null), firstCoordinator);
 			case SERVER2:
-				return new Server2(hasher, null);
+				return addToFront(new Server2(hasher, null), firstCoordinator);
 			case CLIENT:
-				return new Client();
+				return addToFront(new Client(), firstCoordinator);
 			case SUPERTESTINGMETACLIENT:
-				return new SuperTestingMetaClient(hasher, users, TestGeneratorFactory.makeTestGenerator());
+				return addToFront(new SuperTestingMetaClient(hasher, users, TestGeneratorFactory.makeTestGenerator()), firstCoordinator);
 			case TESTINGSTMC:
-				return new TestingSTMC(hasher, users);
+				return addToFront(new TestingSTMC(hasher, users), firstCoordinator);
 			default:
 				return null;
 		}
