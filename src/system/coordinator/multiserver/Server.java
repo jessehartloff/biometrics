@@ -39,7 +39,7 @@ public abstract class Server extends Coordinator {
 		if( !enrollTiming.containsKey(timeName)) {
 			enrollTiming.put(timeName, time);
 		} else{
-		enrollTiming.put(timeName, enrollTiming.get(timeName) + time);
+			enrollTiming.put(timeName, enrollTiming.get(timeName) + time);
 		}
 	}
 	
@@ -47,7 +47,7 @@ public abstract class Server extends Coordinator {
 		if( !testTiming.containsKey(timeName)) {
 			testTiming.put(timeName, time);
 		} else{
-		testTiming.put(timeName, testTiming.get(timeName) + time);
+			testTiming.put(timeName, testTiming.get(timeName) + time);
 		}
 	}
 	
@@ -137,7 +137,7 @@ public abstract class Server extends Coordinator {
 		for (int thread = 0; thread < cores; thread++) {
 			int start = thread*stride;
 			//don't want to go over the end
-			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
+			int stop = ((thread+1) == cores) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
 			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList);
 			t.start();
@@ -153,8 +153,7 @@ public abstract class Server extends Coordinator {
 			}
 		}
 		//pull out the encryptions
-		for (int i=0; i < threads.size()-1; i++) {
-			EncryptThread thread = threads.get(i);
+		for (EncryptThread thread : threads) {
 			ArrayList<BigInteger> these = thread.getEncryptions();
 			encryptions.addAll(these);
 //			thread.finish();
@@ -178,16 +177,22 @@ public abstract class Server extends Coordinator {
 		
 		//create all the threads
 		ArrayList<EncryptThread> threads = new ArrayList<EncryptThread>();
+		int totalMessages = 0;
 		for (int thread = 0; thread < cores; thread++) {
 			int start = thread*stride;
 			//don't want to go over the end
-			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
+			int stop = ((thread+1) == cores) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
+
+			totalMessages += subList.size();
+
 			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList, shiftVal);
+
 			t.start();
 			threads.add(t);
 			
 		}
+//		System.out.println("messages:"+ numMessages+", "+ totalMessages);
 		//wait for them to finish
 		for( EncryptThread thread: threads) {
 			try {
@@ -197,11 +202,11 @@ public abstract class Server extends Coordinator {
 			}
 		}
 		//pull out the encryptions
-		for (int i=0; i < threads.size()-1; i++) {
-			EncryptThread thread = threads.get(i);
+		for (EncryptThread thread : threads) {
+//			System.out.println(thread.getMessages().size()+", "+thread.getEncryptions().size());
 			encryptions.addAll(thread.getEncryptions());
 		}
-		
+//		System.out.println(encryptions.size() + ", "+ totalMessages);
 		
 		return encryptions;
 		
@@ -218,7 +223,7 @@ public abstract class Server extends Coordinator {
 		for (int thread = 0; thread < cores; thread++) {
 			int start = thread*stride;
 			//don't want to go over the end
-			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
+			int stop = ((thread+1) == cores) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
 			DecryptThread t = new DecryptThread(encryptionScheme.getP(), key, subList);
 			t.start();
@@ -233,7 +238,7 @@ public abstract class Server extends Coordinator {
 			}
 		}
 		//pull out the decryptions
-		for (int i=0; i < threads.size()-1; i++) {
+		for (int i=0; i <= threads.size()-1; i++) {
 			DecryptThread thread = threads.get(i);
 			decryptions.addAll(thread.getDecryptions());
 //			thread.finish();
@@ -256,7 +261,7 @@ public abstract class Server extends Coordinator {
 		for (int thread = 0; thread < cores; thread++) {
 			int start = thread*stride;
 			//don't want to go over the end
-			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
+			int stop = ((thread+1) == cores) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
 			DecryptThread t = new DecryptThread(encryptionScheme.getP(), key, subList, shift);
 			t.start();
@@ -271,7 +276,7 @@ public abstract class Server extends Coordinator {
 			}
 		}
 		//pull out the decryptions
-		for (int i=0; i < threads.size()-1; i++) {
+		for (int i=0; i <= threads.size()-1; i++) {
 			DecryptThread thread = threads.get(i);
 			decryptions.addAll(thread.getDecryptions());
 //			thread.finish();

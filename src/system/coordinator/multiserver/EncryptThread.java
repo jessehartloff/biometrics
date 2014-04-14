@@ -25,7 +25,7 @@ public class EncryptThread extends Thread{
 		encryptionScheme = new EncryptionScheme();
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
-		this.messages = messages;
+		this.setMessages(messages);
 //		wait = true;
 		shift = false;
 	}
@@ -35,7 +35,7 @@ public class EncryptThread extends Thread{
 		encryptionScheme = new EncryptionScheme();
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
-		this.messages = messages;
+		this.setMessages(messages);
 //		wait = true;
 		this.shift = true;
 		this.shiftVal = shiftVal;
@@ -45,7 +45,7 @@ public class EncryptThread extends Thread{
 	@Override
 	public void run() {
 //		System.out.println("Yo I'm ready to encrypt stuff");
-		encryptMessages(key, messages);
+		encryptMessages(key, getMessages());
 //		while(wait);
 	}
 	
@@ -78,4 +78,12 @@ public class EncryptThread extends Thread{
 //	public void finish() {
 //		wait = false;
 //	}
+
+	public List<BigInteger> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<BigInteger> messages) {
+		this.messages = messages;
+	}
 }

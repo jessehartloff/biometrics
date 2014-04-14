@@ -147,6 +147,7 @@ public class Server2 extends Server {
 		HashSet<BigInteger> outGoingFV = new HashSet<BigInteger>();
 		long start = System.currentTimeMillis();
 		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0));
+		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
@@ -157,13 +158,16 @@ public class Server2 extends Server {
 		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
 		for(int i=0; i<numberOfChaffPoints; i++){
 			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
-//			BigInteger chaff = Quantizer.getQuantizer().getRandomBigInt();
-//			chaff = encryptionScheme.encrypt(publicKey, chaff);
-//			chaff = chaff.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
-//			receivedEncryptedFP.getHashes().add(chaff);
+//			BigInteger c = Quantizer.getQuantizer().getRandomBigInt();
+//			c = encryptionScheme.encrypt(publicKey, c);
+//			c = c.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
+//			chaff.add(c);
 		}
 		//encrypt the chaff
-		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 1));
+		//THIS ISN'T RIGHT
+//		if(chaff.size() > 0) outGoingFV.addAll(multiEncrypt(publicKey, chaff, 1));
+//		outGoingFV.addAll(chaff);
+
 		stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 generate and multiEcrypt chaff time", (stop-start));
 		receivedEncryptedFP.setHashes(outGoingFV);
@@ -180,16 +184,21 @@ public class Server2 extends Server {
 		long start = System.currentTimeMillis();
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		for (Template template : templates){
+//			System.out.println(template.getHashes().size());
+
 			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
-			hashes.addAll(multiEncrypt(publicKey, template.getHashes()));
+			hashes.addAll(multiEncrypt(publicKey, template.getHashes(), 0));
 			template.setHashes(hashes);
 			
 //			for (BigInteger feature : template.getHashes()){
 //				feature = encryptionScheme.encrypt(publicKey, feature);
+//				hashes.add(feature);
 //			}
+//			template.setHashes(hashes);
 		}
+//		System.out.println(templates.get(0).getHashes().size());
 		long stop = System.currentTimeMillis();
-		addToTestTiming("Server 2 total multiEncrypt templates time", (stop-start));
+//		addToTestTiming("Server 2 total multiEncrypt templates time", (stop-start));
 		addToTestTiming("Server 2 multiEncrypt per template time", (stop-start)/templates.size());
 		
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();

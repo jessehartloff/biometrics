@@ -75,6 +75,7 @@ public class Server1 extends Server {
 		start = System.currentTimeMillis();
 		Template fuzzyVault = hasher.hashEnrollTemplate(template);
 		long ID = objectIn.getUserID();
+		System.out.println("enrollID: "+ID);
 		map.put(ID,fuzzyVault);
 		stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 hash enroll time", (stop-start));
@@ -94,25 +95,27 @@ public class Server1 extends Server {
 //		} 
 		long start = System.currentTimeMillis();
 		long ID = objectIn.getUserID();
+		System.out.println("testID: "+ID);
+
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		for(Template template : templates){
 			for(BigInteger point : template.getHashes()){
 				point = encryptionScheme.decrypt(clientKey, point);
-				point = point.shiftLeft(1);
+//				point = point.shiftLeft(1);
 			}
 		}
 		long stop = System.currentTimeMillis();
-		addToTestTiming("Server 1 decrypt all template genuines time", (stop-start));
+//		addToTestTiming("Server 1 decrypt all template genuines time", (stop-start));
 		addToTestTiming("Server 1 decrypt genuines per template time", (stop-start)/templates.size());
 
 		start = System.currentTimeMillis();
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates(templates); 
 		Template enrolledTemplate = map.get(ID);
-		System.out.println("Enrolled Hashes:"  + enrolledTemplate.getHashes().size());
-		System.out.println("Test templates:" + testTemplates.get(0).getHashes().size());
+//		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
+//		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
 		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
 		stop = System.currentTimeMillis();
-		addToTestTiming("Server 1 hash enroll all time", (stop-start));
+//		addToTestTiming("Server 1 hash enroll all time", (stop-start));
 		addToTestTiming("Server 1 hash enroll per template time", (stop-start)/templates.size());
 		return result;
 	}

@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
@@ -169,7 +170,7 @@ public class Client extends Server{
 		toS1.setOrigin("client");
 		stop = System.currentTimeMillis();
 //		System.out.println("Decrypt object wrapup time = "+ (stop - start) + " ms");
-		addToEnrollTiming("Client Decrypt object wrapup time", (stop-start));
+//		addToEnrollTiming("Client Decrypt object wrapup time", (stop-start));
 		
 		//sendDecryptiontoServerOne(userID, pair);
 //		System.out.println("Sending decrypt key...");
@@ -183,7 +184,7 @@ public class Client extends Server{
 		//encrypt the template
 //		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
-		Template encryptedBiometric = template;//new Template();
+		Template encryptedBiometric = new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
 //			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
 //			encryptedBiometric.getHashes().add(encryptedPoint);
@@ -204,11 +205,11 @@ public class Client extends Server{
 		toS2.setTesting(false);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
-		System.out.println("EnrollID:"+userID);
+//		System.out.println("EnrollID:"+userID);
 		toS2.setContents(encryptedBiometric);
 		stop = System.currentTimeMillis();
 //		System.out.println("Encrypted template wrapup time = "+ (stop - start) + " ms");
-		addToEnrollTiming("Client Encrypted template wrapup time", (stop-start));
+//		addToEnrollTiming("Client Encrypted template wrapup time", (stop-start));
 		//send it to S2
 //		System.out.println("\tSending e_u(T) to S2...");
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
@@ -247,7 +248,7 @@ public class Client extends Server{
 		long start = System.currentTimeMillis();
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 		long stop = System.currentTimeMillis();
-		addToTestTiming("Client KeyGen Time", (stop-start));
+//		addToTestTiming("Client KeyGen Time", (stop-start));
 
 
 		/**
@@ -260,10 +261,12 @@ public class Client extends Server{
 		toS1.setContents(pair.getPrivate());
 		toS1.setEnrolling(false);
 		toS1.setTesting(true);
-		toS1.setUserID(userID);
+		toS1.setUserID(userID);		
+//		System.out.println("TestID:"+userID);
+
 		toS1.setOrigin("client");
 		stop = System.currentTimeMillis();
-		addToTestTiming("Client Decrypt key", (stop-start));
+//		addToTestTiming("Client Decrypt key", (stop-start));
 		
 		//sendDecryptiontoServerOne(userID, pair);
 		send(ServerOneSettings.getInstance().ip().getValue(),
@@ -279,17 +282,24 @@ public class Client extends Server{
 		start = System.currentTimeMillis();
 		ArrayList<Template> encryptedTemplates = new ArrayList<Template>();
 		for ( Template template : testTemplates) {
-			Template encryptedBiometric = new Template();
-//			System.out.println("Encrypting template with e_u...");
-			//for each point in this template
-			for (BigInteger bigInt : template.getHashes()) {
-				BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
-				encryptedBiometric.getHashes().add(encryptedPoint);
-			}
-			encryptedTemplates.add(encryptedBiometric);
+//			Template encryptedBiometric = new Template();
+//			multiEncrypt(pair.getPublic(), template.getHashes());
+//			encryptedTemplates.add(template.setHashes());
+			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
+			hashes.addAll(multiEncrypt(pair.getPublic(), template.getHashes()));
+			template.setHashes(hashes);
+			encryptedTemplates.add(template);
+////			System.out.println("Encrypting template with e_u...");
+//			//for each point in this template
+			
+//			for (BigInteger bigInt : template.getHashes()) {
+//				BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
+//				encryptedBiometric.getHashes().add(encryptedPoint);
+//			}
+//			encryptedTemplates.add(encryptedBiometric);
 		}
 		stop = System.currentTimeMillis();
-		addToTestTiming("Client encrypt all templates time", (stop-start));
+//		addToTestTiming("Client encrypt all templates time", (stop-start));
 		addToTestTiming("Client encrypt per template time", (stop-start)/testTemplates.size());
 		
 		//setup object to send
@@ -301,7 +311,7 @@ public class Client extends Server{
 		toS2.setUserID(userID);
 		toS2.setContents(encryptedTemplates);
 		stop = System.currentTimeMillis();
-		addToTestTiming("Client e_u({T}) wrapup time", (stop-start));
+//		addToTestTiming("Client e_u({T}) wrapup time", (stop-start));
 
 		//send it to S2
 //		System.out.println("\tSending e_u({T}) to S2...");

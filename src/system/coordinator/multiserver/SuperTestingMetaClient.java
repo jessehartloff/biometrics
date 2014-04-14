@@ -63,7 +63,7 @@ public class SuperTestingMetaClient extends Coordinator {
 				this.client.enroll(enrollTemplate, this.computeID(userIndex, readingNumber));
 				long stop = System.currentTimeMillis();
 				totalEnrollTime += (stop-start);
-				System.out.println(stop-start);
+//				System.out.println(stop-start);
 				numEnrolls++;
 //				completed++;
 //				progress = (completed.doubleValue()/total.doubleValue())*100.0;
@@ -109,7 +109,7 @@ public class SuperTestingMetaClient extends Coordinator {
 		Double score = this.client.test(testTemplates, this.computeID(test.enrolledUserID.intValue(), test.enrolledReadingNumber.intValue())); 
 		long stop = System.currentTimeMillis();
 		totalTestTime += (stop-start);
-		System.out.println(stop-start);
+//		System.out.println(stop-start);
 		numTests++;
 		return score;
 	}
@@ -143,29 +143,30 @@ public class SuperTestingMetaClient extends Coordinator {
 				scores.imposterScores.add(score);
 			}
 		}
-		System.out.println("Ran tests");
+//		System.out.println("Ran tests");
 		//ask the client to compile all 3 server times
 		enrollTiming = this.client.getAllEnrollTiming();
 //		System.out.println("got enroll timing");
 
 		testTiming = this.client.getAllTestTiming();
-//		System.out.println("got test timing");
-
-		for (Long val : enrollTiming.values()){
-			val /= numEnrolls;
-		}
-		for (Long val : testTiming.values()){
-			val /= numTests;
-		}
+////		System.out.println("got test timing");
+//
+//		for (Long val : enrollTiming.values()){
+//			val /= numEnrolls;
+//			
+//		}
+//		for (Long val : testTiming.values()){
+//			val /= numTests;
+//		}
 		System.out.println("==== Enroll Timings Averages (out of "+numEnrolls+" ) ====");
 		System.out.println("Average total enroll time = "+ totalEnrollTime/numEnrolls);
 		for (String key : enrollTiming.keySet()) {
-			System.out.println(key+" = "+enrollTiming.get(key));
+			System.out.println(key+" = "+(enrollTiming.get(key)/numEnrolls));
 		}
 		System.out.println("==== Test Timings Averages (out of "+testsRan+" ) ====");
 		System.out.println("Average total test time = "+ totalTestTime/numTests);
 		for (String key : testTiming.keySet()) {
-			System.out.println(key+" = "+testTiming.get(key));
+			System.out.println(key+" = "+(testTiming.get(key)/numTests));
 		}
 	
 		return scores;
