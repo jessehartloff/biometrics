@@ -51,110 +51,6 @@ public class Server2 extends Server {
 		super(hasher, enrollees);
 
 	}
-
-
-	// FIX SERVER2 and DO THE HASHMAP FOR FUZZY VAULT 
-	// testing 
-	
-	
-
-//	public BigInteger encrypt(Key key, BigInteger minutia, Cipher cipher){
-//		
-//		BigInteger encryptedMinutia = null;
-//		try{
-//			cipher.init(Cipher.ENCRYPT_MODE, key);
-//			
-//			encryptedMinutia = new BigInteger (cipher.doFinal(minutia.toByteArray()));
-////		    System.out.println("Encrypted!");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} 
-//		
-//		return encryptedMinutia;
-//	}
-//	
-//	public KeyPair generateKeyPair() throws Exception{
-//
-//		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-//		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
-//		System.out.println("Generated key pair");
-//		EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
-//				"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
-//						"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-//								"fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
-//
-//		ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-//				"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-//						"fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
-//								"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
-//
-//		keyGen.initialize(ecSpec, new SecureRandom());
-//
-//		//KeyAgreement aKeyAgree = KeyAgreement.getInstance("ECDH", "BC");
-//		KeyPair keyPair = keyGen.generateKeyPair();
-//
-//		return keyPair;
-//
-//	}
-//	
-	/*
-	public void initialize() throws Exception{
-		
-		_privateKey = generateKeyPair().getPrivate();
-
-		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
-		Socket S1 = new Socket(ServerOneSettings.getInstance().ip().getValue(), ServerOneSettings.getInstance().portNumber().getValue().intValue());
-		ServerSocket serv_socket = null;
-		Socket client = null;
-		serv_socket = new ServerSocket(port);
-		while(true){
-			//port = serv_socket.getLocalPort();
-			client = serv_socket.accept();
-
-			ObjectInputStream objInput = new ObjectInputStream(client.getInputStream());
-			_receivedObject = (InterServerObjectWrapper)objInput.readObject();
-			
-			if (_receivedObject.isEnrolling()){
-					enroll();
-			}else{
-					test();
-			}
-			ObjectOutputStream objOutput = new ObjectOutputStream(S1.getOutputStream());
-			objOutput.writeObject(_objectToSend);
-		}
-
-		
-	}
-	*/
-	
-	
-//	
-//	public InterServerObjectWrapper testEnroll(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
-//		Cipher cipher = Cipher.getInstance("ECIES", "BC");
-//		Template receivedEncryptedFP = (Template)receivedObject.getContents(); 
-//		for (BigInteger minutiaPoint : receivedEncryptedFP.getHashes() ){
-//			minutiaPoint = encrypt(privateKey, minutiaPoint, cipher);
-//		}
-//		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
-//		objectToSend.setContents(receivedEncryptedFP);
-//		objectToSend.setOrigin("server 2");
-//		return objectToSend;
-//	}
-//	
-//	public InterServerObjectWrapper testTest(InterServerObjectWrapper receivedObject, PrivateKey privateKey) throws Exception{
-//		Cipher cipher = Cipher.getInstance("ECIES","BH");
-//		ArrayList<Template> fingerprintList = (ArrayList<Template>)receivedObject.getContents();
-//		for (Template fingerprint : fingerprintList){
-//			for (BigInteger minutiaPoint : fingerprint.getHashes()){
-//				minutiaPoint = encrypt(publicKey, minutiaPoint,cipher);
-//			}
-//		}
-//		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
-//		objectToSend.setContents(fingerprintList);
-//		objectToSend.setOrigin("server 2");
-//		return objectToSend;
-//	}
 	
 	public void initialize() throws Exception{
 		SimpleKeyPair keyPair = encryptionScheme.generateKeyPair();
@@ -164,14 +60,15 @@ public class Server2 extends Server {
 		
 		ServerSocket serverSocket = new ServerSocket(port);
 		Socket client = null;
-		
+		long start;
+		long stop;
 		int state = 1; 
 		while (true) {
-			System.out.println("State:"+state);
+//			System.out.println("State:"+state);
 
 			switch (state){
 			case 1:
-//				System.out.println("Server 2 listening....");
+				System.out.println("Server 2 listening....");
 //
 //				client = fromS1.accept();
 //				System.out.println("Server 2 has accepted the client");
@@ -185,9 +82,10 @@ public class Server2 extends Server {
 //				System.out.println(_receivedObject.isEnrolling());
 //				System.out.println(_receivedObject.getUserID());
 
-				receivedObject = receive(serverSocket);
-				
-				if (receivedObject.isEnrolling()){
+				receivedObject = receive(serverSocket, false, "IGNORE THIS");
+				if (receivedObject.getOrigin().equals("getEnrollTiming") || receivedObject.getOrigin().equals("getTestTiming")) {
+					state = 1;
+				} else if (receivedObject.isEnrolling()){
 					state = 2;
 				}else {
 					state = 3;
@@ -196,17 +94,23 @@ public class Server2 extends Server {
 			case 2:
 //				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
 //						ServerOneSettings.getInstance().portNumber().getValue().intValue());
+				start = System.currentTimeMillis();
 				InterServerObjectWrapper encryptedBiometric = enroll(receivedObject, publicKey);
+				stop = System.currentTimeMillis();
+				addToEnrollTiming("Server 2 enroll time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
 						ServerOneSettings.getInstance().portNumber().getValue().intValue(),
-						encryptedBiometric);
+						encryptedBiometric, true, "Enroll template");
 				state = 1;
 				break;
 			case 3:
+				start = System.currentTimeMillis();
 				InterServerObjectWrapper encryptedBiometrics = test(receivedObject, publicKey);
+				stop = System.currentTimeMillis();
+				addToEnrollTiming("Server 2 test all time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
 						ServerOneSettings.getInstance().portNumber().getValue().intValue(),
-						encryptedBiometrics);
+						encryptedBiometrics, false, "test templates");
 				state = 1;
 				break;
 			}
@@ -240,13 +144,16 @@ public class Server2 extends Server {
 //			feature = encryptionScheme.encrypt(publicKey, feature);
 //			feature = feature.shiftLeft(1); //mark the genuines for chaff injection
 //		}
-		
 		HashSet<BigInteger> outGoingFV = new HashSet<BigInteger>();
+		long start = System.currentTimeMillis();
 		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0));
-		
+		long stop = System.currentTimeMillis();
+		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
 		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		//chaff points are marked with a 1 as the least significant bit
+		
+		start = System.currentTimeMillis();
 		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
 		for(int i=0; i<numberOfChaffPoints; i++){
 			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
@@ -257,6 +164,8 @@ public class Server2 extends Server {
 		}
 		//encrypt the chaff
 		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 1));
+		stop = System.currentTimeMillis();
+		addToEnrollTiming("Server 2 generate and multiEcrypt chaff time", (stop-start));
 		receivedEncryptedFP.setHashes(outGoingFV);
 		//send out the fv
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
@@ -268,7 +177,7 @@ public class Server2 extends Server {
 	}
 	
 	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject, BigInteger publicKey){
-		
+		long start = System.currentTimeMillis();
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		for (Template template : templates){
 			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
@@ -279,7 +188,9 @@ public class Server2 extends Server {
 //				feature = encryptionScheme.encrypt(publicKey, feature);
 //			}
 		}
-		
+		long stop = System.currentTimeMillis();
+		addToTestTiming("Server 2 total multiEncrypt templates time", (stop-start));
+		addToTestTiming("Server 2 multiEncrypt per template time", (stop-start)/templates.size());
 		
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
 		objectToSend.setContents(templates);

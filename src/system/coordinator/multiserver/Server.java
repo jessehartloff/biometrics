@@ -10,59 +10,108 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserverCoordinatorSettings;
 import system.allcommonclasses.commonstructures.Users;
 import system.coordinator.Coordinator;
 import system.hasher.Hasher;
 
 public abstract class Server extends Coordinator {
 	protected EncryptionScheme encryptionScheme;
+	protected HashMap<String, Long> enrollTiming;
+	protected HashMap<String, Long> testTiming;
+	protected String serverName;
 	
 	public Server(Hasher hasher, Users users) {
 		super(hasher, users);
 		encryptionScheme = new EncryptionScheme();
+		serverName = AllMultiserverCoordinatorSettings.getInstance().getMultiserverCoordinator();
+		enrollTiming = new HashMap<String, Long>();
+		testTiming = new HashMap<String, Long>();
 	}
 
+	public void addToEnrollTiming(String timeName, Long time){
+		//accumulate all timings.  Average will be taken at end
+		if( !enrollTiming.containsKey(timeName)) {
+			enrollTiming.put(timeName, time);
+		} else{
+		enrollTiming.put(timeName, enrollTiming.get(timeName) + time);
+		}
+	}
+	
+	public void addToTestTiming(String timeName, Long time){
+		if( !testTiming.containsKey(timeName)) {
+			testTiming.put(timeName, time);
+		} else{
+		testTiming.put(timeName, testTiming.get(timeName) + time);
+		}
+	}
+	
 	// base server class extends coordinator
 
-	protected InterServerObjectWrapper receive(ServerSocket serverSocket){
+	protected InterServerObjectWrapper receive(ServerSocket serverSocket, boolean enroll, String timeName){//enroll used for differentiating timing
 		long t0 = System.currentTimeMillis();
 		try{
 			long start = System.currentTimeMillis();
 			Socket client = serverSocket.accept();
 			long stop = System.currentTimeMillis();
-			System.out.println("Receive accept time = " + (stop-start)+ " ms");
+//			System.out.println(serverName+" "+timeName+" Receive accept time = " + (stop-start)+ " ms");
+			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive accept time", (stop-start));
+			else addToTestTiming(serverName+" "+timeName+" Test receive accept time", (stop-start));
+			
 			start = System.currentTimeMillis();
 			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper) objIn.readObject();
 			stop = System.currentTimeMillis();
-			System.out.println("Receive object stream & read time = " + (stop-start)+ " ms");
-
+//			System.out.println(serverName+" "+timeName+" Receive object stream & read time = " + (stop-start)+ " ms");
+			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive object stream & read time", (stop-start));
+			else addToTestTiming(serverName+" "+timeName+" Test receive object stream & read time", (stop-start));
+			
+			if (receivedObject.getOrigin() != null && receivedObject.getOrigin().equals("getEnrollTiming")) {
+				ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
+				InterServerObjectWrapper toC = new InterServerObjectWrapper();
+				toC.setContents(enrollTiming);
+				out.writeObject(toC);
+			}
+			else if (receivedObject.getOrigin() != null && receivedObject.getOrigin().equals("getTestTiming")) {
+				ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
+				InterServerObjectWrapper toC = new InterServerObjectWrapper();
+				toC.setContents(testTiming);
+				out.writeObject(toC);
+			}
+			
 			client.close();
 			return receivedObject;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.println("Total receive time = "+ (t1 -t0)+ " ms");
+//		System.out.println(serverName+" "+timeName+" Total receive time = "+ (t1 -t0)+ " ms");
+		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total receive time", (t1-t0));
+		else addToTestTiming(serverName+" "+timeName+" Test Total receive time", (t1-t0));
 		return null;
 	}
 
-	protected void send(String ip, int port, InterServerObjectWrapper message){
+	protected void send(String ip, int port, InterServerObjectWrapper message, boolean enroll, String timeName){
 		long t0 = System.currentTimeMillis();
 		try {
 			long start = System.currentTimeMillis();
 			Socket socket = new Socket(InetAddress.getByName(ip), port);
 			long stop = System.currentTimeMillis();
-			System.out.println("Send connect time = " + (stop-start)+ " ms");
+//			System.out.println(serverName+" "+timeName+" Send connect time = " + (stop-start)+ " ms");
+			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Send connect time", (stop-start));
+			else addToTestTiming(serverName+" "+timeName+" Test Send connect time", (stop-start));
 			start = System.currentTimeMillis();
 			ObjectOutputStream objOutput = new ObjectOutputStream(socket.getOutputStream());
 			objOutput.writeObject(message);
 			stop = System.currentTimeMillis();
-			System.out.println("Send stream & write time = " + (stop-start)+ " ms");
+//			System.out.println(serverName+" "+timeName+" Send stream & write time = " + (stop-start)+ " ms");
+			if(enroll) addToEnrollTiming(serverName+" Enroll Send stream & write time", (stop-start));
+			else addToTestTiming(serverName+" "+timeName+" Test Send stream & write time", (stop-start));
 			socket.close();
 		}catch(ConnectException e){
 			e.printStackTrace();
@@ -71,7 +120,9 @@ public abstract class Server extends Coordinator {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.println("Total send time = "+ (t1 -t0)+ " ms");
+//		System.out.println(serverName+" "+timeName+" Total send time = "+ (t1 -t0)+ " ms");
+		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total send time", (t1-t0));
+		else addToTestTiming(serverName+" "+timeName+" Test Total send time", (t1-t0));
 	}
 	
 	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet) {
@@ -108,7 +159,7 @@ public abstract class Server extends Coordinator {
 			encryptions.addAll(these);
 //			thread.finish();
 //			while(!thread.isAlive());
-			System.out.println("Am I alive? "+thread.isAlive());
+//			System.out.println("Am I alive? "+thread.isAlive());
 
 		}
 		

@@ -3,6 +3,7 @@ package settings.coordinatorsettings.multiservercoordinatorsettings;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import settings.Settings;
@@ -12,7 +13,7 @@ import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettin
 import settings.settingsvariables.SettingsLong;
 
 public class SuperTestingMetaClientSettings extends CoordinatorSettings{
-
+	
 	@Override
 	public String getCoordinator() {
 		return "SUPERTESTINGMETACLIENT";

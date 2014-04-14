@@ -1,7 +1,6 @@
 package system.coordinator.multiserver;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
@@ -9,27 +8,14 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.security.spec.ECFieldFp;
-import java.security.spec.ECParameterSpec;
-import java.security.spec.ECPoint;
-import java.security.spec.EllipticCurve;
 import java.util.ArrayList;
-
-import javax.crypto.Cipher;
+import java.util.HashMap;
 
 import settings.coordinatorsettings.multiservercoordinatorsettings.ClientSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSettings;
 import settings.coordinatorsettings.multiservercoordinatorsettings.ServerTwoSettings;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.commonstructures.Users;
-import system.hasher.Hasher;
 
 public class Client extends Server{
 	// extends server
@@ -42,179 +28,124 @@ public class Client extends Server{
 
 	public Client() {
 		super(null, null);
-		
-//		try {
-//			System.out.println("Connecting to Socket 1...");
-//			S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
-////			System.out.println("Connecting to Socket 2...");
-////			Socket S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
-//
-//			S1Out = new ObjectOutputStream (S1.getOutputStream());
-//			System.out.println("Got Socket 1 Outputstream...");
-//			
-//
-//
-//
-//			//System.out.println("Getting Socket 2 Inputstream...");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 	}
 
-
-//	public void sendDecryptiontoServerOne(Long userID, KeyPair pair) {
-//		
-//
-////		//establish connection to Server 1
-////		
-////		try {
-////			S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
-////		} catch (UnknownHostException e) {
-////			// TODO Auto-generated catch block
-////			System.out.println("Unknown Host encountered...");
-////			e.printStackTrace();
-////		} catch (IOException e) {
-////			// TODO Auto-generated catch block
-////			System.out.println("IO Exception...");
-////			e.printStackTrace();
-////		}
-////		
-////		//send out the decryption key to S1
-////		try {
-////			S1Out.writeObject(toS1);
-////			System.out.println("Client sent decyption to S1");
-////		}
-////		catch (Exception e) {
-////			System.out.println("Sending decyprtion to S1 Failed...");
-////			e.printStackTrace();
-////		}
-////		
-////		//establish that S1 received the decryption key
-////		try {
-////			S1In = new ObjectInputStream(S1.getInputStream());
-////			int check =  S1In.read();
-////			if (check == 0) System.out.println("Server 1 successfully received decryption key");
-////			else System.out.println("Server 1 didn't receive decryption key");
-////
-////		}
-////		catch( Exception e) {
-////			System.out.println("Receiveing S1 responds failed...");
-////			e.printStackTrace();
-////		}
-//
-//
-//	}
-//	
-//	public void sendEncryptedTemplatetoServerTwo(Long userID, KeyPair pair, Template template) {
-//
-//		
-//		//encrypt the template
-//		Template encryptedBiometric = new Template();
-//		System.out.println("Encrypting template with e_u...");
-//		try{
-//			//it may be better to abstract this cipher later...
-//			Cipher cipher = Cipher.getInstance("ECIES","BC");
-//			cipher.init(Cipher.ENCRYPT_MODE,pair.getPublic());
-//			for (BigInteger bigInt : template.getHashes()) {
-//				encryptedBiometric.getHashes().add(new BigInteger(cipher.doFinal(bigInt.toByteArray())));
-//			}
-//
-//		}catch(Exception e){
-//			System.out.println("Client encryption of Tempalte failed...");
-//			e.printStackTrace();
-//		}
-//		
-//		//setup object to send
-//		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
-//		toS2.setEnrolling(true);
-//		toS2.setTesting(false);
-//		toS2.setOrigin("client");
-//		toS2.setUserID(userID);
-//		toS2.setContents(encryptedBiometric);
-//
-//		//establish connection to S2
-//		System.out.println("Connecting to S2...");
-//		try {
-//			S2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
-//			S2Out = new ObjectOutputStream (S2.getOutputStream());
-//		}
-//		catch(Exception e) {
-//			System.out.println("Establishing connection to S2 failed...");
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		//send e(Template) to Server_2
-//		System.out.println("Sending Encrypting template to S2...");
-//		try{	
-//			
-//			S2Out.writeObject(toS2);
-//			S2.close();
-//
-//
-//
-//		} catch (Exception e){
-//			e.printStackTrace();
-//		}
-//		System.out.println("Successfully sent e(Template) to Server_2");
-//	}
-//	
-//	public void waitForDecision() {
-//		ServerSocket client;
-//		try {
-//			client = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
-//			Socket c = client.accept();
-//			S1In = new ObjectInputStream(c.getInputStream());
-//			int check = S1In.read();
-//			if (check == 0) System.out.println("Server 1 has successfully enrolled this template");
-//			else System.out.println("Server 1 failed to enroll this template");
-//
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println("Failed to get decision from Server 1");
-//			e.printStackTrace();
-//		}
-//	}
-//
-//
-//	public KeyPair getKeyPair(){
-//		try{
-//			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-//			//TODO figure out what this ECDH stuff does
-//			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECIES", "BC");
-//			EllipticCurve curve = new EllipticCurve(new ECFieldFp(new BigInteger(
-//					"fffffffffffffffffffffffffffffffeffffffffffffffff", 16)), new BigInteger(
-//							"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-//									"fffffffffffffffffffffffffffffffefffffffffffffffc", 16));
-//
-//			ECParameterSpec ecSpec = new ECParameterSpec(curve, new ECPoint(new BigInteger(
-//					"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), new BigInteger(
-//							"fffffffffffffffffffffffffffffffefffffffffffffffc", 16)), new BigInteger(
-//									"fffffffffffffffffffffffffffffffefffffffffffffffc", 16), 1);
-//
-//			keyGen.initialize(ecSpec, new SecureRandom());
-//			return keyGen.generateKeyPair();
-//		} catch (Exception e){
-//			e.printStackTrace();
-//			return null;
-//		}
-//
-//	}
-//
-//	@Override
-//	public RawScores run() {
-////		long start = System.currentTimeMillis();
-////		enroll(hasher.makeEnrollTemplate(users.users.get(0).readings.get(0)), users.users.get(0).id);
-////		long stop = System.currentTimeMillis();
-////		System.out.println("enrolled in "+ (stop-start) + "sec");
-////		test(hasher.makeTestTemplates(users.users.get(0).readings.get(0)), users.users.get(0).id);
-////		System.out.println("tested!!");
-//
-//		System.exit(0);
-//		return null;
-//	}
-
+	public HashMap<String, Long> getAllEnrollTiming() {
+		HashMap<String, Long> allTiming = enrollTiming;
+		
+		try {
+			Socket s1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			
+			//send the signal to give back the timing
+			ObjectOutputStream toS1 = new ObjectOutputStream(s1.getOutputStream());
+			InterServerObjectWrapper signal = new InterServerObjectWrapper();
+			signal.setOrigin("getEnrollTiming");
+			toS1.writeObject(signal);
+			
+			//get S1's response
+			ObjectInputStream fromS1 = new ObjectInputStream(s1.getInputStream());
+			InterServerObjectWrapper s1times = (InterServerObjectWrapper) fromS1.readObject();
+			HashMap<String, Long> s1Timing = (HashMap<String, Long>) s1times.getContents();
+			allTiming.putAll(s1Timing);
+			s1.close();
+		
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Socket s2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+			
+			//send the signal to give back the timing
+			ObjectOutputStream toS2 = new ObjectOutputStream(s2.getOutputStream());
+			InterServerObjectWrapper signal = new InterServerObjectWrapper();
+			signal.setOrigin("getEnrollTiming");
+			toS2.writeObject(signal);
+			
+			//get S1's response
+			ObjectInputStream fromS2 = new ObjectInputStream(s2.getInputStream());
+			InterServerObjectWrapper s2times = (InterServerObjectWrapper) fromS2.readObject();
+			HashMap<String, Long> s2Timing = (HashMap<String, Long>) s2times.getContents();
+			allTiming.putAll(s2Timing);
+			s2.close();
+		
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allTiming;
+	}
+	
+	public HashMap<String, Long> getAllTestTiming() {
+		HashMap<String, Long> allTiming = testTiming;
+		
+		try {
+			Socket s1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
+			
+			//send the signal to give back the timing
+			ObjectOutputStream toS1 = new ObjectOutputStream(s1.getOutputStream());
+			InterServerObjectWrapper signal = new InterServerObjectWrapper();
+			signal.setOrigin("getTestTiming");
+			toS1.writeObject(signal);
+			
+			//get S1's response
+			ObjectInputStream fromS1 = new ObjectInputStream(s1.getInputStream());
+			InterServerObjectWrapper s1times = (InterServerObjectWrapper) fromS1.readObject();
+			HashMap<String, Long> s1Timing = (HashMap<String, Long>) s1times.getContents();
+			allTiming.putAll(s1Timing);
+			s1.close();
+		
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Socket s2 = new Socket(InetAddress.getByName(ServerTwoSettings.getInstance().ip().getValue()), ServerTwoSettings.getInstance().portNumber().getValue().intValue());
+			
+			//send the signal to give back the timing
+			ObjectOutputStream toS2 = new ObjectOutputStream(s2.getOutputStream());
+			InterServerObjectWrapper signal = new InterServerObjectWrapper();
+			signal.setOrigin("getTestTiming");
+			toS2.writeObject(signal);
+			
+			//get S1's response
+			ObjectInputStream fromS2 = new ObjectInputStream(s2.getInputStream());
+			InterServerObjectWrapper s2times = (InterServerObjectWrapper) fromS2.readObject();
+			HashMap<String, Long> s2Timing = (HashMap<String, Long>) s2times.getContents();
+			allTiming.putAll(s2Timing);
+			s2.close();
+		
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allTiming;
+	}
+	
 	public void enroll(Template template, Long userID) {
 		
 //		System.out.println("\tSending Decryption Key to S1...");
@@ -222,16 +153,8 @@ public class Client extends Server{
 		long start = System.currentTimeMillis();
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
 		long stop = System.currentTimeMillis();
-		System.out.println("KeyGen time = "+ (stop - start) + " ms");
-
-//		//create socket for when server 1 responds
-//		ServerSocket feedBack = null;
-//		try {
-//			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
-//		} catch (IOException e) {
-//			System.out.println("Couldn't make server socket...");
-//			e.printStackTrace();
-//		}
+//		System.out.println("KeyGen time = "+ (stop - start) + " ms");
+		addToEnrollTiming("Client KeyGen Time", (stop-start));
 
 		/**
 		 * send d(u) [private key] to Server_1
@@ -245,21 +168,22 @@ public class Client extends Server{
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
 		stop = System.currentTimeMillis();
-		System.out.println("Decrypt object wrapup time = "+ (stop - start) + " ms");
+//		System.out.println("Decrypt object wrapup time = "+ (stop - start) + " ms");
+		addToEnrollTiming("Client Decrypt object wrapup time", (stop-start));
 		
 		//sendDecryptiontoServerOne(userID, pair);
-		System.out.println("Sending decrypt key...");
+//		System.out.println("Sending decrypt key...");
 		send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
-				toS1);
+				toS1, true, "decrypt key");
 		
 		/**
 		 * send e_u(T) [user encrypted template] to Server_2
 		 */
 		//encrypt the template
-		System.out.println("\tEncrypting template with e_u...");
+//		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
-		Template encryptedBiometric = new Template();
+		Template encryptedBiometric = template;//new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
 //			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
 //			encryptedBiometric.getHashes().add(encryptedPoint);
@@ -268,10 +192,10 @@ public class Client extends Server{
 //		System.out.println("Single time = " +(stop - start));
 //		
 		start = System.currentTimeMillis();
-		encryptedBiometric = new Template();
 		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
 		stop = System.currentTimeMillis();
-		System.out.println("MultiEncrypt time = " +(stop - start));
+//		System.out.println("MultiEncrypt time = " +(stop - start));
+		addToEnrollTiming("Client MultiEncrypt Time", (stop-start));
 
 		//setup object to send
 		start = System.currentTimeMillis();
@@ -280,35 +204,22 @@ public class Client extends Server{
 		toS2.setTesting(false);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
+		System.out.println("EnrollID:"+userID);
 		toS2.setContents(encryptedBiometric);
 		stop = System.currentTimeMillis();
-		System.out.println("Encrypted template wrapup time = "+ (stop - start) + " ms");
+//		System.out.println("Encrypted template wrapup time = "+ (stop - start) + " ms");
+		addToEnrollTiming("Client Encrypted template wrapup time", (stop-start));
 		//send it to S2
-		System.out.println("\tSending e_u(T) to S2...");
+//		System.out.println("\tSending e_u(T) to S2...");
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
-				toS2);
+				toS2, true, "e_u(T)");
 		
-//		/**
-//		 * wait for decision from server1
-//		 */
+		/**
+		 * wait for decision from server1
+		 */
+		start = System.currentTimeMillis();
 //		System.out.println("Waiting for enroll response from S1...");
-//		InterServerObjectWrapper decision = receive(feedBack);
-//		try {
-//			feedBack.close();
-//		} catch (IOException e) {
-//			System.out.println("Failed to close client server socket");
-//			e.printStackTrace();
-//		}
-//		//print out the received decision
-//		System.out.println(decision.getContents().toString());
-		
-	}
-
-	public Double test(ArrayList<Template> testTemplates,  Long userID) {
-		//generate key pair
-		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
-
 		//create socket for when server 1 responds
 		ServerSocket feedBack = null;
 		try {
@@ -317,33 +228,59 @@ public class Client extends Server{
 			System.out.println("Couldn't make server socket...");
 			e.printStackTrace();
 		}
+		InterServerObjectWrapper decision = receive(feedBack, true, "enroll feedback");
+		try {
+			feedBack.close();
+		} catch (IOException e) {
+			System.out.println("Failed to close client server socket");
+			e.printStackTrace();
+		}
+		//print out the received decision
+//		System.out.println(decision.getContents().toString());
+		stop = System.currentTimeMillis();
+		addToEnrollTiming("Client Wait for enroll decision time", (stop-start));
+		return;
+	}
+
+	public Double test(ArrayList<Template> testTemplates,  Long userID) {
+		//generate key pair
+		long start = System.currentTimeMillis();
+		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
+		long stop = System.currentTimeMillis();
+		addToTestTiming("Client KeyGen Time", (stop-start));
+
+
 		/**
 		 * send d(u) [private key] to Server_1
 		 */
-		System.out.println("\tSending Decryption Key to S1...");
+//		System.out.println("\tSending Decryption Key to S1...");
 		//wrap up decryption key to send
+		start = System.currentTimeMillis();
 		InterServerObjectWrapper toS1 = new InterServerObjectWrapper();
 		toS1.setContents(pair.getPrivate());
 		toS1.setEnrolling(false);
 		toS1.setTesting(true);
 		toS1.setUserID(userID);
 		toS1.setOrigin("client");
+		stop = System.currentTimeMillis();
+		addToTestTiming("Client Decrypt key", (stop-start));
 		
 		//sendDecryptiontoServerOne(userID, pair);
 		send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
-				toS1);
+				toS1, false, "decrypt key");
 		
 		/**
 		 * send e_u({T}) [each user encrypted template] to Server_2
 		 */
 		//encrypt the template
 		//for all testing templates
-		System.out.println("\tEncrypting templates with e_u...");
+//		System.out.println("\tEncrypting templates with e_u...");
+		start = System.currentTimeMillis();
 		ArrayList<Template> encryptedTemplates = new ArrayList<Template>();
 		for ( Template template : testTemplates) {
 			Template encryptedBiometric = new Template();
-			System.out.println("Encrypting template with e_u...");
+//			System.out.println("Encrypting template with e_u...");
 			//for each point in this template
 			for (BigInteger bigInt : template.getHashes()) {
 				BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
@@ -351,27 +288,42 @@ public class Client extends Server{
 			}
 			encryptedTemplates.add(encryptedBiometric);
 		}
+		stop = System.currentTimeMillis();
+		addToTestTiming("Client encrypt all templates time", (stop-start));
+		addToTestTiming("Client encrypt per template time", (stop-start)/testTemplates.size());
 		
 		//setup object to send
+		start = System.currentTimeMillis();
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();
 		toS2.setEnrolling(false);
 		toS2.setTesting(true);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
 		toS2.setContents(encryptedTemplates);
+		stop = System.currentTimeMillis();
+		addToTestTiming("Client e_u({T}) wrapup time", (stop-start));
 
 		//send it to S2
-		System.out.println("\tSending e_u({T}) to S2...");
+//		System.out.println("\tSending e_u({T}) to S2...");
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
-				toS2);
+				toS2, false, "e_u({T})");
 		
 		/**
 		 * wait for decision from server1
 		 */
-		System.out.println("\tWaiting for test score from S1...");
-		InterServerObjectWrapper decision = receive(feedBack);
-		System.out.println(decision.getContents().toString());
+		//create socket for when server 1 responds
+		start = System.currentTimeMillis();
+		ServerSocket feedBack = null;
+		try {
+			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+		} catch (IOException e) {
+			System.out.println("Couldn't make server socket...");
+			e.printStackTrace();
+		}
+//		System.out.println("\tWaiting for test score from S1...");
+		InterServerObjectWrapper decision = receive(feedBack, false, "test decision");
+//		System.out.println(decision.getContents().toString());
 //		System.out.println(feedBack);
 
 		try {
@@ -381,6 +333,9 @@ public class Client extends Server{
 			e.printStackTrace();
 		}
 		//print out the received decision
+		stop = System.currentTimeMillis();
+		addToEnrollTiming("Client Wait for test decision time", (stop-start));
+
 		return (Double) decision.getContents();
 	
 	}
