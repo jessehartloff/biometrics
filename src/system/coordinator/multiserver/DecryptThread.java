@@ -21,7 +21,7 @@ public class DecryptThread extends Thread{
 	 */
 	public DecryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages) {
 		//need a new encryption scheme object for each thread
-		encryptionScheme = new EncryptionScheme(prime);
+		encryptionScheme = new EncryptionScheme();
 		decryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
@@ -30,7 +30,7 @@ public class DecryptThread extends Thread{
 	}
 	public DecryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages, boolean shift) {
 		//need a new encryption scheme object for each thread
-		encryptionScheme = new EncryptionScheme(prime);
+		encryptionScheme = new EncryptionScheme();
 		decryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;

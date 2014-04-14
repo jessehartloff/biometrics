@@ -1,12 +1,11 @@
 package unittests.testsystem.testcoordinator.testmultiserver;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
-import java.security.KeyPair;
 import java.util.Random;
 
+import org.bouncycastle.math.ec.ECPoint;
 import org.junit.Test;
 
 import system.coordinator.multiserver.EncryptionScheme;
@@ -20,23 +19,15 @@ public class TestEncryption {
 		SimpleKeyPair keys = scheme.generateKeyPair();
 		
 		BigInteger message = new BigInteger(150, new Random());
-		
-//		for(int i=0; i<10000; i++){
-//			BigInteger cryptoText = scheme.encrypt(keys.getPublic(), message);
-//			BigInteger decryptedMessage = scheme.decrypt(keys.getPrivate(), cryptoText);
-//		}
 
-		BigInteger cryptoText = scheme.encrypt(keys.getPublic(), message);
-		BigInteger decryptedMessage = scheme.decrypt(keys.getPrivate(), cryptoText);
-
-//		System.out.println(message.modPow(keys.getPrivate(), scheme.getPrime()).modPow(keys.getPublic(), scheme.getPrime()) );
-//		System.out.println(message.modPow(keys.getPublic(), scheme.getPrime()).modPow(keys.getPrivate(), scheme.getPrime()) );
-//		
-//		
-//		System.out.println(keys.getPublic().multiply(keys.getPrivate()).mod(scheme.getPrime()) );
+		BigInteger messagePoint = scheme.encodeMessage(message);
 		
-		assertFalse("\nmessage: " + message + "\nencrypted: " + cryptoText, message.equals(cryptoText));
-		assertTrue("\nmessage: " + message + "\ndecrypted: " + decryptedMessage, message.equals(decryptedMessage));
+		BigInteger cryptoText = scheme.encrypt(messagePoint, keys.getPrivate());
+		BigInteger decryptedMessage = scheme.encrypt(cryptoText, keys.getPublic());
+		
+		assertTrue("\nmessage: " + message + "\ndecrypted: " + decryptedMessage, 
+				messagePoint.equals(decryptedMessage));
+		
 	}
 
 	
@@ -47,14 +38,27 @@ public class TestEncryption {
 		SimpleKeyPair keys = scheme.generateKeyPair();
 		SimpleKeyPair keys2 = scheme.generateKeyPair();
 		
-		BigInteger message = BigInteger.valueOf(12645634563257L);
-		BigInteger cryptoText = scheme.encrypt(keys.getPublic(), message);
-		BigInteger doubleCryptoText = scheme.encrypt(keys2.getPublic(), cryptoText);
-		BigInteger storedMessage = scheme.decrypt(keys.getPrivate(), doubleCryptoText);
+		BigInteger message = new BigInteger(150, new Random());
 		
-		BigInteger noDoubleEncrypt = scheme.encrypt(keys2.getPublic(), message);
+		BigInteger messagePoint = scheme.encodeMessage(message);
+		
+		for(int i=0; i<250; i++){
+			BigInteger cryptoText = scheme.encrypt(messagePoint, keys.getPublic());
+			BigInteger doubleCryptoText = scheme.encrypt(cryptoText, keys2.getPublic());
+			BigInteger storedMessage = scheme.encrypt(doubleCryptoText, keys.getPrivate());
 
-		assertTrue("\nCommutative: " + storedMessage + "\nDirect: " + noDoubleEncrypt, storedMessage.equals(noDoubleEncrypt));
+			BigInteger noDoubleEncrypt = scheme.encrypt(messagePoint, keys2.getPublic());
+		}
+
+		BigInteger cryptoText = scheme.encrypt(messagePoint, keys.getPublic());
+		BigInteger doubleCryptoText = scheme.encrypt(cryptoText, keys2.getPublic());
+		BigInteger storedMessage = scheme.encrypt(doubleCryptoText, keys.getPrivate());
+		
+		BigInteger noDoubleEncrypt = scheme.encrypt(messagePoint, keys2.getPublic());
+
+		assertTrue("\nCommutative: " + storedMessage + "\nDirect: " + noDoubleEncrypt, 
+				storedMessage.equals(noDoubleEncrypt)
+				);
 	}
 	
 }

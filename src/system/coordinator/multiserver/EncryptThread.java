@@ -22,7 +22,7 @@ public class EncryptThread extends Thread{
 	 */
 	public EncryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages) {
 		//need a new encryption scheme object for each thread
-		encryptionScheme = new EncryptionScheme(prime);
+		encryptionScheme = new EncryptionScheme();
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;
@@ -32,7 +32,7 @@ public class EncryptThread extends Thread{
 	
 	public EncryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages, int shiftVal) {
 		//need a new encryption scheme object for each thread
-		encryptionScheme = new EncryptionScheme(prime);
+		encryptionScheme = new EncryptionScheme();
 		encryptions = new ArrayList<BigInteger>();
 		this.key = key;
 		this.messages = messages;

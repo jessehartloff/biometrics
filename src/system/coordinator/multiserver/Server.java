@@ -139,7 +139,7 @@ public abstract class Server extends Coordinator {
 			//don't want to go over the end
 			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
-			EncryptThread t = new EncryptThread(encryptionScheme.getPrime(), key, subList);
+			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList);
 			t.start();
 			threads.add(t);
 		}
@@ -183,7 +183,7 @@ public abstract class Server extends Coordinator {
 			//don't want to go over the end
 			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
-			EncryptThread t = new EncryptThread(encryptionScheme.getPrime(), key, subList, shiftVal);
+			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList, shiftVal);
 			t.start();
 			threads.add(t);
 			
@@ -220,7 +220,7 @@ public abstract class Server extends Coordinator {
 			//don't want to go over the end
 			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
-			DecryptThread t = new DecryptThread(encryptionScheme.getPrime(), key, subList);
+			DecryptThread t = new DecryptThread(encryptionScheme.getP(), key, subList);
 			t.start();
 			threads.add(t);
 		}
@@ -258,7 +258,7 @@ public abstract class Server extends Coordinator {
 			//don't want to go over the end
 			int stop = ((thread+1)*stride >= messages.size()) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
-			DecryptThread t = new DecryptThread(encryptionScheme.getPrime(), key, subList, shift);
+			DecryptThread t = new DecryptThread(encryptionScheme.getP(), key, subList, shift);
 			t.start();
 			threads.add(t);
 		}
