@@ -118,12 +118,11 @@ public class SuperTestingMetaClient extends Coordinator {
 
 	@Override
 	public RawScores run() {
-
 		RawScores scores = this.nextCoordinator.run();
-
+		System.out.println("Generating Tests...");
 		// Generate the tests
 		this.generateTests();
-
+		
 		Integer numberOfTests = tests.tests.size();
 		Integer testsRan = 0;
 		// Run the tests

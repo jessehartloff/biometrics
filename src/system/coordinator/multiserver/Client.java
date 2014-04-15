@@ -148,7 +148,7 @@ public class Client extends Server{
 	}
 	
 	public void enroll(Template template, Long userID) {
-		
+		System.out.println("temp size "+ template.getHashes().size());
 //		System.out.println("\tSending Decryption Key to S1...");
 		//generate key pair
 		long start = System.currentTimeMillis();
@@ -197,7 +197,7 @@ public class Client extends Server{
 		stop = System.currentTimeMillis();
 //		System.out.println("MultiEncrypt time = " +(stop - start));
 		addToEnrollTiming("Client MultiEncrypt Time", (stop-start));
-
+		System.out.println(encryptedBiometric.getHashes().size());
 		//setup object to send
 		start = System.currentTimeMillis();
 		InterServerObjectWrapper toS2 = new InterServerObjectWrapper();

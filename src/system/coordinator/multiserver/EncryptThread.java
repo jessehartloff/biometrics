@@ -60,6 +60,10 @@ public class EncryptThread extends Thread{
 //		System.out.println("Encrypting stuff");
 //		lock = true;
 		for (BigInteger m : messages) {
+			System.out.println("m "+m);
+			if(!shift) m = encryptionScheme.encodeMessage(m); // encode at client
+			System.out.println("m "+m);
+
 			BigInteger em = encryptionScheme.encrypt(key, m);
 			//deals with when we have to mark chaff at S2
 			if (shift) {
