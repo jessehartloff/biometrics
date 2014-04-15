@@ -52,8 +52,7 @@ public class Binning extends Quantizer {
 	}
 
 	@Override
-	public BigInteger featureToBigInt(Feature feature,
-			LinkedHashMap<String, Long> quantizedValues) {
+	public BigInteger featureToBigInt(Feature feature, LinkedHashMap<String, Long> quantizedValues) {
 		BigInteger toReturn = BigInteger.ZERO;
 		int i = 0;
 		for (String varName : feature.variables.keySet()) {
@@ -66,6 +65,7 @@ public class Binning extends Quantizer {
 			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
 			i++;
 		}
+//		System.out.println("real thing: " + toReturn);
 		return toReturn;
 	}
 
@@ -117,24 +117,33 @@ public class Binning extends Quantizer {
 			Double randomBinValue = Math.floor(Math.random() * variable.variableSettings.getBins().doubleValue());
 			toReturn.quantizedValues.put(entry.getKey(), randomBinValue.longValue());
 		}
-		// TODO fart
 		return toReturn;
 	}
 
 	public BigInteger getRandomBigInt() {
-		Feature randomFeature = getRandomFeature();
+//		Feature randomFeature = getRandomFeature();
+//		BigInteger toReturn = BigInteger.ZERO;
+//		int i = 0;
+//		for (String varName : randomFeature.variables.keySet()) {
+//			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
+//			// FIXME - Matt: getPrequantizedValue() returns NULL
+//			Long quantizedValue = variableSettings.get(i).findBin(randomFeature.variables.get(varName).getPrequantizedValue());
+//			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
+//			i++;
+//		}
+		return this.toBigIntFromQuantizedValues(this.getRandomFeature());
+	}
+	
+
+	private BigInteger toBigIntFromQuantizedValues(Feature feature) {
 		BigInteger toReturn = BigInteger.ZERO;
 		int i = 0;
-		for (String varName : randomFeature.variables.keySet()) {
-			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
-			// FIXME - Matt: getPrequantizedValue() returns NULL
-			Long quantizedValue = variableSettings.get(i).findBin(randomFeature.variables.get(varName).getPrequantizedValue());
-			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
-			i++;
+		for (Entry<String, Variable> entry : feature.variables.entrySet()) {
+			toReturn = toReturn.shiftLeft(entry.getValue().variableSettings.getBits().intValue());
+			toReturn = toReturn.add(BigInteger.valueOf(feature.quantizedValues.get(entry.getKey())));
 		}
-
 		return toReturn;
-
 	}
+
 
 }

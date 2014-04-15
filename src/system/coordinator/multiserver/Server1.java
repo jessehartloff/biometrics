@@ -65,8 +65,10 @@ public class Server1 extends Server {
 			}else{ //genuine
 //				point = point.shiftRight(1);
 				
+
 				point = encryptionScheme.decrypt(point, clientKey);
-//				point =s point.shiftLeft(1);
+//				point = point.shiftLeft(1);
+
 			}
 		}
 		long stop = System.currentTimeMillis();

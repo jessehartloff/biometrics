@@ -12,6 +12,7 @@ import system.allcommonclasses.transformations.SHA2;
 import system.coordinator.testgenerators.Test;
 import system.coordinator.testgenerators.TestGenerator;
 import system.hasher.Hasher;
+import system.quantizer.Quantizer;
 
 public class DefaultTestingPrequantized extends DefaultTesting{
 
@@ -27,7 +28,9 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 	}
 	
 	public void quantizeUserSet(ArrayList<User> users, boolean print){	
-
+//		for(int i=0; i<1000; i++){
+//			System.out.println("random thing: " + Quantizer.getQuantizer().getRandomBigInt());
+//		}
 		SHA2 sha = new SHA2();
 		Long total = 0L;
 		Long completed = 0L;
@@ -87,7 +90,6 @@ public class DefaultTestingPrequantized extends DefaultTesting{
 		ArrayList<Template> testTemplates = users.users.get(test.testUserID.intValue()).prequantizedTestTemplates.get(test.testReadingNumber.intValue());
 		
 		Double score = hasher.compareTemplates(enrolledTemplate, testTemplates);
-		
 		return score; 
 	}
 	
