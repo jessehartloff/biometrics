@@ -147,8 +147,8 @@ public class Server2 extends Server {
 		HashSet<BigInteger> outGoingFV = new HashSet<BigInteger>();
 		long start = System.currentTimeMillis();
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
-		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0));
-//		outGoingFV.addAll(receivedEncryptedFP.getHashes());
+//		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes()));//, 0));
+		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
@@ -187,9 +187,9 @@ public class Server2 extends Server {
 		for (Template template : templates){
 //			System.out.println(template.getHashes().size());
 
-			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
-			hashes.addAll(multiEncrypt(publicKey, template.getHashes(), 0));
-			template.setHashes(hashes);
+//			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
+//			hashes.addAll(multiEncrypt(publicKey, template.getHashes()));//, 0));
+//			template.setHashes(hashes);
 			
 //			for (BigInteger feature : template.getHashes()){
 //				feature = encryptionScheme.encrypt(publicKey, feature);

@@ -148,6 +148,8 @@ public class Client extends Server{
 	}
 	
 	public void enroll(Template template, Long userID) {
+		System.out.println(template.getHashes());
+
 		System.out.println("temp size "+ template.getHashes().size());
 //		System.out.println("\tSending Decryption Key to S1...");
 		//generate key pair
@@ -184,7 +186,7 @@ public class Client extends Server{
 		//encrypt the template
 //		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
-		Template encryptedBiometric = new Template();
+		Template encryptedBiometric = template;//new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
 //			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
 //			encryptedBiometric.getHashes().add(encryptedPoint);
@@ -193,7 +195,7 @@ public class Client extends Server{
 //		System.out.println("Single time = " +(stop - start));
 //		
 		start = System.currentTimeMillis();
-		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
+//		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
 		stop = System.currentTimeMillis();
 //		System.out.println("MultiEncrypt time = " +(stop - start));
 		addToEnrollTiming("Client MultiEncrypt Time", (stop-start));
@@ -244,6 +246,7 @@ public class Client extends Server{
 	}
 
 	public Double test(ArrayList<Template> testTemplates,  Long userID) {
+		System.out.println(testTemplates.get(0).getHashes());
 		//generate key pair
 		long start = System.currentTimeMillis();
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();
@@ -286,8 +289,11 @@ public class Client extends Server{
 //			multiEncrypt(pair.getPublic(), template.getHashes());
 //			encryptedTemplates.add(template.setHashes());
 			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
-			hashes.addAll(multiEncrypt(pair.getPublic(), template.getHashes()));
-			template.setHashes(hashes);
+//			hashes.addAll(multiEncrypt(pair.getPublic(), template.getHashes()));
+//			template.setHashes(hashes);
+//			Template insertT = new Template();
+//			insertT.getHashes().addAll(hashes);
+//			insertT.setHashes(hashes);
 			encryptedTemplates.add(template);
 ////			System.out.println("Encrypting template with e_u...");
 //			//for each point in this template
@@ -309,7 +315,7 @@ public class Client extends Server{
 		toS2.setTesting(true);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
-		toS2.setContents(encryptedTemplates);
+		toS2.setContents(testTemplates);//encryptedTemplates);
 		stop = System.currentTimeMillis();
 //		addToTestTiming("Client e_u({T}) wrapup time", (stop-start));
 

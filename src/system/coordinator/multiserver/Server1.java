@@ -65,9 +65,8 @@ public class Server1 extends Server {
 			}else{ //genuine
 //				point = point.shiftRight(1);
 				
-
-				point = encryptionScheme.decrypt(point, clientKey);
-//				point = point.shiftLeft(1);
+//				point = encryptionScheme.decrypt(point, clientKey);
+				point = point.shiftLeft(1);
 
 			}
 		}
@@ -75,7 +74,10 @@ public class Server1 extends Server {
 		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
 		start = System.currentTimeMillis();
+		System.out.println("enroll b4: "+template.getHashes());
 		Template fuzzyVault = hasher.hashEnrollTemplate(template);
+		System.out.println("fv: "+fuzzyVault.getHashes());
+
 		long ID = objectIn.getUserID();
 		System.out.println("enrollID: "+ID);
 		map.put(ID,fuzzyVault);
@@ -102,7 +104,7 @@ public class Server1 extends Server {
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		for(Template template : templates){
 			for(BigInteger point : template.getHashes()){
-				point = encryptionScheme.decrypt(point, clientKey);
+//				point = encryptionScheme.decrypt(point, clientKey);
 //				point = point.shiftLeft(1);
 			}
 		}
@@ -111,11 +113,17 @@ public class Server1 extends Server {
 		addToTestTiming("Server 1 decrypt genuines per template time", (stop-start)/templates.size());
 
 		start = System.currentTimeMillis();
+//		System.out.println("before:"+templates.get(0).getHashes());
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates(templates); 
+//		System.out.println("after:"+testTemplates.get(0).getHashes());
+
 		Template enrolledTemplate = map.get(ID);
+		System.out.println(enrolledTemplate.getHashes());
+		System.out.println(testTemplates.get(0).getHashes());
 //		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
 //		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
 		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
+		System.out.println(result);
 		stop = System.currentTimeMillis();
 //		addToTestTiming("Server 1 hash enroll all time", (stop-start));
 		addToTestTiming("Server 1 hash enroll per template time", (stop-start)/templates.size());
