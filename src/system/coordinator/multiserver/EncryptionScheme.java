@@ -44,7 +44,8 @@ public class EncryptionScheme {
 
 
 	public BigInteger encrypt(BigInteger messagePoint, BigInteger key){
-		return new BigInteger(this.curve.getCurve().decodePoint(messagePoint.toByteArray()).multiply(key).getEncoded());
+		ECPoint decoded = this.curve.getCurve().decodePoint(messagePoint.toByteArray());
+		return new BigInteger(decoded.multiply(key).getEncoded());
 	}
 
 	public BigInteger decrypt(BigInteger messagePoint, BigInteger key){

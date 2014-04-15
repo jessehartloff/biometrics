@@ -59,7 +59,7 @@ public class DecryptThread extends Thread{
 //		lock = true;
 		for (BigInteger dm : messages) {
 			if(shift) dm.shiftRight(1);
-			BigInteger m = encryptionScheme.decrypt(key, dm);
+			BigInteger m = encryptionScheme.decrypt(dm, key);
 			if(shift) m.shiftLeft(1);
 			decryptions.add(m);
 		}

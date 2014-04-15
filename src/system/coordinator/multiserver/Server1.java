@@ -63,10 +63,10 @@ public class Server1 extends Server {
 		for(BigInteger point : template.getHashes()){
 			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){ //chaff
 			}else{ //genuine
-				point = point.shiftRight(1);
+//				point = point.shiftRight(1);
 				
-				point = encryptionScheme.decrypt(clientKey, point);
-				point = point.shiftLeft(1);
+				point = encryptionScheme.decrypt(point, clientKey);
+//				point =s point.shiftLeft(1);
 			}
 		}
 		long stop = System.currentTimeMillis();
@@ -100,7 +100,7 @@ public class Server1 extends Server {
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		for(Template template : templates){
 			for(BigInteger point : template.getHashes()){
-				point = encryptionScheme.decrypt(clientKey, point);
+				point = encryptionScheme.decrypt(point, clientKey);
 //				point = point.shiftLeft(1);
 			}
 		}

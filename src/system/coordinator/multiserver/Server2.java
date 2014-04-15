@@ -158,7 +158,7 @@ public class Server2 extends Server {
 		start = System.currentTimeMillis();
 		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
 		for(int i=0; i<numberOfChaffPoints; i++){
-			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
+//			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
 //			BigInteger c = Quantizer.getQuantizer().getRandomBigInt();
 //			c = encryptionScheme.encrypt(publicKey, c);
 //			c = c.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
