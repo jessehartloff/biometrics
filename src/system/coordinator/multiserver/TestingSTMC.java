@@ -21,8 +21,8 @@ public class TestingSTMC extends Coordinator {
 //		Template enrollT = hasher.makeEnrollTemplate(users.users.get(0).readings.get(0));
 		Template enrollT = users.users.get(0).readings.get(0).quantizeOne();
 
-//		ArrayList<Template> testT = users.users.get(0).readings.get(1).quantizeAll();
-		ArrayList<Template> testT = hasher.makeTestTemplates(users.users.get(0).readings.get(1));
+		ArrayList<Template> testT = users.users.get(0).readings.get(1).quantizeAll();
+//		ArrayList<Template> testT = hasher.makeTestTemplates(users.users.get(0).readings.get(1));
 
 		System.out.println(enrollT.getHashes());
 		System.out.println(testT.size()+" .. "+testT.get(0).getHashes());

@@ -51,13 +51,10 @@ public class Client extends Server{
 			s1.close();
 		
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -77,13 +74,10 @@ public class Client extends Server{
 			s2.close();
 		
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return allTiming;
@@ -109,13 +103,10 @@ public class Client extends Server{
 			s1.close();
 		
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -135,13 +126,10 @@ public class Client extends Server{
 			s2.close();
 		
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return allTiming;
@@ -176,7 +164,7 @@ public class Client extends Server{
 		
 		//sendDecryptiontoServerOne(userID, pair);
 //		System.out.println("Sending decrypt key...");
-		send(ServerOneSettings.getInstance().ip().getValue(),
+		this.send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
 				toS1, true, "decrypt key");
 		
@@ -186,16 +174,16 @@ public class Client extends Server{
 		//encrypt the template
 //		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
-		Template encryptedBiometric = template;//new Template();
+		Template encryptedBiometric = new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
-//			BigInteger encryptedPoint = encryptionScheme.encrypt(pair.getPublic(), bigInt);
+//			BigInteger encryptedPoint = encryptionScheme.encodeAndEncrypt(bigInt, pair.getPublic());
 //			encryptedBiometric.getHashes().add(encryptedPoint);
 //		}
 //		long stop = System.currentTimeMillis();
 //		System.out.println("Single time = " +(stop - start));
 //		
 		start = System.currentTimeMillis();
-//		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes()));
+		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes(), true, -1));
 		stop = System.currentTimeMillis();
 //		System.out.println("MultiEncrypt time = " +(stop - start));
 		addToEnrollTiming("Client MultiEncrypt Time", (stop-start));
@@ -288,13 +276,13 @@ public class Client extends Server{
 //			Template encryptedBiometric = new Template();
 //			multiEncrypt(pair.getPublic(), template.getHashes());
 //			encryptedTemplates.add(template.setHashes());
-			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
-//			hashes.addAll(multiEncrypt(pair.getPublic(), template.getHashes()));
+			Template encryptedHashes = new Template();
+			encryptedHashes.getHashes().addAll(multiEncrypt(pair.getPublic(), template.getHashes(), true, -1));
 //			template.setHashes(hashes);
 //			Template insertT = new Template();
 //			insertT.getHashes().addAll(hashes);
 //			insertT.setHashes(hashes);
-			encryptedTemplates.add(template);
+			encryptedTemplates.add(encryptedHashes);
 ////			System.out.println("Encrypting template with e_u...");
 //			//for each point in this template
 			
@@ -315,7 +303,7 @@ public class Client extends Server{
 		toS2.setTesting(true);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
-		toS2.setContents(testTemplates);//encryptedTemplates);
+		toS2.setContents(encryptedTemplates);
 		stop = System.currentTimeMillis();
 //		addToTestTiming("Client e_u({T}) wrapup time", (stop-start));
 
@@ -359,7 +347,7 @@ public class Client extends Server{
 
 	@Override
 	public RawScores run() {
-		System.out.println("Client run should never be called... so somethings wrong");
+		System.out.println("Client run should never be called... so something's wrong");
 		System.exit(0);
 		return null;
 	}

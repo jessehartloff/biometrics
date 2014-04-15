@@ -30,6 +30,25 @@ public class TestEncryption {
 		
 	}
 
+
+	@Test
+	public void testEncodeAndEncrypt() {
+		EncryptionScheme scheme = new EncryptionScheme();
+		SimpleKeyPair keys = scheme.generateKeyPair();
+		
+		BigInteger message = new BigInteger(150, new Random());
+
+		BigInteger messagePoint = scheme.encodeMessage(message);
+		BigInteger cryptoText = scheme.encrypt(messagePoint, keys.getPrivate());
+		
+		BigInteger cryptoText2 = scheme.encodeAndEncrypt(message, keys.getPrivate());
+		
+		assertTrue("\nencrypted seperate: " + cryptoText + "\nencoded and encrypt: " + cryptoText2, 
+				cryptoText.equals(cryptoText2));
+		
+	}
+
+	
 	
 	
 	@Test

@@ -73,9 +73,6 @@ public class Stars extends FingerprintMethod {
 			BigInteger featureBigInt = super.toBigInt();
 			return Stars.appendRegionNumber(featureBigInt,
 			this.getRegionNumber());
-			// return Quantizer.getQuantizer().getRandomBigInt();
-			// FIXME - Matt: Why was this returning a random big int?
-			//return featureBigInt;
 		}
 
 		public Long getRegionNumber() {

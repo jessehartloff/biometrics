@@ -213,7 +213,6 @@ public class MyECPoint {
     public MyECPoint multiplyBouncy(BigInteger k)
     {
     	MyECPoint p = new MyECPoint(this);
-        // TODO Probably should try to add this
         // BigInteger e = k.mod(n); // n == order of p
         BigInteger e = k;
         BigInteger h = e.multiply(BigInteger.valueOf(3));

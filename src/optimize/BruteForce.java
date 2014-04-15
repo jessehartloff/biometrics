@@ -79,7 +79,6 @@ public class BruteForce {
 
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -266,7 +265,7 @@ public class BruteForce {
  * settings.settingsvariables.SettingsDropDownItem; import
  * system.allcommonclasses.commonstructures.Results;
  * 
- * public class GeneticAlgorithm { //FIXME Matt private FitnessFunction f;
+ * public class GeneticAlgorithm {
  * 
  * public GeneticAlgorithm(FitnessFunction fitness){
  * AllFingerprintMethodSettings
@@ -499,7 +498,6 @@ public class BruteForce {
 //
 //			Thread.sleep(5000);
 //		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //
@@ -686,7 +684,7 @@ public class BruteForce {
 // * settings.settingsvariables.SettingsDropDownItem; import
 // * system.allcommonclasses.commonstructures.Results;
 // * 
-// * public class GeneticAlgorithm { //FIXME Matt private FitnessFunction f;
+// * public class GeneticAlgorithm {
 // * 
 // * public GeneticAlgorithm(FitnessFunction fitness){
 // * AllFingerprintMethodSettings

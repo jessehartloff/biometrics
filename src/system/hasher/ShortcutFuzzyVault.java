@@ -12,6 +12,7 @@ import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.indexingstructure.IndexingPoint;
 import system.allcommonclasses.indexingstructure.IndexingStructure;
 import system.allcommonclasses.modalities.Biometric;
+import system.quantizer.Quantizer;
 
 /**
  * 
@@ -35,9 +36,7 @@ public class ShortcutFuzzyVault extends Hasher {
 		for(BigInteger bigInt : template.getHashes()){
 			toReturn.getHashes().add(bigInt.shiftLeft(1));
 		}
-		
 		this.addChaffPoints(toReturn);
-		
 		return toReturn;
 	}
 
@@ -81,7 +80,8 @@ public class ShortcutFuzzyVault extends Hasher {
 	private void addChaffPoints(Template template) {
 		for (int i = 0; i < settings.numberOfChaffPoints().getValue(); i++) {
 			Random random = new Random();
-			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(), random);
+//			BigInteger chaff = new BigInteger(settings.getNumberOfBitsForTheField().intValue(), random);
+			BigInteger chaff = Quantizer.getQuantizer().getRandomBigInt();
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));
 			template.getHashes().add(chaff);
 		}
@@ -168,5 +168,3 @@ public class ShortcutFuzzyVault extends Hasher {
 	}
 
 }
-
-// TODO advanced chaff points in shortcut fuzzy vault

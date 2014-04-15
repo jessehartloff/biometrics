@@ -31,7 +31,6 @@ public class FeatureCounter extends DefaultTestingPrequantized{
 		numEnrollTemplates = 0L;
 		totalTestHashCount = 0L;
 		numTestTemplates = 0L;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -40,7 +40,7 @@ import system.quantizer.Quantizer;
 public class Server2 extends Server {
 
 	
-	private BigInteger publicKey;
+	private BigInteger publicKey; //FIXME use different key for each user
 	private InterServerObjectWrapper receivedObject;
 //	private InterServerObjectWrapper objectToSend;
 //	private Socket S1;
@@ -54,8 +54,8 @@ public class Server2 extends Server {
 	
 	public void initialize() throws Exception{
 		SimpleKeyPair keyPair = encryptionScheme.generateKeyPair();
-		publicKey = keyPair.getPublic();
-		keyMap = new HashMap<Long, BigInteger>(); //userID to encryption key
+		this.publicKey = keyPair.getPublic();
+		this.keyMap = new HashMap<Long, BigInteger>(); //userID to encryption key
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
 		
 		ServerSocket serverSocket = new ServerSocket(port);
@@ -91,7 +91,7 @@ public class Server2 extends Server {
 					state = 3;
 				}
 				break;
-			case 2:
+			case 2: //enroll
 //				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
 //						ServerOneSettings.getInstance().portNumber().getValue().intValue());
 				start = System.currentTimeMillis();
@@ -103,7 +103,7 @@ public class Server2 extends Server {
 						encryptedBiometric, true, "Enroll template");
 				state = 1;
 				break;
-			case 3:
+			case 3: //test
 				start = System.currentTimeMillis();
 				InterServerObjectWrapper encryptedBiometrics = test(receivedObject, publicKey);
 				stop = System.currentTimeMillis();
@@ -144,37 +144,44 @@ public class Server2 extends Server {
 //			feature = encryptionScheme.encrypt(publicKey, feature);
 //			feature = feature.shiftLeft(1); //mark the genuines for chaff injection
 //		}
-		HashSet<BigInteger> outGoingFV = new HashSet<BigInteger>();
+		Template outGoingFV = new Template();
 		long start = System.currentTimeMillis();
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
-//		outGoingFV.addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes()));//, 0));
-		outGoingFV.addAll(receivedEncryptedFP.getHashes());
+		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0)); 
+//		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
-		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		//chaff points are marked with a 1 as the least significant bit
+
+		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		
 		start = System.currentTimeMillis();
 		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
-		for(int i=0; i<numberOfChaffPoints; i++){
-//			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
+		System.out.println("number of chaff: " + numberOfChaffPoints);
+//		for(int i=0; i<numberOfChaffPoints; i++){ 
+		while(chaff.size() < numberOfChaffPoints){
+			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
 //			BigInteger c = Quantizer.getQuantizer().getRandomBigInt();
 //			c = encryptionScheme.encrypt(publicKey, c);
 //			c = c.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
 //			chaff.add(c);
 		}
-		//encrypt the chaff
-		//THIS ISN'T RIGHT
-//		if(chaff.size() > 0) outGoingFV.addAll(multiEncrypt(publicKey, chaff, 1));
-//		outGoingFV.addAll(chaff);
+
+		//FIXME make sure chaff injection is working. I haven't hit a chaff point yet.
+		
+		System.out.println("actual number of chaff: " + chaff.size());
+		
+		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, chaff, true, 1)); 
+
+		System.out.println("template size: " + outGoingFV.getHashes().size());
 
 		stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 generate and multiEcrypt chaff time", (stop-start));
-		receivedEncryptedFP.setHashes(outGoingFV);
+//		receivedEncryptedFP.setHashes(outGoingFV);
 		//send out the fv
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
-		objectToSend.setContents(receivedEncryptedFP);
+		objectToSend.setContents(outGoingFV);
 		objectToSend.setOrigin("server 2");
 		objectToSend.setEnrolling(true);
 		objectToSend.setUserID(receivedObject.getUserID());
@@ -184,11 +191,13 @@ public class Server2 extends Server {
 	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject, BigInteger publicKey){
 		long start = System.currentTimeMillis();
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
+		ArrayList<Template> outGoingTemplates = new ArrayList<Template>();
 		for (Template template : templates){
 //			System.out.println(template.getHashes().size());
 
-//			HashSet<BigInteger> hashes = new HashSet<BigInteger>();
-//			hashes.addAll(multiEncrypt(publicKey, template.getHashes()));//, 0));
+			Template hashes = new Template();
+			hashes.getHashes().addAll(multiEncrypt(publicKey, template.getHashes(), false, -1));
+			outGoingTemplates.add(hashes);
 //			template.setHashes(hashes);
 			
 //			for (BigInteger feature : template.getHashes()){
@@ -203,7 +212,7 @@ public class Server2 extends Server {
 		addToTestTiming("Server 2 multiEncrypt per template time", (stop-start)/templates.size());
 		
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
-		objectToSend.setContents(templates);
+		objectToSend.setContents(outGoingTemplates);
 		objectToSend.setOrigin("server 2");
 		objectToSend.setEnrolling(false);
 		objectToSend.setTesting(true);
@@ -232,3 +241,4 @@ public class Server2 extends Server {
 	}
 
 }
+

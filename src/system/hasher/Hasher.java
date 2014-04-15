@@ -23,8 +23,7 @@ public abstract class Hasher {
 
 	public abstract Template hashEnrollTemplate(Template template);
 
-	public abstract ArrayList<Template> hashTestTemplates(
-			ArrayList<Template> template);
+	public abstract ArrayList<Template> hashTestTemplates(ArrayList<Template> template);
 
 	/**
 	 * Converts a biometric to an enrolling template.

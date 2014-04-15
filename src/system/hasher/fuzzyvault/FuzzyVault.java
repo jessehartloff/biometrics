@@ -21,7 +21,7 @@ public class FuzzyVault extends Hasher{
 	}
 	
 	public FuzzyVault(boolean chaffInjection){
-		this.chaffInjection = true;
+		this.chaffInjection = chaffInjection;
 	}
 	
 	@Override

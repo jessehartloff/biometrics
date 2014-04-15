@@ -41,6 +41,10 @@ public class EncryptionScheme {
 	public BigInteger encodeMessage(BigInteger message){
 		return new BigInteger(this.g.multiply(message).getEncoded());
 	}
+	
+	public BigInteger encodeAndEncrypt(BigInteger message, BigInteger key){
+		return new BigInteger(this.g.multiply(message.multiply(key)).getEncoded());
+	}
 
 
 	public BigInteger encrypt(BigInteger messagePoint, BigInteger key){

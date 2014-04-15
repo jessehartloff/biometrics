@@ -15,6 +15,7 @@ public class EncryptThread extends Thread{
 //	private boolean wait;
 //	private boolean lock;
 	private boolean shift; //marks points at server 2
+	private boolean encode; //encode to and ECPoint at client
 	private int shiftVal;
 	
 	/**
@@ -28,18 +29,20 @@ public class EncryptThread extends Thread{
 		this.setMessages(messages);
 //		wait = true;
 		shift = false;
+		this.encode = false;
 	}
 	
 	public EncryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages, int shiftVal) {
-		//need a new encryption scheme object for each thread
-		encryptionScheme = new EncryptionScheme();
-		encryptions = new ArrayList<BigInteger>();
-		this.key = key;
-		this.setMessages(messages);
-//		wait = true;
+		this(prime, key, messages);
 		this.shift = true;
 		this.shiftVal = shiftVal;
-		
+	}
+	
+	public EncryptThread(BigInteger prime, BigInteger key, List<BigInteger> messages, boolean encode, int shiftVal) {
+		this(prime, key, messages);
+		this.encode = encode;
+		this.shift = shiftVal == -1 ? false : true;
+		this.shiftVal = shiftVal;
 	}
 
 	@Override
@@ -60,19 +63,23 @@ public class EncryptThread extends Thread{
 //		System.out.println("Encrypting stuff");
 //		lock = true;
 		for (BigInteger m : messages) {
-
+			BigInteger em;
 //			System.out.println("m "+m);
-			if(!shift) m = encryptionScheme.encodeMessage(m); // encode at client
+//			if(!shift) {em = encryptionScheme.encodeMessage(m);} // encode at client
 //			System.out.println("m "+m);
 
-
-			BigInteger em = encryptionScheme.encrypt(m, key);
+			if(encode){
+				em = encryptionScheme.encodeAndEncrypt(m, key);
+			}else{
+				em = encryptionScheme.encrypt(m, key);
+			}
+//			em = encryptionScheme.encrypt(m, key);
 			//deals with when we have to mark chaff at S2
 			if (shift) {
-				em.shiftLeft(1);
-				if(shiftVal != 0) em.add(BigInteger.ONE);
+				em = em.shiftLeft(1);
+				if(shiftVal != 0) {em = em.add(BigInteger.ONE);}
 			}
-			encryptions.add(m);
+			encryptions.add(em);
 		}
 //		lock = false;
 	}

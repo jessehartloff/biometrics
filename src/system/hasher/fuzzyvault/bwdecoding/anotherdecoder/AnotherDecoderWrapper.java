@@ -25,7 +25,6 @@ public class AnotherDecoderWrapper implements RSDecoder{
 		
 		// crap!
 		
-		// TODO Auto-generated method stub
 		return null;
 	}
 

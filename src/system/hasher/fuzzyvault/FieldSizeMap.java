@@ -70,6 +70,5 @@ public class FieldSizeMap {
         daMap.put(39, BigInteger.valueOf(549755813911L)); // BigInteger = the smallest prime larger than 2^Integer
         daMap.put(40, BigInteger.valueOf(1099511627791L)); // BigInteger = the smallest prime larger than 2^Integer
 
-        //TODO Jim
     }
 }

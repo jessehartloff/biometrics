@@ -125,7 +125,7 @@ public abstract class Server extends Coordinator {
 		else addToTestTiming(serverName+" "+timeName+" Test Total send time", (t1-t0));
 	}
 	
-	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet) {
+	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet, boolean encode, int shiftVal) {
 		ArrayList<BigInteger> messages = new ArrayList<BigInteger>(messageSet);
 		Set<BigInteger> encryptions = Collections.synchronizedSet(new HashSet<BigInteger>());
 		int cores = Runtime.getRuntime().availableProcessors();
@@ -139,7 +139,7 @@ public abstract class Server extends Coordinator {
 			//don't want to go over the end
 			int stop = ((thread+1) == cores) ? messages.size()-1 : (thread+1)*stride;
 			List<BigInteger> subList = messages.subList(start, stop);
-			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList);
+			EncryptThread t = new EncryptThread(encryptionScheme.getP(), key, subList, encode, shiftVal);
 			t.start();
 			threads.add(t);
 		}
@@ -148,7 +148,6 @@ public abstract class Server extends Coordinator {
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -233,7 +232,6 @@ public abstract class Server extends Coordinator {
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -271,7 +269,6 @@ public abstract class Server extends Coordinator {
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

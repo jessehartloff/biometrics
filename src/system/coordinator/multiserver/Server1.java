@@ -44,7 +44,6 @@ public class Server1 extends Server {
 		super(hasher, users);
 //		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
-		// TODO Auto-generated constructor stub
 	}
 
 	public void enroll(InterServerObjectWrapper objectIn) {
@@ -54,28 +53,30 @@ public class Server1 extends Server {
 //		try {
 //			cipher = Cipher.getInstance("ECIES","BH");
 //		} catch (Exception e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		} 
 		long start = System.currentTimeMillis();
 		Template template = (Template) objectIn.getContents();
 		
+		Template newTemplate = new Template();
+		
 		for(BigInteger point : template.getHashes()){
-			if(point.and(BigInteger.ONE).equals(BigInteger.ONE)){ //chaff
-			}else{ //genuine
-//				point = point.shiftRight(1);
-				
-//				point = encryptionScheme.decrypt(point, clientKey);
-				point = point.shiftLeft(1);
-
-			}
+			BigInteger temp;
+			BigInteger shiftAdder = point.and(BigInteger.ONE);
+			if(shiftAdder.equals(BigInteger.ONE)){System.out.println("chaff");}
+			temp = point.shiftRight(1);
+			temp = encryptionScheme.decrypt(temp, clientKey);
+			newTemplate.getHashes().add((temp.shiftLeft(1)).add(shiftAdder));
 		}
+
+		System.out.println("enroll shifted: "+newTemplate.getHashes());
+		
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
 		start = System.currentTimeMillis();
-		System.out.println("enroll b4: "+template.getHashes());
-		Template fuzzyVault = hasher.hashEnrollTemplate(template);
+		System.out.println("enroll b4: "+newTemplate.getHashes());
+		Template fuzzyVault = hasher.hashEnrollTemplate(newTemplate);
 		System.out.println("fv: "+fuzzyVault.getHashes());
 
 		long ID = objectIn.getUserID();
@@ -94,7 +95,6 @@ public class Server1 extends Server {
 //		try {
 //			cipher = Cipher.getInstance("ECIES","BH");
 //		} catch (Exception e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		} 
 		long start = System.currentTimeMillis();
@@ -102,19 +102,24 @@ public class Server1 extends Server {
 		System.out.println("testID: "+ID);
 
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
+		
+		ArrayList<Template> decryptedTemplates = new ArrayList<Template>();
+		
 		for(Template template : templates){
+			Template decryptedTemplate = new Template();
 			for(BigInteger point : template.getHashes()){
-//				point = encryptionScheme.decrypt(point, clientKey);
-//				point = point.shiftLeft(1);
+				decryptedTemplate.getHashes().add(encryptionScheme.decrypt(point, clientKey));
 			}
+			decryptedTemplates.add(decryptedTemplate);
 		}
+		
 		long stop = System.currentTimeMillis();
 //		addToTestTiming("Server 1 decrypt all template genuines time", (stop-start));
 		addToTestTiming("Server 1 decrypt genuines per template time", (stop-start)/templates.size());
 
 		start = System.currentTimeMillis();
 //		System.out.println("before:"+templates.get(0).getHashes());
-		ArrayList<Template> testTemplates = hasher.hashTestTemplates(templates); 
+		ArrayList<Template> testTemplates = hasher.hashTestTemplates(decryptedTemplates); 
 //		System.out.println("after:"+testTemplates.get(0).getHashes());
 
 		Template enrolledTemplate = map.get(ID);
@@ -133,12 +138,9 @@ public class Server1 extends Server {
 
 	@Override
 	public RawScores run() {
-		// TODO Auto-generated method stub
-		// call intitialize 
 		try {
 			initialize();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -146,7 +148,7 @@ public class Server1 extends Server {
 
 
 	public void initialize() {
-		map = new HashMap<Long,Template>();
+		this.map = new HashMap<Long,Template>();
 		
 		try{
 			ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
@@ -183,8 +185,10 @@ public class Server1 extends Server {
 				 * receiving from the client
 				 */
 				case 2:
-//					System.out.println("Got to case 2");
+					System.out.println("Got to case 2");
 					clientKey = (BigInteger) receivedObject.getContents();
+
+					System.out.println("client key: " + clientKey);
 //					InterServerObjectWrapper response = new InterServerObjectWrapper();
 //					response.setContents("Server 1 has successfully received client decryption key");
 //					//send back the decision

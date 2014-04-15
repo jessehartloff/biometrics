@@ -184,13 +184,13 @@ public class PCA extends Quantizer {
 
 	@Override
 	public Feature getRandomFeature() {
-		// TODO random features instead of random BigIntegers
+		// TODO PCA random feature
 		return null;
 	}
 
 	@Override
 	public BigInteger getRandomBigInt() {
-		// TODO Auto-generated method stub
+		// TODO PCA random values
 		return null;
 	}
 

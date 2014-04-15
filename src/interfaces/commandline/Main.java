@@ -38,8 +38,17 @@ public class Main {
 		t.getHashes().add(BigInteger.valueOf(4L));
 		t.getHashes().add(BigInteger.valueOf(12L));
 
+		
 		System.out.println("size: " + t.getHashes().size());
+		
 		System.out.println("contents: " + t.getHashes());
+		
+		for(BigInteger bi :  t.getHashes()){
+			bi = bi.add(BigInteger.ONE);
+		}
+
+		System.out.println("contents: " + t.getHashes());
+		
 		
 		System.exit(0);
 		

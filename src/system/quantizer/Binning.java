@@ -121,16 +121,6 @@ public class Binning extends Quantizer {
 	}
 
 	public BigInteger getRandomBigInt() {
-//		Feature randomFeature = getRandomFeature();
-//		BigInteger toReturn = BigInteger.ZERO;
-//		int i = 0;
-//		for (String varName : randomFeature.variables.keySet()) {
-//			toReturn = toReturn.shiftLeft(variableSettings.get(i).getBits().intValue());
-//			// FIXME - Matt: getPrequantizedValue() returns NULL
-//			Long quantizedValue = variableSettings.get(i).findBin(randomFeature.variables.get(varName).getPrequantizedValue());
-//			toReturn = toReturn.add(BigInteger.valueOf(quantizedValue));
-//			i++;
-//		}
 		return this.toBigIntFromQuantizedValues(this.getRandomFeature());
 	}
 	

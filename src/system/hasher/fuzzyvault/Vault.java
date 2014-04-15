@@ -47,7 +47,7 @@ public class Vault {
 
 			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
 
-			chaffPoint.setZ(new BigInteger(this.totalBits.intValue(), new Random()));
+			chaffPoint.setZ(new BigInteger(this.totalBits.intValue(), new Random())); // TODO new chaff points
 			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random()));
 
 			chaffPoint.setChaff(true);
@@ -59,7 +59,7 @@ public class Vault {
 
 	
 	public void lockWithChaffInjection(Template enrollingTemplate) {
-		
+		System.out.println("Expecting chaff injection");
 		Template genuinePointsTemplate = new Template();
 		ArrayList<BigInteger> chaffPointsToInject = new ArrayList<BigInteger>();
 		
@@ -75,14 +75,13 @@ public class Vault {
 		
 		this.addGenuinePoints(genuinePointsTemplate);
 		
-		
 		//add chaff
 		for (BigInteger chaffZ : chaffPointsToInject){
 
 			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
 
 			chaffPoint.setZ(chaffZ);
-			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random())); //FIXME bits should be the size of an encryption
+			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random())); //FIXME bits should be the size of an encryption, not fixed
 
 			chaffPoint.setChaff(true);
 			this.vaultPoints.add(chaffPoint);
@@ -92,10 +91,7 @@ public class Vault {
 	
 	
 	private void addGenuinePoints(Template enrollingTemplate){
-		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against
-		// making a
-		// vault more
-		// than once
+		this.vaultPoints = new ArrayList<FuzzyVaultPoint>(); // protect against making a vault more than once
 		SecretPolynomial secretPoly = new SecretPolynomial(termsInPoly, totalBits);
 		this.hashOfPolynomial = secretPoly.computeHash();
 
@@ -114,8 +110,7 @@ public class Vault {
 	
 	/**
 	 * 
-	 * @param testTemplate
-	 *            set of BigIntegers representing z-values only
+	 * @param testTemplate set of BigIntegers representing z-values only
 	 * @return did it unlock? determined by the CRC check
 	 */
 	public boolean unlock(Template testTemplate) {
