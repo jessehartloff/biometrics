@@ -195,6 +195,7 @@ public class Client extends Server{
 		toS2.setTesting(false);
 		toS2.setOrigin("client");
 		toS2.setUserID(userID);
+
 //		System.out.println("EnrollID:"+userID);
 		toS2.setContents(encryptedBiometric);
 		stop = System.currentTimeMillis();

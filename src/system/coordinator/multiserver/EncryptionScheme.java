@@ -1,8 +1,13 @@
 package system.coordinator.multiserver;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Random;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.asn1.nist.NISTNamedCurves;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.math.ec.ECPoint;
@@ -37,17 +42,22 @@ public class EncryptionScheme {
 //		this.q = new BigInteger("6277101735386680763835789423176059013767194773182842284081"); //r, q, n
 	}
 
+
+	
+	
 	
 	public BigInteger encodeMessage(BigInteger message){
+
+		
 		return new BigInteger(this.g.multiply(message).getEncoded());
 	}
 	
-	public BigInteger encodeAndEncrypt(BigInteger message, BigInteger key){
+	public BigInteger encodeAndEncrypt(BigInteger message, BigInteger key){ //bingsheng's encrypt
 		return new BigInteger(this.g.multiply(message.multiply(key)).getEncoded());
 	}
 
 
-	public BigInteger encrypt(BigInteger messagePoint, BigInteger key){
+	public BigInteger encrypt(BigInteger messagePoint, BigInteger key){ //bingsheng's reencrypt
 		ECPoint decoded = this.curve.getCurve().decodePoint(messagePoint.toByteArray());
 		return new BigInteger(decoded.multiply(key).getEncoded());
 	}

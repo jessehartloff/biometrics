@@ -151,6 +151,7 @@ public class Server1 extends Server {
 		this.map = new HashMap<Long,Template>();
 		
 		try{
+
 			ServerSocket S1 = new ServerSocket(ServerOneSettings.getInstance().portNumber().getValue().intValue());
 	//		AllHasherSettings.getInstance().manuallySetComboBox(ShortcutFuzzyVaultSettings.getInstance());
 			Socket client = null;
