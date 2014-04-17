@@ -30,6 +30,7 @@ public class BingshengEncryptionScheme {
 			ArrayList<BigInteger> encryptedBigInts = new ArrayList<BigInteger>();
 			
 			for(int i = 0; i < iter; i ++){
+				BingyZhangPoint bzp = new BingyZhangPoint(r.readLine());
 				BigInteger returnedInt = new BigInteger(Base64.decodeBase64(r.readLine()));
 				encryptedBigInts.add(returnedInt);
 			}
@@ -63,7 +64,6 @@ public class BingshengEncryptionScheme {
 				i += j;
 			}
 			ArrayList<Process> processes = new ArrayList<Process>();
-
 			for(String command :toBingsheng){
 				processes.add(rt.exec(System.getProperty("user.dir")+command));
 			}
@@ -76,15 +76,23 @@ public class BingshengEncryptionScheme {
 			for(Process p : processes){
 				InputStream is = p.getInputStream();
 				BufferedReader r = new BufferedReader(new InputStreamReader(is));
-
-				for(int j = 0; j < iter; j ++){
+				System.out.println("shitshitshit");
+				int poop = 0, poop2 = 0;
+				for(int k = 0; k < iter; k ++){
 					String s= r.readLine();
 					System.out.println(s);
-					BigInteger returnedInt = new BigInteger(Base64.decodeBase64(s));
-					encryptedBigInts.add(returnedInt);
+					if(s == null)
+					poop++;
+					else
+						poop2++;
+					//BigInteger returnedInt = new BigInteger(Base64.decodeBase64(s));
+					//encryptedBigInts.add(returnedInt);
 				}
-				return encryptedBigInts;
+				System.out.println(poop);
+				System.out.println(poop2);
+				
 			}
+			return encryptedBigInts;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,6 +107,7 @@ public class BingshengEncryptionScheme {
 		for(int i = 0; i < 5000; i++)
 			testInts.add(new BigInteger(190,r));	
 		System.out.println("made some ints");
-		reencrypt(testInts,null);
+		ArrayList<BigInteger> encryptedshit = encrypt(null,null);
+		reencrypt(encryptedshit, null);
 	}
 }
