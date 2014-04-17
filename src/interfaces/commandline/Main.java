@@ -30,9 +30,16 @@ import system.method.fingerprintmethods.NgonsAllRotations;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		
+		System.getProperties().list(System.out);
 		Template t = new Template();
 
+		String test = "345irhweiut4h3497 1";
+		String test2 = "345irhweiut4h3497 0";
+
+		System.out.println(test.charAt(test.length()-1) == '0' );
+		System.out.println(test2.charAt(test.length()-1) == '0' );
+		System.out.println(test2.substring(0, test2.length()-2) );
+		
 		t.getHashes().add(BigInteger.valueOf(56L));
 		t.getHashes().add(BigInteger.valueOf(12L));
 		t.getHashes().add(BigInteger.valueOf(4L));

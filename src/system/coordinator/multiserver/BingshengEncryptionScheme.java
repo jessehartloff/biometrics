@@ -19,7 +19,7 @@ public class BingshengEncryptionScheme {
 			Random rand = new Random();
 			for(int i = 0; i < iter; i ++){
 				BigInteger randomInt = new BigInteger(190, rand);				
-				command = command + " "+new String(Base64.encodeBase64(randomInt.toByteArray()));
+				command = command + " " + new String(Base64.encodeBase64(randomInt.toByteArray()));
 			}
 			
 			Process p = rt.exec(System.getProperty("user.dir")+command);
@@ -31,7 +31,7 @@ public class BingshengEncryptionScheme {
 			
 			for(int i = 0; i < iter; i ++){
 				BingyZhangPoint bzp = new BingyZhangPoint(r.readLine());
-				BigInteger returnedInt = new BigInteger(Base64.decodeBase64(r.readLine()));
+				BigInteger returnedInt = bzp.toBigInt();//new BigInteger(Base64.decodeBase64(r.readLine()));
 				encryptedBigInts.add(returnedInt);
 			}
 			return encryptedBigInts;
@@ -52,11 +52,17 @@ public class BingshengEncryptionScheme {
 			ArrayList< String > toBingsheng = new ArrayList<String>();
 			int i = 0;
 			while( i < messages.size()){
-				String command = "/bingyzhang/ReEnc AIUiUE/kjQmLfJu514zVw/NzOlHc ";
+//				String command = "/bingyzhang/ReEnc AIUiUE/kjQmLfJu514zVw/NzOlHc ";
+				String command = "/bingyzhang/ReEnc ";
+				command += new String(Base64.encodeBase64(key.toByteArray()));
+				command += " ";
 				int j = 0;
+				BingyZhangPoint bzp = new BingyZhangPoint();
 				while(j < iter){
 					BigInteger message = messages.get(i+j);
-					command = command + " "+new String(Base64.encodeBase64(message.toByteArray()));
+					bzp.fromBigInt(message);
+					command += " " + bzp.toEncodedString();
+//					command = command + " "+new String(Base64.encodeBase64(message.toByteArray()));
 					j++;
 				}
 				System.out.println(command);
@@ -107,7 +113,7 @@ public class BingshengEncryptionScheme {
 		for(int i = 0; i < 5000; i++)
 			testInts.add(new BigInteger(190,r));	
 		System.out.println("made some ints");
-		ArrayList<BigInteger> encryptedshit = encrypt(null,null);
-		reencrypt(encryptedshit, null);
+		ArrayList<BigInteger> encryptedshit = encrypt(null, new BigInteger(190, new Random()) );
+		reencrypt(encryptedshit, new BigInteger(190, new Random()));
 	}
 }
