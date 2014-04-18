@@ -79,7 +79,7 @@ public class Server1 extends Server {
 		start = System.currentTimeMillis();
 //		System.out.println("enroll b4: "+newTemplate.getHashes());
 		Template fuzzyVault = hasher.hashEnrollTemplate(template);
-		System.out.println("fv: "+fuzzyVault.getHashes());
+//		System.out.println("fv: "+fuzzyVault.getHashes());
 
 		long ID = objectIn.getUserID();
 		System.out.println("enrollID: "+ID);
@@ -109,9 +109,7 @@ public class Server1 extends Server {
 		
 		for(Template template : templates){
 			Template decryptedTemplate = new Template();
-			for(BigInteger point : template.getHashes()){
-				decryptedTemplate.getHashes().add(encryptionScheme.decrypt(point, clientKey));
-			}
+			decryptedTemplate.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
 			decryptedTemplates.add(decryptedTemplate);
 		}
 		
@@ -125,8 +123,8 @@ public class Server1 extends Server {
 //		System.out.println("after:"+testTemplates.get(0).getHashes());
 
 		Template enrolledTemplate = map.get(ID);
-		System.out.println(enrolledTemplate.getHashes());
-		System.out.println(testTemplates.get(0).getHashes());
+//		System.out.println(enrolledTemplate.getHashes());
+//		System.out.println(testTemplates.get(0).getHashes());
 //		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
 //		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
 		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
