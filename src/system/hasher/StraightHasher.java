@@ -20,7 +20,7 @@ public class StraightHasher extends Hasher {
 		
 		Transformation hashFunction = new SHA2();
 		for(BigInteger bigInt : template.getHashes()){
-			bigInt = hashFunction.transform(bigInt);
+			bigInt = hashFunction.transform(bigInt); //FIXME
 		}
 		
 		return template;
@@ -33,7 +33,7 @@ public class StraightHasher extends Hasher {
 		Transformation hashFunction = new SHA2();
 		for(Template template : templates){
 			for(BigInteger bigInt : template.getHashes()){
-				bigInt = hashFunction.transform(bigInt);
+				bigInt = hashFunction.transform(bigInt); //FIXME 
 			}
 		}
 		

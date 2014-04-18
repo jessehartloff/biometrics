@@ -40,7 +40,7 @@ import system.quantizer.Quantizer;
 public class Server2 extends Server {
 
 	
-	private BigInteger publicKey; //FIXME use different key for each user
+//	private BigInteger publicKey; 
 	private InterServerObjectWrapper receivedObject;
 //	private InterServerObjectWrapper objectToSend;
 //	private Socket S1;
@@ -53,8 +53,8 @@ public class Server2 extends Server {
 	}
 	
 	public void initialize() throws Exception{
-		SimpleKeyPair keyPair = encryptionScheme.generateKeyPair();
-		this.publicKey = keyPair.getPublic();
+//		SimpleKeyPair keyPair = encryptionScheme.generateKeyPair();
+//		this.publicKey = keyPair.getPublic();
 		this.keyMap = new HashMap<Long, BigInteger>(); //userID to encryption key
 		int port = ServerTwoSettings.getInstance().portNumber().getValue().intValue();
 		
@@ -95,7 +95,7 @@ public class Server2 extends Server {
 //				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
 //						ServerOneSettings.getInstance().portNumber().getValue().intValue());
 				start = System.currentTimeMillis();
-				InterServerObjectWrapper encryptedBiometric = enroll(receivedObject, publicKey);
+				InterServerObjectWrapper encryptedBiometric = enroll(receivedObject);
 				stop = System.currentTimeMillis();
 				addToEnrollTiming("Server 2 enroll time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
@@ -105,7 +105,7 @@ public class Server2 extends Server {
 				break;
 			case 3: //test
 				start = System.currentTimeMillis();
-				InterServerObjectWrapper encryptedBiometrics = test(receivedObject, publicKey);
+				InterServerObjectWrapper encryptedBiometrics = test(receivedObject);
 				stop = System.currentTimeMillis();
 				addToEnrollTiming("Server 2 test all time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
@@ -129,13 +129,15 @@ public class Server2 extends Server {
 
 	}
 	
-	public InterServerObjectWrapper enroll(InterServerObjectWrapper receivedObject, BigInteger publicKey) throws Exception{
+	public InterServerObjectWrapper enroll(InterServerObjectWrapper receivedObject) throws Exception{
 //		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 //		System.out.println("adding bouncy castle");
 //		Cipher cipher = Cipher.getInstance("ECIES", "BC");
 //		System.out.println("got the cipher!");
 		//store this users key
 //		this.keyMap.put(receivedObject.getUserID(), publicKey);
+		BigInteger userKey = this.encryptionScheme.generateKeyPair().getPrivate();
+		this.keyMap.put(receivedObject.userID, userKey);
 		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
 //		System.out.println(receivedEncryptedFP);
 		
@@ -148,7 +150,7 @@ public class Server2 extends Server {
 		long start = System.currentTimeMillis();
 
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
-		outGoingFV.setHashes(this.multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), false)); 
+		outGoingFV.setHashes(this.multiEncrypt(userKey, receivedEncryptedFP.getHashes(), false)); 
 //		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
@@ -189,7 +191,8 @@ public class Server2 extends Server {
 		return objectToSend;
 	}
 	
-	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject, BigInteger publicKey){
+	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject){
+		BigInteger userKey = this.keyMap.get(receivedObject.getUserID());
 		long start = System.currentTimeMillis();
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		ArrayList<Template> outGoingTemplates = new ArrayList<Template>();
@@ -197,7 +200,7 @@ public class Server2 extends Server {
 //			System.out.println(template.getHashes().size());
 
 			Template hashes = new Template();
-			hashes.setHashes(multiEncrypt(publicKey, template.getHashes(), false));
+			hashes.setHashes(multiEncrypt(userKey, template.getHashes(), false));
 			outGoingTemplates.add(hashes);
 //			template.setHashes(hashes);
 			

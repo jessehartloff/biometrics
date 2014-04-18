@@ -67,9 +67,5 @@ public class BingyZhangPoint {
 	public void setY(Boolean y) {
 		this.y = y;
 	}
-
-	public BigInteger truncate(){
-		return null; //FIXME
-	}
 	
 }

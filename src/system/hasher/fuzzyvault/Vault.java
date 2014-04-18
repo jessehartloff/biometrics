@@ -81,7 +81,7 @@ public class Vault {
 			FuzzyVaultPoint chaffPoint = new FuzzyVaultPoint();
 
 			chaffPoint.setZ(chaffZ);
-			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random())); //FIXME bits should be the size of an encryption, not fixed
+			chaffPoint.setGamma(new BigInteger(this.totalBits.intValue(), new Random()));
 
 			chaffPoint.setChaff(true);
 			this.vaultPoints.add(chaffPoint);
@@ -110,8 +110,10 @@ public class Vault {
 	
 	
 	private BigInteger truncate(BigInteger bigInt) {
+//		System.out.println("before:" + bigInt);
 		int totalBits = Quantizer.getQuantizer().getTotalBits().intValue();
 		BigInteger toAnd = BigInteger.ONE.shiftLeft(totalBits).subtract(BigInteger.ONE);
+//		System.out.println("after :" + bigInt.and(toAnd));
 		return bigInt.and(toAnd);
 	}
 
