@@ -40,7 +40,7 @@ Miracl precision(50,MAXBASE);
 int main(int argc, char *argv[])
 {
     int iy;
-    Big a,b,p,q,x,y,e,m;
+    Big a,b,p,q,x,y,e,m,temp_e;
     ECn g,c;
     miracl *mip=&precision;
     
@@ -72,8 +72,8 @@ int main(int argc, char *argv[])
 		}*/
 			
 		//encrypt
-		e=modmult(m,e,q);
-		c = e*g;
+		temp_e = modmult(m,e,q);
+		c = temp_e*g;
 		iy=c.get(x); //<x,y> is compressed form of c
 		cout<<x<<" "<<iy<<endl;
 
