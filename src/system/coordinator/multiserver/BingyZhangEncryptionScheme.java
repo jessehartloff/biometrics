@@ -47,7 +47,6 @@ public class BingyZhangEncryptionScheme {
 			HashSet<BigInteger> encryptedBigInts = new HashSet<BigInteger>();
 
 			for(String command2 :toBingsheng){
-
 				Process p = rt.exec(System.getProperty("user.dir")+command2);
 				processes.add(p);
 			} 
@@ -110,11 +109,16 @@ public class BingyZhangEncryptionScheme {
 			
 			ArrayList<Process> processes = new ArrayList<Process>();
 			HashSet<BigInteger> encryptedBigInts = new HashSet<BigInteger>();
-
+			
 			for(String command2 :toBingsheng){
 				Process p = rt.exec(System.getProperty("user.dir")+command2);
 				processes.add(p);
+			} 
+			for(Process p : processes){
 				p.waitFor(); 
+			}
+			
+			for(Process p : processes){ 
 				InputStream is = p.getInputStream();
 				BufferedReader r = new BufferedReader(new InputStreamReader(is));
 				for(int k = 0; k < encryptionsPerCall; k++){
@@ -139,7 +143,7 @@ public class BingyZhangEncryptionScheme {
 	
 	public static void main(String[] args){
 		HashSet<BigInteger> testInts = new HashSet<BigInteger>();
-		for(int i = 0; i < 50; i++){
+		for(int i = 0; i < 2000; i++){
 			testInts.add(new BigInteger(190, new Random()));
 		}
 		System.out.println("made some ints" + testInts);
@@ -148,10 +152,10 @@ public class BingyZhangEncryptionScheme {
 		SimpleKeyPair keys2 = es.generateKeyPair();
 		long start = System.currentTimeMillis();
 		HashSet<BigInteger> encryptedshit = encrypt(testInts, keys.getPrivate());
-		System.out.println("Jim: " + encryptedshit);
+//		System.out.println("Jim: " + encryptedshit);
 //		HashSet<BigInteger> encryptedshit = encrypt(testInts, new BigInteger(40, new Random()));
 		long middle = System.currentTimeMillis();
-//		HashSet<BigInteger> encryptedershit = reEncrypt(encryptedshit, keys2.getPrivate());
+		HashSet<BigInteger> encryptedershit = reEncrypt(encryptedshit, keys2.getPrivate());
 //		HashSet<BigInteger> encryptedershit = reEncrypt(encryptedshit, new BigInteger(80, new Random()));
 		long end = System.currentTimeMillis();
 //		HashSet<BigInteger> unencryptedershit = reEncrypt(encryptedershit, keys.getPublic());
