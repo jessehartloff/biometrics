@@ -24,8 +24,10 @@ public class SuperTestingMetaClient extends Coordinator {
 	private TestGenerator testGenerator;
 	private Tests tests;
 	private Client client;
-	private HashMap<String, Long> enrollTiming;
-	private HashMap<String, Long> testTiming;
+	private HashMap<String, ArrayList<Long>> enrollTiming;
+	private HashMap<String, ArrayList<Long>> testTiming;
+	private ArrayList<Long> enrollTimes;
+	private ArrayList<Long> testTimes;
 	private long numEnrolls;
 	private long numTests;
 	private long totalEnrollTime;
@@ -37,8 +39,10 @@ public class SuperTestingMetaClient extends Coordinator {
 		super(hasher, users);
 		this.testGenerator = testGenerator;
 		this.client = new Client();
-		enrollTiming = new HashMap<String, Long>();
-		testTiming = new HashMap<String, Long>();
+		enrollTiming = new HashMap<String, ArrayList<Long>>();
+		testTiming = new HashMap<String, ArrayList<Long>>();
+		enrollTimes = new ArrayList<Long>();
+		testTimes = new ArrayList<Long>();
 		this.quantizeAllTestTemplates(users.users, true);
 		numEnrolls = 0;
 		numTests = 0;
@@ -58,13 +62,14 @@ public class SuperTestingMetaClient extends Coordinator {
 			User currentUser = this.users.users.get(userIndex);
 			int numberOfReadings = currentUser.readings.size();
 			for(int readingNumber=0; readingNumber<numberOfReadings; readingNumber++){
+				System.out.println("Enroll "+userIndex*numberOfReadings+readingNumber);
 				Template enrollTemplate = currentUser.readings.get(readingNumber).quantizeOne();
 				long start = System.currentTimeMillis();
 				this.client.enroll(enrollTemplate, this.computeID(userIndex, readingNumber));
 				long stop = System.currentTimeMillis();
-				totalEnrollTime += (stop-start);
+				enrollTimes.add(stop-start);
 //				System.out.println(stop-start);
-				numEnrolls++;
+//				numEnrolls++;
 //				completed++;
 //				progress = (completed.doubleValue()/total.doubleValue())*100.0;
 
@@ -108,9 +113,9 @@ public class SuperTestingMetaClient extends Coordinator {
 		long start = System.currentTimeMillis();
 		Double score = this.client.test(testTemplates, this.computeID(test.enrolledUserID.intValue(), test.enrolledReadingNumber.intValue())); 
 		long stop = System.currentTimeMillis();
-		totalTestTime += (stop-start);
+		testTimes.add(stop-start);
 //		System.out.println(stop-start);
-		numTests++;
+//		numTests++;
 		return score;
 	}
 
@@ -157,22 +162,40 @@ public class SuperTestingMetaClient extends Coordinator {
 //		for (Long val : testTiming.values()){
 //			val /= numTests;
 //		}
-		System.out.println("==== Enroll Timings Averages (out of "+numEnrolls+" ) ====");
-		System.out.println("Average total enroll time = "+ totalEnrollTime/numEnrolls);
+		System.out.println("==== Enroll Timings Stats (out of "+numEnrolls+" ) ====");
+		System.out.println("Total enroll time stats: SampleMean = "+ findAverage(enrollTimes)+ ", SampleStdDev = "+ findStandardDeviation(enrollTimes));
 		for (String key : enrollTiming.keySet()) {
-			System.out.println(key+" = "+(enrollTiming.get(key)/numEnrolls));
+			System.out.println(key+": SampleMean = "+ findAverage(enrollTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(enrollTiming.get(key)));
 		}
 		System.out.println("==== Test Timings Averages (out of "+testsRan+" ) ====");
-		System.out.println("Average total test time = "+ totalTestTime/numTests);
+		System.out.println("Total test time stats: SampleMean = "+ findAverage(testTimes)+ ", SampleStdDev = "+ findStandardDeviation(testTimes));
 		for (String key : testTiming.keySet()) {
-			System.out.println(key+" = "+(testTiming.get(key)/numTests));
+			System.out.println(key+": SampleMean = "+ findAverage(testTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(testTiming.get(key)));
 		}
 	
 		return scores;
 	}
 
 
-
+	public Double findAverage(ArrayList<Long> values) {
+		Double total = 0.;
+		int numPoints = values.size();
+		for (Long val : values){
+			total += val;
+		}
+		return total/numPoints;
+	}
+	
+	public Double findStandardDeviation(ArrayList<Long> values) {
+		Double s = 0.;
+		System.out.println(values.size());
+		Double avg = findAverage(values);
+		for (Long val : values) {
+			s += Math.pow((val - avg), 2.);
+		}
+		s = Math.sqrt(s/(values.size()-1));
+		return s;
+	}
 
 
 }

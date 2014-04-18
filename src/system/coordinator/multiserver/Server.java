@@ -22,33 +22,40 @@ import system.hasher.Hasher;
 
 public abstract class Server extends Coordinator {
 	protected EncryptionScheme encryptionScheme;
-	protected HashMap<String, Long> enrollTiming;
-	protected HashMap<String, Long> testTiming;
+	protected HashMap<String, ArrayList<Long>> enrollTiming;
+	protected HashMap<String, ArrayList<Long>> testTiming;
 	protected String serverName;
 	
 	public Server(Hasher hasher, Users users) {
 		super(hasher, users);
 		encryptionScheme = new EncryptionScheme();
 		serverName = AllMultiserverCoordinatorSettings.getInstance().getMultiserverCoordinator();
-		enrollTiming = new HashMap<String, Long>();
-		testTiming = new HashMap<String, Long>();
+		enrollTiming = new HashMap<String, ArrayList<Long> >();
+		testTiming = new HashMap<String, ArrayList<Long> >();
 	}
 
 	public void addToEnrollTiming(String timeName, Long time){
-		//accumulate all timings.  Average will be taken at end
+		//accumulate all timings.  Stats will be taken at end
 		if( !enrollTiming.containsKey(timeName)) {
-			enrollTiming.put(timeName, time);
+			ArrayList<Long> times = new ArrayList<Long>();
+			times.add(time);
+			enrollTiming.put(timeName, times);
 		} else{
-			enrollTiming.put(timeName, enrollTiming.get(timeName) + time);
+			ArrayList<Long> times = enrollTiming.get(timeName);
+			times.add(time);
+			enrollTiming.put(timeName, times);
 		}
 	}
 	
 	public void addToTestTiming(String timeName, Long time){
 		if( !testTiming.containsKey(timeName)) {
-			testTiming.put(timeName, time);
+			ArrayList<Long> times = new ArrayList<Long>();
+			times.add(time);
+			enrollTiming.put(timeName, times);
 		} else{
-			testTiming.put(timeName, testTiming.get(timeName) + time);
-		}
+			ArrayList<Long> times = enrollTiming.get(timeName);
+			times.add(time);
+			enrollTiming.put(timeName, times);		}
 	}
 	
 	// base server class extends coordinator

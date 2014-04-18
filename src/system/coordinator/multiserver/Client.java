@@ -31,8 +31,8 @@ public class Client extends Server{
 		super(null, null);
 	}
 
-	public HashMap<String, Long> getAllEnrollTiming() {
-		HashMap<String, Long> allTiming = enrollTiming;
+	public HashMap<String, ArrayList<Long>> getAllEnrollTiming() {
+		HashMap<String, ArrayList<Long>> allTiming = enrollTiming;
 		
 		try {
 			Socket s1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
@@ -46,7 +46,7 @@ public class Client extends Server{
 			//get S1's response
 			ObjectInputStream fromS1 = new ObjectInputStream(s1.getInputStream());
 			InterServerObjectWrapper s1times = (InterServerObjectWrapper) fromS1.readObject();
-			HashMap<String, Long> s1Timing = (HashMap<String, Long>) s1times.getContents();
+			HashMap<String, ArrayList<Long>> s1Timing = (HashMap<String, ArrayList<Long>>) s1times.getContents();
 			allTiming.putAll(s1Timing);
 			s1.close();
 		
@@ -69,7 +69,7 @@ public class Client extends Server{
 			//get S1's response
 			ObjectInputStream fromS2 = new ObjectInputStream(s2.getInputStream());
 			InterServerObjectWrapper s2times = (InterServerObjectWrapper) fromS2.readObject();
-			HashMap<String, Long> s2Timing = (HashMap<String, Long>) s2times.getContents();
+			HashMap<String, ArrayList<Long>> s2Timing = (HashMap<String, ArrayList<Long>>) s2times.getContents();
 			allTiming.putAll(s2Timing);
 			s2.close();
 		
@@ -83,8 +83,8 @@ public class Client extends Server{
 		return allTiming;
 	}
 	
-	public HashMap<String, Long> getAllTestTiming() {
-		HashMap<String, Long> allTiming = testTiming;
+	public HashMap<String, ArrayList<Long>> getAllTestTiming() {
+		HashMap<String, ArrayList<Long>> allTiming = testTiming;
 		
 		try {
 			Socket s1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()), ServerOneSettings.getInstance().portNumber().getValue().intValue());
@@ -98,7 +98,7 @@ public class Client extends Server{
 			//get S1's response
 			ObjectInputStream fromS1 = new ObjectInputStream(s1.getInputStream());
 			InterServerObjectWrapper s1times = (InterServerObjectWrapper) fromS1.readObject();
-			HashMap<String, Long> s1Timing = (HashMap<String, Long>) s1times.getContents();
+			HashMap<String, ArrayList<Long>> s1Timing = (HashMap<String, ArrayList<Long>>) s1times.getContents();
 			allTiming.putAll(s1Timing);
 			s1.close();
 		
@@ -121,7 +121,7 @@ public class Client extends Server{
 			//get S1's response
 			ObjectInputStream fromS2 = new ObjectInputStream(s2.getInputStream());
 			InterServerObjectWrapper s2times = (InterServerObjectWrapper) fromS2.readObject();
-			HashMap<String, Long> s2Timing = (HashMap<String, Long>) s2times.getContents();
+			HashMap<String, ArrayList<Long>> s2Timing = (HashMap<String, ArrayList<Long>>) s2times.getContents();
 			allTiming.putAll(s2Timing);
 			s2.close();
 		
@@ -235,7 +235,7 @@ public class Client extends Server{
 	}
 
 	public Double test(ArrayList<Template> testTemplates,  Long userID) {
-		System.out.println(testTemplates.get(0).getHashes());
+//		System.out.println(testTemplates.get(0).getHashes());
 		//generate key pair
 		long start = System.currentTimeMillis();
 		SimpleKeyPair pair = encryptionScheme.generateKeyPair();

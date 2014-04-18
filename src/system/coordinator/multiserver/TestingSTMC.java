@@ -25,15 +25,21 @@ public class TestingSTMC extends Coordinator {
 		Template enrollT = users.users.get(0).readings.get(0).quantizeOne();
 
 		Template enrollTE = new Template();
+//		enrollTE.setHashes(enrollT.getHashes());
 		enrollTE.setHashes(BingyZhangEncryptionScheme.encrypt(enrollT.getHashes(), keys.getPrivate()));
 		
 		ArrayList<Template> testT = users.users.get(0).readings.get(1).quantizeAll();
 //		ArrayList<Template> testT = hasher.makeTestTemplates(users.users.get(0).readings.get(1));
+
 		
 		ArrayList<Template> testTE = new ArrayList<Template>();
 		for(Template template : testT){
 			Template testE = new Template();
+//			testE.setHashes(template.getHashes());
+			System.out.println(template.getHashes().size());
 			testE.setHashes(BingyZhangEncryptionScheme.encrypt(template.getHashes(), keys.getPrivate()));
+			System.out.println(testE.getHashes().size());
+
 			testTE.add(testE);
 		}
 		
@@ -46,7 +52,7 @@ public class TestingSTMC extends Coordinator {
 		System.out.println("enrolled!!");
 		Double score = client.test(testT, users.users.get(0).id);
 		System.out.println("tested!!");
-		System.out.println("Sizes:"+ enrollT.getHashes().size()+", "+testT.get(0).getHashes().size());
+//		System.out.println("Sizes:"+ enrollT.getHashes().size()+", "+testT.get(0).getHashes().size());
 //		hasher.hashEnrollTemplate(enrollT);
 		System.out.println(score );
 		

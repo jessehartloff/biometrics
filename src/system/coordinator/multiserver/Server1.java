@@ -70,6 +70,7 @@ public class Server1 extends Server {
 //		}
 //
 //		System.out.println("enroll shifted: "+newTemplate.getHashes());
+
 		Template decryptedTemplate = new Template();
 		decryptedTemplate.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
 		
@@ -77,12 +78,13 @@ public class Server1 extends Server {
 		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
 		start = System.currentTimeMillis();
+
 //		System.out.println("enroll b4: "+newTemplate.getHashes());
 		Template fuzzyVault = hasher.hashEnrollTemplate(decryptedTemplate);
 //		System.out.println("fv: "+fuzzyVault.getHashes());
 
 		long ID = objectIn.getUserID();
-		System.out.println("enrollID: "+ID);
+//		System.out.println("enrollID: "+ID);
 		map.put(ID,fuzzyVault);
 		stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 hash enroll time", (stop-start));
@@ -100,7 +102,7 @@ public class Server1 extends Server {
 //		} 
 		long start = System.currentTimeMillis();
 		long ID = objectIn.getUserID();
-		System.out.println("testID: "+ID);
+//		System.out.println("testID: "+ID);
 
 		ArrayList<Template> templates = (ArrayList<Template>)objectIn.getContents();
 		
@@ -185,10 +187,11 @@ public class Server1 extends Server {
 				 * receiving from the client
 				 */
 				case 2:
+
 					System.out.println("Got to case 2");
 					this.clientKey = (BigInteger) receivedObject.getContents();
 
-					System.out.println("client key: " + clientKey);
+//					System.out.println("client key: " + clientKey);
 //					InterServerObjectWrapper response = new InterServerObjectWrapper();
 //					response.setContents("Server 1 has successfully received client decryption key");
 //					//send back the decision

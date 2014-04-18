@@ -146,6 +146,7 @@ public class Server2 extends Server {
 //		}
 		Template outGoingFV = new Template();
 		long start = System.currentTimeMillis();
+
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
 		outGoingFV.setHashes(this.multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), false)); 
 //		outGoingFV.addAll(receivedEncryptedFP.getHashes());
@@ -156,6 +157,7 @@ public class Server2 extends Server {
 
 //		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		
+
 //		start = System.currentTimeMillis();
 //		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
 //		System.out.println("number of chaff: " + numberOfChaffPoints);
@@ -168,6 +170,7 @@ public class Server2 extends Server {
 ////			chaff.add(c);
 //		}
 		
+
 //		System.out.println("actual number of chaff: " + chaff.size());
 //		
 //		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, chaff, false)); 

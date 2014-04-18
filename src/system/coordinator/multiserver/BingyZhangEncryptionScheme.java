@@ -13,7 +13,10 @@ import org.apache.commons.codec.binary.Base64;
 public class BingyZhangEncryptionScheme {
 	
 	public static HashSet<BigInteger> encrypt(HashSet<BigInteger> messages, BigInteger key ){
+//		int encryptionsPerCall = 5;
+
 		int encryptionsPerCall = 200;
+
 		Runtime rt = Runtime.getRuntime();
 		try {
 			ArrayList<String> toBingsheng = new ArrayList<String>();
@@ -29,7 +32,7 @@ public class BingyZhangEncryptionScheme {
 					}
 					command = "/bingyzhang/Enc ";
 					command += new String(Base64.encodeBase64(key.toByteArray()));
-					command += " ";
+//					command += " ";
 				}
 //				BigInteger message = messages.get(j);
 				//System.out.println(command);
@@ -40,15 +43,22 @@ public class BingyZhangEncryptionScheme {
 			toBingsheng.add(command);
 			
 			ArrayList<Process> processes = new ArrayList<Process>();
+
 			HashSet<BigInteger> encryptedBigInts = new HashSet<BigInteger>();
 
 			for(String command2 :toBingsheng){
-				System.out.println(command2);
 				Process p = rt.exec(System.getProperty("user.dir")+command2);
 				processes.add(p);
-				p.waitFor();
+
+			} 
+			for(Process p : processes){
+				p.waitFor(); 
+			}
+			
+			for(Process p : processes){
 				InputStream is = p.getInputStream();
 				BufferedReader r = new BufferedReader(new InputStreamReader(is));
+				
 				for(int k=0; k<encryptionsPerCall; k++){
 					String s= r.readLine();
 					if(s == null){
@@ -56,8 +66,9 @@ public class BingyZhangEncryptionScheme {
 					}
 					encryptedBigInts.add(new BingyZhangPoint(s).toBigInt());
 				}
+				p.destroy();
 			}
-			
+
 			return encryptedBigInts;
 		} catch (Exception e) {
 			e.printStackTrace();
