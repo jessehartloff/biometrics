@@ -97,9 +97,10 @@ public class Vault {
 
 		// add the genuine points to vaultPoints
 		for (BigInteger bigInt : enrollingTemplate.getHashes()) {
+			BigInteger truncatedBigInt = this.truncate(bigInt);
 			FuzzyVaultPoint genuinePoint = new FuzzyVaultPoint();
-			genuinePoint.setZ(bigInt);
-			genuinePoint.setGamma(secretPoly.evaluateAt(bigInt));
+			genuinePoint.setZ(truncatedBigInt);
+			genuinePoint.setGamma(secretPoly.evaluateAt(truncatedBigInt));
 			genuinePoint.setChaff(false);
 			this.vaultPoints.add(genuinePoint);
 
@@ -108,6 +109,12 @@ public class Vault {
 	}
 	
 	
+	private BigInteger truncate(BigInteger bigInt) {
+		int totalBits = Quantizer.getQuantizer().getTotalBits().intValue();
+		BigInteger toAnd = BigInteger.ONE.shiftLeft(totalBits).subtract(BigInteger.ONE);
+		return bigInt.and(toAnd);
+	}
+
 	/**
 	 * 
 	 * @param testTemplate set of BigIntegers representing z-values only
@@ -128,9 +135,15 @@ public class Vault {
 //				}
 //			}
 //		}
+		
+		Template truncatedTestTemplate = new Template();
+		for(BigInteger bigInt : testTemplate.getHashes()){
+			truncatedTestTemplate.getHashes().add(this.truncate(bigInt));
+		}
+		
 		for (FuzzyVaultPoint point : vaultPoints) {
 //			System.out.println("z:"+point.getZ());
-				if(testTemplate.getHashes().contains(point.getZ())) {
+				if(truncatedTestTemplate.getHashes().contains(point.getZ())) {
 //					System.out.println("z:"+point.getZ());
 					hashesInFuzzyVault.add(point);
 				}

@@ -25,8 +25,8 @@ public class FuzzyVaultPoint {
 	 */
 	public BigInteger toBigInt() {
 
-//		Long totalBits = Quantizer.getQuantizer().getTotalBits();
-		Long totalBits = 200L; //FIXME this is bad
+		Long totalBits = Quantizer.getQuantizer().getTotalBits();
+//		Long totalBits = 200L; //FIXME this is bad
 		
 		BigInteger toReturn = this.z;
 		toReturn = toReturn.shiftLeft(totalBits.intValue());
@@ -48,8 +48,8 @@ public class FuzzyVaultPoint {
 	public void bigIntToPoint(BigInteger bigInt) {
 		BigInteger bigTwo = BigInteger.valueOf(2);
 
-//		Long totalBits = Quantizer.getQuantizer().getTotalBits();
-		Long totalBits = 200L; //FIXME this is bad
+		Long totalBits = Quantizer.getQuantizer().getTotalBits();
+//		Long totalBits = 200L; //FIXME this is bad
 
 		this.chaff = bigInt.and(BigInteger.ONE).equals(BigInteger.ONE) ? true : false;
 

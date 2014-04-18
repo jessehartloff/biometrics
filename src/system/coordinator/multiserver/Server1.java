@@ -70,15 +70,15 @@ public class Server1 extends Server {
 //		}
 //
 //		System.out.println("enroll shifted: "+newTemplate.getHashes());
-		
-		template.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
+		Template decryptedTemplate = new Template();
+		decryptedTemplate.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
 		
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
 		start = System.currentTimeMillis();
 //		System.out.println("enroll b4: "+newTemplate.getHashes());
-		Template fuzzyVault = hasher.hashEnrollTemplate(template);
+		Template fuzzyVault = hasher.hashEnrollTemplate(decryptedTemplate);
 //		System.out.println("fv: "+fuzzyVault.getHashes());
 
 		long ID = objectIn.getUserID();
@@ -86,7 +86,6 @@ public class Server1 extends Server {
 		map.put(ID,fuzzyVault);
 		stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 hash enroll time", (stop-start));
-		
 	}
 
 	public double test(InterServerObjectWrapper objectIn) {
@@ -125,8 +124,8 @@ public class Server1 extends Server {
 		Template enrolledTemplate = map.get(ID);
 //		System.out.println(enrolledTemplate.getHashes());
 //		System.out.println(testTemplates.get(0).getHashes());
-//		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
-//		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
+		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
+		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
 		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
 		System.out.println(result);
 		stop = System.currentTimeMillis();
@@ -187,7 +186,7 @@ public class Server1 extends Server {
 				 */
 				case 2:
 					System.out.println("Got to case 2");
-					clientKey = (BigInteger) receivedObject.getContents();
+					this.clientKey = (BigInteger) receivedObject.getContents();
 
 					System.out.println("client key: " + clientKey);
 //					InterServerObjectWrapper response = new InterServerObjectWrapper();

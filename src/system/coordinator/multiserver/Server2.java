@@ -135,7 +135,7 @@ public class Server2 extends Server {
 //		Cipher cipher = Cipher.getInstance("ECIES", "BC");
 //		System.out.println("got the cipher!");
 		//store this users key
-		this.keyMap.put(receivedObject.getUserID(), publicKey);
+//		this.keyMap.put(receivedObject.getUserID(), publicKey);
 		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
 //		System.out.println(receivedEncryptedFP);
 		
@@ -147,7 +147,7 @@ public class Server2 extends Server {
 		Template outGoingFV = new Template();
 		long start = System.currentTimeMillis();
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
-		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), false)); 
+		outGoingFV.setHashes(this.multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), false)); 
 //		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
@@ -194,7 +194,7 @@ public class Server2 extends Server {
 //			System.out.println(template.getHashes().size());
 
 			Template hashes = new Template();
-			hashes.getHashes().addAll(multiEncrypt(publicKey, template.getHashes(), false));
+			hashes.setHashes(multiEncrypt(publicKey, template.getHashes(), false));
 			outGoingTemplates.add(hashes);
 //			template.setHashes(hashes);
 			
