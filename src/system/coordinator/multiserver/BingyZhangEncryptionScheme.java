@@ -13,7 +13,7 @@ import org.apache.commons.codec.binary.Base64;
 public class BingyZhangEncryptionScheme {
 	
 	public static HashSet<BigInteger> encrypt(HashSet<BigInteger> messages, BigInteger key ){
-		int encryptionsPerCall = 200;
+		int encryptionsPerCall = 50;
 		Runtime rt = Runtime.getRuntime();
 		try {
 			ArrayList<String> toBingsheng = new ArrayList<String>();
