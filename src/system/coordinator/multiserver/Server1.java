@@ -58,25 +58,27 @@ public class Server1 extends Server {
 		long start = System.currentTimeMillis();
 		Template template = (Template) objectIn.getContents();
 		
-		Template newTemplate = new Template();
+//		Template newTemplate = new Template();
+//		
+//		for(BigInteger point : template.getHashes()){
+//			BigInteger temp;
+//			BigInteger shiftAdder = point.and(BigInteger.ONE);
+//			if(shiftAdder.equals(BigInteger.ONE)){System.out.println("chaff");}
+//			temp = point.shiftRight(1);
+//			temp = encryptionScheme.decrypt(temp, clientKey);
+//			newTemplate.getHashes().add((temp.shiftLeft(1)).add(shiftAdder));
+//		}
+//
+//		System.out.println("enroll shifted: "+newTemplate.getHashes());
 		
-		for(BigInteger point : template.getHashes()){
-			BigInteger temp;
-			BigInteger shiftAdder = point.and(BigInteger.ONE);
-			if(shiftAdder.equals(BigInteger.ONE)){System.out.println("chaff");}
-			temp = point.shiftRight(1);
-			temp = encryptionScheme.decrypt(temp, clientKey);
-			newTemplate.getHashes().add((temp.shiftLeft(1)).add(shiftAdder));
-		}
-
-		System.out.println("enroll shifted: "+newTemplate.getHashes());
+		template.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
 		
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
 		start = System.currentTimeMillis();
-		System.out.println("enroll b4: "+newTemplate.getHashes());
-		Template fuzzyVault = hasher.hashEnrollTemplate(newTemplate);
+//		System.out.println("enroll b4: "+newTemplate.getHashes());
+		Template fuzzyVault = hasher.hashEnrollTemplate(template);
 		System.out.println("fv: "+fuzzyVault.getHashes());
 
 		long ID = objectIn.getUserID();

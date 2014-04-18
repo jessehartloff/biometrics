@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
 import settings.settingsvariables.SettingsLong;
+import settings.settingsvariables.SettingsNote;
 import settings.settingsvariables.SettingsString;
 
 public class ClientSettings extends CoordinatorSettings{
@@ -21,7 +22,6 @@ public class ClientSettings extends CoordinatorSettings{
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10000));
 		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
-
 	}
 
 	public SettingsLong portNumber(){

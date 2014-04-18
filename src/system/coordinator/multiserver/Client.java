@@ -183,7 +183,7 @@ public class Client extends Server{
 //		System.out.println("Single time = " +(stop - start));
 //		
 		start = System.currentTimeMillis();
-		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes(), true, -1));
+		encryptedBiometric.getHashes().addAll(multiEncrypt( pair.getPublic(), template.getHashes(), true));
 		stop = System.currentTimeMillis();
 //		System.out.println("MultiEncrypt time = " +(stop - start));
 		addToEnrollTiming("Client MultiEncrypt Time", (stop-start));
@@ -278,7 +278,7 @@ public class Client extends Server{
 //			multiEncrypt(pair.getPublic(), template.getHashes());
 //			encryptedTemplates.add(template.setHashes());
 			Template encryptedHashes = new Template();
-			encryptedHashes.getHashes().addAll(multiEncrypt(pair.getPublic(), template.getHashes(), true, -1));
+			encryptedHashes.getHashes().addAll(multiEncrypt(pair.getPublic(), template.getHashes(), true));
 //			template.setHashes(hashes);
 //			Template insertT = new Template();
 //			insertT.getHashes().addAll(hashes);

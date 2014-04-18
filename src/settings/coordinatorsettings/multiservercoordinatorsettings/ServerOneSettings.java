@@ -7,7 +7,9 @@ import java.util.LinkedHashMap;
 
 import settings.Settings;
 import settings.coordinatorsettings.CoordinatorSettings;
+import settings.hashersettings.AllHasherSettings;
 import settings.settingsvariables.SettingsLong;
+import settings.settingsvariables.SettingsNote;
 import settings.settingsvariables.SettingsString;
 
 public class ServerOneSettings extends CoordinatorSettings {
@@ -21,6 +23,8 @@ public class ServerOneSettings extends CoordinatorSettings {
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10001));
 		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+		this.settingsVariables.put("Don't Forget", new SettingsNote("Set hasher to fuzzy vault and choose its parameters"));
+		this.settingsVariables.put("Note", new SettingsNote("Must set the method to get the correct number of bits"));
 	}
 
 	public SettingsLong portNumber() {

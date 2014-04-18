@@ -11,6 +11,7 @@ import settings.coordinatorsettings.CoordinatorSettings;
 import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.settingsvariables.SettingsLong;
+import settings.settingsvariables.SettingsNote;
 
 public class SuperTestingMetaClientSettings extends CoordinatorSettings{
 	
@@ -23,6 +24,7 @@ public class SuperTestingMetaClientSettings extends CoordinatorSettings{
 	protected void addSettings() {
 		this.settingsVariables.put("Port Number", new SettingsLong(10000));
 		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
+		this.settingsVariables.put("Note", new SettingsNote("Must also set the method"));
 	}
 
 	public SettingsLong portNumber(){

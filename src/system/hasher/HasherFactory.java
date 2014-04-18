@@ -17,12 +17,12 @@ public class HasherFactory {
 		case SHORTCUTFUZZYVAULT:
 			return new ShortcutFuzzyVault();
 		case FUZZYVAULT:
-			if(MultiserverCoordinatorEnumerator.valueOf(AllMultiserverCoordinatorSettings.getMultiserverCoordinator()).
-					equals(MultiserverCoordinatorEnumerator.SERVER1)){
-				return new FuzzyVault(true); // server1 chaff injection from server2
-			}else{
+//			if(MultiserverCoordinatorEnumerator.valueOf(AllMultiserverCoordinatorSettings.getMultiserverCoordinator()).
+//					equals(MultiserverCoordinatorEnumerator.SERVER1)){
+//				return new FuzzyVault(true); // server1 chaff injection from server2
+//			}else{
 				return new FuzzyVault();
-			}
+//			}
 		default:
 			System.out.println("You didn't provide an appropriate hasher");
 			return new StraightHasher();

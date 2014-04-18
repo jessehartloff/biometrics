@@ -125,6 +125,14 @@ public abstract class Server extends Coordinator {
 		else addToTestTiming(serverName+" "+timeName+" Test Total send time", (t1-t0));
 	}
 	
+	
+	protected HashSet<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet, boolean encode){
+		return encode ? BingyZhangEncryptionScheme.encrypt(messageSet, key) : BingyZhangEncryptionScheme.reEncrypt(messageSet, key);
+	}
+	
+	
+	
+	/*
 	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet, boolean encode, int shiftVal) {
 		ArrayList<BigInteger> messages = new ArrayList<BigInteger>(messageSet);
 		Set<BigInteger> encryptions = Collections.synchronizedSet(new HashSet<BigInteger>());
@@ -158,14 +166,15 @@ public abstract class Server extends Coordinator {
 //			thread.finish();
 //			while(!thread.isAlive());
 //			System.out.println("Am I alive? "+thread.isAlive());
-
 		}
 		
-		
-		
 		return encryptions;
-		
 	}
+	
+	
+	
+	
+	
 	//shifting case
 	protected Set<BigInteger> multiEncrypt(BigInteger key, HashSet<BigInteger> messageSet, int shiftVal) {
 		ArrayList<BigInteger> messages = new ArrayList<BigInteger>(messageSet);
@@ -283,6 +292,7 @@ public abstract class Server extends Coordinator {
 		
 	}
 
+	*/
 
 	/*
 	 * public void RSA() throws NoSuchAlgorithmException, IOException,

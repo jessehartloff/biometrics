@@ -147,37 +147,35 @@ public class Server2 extends Server {
 		Template outGoingFV = new Template();
 		long start = System.currentTimeMillis();
 		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
-		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), 0)); 
+		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, receivedEncryptedFP.getHashes(), false)); 
 //		outGoingFV.addAll(receivedEncryptedFP.getHashes());
 		long stop = System.currentTimeMillis();
 		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
 		//chaff points are marked with a 1 as the least significant bit
 
-		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
+//		HashSet<BigInteger> chaff = new HashSet<BigInteger>();
 		
-		start = System.currentTimeMillis();
-		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
-		System.out.println("number of chaff: " + numberOfChaffPoints);
+//		start = System.currentTimeMillis();
+//		long numberOfChaffPoints = ServerTwoSettings.getInstance().chaffPoints().getValue();
+//		System.out.println("number of chaff: " + numberOfChaffPoints);
 //		for(int i=0; i<numberOfChaffPoints; i++){ 
-		while(chaff.size() < numberOfChaffPoints){
-			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
-//			BigInteger c = Quantizer.getQuantizer().getRandomBigInt();
-//			c = encryptionScheme.encrypt(publicKey, c);
-//			c = c.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
-//			chaff.add(c);
-		}
-
-		//FIXME make sure chaff injection is working. I haven't hit a chaff point yet.
+//		while(chaff.size() < numberOfChaffPoints){
+//			chaff.add(Quantizer.getQuantizer().getRandomBigInt());
+////			BigInteger c = Quantizer.getQuantizer().getRandomBigInt();
+////			c = encryptionScheme.encrypt(publicKey, c);
+////			c = c.shiftLeft(1).add(BigInteger.ONE); //mark as chaff for chaff injection
+////			chaff.add(c);
+//		}
 		
-		System.out.println("actual number of chaff: " + chaff.size());
-		
-		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, chaff, true, 1)); 
+//		System.out.println("actual number of chaff: " + chaff.size());
+//		
+//		outGoingFV.getHashes().addAll(multiEncrypt(publicKey, chaff, false)); 
+//
+//		System.out.println("template size: " + outGoingFV.getHashes().size());
 
-		System.out.println("template size: " + outGoingFV.getHashes().size());
-
-		stop = System.currentTimeMillis();
-		addToEnrollTiming("Server 2 generate and multiEcrypt chaff time", (stop-start));
+//		stop = System.currentTimeMillis();
+//		addToEnrollTiming("Server 2 generate and multiEcrypt chaff time", (stop-start));
 //		receivedEncryptedFP.setHashes(outGoingFV);
 		//send out the fv
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
@@ -196,7 +194,7 @@ public class Server2 extends Server {
 //			System.out.println(template.getHashes().size());
 
 			Template hashes = new Template();
-			hashes.getHashes().addAll(multiEncrypt(publicKey, template.getHashes(), false, -1));
+			hashes.getHashes().addAll(multiEncrypt(publicKey, template.getHashes(), false));
 			outGoingTemplates.add(hashes);
 //			template.setHashes(hashes);
 			
