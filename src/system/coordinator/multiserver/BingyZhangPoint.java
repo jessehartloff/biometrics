@@ -26,9 +26,15 @@ public class BingyZhangPoint {
 	}
 	
 	public void fromEncodedString(String input){
-		System.out.println(input);
-		this.y = input.charAt(input.length()-1) == '1';
-		this.x = new BigInteger(Base64.decodeBase64(input.substring(0, input.length() - 2)));
+//		System.out.println(input);
+		if(input.equals(" 0")){
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			this.y = false;
+			this.x = BigInteger.ZERO;
+		}else{
+			this.y = input.charAt(input.length()-1) == '1';
+			this.x = new BigInteger(Base64.decodeBase64(input.substring(0, input.length() - 2)));
+		}
 	}
 	
 	

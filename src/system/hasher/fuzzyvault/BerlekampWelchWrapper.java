@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import settings.hashersettings.FuzzyVaultSettings;
 import system.hasher.fuzzyvault.bwdecoding.BWDecoder;
 import system.hasher.fuzzyvault.bwdecoding.BigPoly;
 
@@ -29,6 +30,10 @@ public class BerlekampWelchWrapper implements RSDecoder {
 			System.out.println("need: " + (termsInPoly+1) + "  have: "+ numberOfPoints);
 			return null;
 		}
+		
+		int maxPoints = FuzzyVaultSettings.getInstance().maxPointsForDecoding().getValue().intValue();
+		
+		numberOfPoints = numberOfPoints > maxPoints ? maxPoints : numberOfPoints;
 		
 		BigInteger[] zValueArray = new BigInteger[numberOfPoints];
 		BigInteger[] gammaValueArray = new BigInteger[numberOfPoints];

@@ -37,6 +37,7 @@ public class FuzzyVaultSettings extends HasherSettings{
 	protected void addSettings(){
 		this.settingsVariables.put("numberOfChaffPoints", new SettingsLong(100));
 		this.settingsVariables.put("numberOfTermsInPolynomial", new SettingsLong(5));
+		this.settingsVariables.put("maxPointsForDecoding", new SettingsLong(30));
 	}
 
 
@@ -46,6 +47,10 @@ public class FuzzyVaultSettings extends HasherSettings{
 
 	public SettingsLong numberOfTermsInPolynomial(){
 		return (SettingsLong) this.settingsVariables.get("numberOfTermsInPolynomial");
+	}
+
+	public SettingsLong maxPointsForDecoding(){
+		return (SettingsLong) this.settingsVariables.get("maxPointsForDecoding");
 	}
 	
 
