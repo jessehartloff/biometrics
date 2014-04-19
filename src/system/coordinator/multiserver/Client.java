@@ -165,8 +165,8 @@ public class Client extends Server{
 		//sendDecryptiontoServerOne(userID, pair);
 //		System.out.println("Sending decrypt key...");
 		
-		System.out.println("sending key to server 1 at: " + ServerOneSettings.getInstance().ip().getValue() + " port " +
-				ServerOneSettings.getInstance().portNumber().getValue().intValue());
+//		System.out.println("sending key to server 1 at: " + ServerOneSettings.getInstance().ip().getValue() + " port " +
+//				ServerOneSettings.getInstance().portNumber().getValue().intValue());
 		
 		this.send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
@@ -228,9 +228,9 @@ public class Client extends Server{
 //		System.out.println("Waiting for enroll response from S1...");
 		//create socket for when server 1 responds
 		
-		System.out.println("Listening on port " + feedBack.getLocalPort());
+//		System.out.println("Listening on port " + feedBack.getLocalPort());
 		InterServerObjectWrapper decision = receive(feedBack, true, "enroll feedback");
-		System.out.println("got something");
+//		System.out.println("got something");
 		try {
 			feedBack.close();
 		} catch (IOException e) {
