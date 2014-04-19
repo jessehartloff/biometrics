@@ -21,8 +21,10 @@ public class ServerOneSettings extends CoordinatorSettings {
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10001));
-		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+//		this.settingsVariables.put("Port Number", new SettingsLong(10001));
+//		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+		this.settingsVariables.put("Port Number", new SettingsLong(8080));
+		this.settingsVariables.put("IP Address", new SettingsString("192.168.0.5"));
 		this.settingsVariables.put("Don't Forget", new SettingsNote("Set hasher to fuzzy vault and choose its parameters"));
 		this.settingsVariables.put("Note", new SettingsNote("Must set the method to get the correct number of bits"));
 	}

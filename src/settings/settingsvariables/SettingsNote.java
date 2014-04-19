@@ -19,7 +19,9 @@ public class SettingsNote extends SettingsVariable{
 	@Override
 	protected JPanel thisJPanel() {
 		JPanel panel = new JPanel();
-		panel.add(this.label);
+		if(this.label != null){
+			panel.add(this.label);
+		}
 		return panel;
 	}
 

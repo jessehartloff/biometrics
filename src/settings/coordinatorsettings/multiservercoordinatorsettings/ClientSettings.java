@@ -20,8 +20,10 @@ public class ClientSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10000));
-		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+//		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+//		this.settingsVariables.put("IP Address", new SettingsString("localhost"));
+		this.settingsVariables.put("Port Number", new SettingsLong(8080));
+		this.settingsVariables.put("IP Address", new SettingsString("192.168.0.3"));
 	}
 
 	public SettingsLong portNumber(){

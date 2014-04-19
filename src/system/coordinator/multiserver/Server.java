@@ -61,6 +61,7 @@ public abstract class Server extends Coordinator {
 	// base server class extends coordinator
 
 	protected InterServerObjectWrapper receive(ServerSocket serverSocket, boolean enroll, String timeName){//enroll used for differentiating timing
+		System.out.println("listening on port " + serverSocket.getLocalPort());
 		long t0 = System.currentTimeMillis();
 		try{
 			long start = System.currentTimeMillis();
@@ -104,6 +105,7 @@ public abstract class Server extends Coordinator {
 	}
 
 	protected void send(String ip, int port, InterServerObjectWrapper message, boolean enroll, String timeName){
+		System.out.println("sending to " + ip + " port " + port);
 		long t0 = System.currentTimeMillis();
 		try {
 			long start = System.currentTimeMillis();

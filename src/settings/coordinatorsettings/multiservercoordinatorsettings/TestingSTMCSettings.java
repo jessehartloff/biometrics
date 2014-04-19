@@ -18,7 +18,8 @@ public class TestingSTMCSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+//		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+		this.settingsVariables.put("Port Number", new SettingsLong(8080));
 	}
 
 	public SettingsLong portNumber(){

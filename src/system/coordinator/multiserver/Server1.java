@@ -162,7 +162,7 @@ public class Server1 extends Server {
 //				System.out.println("State:"+state);
 				switch(state){
 				case 1:
-					System.out.println("Server 1 listening....");
+					System.out.println("Server 1 listening on port " + ServerOneSettings.getInstance().portNumber().getValue().intValue() + "....");
 	//				client = S1.accept();
 	//				ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 	//				
@@ -170,8 +170,7 @@ public class Server1 extends Server {
 	
 					receivedObject = receive(S1, false, " IGNORE THIS ");
 	//				System.out.println(System.currentTimeMillis());
-					
-//					System.out.println("Received data from "+receivedObject.getOrigin());
+					System.out.println("Received data from "+receivedObject.getOrigin());
 					if (receivedObject.getOrigin().equals("client")){
 						state = 2;
 					} else if (receivedObject.getOrigin().equals("getEnrollTiming") || receivedObject.getOrigin().equals("getTestTiming")) {

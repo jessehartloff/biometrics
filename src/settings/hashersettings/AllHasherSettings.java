@@ -63,8 +63,8 @@ public class AllHasherSettings extends ComboBoxSettings{
 
 	@Override
 	protected void addALLOptions() {
-		this.addToOptions(StraightHasherSettings.getInstance());
 		this.addToOptions(FuzzyVaultSettings.getInstance());
+		this.addToOptions(StraightHasherSettings.getInstance());
 		this.addToOptions(ShortcutFuzzyVaultSettings.getInstance());
 	}
 }

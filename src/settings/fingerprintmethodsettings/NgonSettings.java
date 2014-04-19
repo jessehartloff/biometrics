@@ -102,7 +102,7 @@ public class NgonSettings extends FingerprintMethodSettings{
 	
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("N", new SettingsLong(3));
+		this.settingsVariables.put("N", new SettingsLong(4));
 		this.settingsVariables.put("kClosestMinutia", new SettingsLong(4));
 		this.settingsVariables.put("thetaBins", new SettingsLong(8));
 		this.settingsVariables.put("xBins", new SettingsLong(8));

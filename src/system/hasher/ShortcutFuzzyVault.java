@@ -85,6 +85,7 @@ public class ShortcutFuzzyVault extends Hasher {
 			chaff = chaff.shiftLeft(1).add(BigInteger.valueOf(1));
 			template.getHashes().add(chaff);
 		}
+//		System.out.println(template.getHashes().size());
 	}
 
 	@Override

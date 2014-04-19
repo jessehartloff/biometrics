@@ -22,7 +22,8 @@ public class SuperTestingMetaClientSettings extends CoordinatorSettings{
 
 	@Override
 	protected void addSettings() {
-		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+//		this.settingsVariables.put("Port Number", new SettingsLong(10000));
+		this.settingsVariables.put("Port Number", new SettingsLong(8080));
 		this.settingsVariables.put("TestGenerator", AllTestGeneratorSettings.getInstance());
 		this.settingsVariables.put("Note", new SettingsNote("Must also set the method"));
 	}

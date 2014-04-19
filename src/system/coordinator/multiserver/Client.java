@@ -164,6 +164,10 @@ public class Client extends Server{
 		
 		//sendDecryptiontoServerOne(userID, pair);
 //		System.out.println("Sending decrypt key...");
+		
+		System.out.println("sending key to server 1 at: " + ServerOneSettings.getInstance().ip().getValue() + " port " +
+				ServerOneSettings.getInstance().portNumber().getValue().intValue());
+		
 		this.send(ServerOneSettings.getInstance().ip().getValue(),
 				ServerOneSettings.getInstance().portNumber().getValue().intValue(),
 				toS1, true, "decrypt key");
@@ -172,7 +176,7 @@ public class Client extends Server{
 		 * send e_u(T) [user encrypted template] to Server_2
 		 */
 		//encrypt the template
-//		System.out.println("\tEncrypting template with e_u...");
+		System.out.println("\tEncrypting template with e_u...");
 //		long start = System.currentTimeMillis();
 		Template encryptedBiometric = new Template();
 //		for (BigInteger bigInt : template.getHashes()) {
@@ -203,6 +207,16 @@ public class Client extends Server{
 //		addToEnrollTiming("Client Encrypted template wrapup time", (stop-start));
 		//send it to S2
 //		System.out.println("\tSending e_u(T) to S2...");
+		ServerSocket feedBack = null;
+		try {
+			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
+		} catch (IOException e) {
+			System.out.println("Couldn't make server socket...");
+			e.printStackTrace();
+		}
+		
+		
+		
 		send(ServerTwoSettings.getInstance().ip().getValue(), 
 				ServerTwoSettings.getInstance().portNumber().getValue().intValue(),
 				toS2, true, "e_u(T)");
@@ -213,14 +227,10 @@ public class Client extends Server{
 		start = System.currentTimeMillis();
 //		System.out.println("Waiting for enroll response from S1...");
 		//create socket for when server 1 responds
-		ServerSocket feedBack = null;
-		try {
-			feedBack = new ServerSocket(ClientSettings.getInstance().portNumber().getValue().intValue());
-		} catch (IOException e) {
-			System.out.println("Couldn't make server socket...");
-			e.printStackTrace();
-		}
+		
+		System.out.println("Listening on port " + feedBack.getLocalPort());
 		InterServerObjectWrapper decision = receive(feedBack, true, "enroll feedback");
+		System.out.println("got something");
 		try {
 			feedBack.close();
 		} catch (IOException e) {
