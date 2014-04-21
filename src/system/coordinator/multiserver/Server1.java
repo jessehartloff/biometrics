@@ -55,7 +55,7 @@ public class Server1 extends Server {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		} 
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 		Template template = (Template) objectIn.getContents();
 		
 //		Template newTemplate = new Template();
@@ -74,10 +74,10 @@ public class Server1 extends Server {
 		Template decryptedTemplate = new Template();
 		decryptedTemplate.setHashes(this.multiEncrypt(clientKey, template.getHashes(), false));
 		
-		long stop = System.currentTimeMillis();
-		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
+//		long stop = System.currentTimeMillis();
+//		addToEnrollTiming("Server 1 decrypt gen points time", (stop-start));
 		
-		start = System.currentTimeMillis();
+//		start = System.currentTimeMillis();
 
 //		System.out.println("enroll b4: "+newTemplate.getHashes());
 		Template fuzzyVault = hasher.hashEnrollTemplate(decryptedTemplate);
@@ -86,8 +86,8 @@ public class Server1 extends Server {
 		long ID = objectIn.getUserID();
 //		System.out.println("enrollID: "+ID);
 		map.put(ID,fuzzyVault);
-		stop = System.currentTimeMillis();
-		addToEnrollTiming("Server 1 hash enroll time", (stop-start));
+//		stop = System.currentTimeMillis();
+//		addToEnrollTiming("Server 1 hash enroll time", (stop-start));
 	}
 
 	public double test(InterServerObjectWrapper objectIn) {
@@ -100,7 +100,7 @@ public class Server1 extends Server {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		} 
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 		long ID = objectIn.getUserID();
 //		System.out.println("testID: "+ID);
 
@@ -114,11 +114,11 @@ public class Server1 extends Server {
 			decryptedTemplates.add(decryptedTemplate);
 		}
 		
-		long stop = System.currentTimeMillis();
+//		long stop = System.currentTimeMillis();
 //		addToTestTiming("Server 1 decrypt all template genuines time", (stop-start));
-		addToTestTiming("Server 1 decrypt genuines per template time", (stop-start)/templates.size());
+//		addToTestTiming("Server 1 decrypt genuines per template time", (stop-start)/templates.size());
 
-		start = System.currentTimeMillis();
+//		start = System.currentTimeMillis();
 //		System.out.println("before:"+templates.get(0).getHashes());
 		ArrayList<Template> testTemplates = hasher.hashTestTemplates(decryptedTemplates); 
 //		System.out.println("after:"+testTemplates.get(0).getHashes());
@@ -126,13 +126,13 @@ public class Server1 extends Server {
 		Template enrolledTemplate = map.get(ID);
 //		System.out.println(enrolledTemplate.getHashes());
 //		System.out.println(testTemplates.get(0).getHashes());
-		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
-		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
+//		System.out.println("Enrolled Size:"  + enrolledTemplate.getHashes().size());
+//		System.out.println("Test template 0 size:" + testTemplates.get(0).getHashes().size());
 		Double result =  hasher.compareTemplates(enrolledTemplate, testTemplates);
 		System.out.println(result);
-		stop = System.currentTimeMillis();
+//		stop = System.currentTimeMillis();
 //		addToTestTiming("Server 1 hash enroll all time", (stop-start));
-		addToTestTiming("Server 1 hash enroll per template time", (stop-start)/templates.size());
+//		addToTestTiming("Server 1 hash enroll per template time", (stop-start)/templates.size());
 		return result;
 	}
 
@@ -212,10 +212,10 @@ public class Server1 extends Server {
 	//
 	//				System.out.println(receivedObject.isEnrolling());
 	//				System.out.println(receivedObject.getUserID());
-					long start = System.currentTimeMillis();
+//					long start = System.currentTimeMillis();
 					enroll(receivedObject);
-					long stop = System.currentTimeMillis();
-					addToEnrollTiming("Server 1 enroll template time", (stop-start));
+//					long stop = System.currentTimeMillis();
+//					addToEnrollTiming("Server 1 enroll template time", (stop-start));
 					InterServerObjectWrapper decision = new InterServerObjectWrapper();
 					decision.setContents("Server 1 has successfully enrolled template");
 					//send back the decision

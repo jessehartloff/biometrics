@@ -62,22 +62,22 @@ public abstract class Server extends Coordinator {
 
 	protected InterServerObjectWrapper receive(ServerSocket serverSocket, boolean enroll, String timeName){//enroll used for differentiating timing
 		System.out.println("listening on port " + serverSocket.getLocalPort());
-		long t0 = System.currentTimeMillis();
+//		long t0 = System.currentTimeMillis();
 		try{
-			long start = System.currentTimeMillis();
+//			long start = System.currentTimeMillis();
 			Socket client = serverSocket.accept();
-			long stop = System.currentTimeMillis();
+//			long stop = System.currentTimeMillis();
 //			System.out.println(serverName+" "+timeName+" Receive accept time = " + (stop-start)+ " ms");
-			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive accept time", (stop-start));
-			else addToTestTiming(serverName+" "+timeName+" Test receive accept time", (stop-start));
+//			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive accept time", (stop-start));
+//			else addToTestTiming(serverName+" "+timeName+" Test receive accept time", (stop-start));
 			
-			start = System.currentTimeMillis();
+//			start = System.currentTimeMillis();
 			ObjectInputStream objIn = new ObjectInputStream (client.getInputStream());
 			InterServerObjectWrapper receivedObject = (InterServerObjectWrapper) objIn.readObject();
-			stop = System.currentTimeMillis();
+//			stop = System.currentTimeMillis();
 //			System.out.println(serverName+" "+timeName+" Receive object stream & read time = " + (stop-start)+ " ms");
-			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive object stream & read time", (stop-start));
-			else addToTestTiming(serverName+" "+timeName+" Test receive object stream & read time", (stop-start));
+//			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll receive object stream & read time", (stop-start));
+//			else addToTestTiming(serverName+" "+timeName+" Test receive object stream & read time", (stop-start));
 			
 			if (receivedObject.getOrigin() != null && receivedObject.getOrigin().equals("getEnrollTiming")) {
 				ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
@@ -97,30 +97,30 @@ public abstract class Server extends Coordinator {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		long t1 = System.currentTimeMillis();
+//		long t1 = System.currentTimeMillis();
 //		System.out.println(serverName+" "+timeName+" Total receive time = "+ (t1 -t0)+ " ms");
-		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total receive time", (t1-t0));
-		else addToTestTiming(serverName+" "+timeName+" Test Total receive time", (t1-t0));
+//		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total receive time", (t1-t0));
+//		else addToTestTiming(serverName+" "+timeName+" Test Total receive time", (t1-t0));
 		return null;
 	}
 
 	protected void send(String ip, int port, InterServerObjectWrapper message, boolean enroll, String timeName){
-		System.out.println("sending to " + ip + " port " + port);
-		long t0 = System.currentTimeMillis();
+//		System.out.println("sending to " + ip + " port " + port);
+//		long t0 = System.currentTimeMillis();
 		try {
-			long start = System.currentTimeMillis();
+//			long start = System.currentTimeMillis();
 			Socket socket = new Socket(InetAddress.getByName(ip), port);
-			long stop = System.currentTimeMillis();
+//			long stop = System.currentTimeMillis();
 //			System.out.println(serverName+" "+timeName+" Send connect time = " + (stop-start)+ " ms");
-			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Send connect time", (stop-start));
-			else addToTestTiming(serverName+" "+timeName+" Test Send connect time", (stop-start));
-			start = System.currentTimeMillis();
+//			if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Send connect time", (stop-start));
+//			else addToTestTiming(serverName+" "+timeName+" Test Send connect time", (stop-start));
+//			start = System.currentTimeMillis();
 			ObjectOutputStream objOutput = new ObjectOutputStream(socket.getOutputStream());
 			objOutput.writeObject(message);
-			stop = System.currentTimeMillis();
+//			stop = System.currentTimeMillis();
 //			System.out.println(serverName+" "+timeName+" Send stream & write time = " + (stop-start)+ " ms");
-			if(enroll) addToEnrollTiming(serverName+" Enroll Send stream & write time", (stop-start));
-			else addToTestTiming(serverName+" "+timeName+" Test Send stream & write time", (stop-start));
+//			if(enroll) addToEnrollTiming(serverName+" Enroll Send stream & write time", (stop-start));
+//			else addToTestTiming(serverName+" "+timeName+" Test Send stream & write time", (stop-start));
 			socket.close();
 		}catch(ConnectException e){
 			e.printStackTrace();
@@ -128,10 +128,10 @@ public abstract class Server extends Coordinator {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		long t1 = System.currentTimeMillis();
+//		long t1 = System.currentTimeMillis();
 //		System.out.println(serverName+" "+timeName+" Total send time = "+ (t1 -t0)+ " ms");
-		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total send time", (t1-t0));
-		else addToTestTiming(serverName+" "+timeName+" Test Total send time", (t1-t0));
+//		if(enroll) addToEnrollTiming(serverName+" "+timeName+" Enroll Total send time", (t1-t0));
+//		else addToTestTiming(serverName+" "+timeName+" Test Total send time", (t1-t0));
 	}
 	
 	

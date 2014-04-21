@@ -94,20 +94,20 @@ public class Server2 extends Server {
 			case 2: //enroll
 //				S1 = new Socket(InetAddress.getByName(ServerOneSettings.getInstance().ip().getValue()),
 //						ServerOneSettings.getInstance().portNumber().getValue().intValue());
-				start = System.currentTimeMillis();
+//				start = System.currentTimeMillis();
 				InterServerObjectWrapper encryptedBiometric = enroll(receivedObject);
-				stop = System.currentTimeMillis();
-				addToEnrollTiming("Server 2 enroll time", (stop-start));
+//				stop = System.currentTimeMillis();
+//				addToEnrollTiming("Server 2 enroll time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
 						ServerOneSettings.getInstance().portNumber().getValue().intValue(),
 						encryptedBiometric, true, "Enroll template");
 				state = 1;
 				break;
 			case 3: //test
-				start = System.currentTimeMillis();
+//				start = System.currentTimeMillis();
 				InterServerObjectWrapper encryptedBiometrics = test(receivedObject);
-				stop = System.currentTimeMillis();
-				addToEnrollTiming("Server 2 test all time", (stop-start));
+//				stop = System.currentTimeMillis();
+//				addToEnrollTiming("Server 2 test all time", (stop-start));
 				send(ServerOneSettings.getInstance().ip().getValue(),
 						ServerOneSettings.getInstance().portNumber().getValue().intValue(),
 						encryptedBiometrics, false, "test templates");
@@ -148,13 +148,13 @@ public class Server2 extends Server {
 //			feature = feature.shiftLeft(1); //mark the genuines for chaff injection
 //		}
 		Template outGoingFV = new Template();
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 
-		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
+//		System.out.println("S2 enroll fp size: "+receivedEncryptedFP.getHashes().size());
 		outGoingFV.setHashes(this.multiEncrypt(userKey, receivedEncryptedFP.getHashes(), false)); 
 //		outGoingFV.addAll(receivedEncryptedFP.getHashes());
-		long stop = System.currentTimeMillis();
-		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
+//		long stop = System.currentTimeMillis();
+//		addToEnrollTiming("Server 2 multiEncrypt gen time", (stop-start));
 		//add in chaff points (need to be encrypted at S2)
 		//chaff points are marked with a 1 as the least significant bit
 
@@ -194,7 +194,7 @@ public class Server2 extends Server {
 	
 	public InterServerObjectWrapper test(InterServerObjectWrapper receivedObject){
 		BigInteger userKey = this.keyMap.get(receivedObject.getUserID());
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 		ArrayList<Template> templates = (ArrayList<Template>) receivedObject.getContents();
 		ArrayList<Template> outGoingTemplates = new ArrayList<Template>();
 		for (Template template : templates){
@@ -212,9 +212,9 @@ public class Server2 extends Server {
 //			template.setHashes(hashes);
 		}
 //		System.out.println(templates.get(0).getHashes().size());
-		long stop = System.currentTimeMillis();
+//		long stop = System.currentTimeMillis();
 //		addToTestTiming("Server 2 total multiEncrypt templates time", (stop-start));
-		addToTestTiming("Server 2 multiEncrypt per template time", (stop-start)/templates.size());
+//		addToTestTiming("Server 2 multiEncrypt per template time", (stop-start)/templates.size());
 		
 		InterServerObjectWrapper objectToSend = new InterServerObjectWrapper();
 		objectToSend.setContents(outGoingTemplates);

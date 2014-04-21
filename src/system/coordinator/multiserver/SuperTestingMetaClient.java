@@ -149,10 +149,10 @@ public class SuperTestingMetaClient extends Coordinator {
 		}
 //		System.out.println("Ran tests");
 		//ask the client to compile all 3 server times
-		enrollTiming = this.client.getAllEnrollTiming();
+//		enrollTiming = this.client.getAllEnrollTiming();
 //		System.out.println("got enroll timing");
 
-		testTiming = this.client.getAllTestTiming();
+//		testTiming = this.client.getAllTestTiming();
 ////		System.out.println("got test timing");
 //
 //		for (Long val : enrollTiming.values()){
@@ -164,14 +164,14 @@ public class SuperTestingMetaClient extends Coordinator {
 //		}
 		System.out.println("==== Enroll Timings Stats (out of "+numEnrolls+" ) ====");
 		System.out.println("Total enroll time stats: SampleMean = "+ findAverage(enrollTimes)+ ", SampleStdDev = "+ findStandardDeviation(enrollTimes));
-		for (String key : enrollTiming.keySet()) {
-			System.out.println(key+": SampleMean = "+ findAverage(enrollTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(enrollTiming.get(key)));
-		}
+//		for (String key : enrollTiming.keySet()) {
+//			System.out.println(key+": SampleMean = "+ findAverage(enrollTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(enrollTiming.get(key)));
+//		}
 		System.out.println("==== Test Timings Averages (out of "+testsRan+" ) ====");
 		System.out.println("Total test time stats: SampleMean = "+ findAverage(testTimes)+ ", SampleStdDev = "+ findStandardDeviation(testTimes));
-		for (String key : testTiming.keySet()) {
-			System.out.println(key+": SampleMean = "+ findAverage(testTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(testTiming.get(key)));
-		}
+//		for (String key : testTiming.keySet()) {
+//			System.out.println(key+": SampleMean = "+ findAverage(testTiming.get(key))+ ", SampleStdDev = "+ findStandardDeviation(testTiming.get(key)));
+//		}
 	
 		return scores;
 	}
