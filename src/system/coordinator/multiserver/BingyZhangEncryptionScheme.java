@@ -10,6 +10,8 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Base64;
 
+import system.quantizer.Quantizer;
+
 public class BingyZhangEncryptionScheme {
 	
 	public static HashSet<BigInteger> encrypt(HashSet<BigInteger> messages, BigInteger key ){
@@ -143,17 +145,30 @@ public class BingyZhangEncryptionScheme {
 	
 	public static void main(String[] args){
 		HashSet<BigInteger> testInts = new HashSet<BigInteger>();
+		EncryptionScheme es = new EncryptionScheme();
+		
+		long startKeys = System.currentTimeMillis();
 		for(int i = 0; i < 2000; i++){
+//			SimpleKeyPair keys = es.generateKeyPair();
+			BigInteger key = es.generateSingleKey();
 			testInts.add(new BigInteger(190, new Random()));
 		}
-		System.out.println("made some ints" + testInts);
-		EncryptionScheme es = new EncryptionScheme();
+		long endKeys = System.currentTimeMillis();
+
+		System.out.println("keyGen time: " + (endKeys - startKeys));
+//		System.out.println("made some ints" + testInts);
 		SimpleKeyPair keys = es.generateKeyPair();
 		SimpleKeyPair keys2 = es.generateKeyPair();
 		long start = System.currentTimeMillis();
 		HashSet<BigInteger> encryptedshit = encrypt(testInts, keys.getPrivate());
 //		System.out.println("Jim: " + encryptedshit);
 //		HashSet<BigInteger> encryptedshit = encrypt(testInts, new BigInteger(40, new Random()));
+//		HashSet<BigInteger> trunc = new HashSet<BigInteger>();
+//		for(BigInteger bi : encryptedshit){
+//			int totalBits = 30;
+//			BigInteger toAnd = BigInteger.ONE.shiftLeft(totalBits).subtract(BigInteger.ONE);
+//			trunc.add(bi.and(toAnd));
+//		}
 		long middle = System.currentTimeMillis();
 		HashSet<BigInteger> encryptedershit = reEncrypt(encryptedshit, keys2.getPrivate());
 //		HashSet<BigInteger> encryptedershit = reEncrypt(encryptedshit, new BigInteger(80, new Random()));

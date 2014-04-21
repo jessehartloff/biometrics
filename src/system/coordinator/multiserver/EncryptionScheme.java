@@ -63,7 +63,7 @@ public class EncryptionScheme {
 	public BigInteger decrypt(BigInteger messagePoint, BigInteger key){
 		return this.encrypt(messagePoint, key);
 	}
-	
+
 
 	public SimpleKeyPair generateKeyPair(){
 		SimpleKeyPair keys = new SimpleKeyPair();
@@ -73,6 +73,10 @@ public class EncryptionScheme {
 		keys.setPublicKey(keys.getPrivate().modInverse(this.q.add(BigInteger.valueOf(0L))).mod(this.q));
 
 		return keys;
+	}
+
+	public BigInteger generateSingleKey(){
+		return new BigInteger(190, new SecureRandom());
 	}
 
 }

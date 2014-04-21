@@ -136,7 +136,8 @@ public class Server2 extends Server {
 //		System.out.println("got the cipher!");
 		//store this users key
 //		this.keyMap.put(receivedObject.getUserID(), publicKey);
-		BigInteger userKey = this.encryptionScheme.generateKeyPair().getPrivate();
+//		BigInteger userKey = this.encryptionScheme.generateKeyPair().getPrivate();
+		BigInteger userKey = this.encryptionScheme.generateSingleKey();
 		this.keyMap.put(receivedObject.userID, userKey);
 		Template receivedEncryptedFP = (Template) receivedObject.getContents(); 
 //		System.out.println(receivedEncryptedFP);
