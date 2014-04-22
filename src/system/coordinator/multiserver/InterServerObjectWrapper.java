@@ -1,12 +1,13 @@
 package system.coordinator.multiserver;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class InterServerObjectWrapper implements Serializable{
-
 
 	protected String origin;
 	private Object contents;
@@ -17,7 +18,6 @@ public class InterServerObjectWrapper implements Serializable{
 	public InterServerObjectWrapper(){
 		
 	}
-	
 	protected void writeObject(ObjectOutputStream out) throws IOException {	
 		out.writeBoolean(testing);
 		out.writeBoolean(enrolling);

@@ -28,6 +28,7 @@ import settings.coordinatorsettings.multiservercoordinatorsettings.ServerOneSett
 import settings.hashersettings.AllHasherSettings;
 import settings.hashersettings.HasherSettings;
 import settings.hashersettings.ShortcutFuzzyVaultSettings;
+
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;

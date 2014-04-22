@@ -1,98 +1,88 @@
 package interfaces.commandline;
 
 import settings.AllSettings;
+import settings.coordinatorsettings.NoCoordinator;
+import settings.coordinatorsettings.histogramcoordinatorsettings.AllHistogramCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.AllMatchingCoordinatorSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedSettings;
+import settings.coordinatorsettings.matchingcoordinatorsettings.FeatureCounterSettings;
 import settings.coordinatorsettings.testgeneratorsettings.AllTestGeneratorSettings;
 import settings.coordinatorsettings.testgeneratorsettings.TestGeneratorFVCTestsSettings;
 import settings.fingerprintmethodsettings.AllFingerprintMethodSettings;
 import settings.fingerprintmethodsettings.NgonAllRotationsSettings;
-import settings.fingerprintmethodsettings.PRINTSettings;
-import settings.hashersettings.HasherSettings;
+import settings.hashersettings.ShortcutFuzzyVaultSettings;
 import settings.modalitysettings.AllModalitySettings;
 import settings.modalitysettings.FingerprintSettings;
 import settings.settingsvariables.SettingsDropDownItem;
-
-import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.indexingstructure.SQLStructure;
-import system.allcommonclasses.utilities.SQLFunctions;
-import system.hasher.fuzzyvault.CRC;
-
-import java.lang.*;
-
-import system.method.fingerprintmethods.NgonsAllRotations;
 //import oracle.jdbc.*;
 // Main's main job is to build a parameters object, populate it, and give it to a Processor.
 // Alternatively, it could read a serialized Parameters file are give that to a Processor.
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		System.getProperties().list(System.out);
-		Template t = new Template();
-
-		String test = "345irhweiut4h3497 1";
-		String test2 = "345irhweiut4h3497 0";
-
-		System.out.println(test.charAt(test.length()-1) == '0' );
-		System.out.println(test2.charAt(test.length()-1) == '0' );
-		System.out.println(test2.substring(0, test2.length()-2) );
-		
-		t.getHashes().add(BigInteger.valueOf(56L));
-		t.getHashes().add(BigInteger.valueOf(12L));
-		t.getHashes().add(BigInteger.valueOf(4L));
-		t.getHashes().add(BigInteger.valueOf(12L));
-
-		
-		System.out.println("size: " + t.getHashes().size());
-		
-		System.out.println("contents: " + t.getHashes());
-		
-		for(BigInteger bi :  t.getHashes()){
-			bi = bi.add(BigInteger.ONE);
-		}
-
-		System.out.println("contents: " + t.getHashes());
-		
-		
-		System.exit(0);
-		
-		
-		SQLFunctions myfs = new SQLFunctions("test");
-		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
-		myfs.executeMyQueryNoReturn("use temp_database;");
-		for(int i = 0; i < 100000; i++){
-			BigInteger big = new BigInteger("5");
-			
-		}
-		System.out.println("We just did stuff--ain't that neat?");
-		System.exit(0);
-		myfs.executeMyQueryNoReturn("create table if not exists watch (company text, owner text);");
-		SQLFunctions sqlFunctions = new SQLFunctions("fec");
-		sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");
-		sqlFunctions.executeMyQueryNoReturn("use biometrics;");
-		sqlFunctions.executeMyQueryNoReturn("create table if not exists indexing (bi text, userid text;");
-		System.exit(0);
-//		myfs.executeMyQueryNoReturn("insert into watch values (\"Rolex\", \"Jim\");");
-		ResultSet rs2 = myfs.executeMyQuery("select * from watch;");
-		while(rs2.next()){
-			System.out.println(rs2.getString(1) + ' ' + rs2.getString(2));
-		}
-		myfs.executeMyQueryNoReturn("use fec;");
-		ResultSet rs = myfs.executeMyQuery("select * from blah");
-		while(rs.next()){
-			System.out.println(rs.getString(1)+' '+rs.getString(2));
-//			System.out.println(rs.toString());
-		}
-//		myfs.executeMyQueryNoReturn("create table plastics (length int);");
-//		myfs.executeMyQueryNoReturn("insert into plastics value (55);");
-		ResultSet rs1 = myfs.executeMyQuery("select * from plastics where length < 55");
-		while(rs1.next()){
-			System.out.println(rs1.getString("length"));
-		}
-		System.exit(0);
+//		System.getProperties().list(System.out);
+//		Template t = new Template();
+//
+//		String test = "345irhweiut4h3497 1";
+//		String test2 = "345irhweiut4h3497 0";
+//
+//		System.out.println(test.charAt(test.length()-1) == '0' );
+//		System.out.println(test2.charAt(test.length()-1) == '0' );
+//		System.out.println(test2.substring(0, test2.length()-2) );
+//		
+//		t.getHashes().add(BigInteger.valueOf(56L));
+//		t.getHashes().add(BigInteger.valueOf(12L));
+//		t.getHashes().add(BigInteger.valueOf(4L));
+//		t.getHashes().add(BigInteger.valueOf(12L));
+//
+//		
+//		System.out.println("size: " + t.getHashes().size());
+//		
+//		System.out.println("contents: " + t.getHashes());
+//		
+//		for(BigInteger bi :  t.getHashes()){
+//			bi = bi.add(BigInteger.ONE);
+//		}
+//
+//		System.out.println("contents: " + t.getHashes());
+//		
+//		
+//		System.exit(0);
+//		
+//		
+//		SQLFunctions myfs = new SQLFunctions("test");
+//		myfs.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS temp_database;");
+//		myfs.executeMyQueryNoReturn("use temp_database;");
+//		for(int i = 0; i < 100000; i++){
+//			BigInteger big = new BigInteger("5");
+//			
+//		}
+//		System.out.println("We just did stuff--ain't that neat?");
+//		System.exit(0);
+//		myfs.executeMyQueryNoReturn("create table if not exists watch (company text, owner text);");
+//		SQLFunctions sqlFunctions = new SQLFunctions("fec");
+//		sqlFunctions.executeMyQueryNoReturn("CREATE DATABASE IF NOT EXISTS biometrics;");
+//		sqlFunctions.executeMyQueryNoReturn("use biometrics;");
+//		sqlFunctions.executeMyQueryNoReturn("create table if not exists indexing (bi text, userid text;");
+//		System.exit(0);
+////		myfs.executeMyQueryNoReturn("insert into watch values (\"Rolex\", \"Jim\");");
+//		ResultSet rs2 = myfs.executeMyQuery("select * from watch;");
+//		while(rs2.next()){
+//			System.out.println(rs2.getString(1) + ' ' + rs2.getString(2));
+//		}
+//		myfs.executeMyQueryNoReturn("use fec;");
+//		ResultSet rs = myfs.executeMyQuery("select * from blah");
+//		while(rs.next()){
+//			System.out.println(rs.getString(1)+' '+rs.getString(2));
+////			System.out.println(rs.toString());
+//		}
+////		myfs.executeMyQueryNoReturn("create table plastics (length int);");
+////		myfs.executeMyQueryNoReturn("insert into plastics value (55);");
+//		ResultSet rs1 = myfs.executeMyQuery("select * from plastics where length < 55");
+//		while(rs1.next()){
+//			System.out.println(rs1.getString("length"));
+//		}
+//		System.exit(0);
 //		int fieldSize = 13;
 //		CRCPolynomial crcPoly = new CRCPolynomial();
 //		crcPoly = CRCPolynomial.createIrreducible(fieldSize);
@@ -132,7 +122,8 @@ public class Main {
 															// default values
 		// set the values for any comboBox
 		AllFingerprintMethodSettings.getInstance().manuallySetComboBox(NgonAllRotationsSettings.getInstance());
-		// AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
+		//AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedMultiThreadedSettings.getInstance());
+		AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(DefaultTestingPrequantizedSettings.getInstance());
 		AllModalitySettings.getInstance().manuallySetComboBox(FingerprintSettings.getInstance());
 		AllTestGeneratorSettings.getInstance().manuallySetComboBox(new TestGeneratorFVCTestsSettings());
 		// FingerprintSettings.getInstance().testingDataset(
@@ -142,19 +133,25 @@ public class Main {
 		FingerprintSettings
 				.getInstance()
 				.testingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB2Training.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
 		FingerprintSettings
 				.getInstance()
 				.trainingDataset()
-				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB1.ser"));
+				.manuallySetComboBox(new SettingsDropDownItem("FVC2002DB2.ser"));
 		// //...
 		// set values for everything else
 		//NgonAllRotationsSettings.getInstance().rotationRegions().setValue(8);
 		NgonAllRotationsSettings.getInstance().n().setValue(4);
 		NgonAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
-		NgonAllRotationsSettings.getInstance().xBins().setValue(6);// ...
-		NgonAllRotationsSettings.getInstance().yBins().setValue(7);// ...
+		NgonAllRotationsSettings.getInstance().xBins().setValue(8);// ...
+		NgonAllRotationsSettings.getInstance().yBins().setValue(8);// ...
 		NgonAllRotationsSettings.getInstance().thetaBins().setValue(8);// ...
+		NgonAllRotationsSettings.getInstance().rotationStart().setValue(-40.0);
+		NgonAllRotationsSettings.getInstance().rotationStop().setValue(40.0);
+		NgonAllRotationsSettings.getInstance().rotationStep().setValue(5.0);
+		ShortcutFuzzyVaultSettings.getInstance().numberOfChaffPoints().setValue(260000);
+		AllMatchingCoordinatorSettings.getInstance().manuallySetComboBox(FeatureCounterSettings.getInstance());
+		AllHistogramCoordinatorSettings.getInstance().manuallySetComboBox(NoCoordinator.getInstance());
 //		 NgonSettings.getInstance().rotationRegions().setValue(8);
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().n().setValue(3);
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().kClosestMinutia().setValue(4);
@@ -164,7 +161,7 @@ public class Main {
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().thetaBins().setValue(7);//...
 
 		// settings.runSystemAndMakeGraphs();
-		settings.runSystemAndGetResults();
+		settings.runSystemAndMakeGraphs();
 
 		// Results results = settings.buildSystem().go();
 		// System.out.print(results.rawScores);

@@ -27,7 +27,6 @@ import settings.modalitysettings.AllModalitySettings;
 import settings.quantizersettings.AllQuantizerSettings;
 import system.allcommonclasses.commonstructures.Results;
 import system.biometricsystem.BiometricSystem;
-import interfaces.gui.ResultsGUI;
 
 public class AllSettings extends Settings {
 
