@@ -1,13 +1,14 @@
 package system.coordinator;
 
-import java.util.ArrayList;
-
-import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.Users;
-import system.coordinator.testgenerators.*;
+import system.coordinator.testgenerators.Test;
+import system.coordinator.testgenerators.TestGenerator;
+import system.coordinator.testgenerators.Tests;
 import system.hasher.Hasher;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -24,8 +25,8 @@ public class DefaultTesting extends Coordinator {
 	/**
 	 * Constructor
 	 * 
-	 * @param hasher
-	 * @param users
+	 * @param hasher the hasher
+	 * @param users the users
 	 * @param testGenerator
 	 *            determines which pairs of readings should be tested
 	 */
