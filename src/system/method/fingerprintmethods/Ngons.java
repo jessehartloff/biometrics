@@ -1,21 +1,17 @@
 package system.method.fingerprintmethods;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-
 import settings.fingerprintmethodsettings.NgonSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.feature.Feature;
 import system.method.feature.ThetaVariable;
-import system.method.feature.Variable;
 import system.method.feature.XYVariable;
-import system.method.fingerprintmethods.Triangles.Triangle;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 
 public class Ngons extends FingerprintMethod{
 
@@ -97,6 +93,10 @@ public class Ngons extends FingerprintMethod{
 		}
 		
 	}
+
+
+
+
 	public Ngons(){
 		this.settings = NgonSettings.getInstance();
 		this.settings.setAllNumberOfBins(); // initializes the method variable settings (bins and bits)

@@ -1,15 +1,13 @@
 package system.biometricsystem;
 
 
-import settings.AllSettings;
-import settings.UsersIO;
 import settings.modalitysettings.AllModalitySettings;
-import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
-import system.coordinator.*;
-import system.method.fingerprintmethods.*;
+import system.coordinator.Coordinator;
+import system.coordinator.CoordinatorFactory;
+import system.method.fingerprintmethods.FingerprintMethodFactory;
 import system.quantizer.Quantizer;
 import system.quantizer.QuantizerFactory;
 
@@ -25,7 +23,6 @@ public class BiometricSystem {
 	/**
 	 * Actually runs the "real part" of the program.
 	 * Processes the choices of the user as set in "Main.java" using enumerators, and runs the appropriate tests.
-	 * @param parameters
 	 * @return
 	 */
 	public Results go(){
