@@ -1,16 +1,16 @@
 package system.quantizer;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
-
 import settings.settingsvariables.SettingsMethodVariable;
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Biometric;
 import system.method.feature.Feature;
 import system.method.feature.Variable;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 public class Binning extends Quantizer {
 
@@ -104,6 +104,7 @@ public class Binning extends Quantizer {
 		return totalBits;
 	}
 
+    //TODO refactor: get rid of functions like this. Quantizer goes in method and method handles its own training
 	@Override
 	public Feature getBlankFeatureForTraining() {
 		return Biometric.method.getBlankFeatureForTraining();

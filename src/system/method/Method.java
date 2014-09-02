@@ -1,9 +1,7 @@
 package system.method;
 
-import java.math.BigInteger;
-
 import system.method.feature.Feature;
-import system.vectordistance.Distance;
+import system.quantizer.Quantizer;
 
 /**
  * Interacts with the raw biometric data. Converts them into structures that the
@@ -13,6 +11,9 @@ import system.vectordistance.Distance;
  * 
  */
 public abstract class Method {
+
+    // TODO give this a quantizer
+    Quantizer quantizer;
 
 	/**
 	 * This constructor defaults to ExactDistance for the distance function.

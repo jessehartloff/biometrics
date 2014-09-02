@@ -17,7 +17,8 @@ public class Fingerprint extends Biometric{
 	
 	public ArrayList<Minutia> minutiae;
 
-	private static FingerprintMethod fingerprintMethod; 
+    //TODO refactor: change fingerprint to not contain a method. Change this to casting from biometrics.
+	private static FingerprintMethod fingerprintMethod;
 	
 	/**
 	 * When creating a fingerprint, it's quantization method must be specified.

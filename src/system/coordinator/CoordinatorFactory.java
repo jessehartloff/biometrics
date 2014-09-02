@@ -8,27 +8,19 @@ import settings.coordinatorsettings.multiservercoordinatorsettings.AllMultiserve
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.indexingstructure.RAMStructure;
-import system.coordinator.multiserver.Client;
-import system.coordinator.multiserver.Server1;
-import system.coordinator.multiserver.Server2;
-import system.coordinator.multiserver.SuperTestingMetaClient;
-import system.coordinator.multiserver.TestingSTMC;
 import system.allcommonclasses.indexingstructure.SQLStructure;
-//import system.allcommonclasses.indexingstructure.SQLStructure;
-import system.coordinator.Coordinator;
-import system.coordinator.DefaultTesting;
-import system.coordinator.DefaultTestingPrequantized;
-import system.coordinator.HistogramCoordinator;
-import system.coordinator.IndexTesting;
-import system.coordinator.MultipleEnrollment;
+import system.coordinator.multiserver.*;
 import system.coordinator.testgenerators.TestGeneratorFactory;
 import system.hasher.Hasher;
 import system.hasher.HasherFactory;
+
+//import system.allcommonclasses.indexingstructure.SQLStructure;
 //import system.allcommonclasses.indexingstructure.SQLStructure;
 
 public class CoordinatorFactory {
 	 	
 	public static Coordinator makeMultiserverCoordinator(Users users){
+        //TODO refactor: get rid of all the global crap
 
 		Hasher hasher = HasherFactory.makeHasher();
 		Coordinator firstCoordinator = new CoordinatorFactory().new BaseCoordinator(hasher, users);

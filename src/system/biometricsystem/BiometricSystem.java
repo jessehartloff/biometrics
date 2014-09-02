@@ -29,11 +29,14 @@ public class BiometricSystem {
 	 * @return
 	 */
 	public Results go(){
-		
+		//TODO refactor: use logger
+
+        //TODO refactor: make this generic for method. Will require casting later
 		FingerprintMethodFactory.makeFingerprintMethod();
-		
+
+        //TODO refactor: method trains it's quantizer (and maybe other things later)
 		this.trainTheSystem();
-		
+
 		Users testingUsers = AllModalitySettings.getTestingUsers();
 		Double FTC = testingUsers.removeFailureToCapture();
 		System.out.println("Failure to Capture");

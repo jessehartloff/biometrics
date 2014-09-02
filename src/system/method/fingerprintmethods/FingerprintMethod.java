@@ -1,13 +1,12 @@
 package system.method.fingerprintmethods;
 
-import java.util.ArrayList;
-
-import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.Template;
-import system.allcommonclasses.modalities.*;
+import system.allcommonclasses.modalities.Fingerprint;
 import system.method.Method;
 import system.method.feature.Feature;
 import system.quantizer.Quantizer;
+
+import java.util.ArrayList;
 
 public abstract class FingerprintMethod extends Method {
 
@@ -36,9 +35,8 @@ public abstract class FingerprintMethod extends Method {
 		ArrayList<Feature> featuresToReturn = new ArrayList<Feature>();
 		ArrayList<Feature> features = this.fingerprintToFeatures(fingerprint);
 		for (Feature feature : features) {
-			featuresToReturn.add(Quantizer.getQuantizer().quantizeFeature(
-					feature));
-			// System.out.println("!@#$%^&*()(*&^%$#@!" +
+			featuresToReturn.add(Quantizer.getQuantizer().quantizeFeature(feature));
+			// System.out.println("!@#$%^&*())(*&^%$#@!" +
 			// Quantizer.getQuantizer().quantizeFeature(feature).quantizedValues.size());
 		}
 		return featuresToReturn;

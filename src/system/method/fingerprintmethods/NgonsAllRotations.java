@@ -1,14 +1,12 @@
 package system.method.fingerprintmethods;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-
 import settings.fingerprintmethodsettings.NgonAllRotationsSettings;
-import settings.fingerprintmethodsettings.TripletsOfTrianglesSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.method.feature.Feature;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class NgonsAllRotations extends Ngons {
 

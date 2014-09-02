@@ -1,14 +1,10 @@
 package system.method.feature;
 
+import system.quantizer.Quantizer;
+
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-
-import system.quantizer.Quantizer;
-import system.vectordistance.MeasurableDistance;
 
 public class Feature {
 
@@ -32,8 +28,7 @@ public class Feature {
 
 	public BigInteger toBigInt() {
 		// this.quantizedValues = new LinkedHashMap<String, Long>();
-		return Quantizer.getQuantizer().featureToBigInt(this,
-				this.quantizedValues);
+		return Quantizer.getQuantizer().featureToBigInt(this, this.quantizedValues);
 	}
 
 	// todo if this is ever used, it needs to be updated.
