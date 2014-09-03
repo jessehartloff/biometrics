@@ -1,15 +1,14 @@
 package system.biometricsystem;
 
 
-import settings.AllSettings;
-import settings.UsersIO;
 import settings.modalitysettings.AllModalitySettings;
-import system.allcommonclasses.commonstructures.Histogram;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Results;
 import system.allcommonclasses.commonstructures.Users;
-import system.coordinator.*;
-import system.method.fingerprintmethods.*;
+import system.coordinator.Coordinator;
+import system.coordinator.CoordinatorFactory;
+import system.method.Method;
+import system.method.MethodFactory;
 import system.quantizer.Quantizer;
 import system.quantizer.QuantizerFactory;
 
@@ -29,10 +28,10 @@ public class BiometricSystem {
 	 * @return
 	 */
 	public Results go(){
-		//TODO refactor: use logger
+		//TODO refactor: use loggers
 
         //TODO refactor: make this generic for method. Will require casting later
-		FingerprintMethodFactory.makeFingerprintMethod();
+		Method method = MethodFactory.makeMethod("NGONSALLROTATIONS");
 
         //TODO refactor: method trains it's quantizer (and maybe other things later)
 		this.trainTheSystem();
@@ -61,8 +60,8 @@ public class BiometricSystem {
 	}
 
 	public Results goNoOut(){
-		
-		FingerprintMethodFactory.makeFingerprintMethod();
+		//TODO this function has to go
+		MethodFactory.makeMethod("");
 		
 		this.trainTheSystemNoOut();
 		
@@ -76,7 +75,9 @@ public class BiometricSystem {
 		
 		return results;
 	}
-	private void trainTheSystem(){ 
+
+	private void trainTheSystem(){
+        //TODO refactor: train the quantizer through the method
 		System.out.println("Training");
 		QuantizerFactory.makeQuantizer();
 		Users trainingSet = AllModalitySettings.getTrainingUsers();
@@ -86,7 +87,8 @@ public class BiometricSystem {
 		System.out.println("Done training");
 	}
 	
-	private void trainTheSystemNoOut(){ 
+	private void trainTheSystemNoOut(){
+        //TODO this has to go
 		//System.out.println("Training");
 		QuantizerFactory.makeQuantizer();
 		Users trainingSet = AllModalitySettings.getTrainingUsers();

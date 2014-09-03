@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public abstract class FingerprintMethod extends Method {
 
+    //TODO refactor: do casting to fingerprint here. keep these functions, but implement generic biometric versions from
+    // Method that do the casting and error checking (throw away non-fingerprints)
+
 	/**
 	 * Converts a fingerprint into a Template containing hashable data
 	 * 

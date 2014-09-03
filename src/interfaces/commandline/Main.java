@@ -20,6 +20,9 @@ import settings.settingsvariables.SettingsDropDownItem;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
+
+//        JFreeChart chart = new JFreeChart("Best Chart Everrr", new Plot());
+
 //		System.getProperties().list(System.out);
 //		Template t = new Template();
 //
@@ -161,7 +164,7 @@ public class Main {
 //		NgonsSingleEnrollAllRotationsSettings.getInstance().thetaBins().setValue(7);//...
 
 		// settings.runSystemAndMakeGraphs();
-		settings.runSystemAndMakeGraphs();
+/****		settings.runSystemAndMakeGraphs();     ****/
 
 		// Results results = settings.buildSystem().go();
 		// System.out.print(results.rawScores);

@@ -31,6 +31,7 @@ public class HistogramCoordinator extends Coordinator{
 		
 		for(User user : this.users.users){
 			for(Biometric bio : user.readings){
+                //TODO refactor: make these calls of the flavor method.toFeatures(bio)
 				ArrayList<Feature> features = bio.toFeatures();
 				ArrayList<Feature> quantizedFeatures = bio.toQuantizedFeatures();
 //				System.out.println("######" + features.size());

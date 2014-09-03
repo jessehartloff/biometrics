@@ -1,9 +1,5 @@
 package system.coordinator;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Random;
-
 import settings.coordinatorsettings.matchingcoordinatorsettings.DefaultTestingPrequantizedSettings;
 import system.allcommonclasses.commonstructures.Template;
 import system.allcommonclasses.commonstructures.User;
@@ -12,11 +8,12 @@ import system.allcommonclasses.transformations.SHA2;
 import system.coordinator.testgenerators.Test;
 import system.coordinator.testgenerators.TestGenerator;
 import system.hasher.Hasher;
-import system.quantizer.Quantizer;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class DefaultTestingPrequantized extends DefaultTesting{
-
-	// TODO Jen/Jim - SQL prequantizing
 	
 	public DefaultTestingPrequantized(Hasher hasher, Users users, TestGenerator testGenerator) {
 		super(hasher, users, testGenerator);

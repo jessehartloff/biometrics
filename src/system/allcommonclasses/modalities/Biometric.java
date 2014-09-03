@@ -1,12 +1,6 @@
 package system.allcommonclasses.modalities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import system.allcommonclasses.commonstructures.Template;
-import system.method.Method;
-import system.method.feature.Feature;
-import system.method.fingerprintmethods.FingerprintMethod;
 
 /**
  * 
@@ -18,14 +12,14 @@ public abstract class Biometric implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Method method;
+//	public static Method method;
 
 	/**
 	 * converts this biometric into hashable data
 	 * 
 	 * @return feature vector to be hashed
 	 */
-	public abstract Template quantizeOne();
+//	public abstract Template quantizeOne();
 
 	/**
 	 * converts this biometric into hashable data including all variations
@@ -33,11 +27,11 @@ public abstract class Biometric implements Serializable {
 	 * 
 	 * @return ArrayList of feature vectors to be hashed
 	 */
-	public abstract ArrayList<Template> quantizeAll();
-
-	public abstract ArrayList<Feature> toFeatures();
-
-	public abstract ArrayList<Feature> toQuantizedFeatures();
+//	public abstract ArrayList<Template> quantizeAll();
+//
+//	public abstract ArrayList<Feature> toFeatures();
+//
+//	public abstract ArrayList<Feature> toQuantizedFeatures();
 
 	public boolean isFailure() {
 		return false;

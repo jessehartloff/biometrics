@@ -12,6 +12,10 @@ import java.util.HashSet;
  */
 public class Template implements Serializable{
 
+    //TODO might need to redo Template to take doubles and different types of data
+    // I think it was done like this to make it easy to serialize, but that feature
+    // hasn't proven useful yet since SQL is always an issue
+
 	
 	private static final long serialVersionUID = 6938186447187369796L;
 

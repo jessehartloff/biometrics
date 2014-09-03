@@ -18,38 +18,34 @@ public class Fingerprint extends Biometric{
 	public ArrayList<Minutia> minutiae;
 
     //TODO refactor: change fingerprint to not contain a method. Change this to casting from biometrics.
-	private static FingerprintMethod fingerprintMethod;
+//	private static FingerprintMethod fingerprintMethod;
 	
-	/**
-	 * When creating a fingerprint, it's quantization method must be specified.
-	 * 
-	 * @param method the method determining how the print will be quantized for template generation.
-	 */
+
 	public Fingerprint(){
 		this.minutiae = new ArrayList<Minutia>();
 	}
 	
-	@Override
-	public Template quantizeOne(){
-		return Fingerprint.fingerprintMethod.quantizeOne(this);
-	}
+//	@Override
+//	public Template quantizeOne(){
+//		return Fingerprint.fingerprintMethod.quantizeOne(this);
+//	}
 
 	
-	@Override
-	public ArrayList<Template> quantizeAll(){
-		return Fingerprint.fingerprintMethod.quantizeAll(this);
-	}
+//	@Override
+//	public ArrayList<Template> quantizeAll(){
+//		return Fingerprint.fingerprintMethod.quantizeAll(this);
+//	}
 	
 
-	@Override
-	public ArrayList<Feature> toFeatures() {
-		return Fingerprint.fingerprintMethod.fingerprintToFeatures(this);
-	}
+//	@Override
+//	public ArrayList<Feature> toFeatures() {
+//		return Fingerprint.fingerprintMethod.fingerprintToFeatures(this);
+//	}
 
-	@Override
-	public ArrayList<Feature> toQuantizedFeatures() {
-		return Fingerprint.fingerprintMethod.fingerprintToQuantizedFeatures(this);
-	}
+//	@Override
+//	public ArrayList<Feature> toQuantizedFeatures() {
+//		return Fingerprint.fingerprintMethod.fingerprintToQuantizedFeatures(this);
+//	}
 	
 	/**
 	 * Rotate the fingerprint around the point (0,0)
@@ -159,14 +155,14 @@ public class Fingerprint extends Biometric{
 	}
 
 	
-	public static FingerprintMethod getFingerprintMethod() {
-		return fingerprintMethod;
-	}
+//	public static FingerprintMethod getFingerprintMethod() {
+//		return fingerprintMethod;
+//	}
 
-	public static void setFingerprintMethod(FingerprintMethod fingerprintMethod) {
-		Fingerprint.fingerprintMethod = fingerprintMethod;
-		Biometric.method = fingerprintMethod;
-	}
+//	public static void setFingerprintMethod(FingerprintMethod fingerprintMethod) {
+//		Fingerprint.fingerprintMethod = fingerprintMethod;
+//		Biometric.method = fingerprintMethod;
+//	}
 
 	@Override
 	public boolean isFailure() {

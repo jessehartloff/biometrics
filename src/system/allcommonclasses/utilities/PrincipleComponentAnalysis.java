@@ -7,8 +7,6 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.NormOps;
 import org.ejml.ops.SingularOps;
 
-import system.allcommonclasses.commonstructures.Users;
-
 /**
  * <p>
  * The following is a simple example of how to perform basic principle component analysis in EJML.
