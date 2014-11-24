@@ -1,13 +1,10 @@
 package system.allcommonclasses.commonstructures;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import system.allcommonclasses.modalities.Biometric;
+import system.allcommonclasses.modalities.Fingerprint;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import system.allcommonclasses.modalities.*;
-import system.method.feature.Feature;
-import system.method.feature.Variable;
 
 /**
  * 
@@ -57,6 +54,8 @@ public class Users implements Serializable{
 		}
 		return numberOfFailures.doubleValue()/total.doubleValue();
 	}
-	
-		
+
+
+    public void addReading(Fingerprint fingerprint) {
+    }
 }

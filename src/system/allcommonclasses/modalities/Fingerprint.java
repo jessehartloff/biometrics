@@ -1,11 +1,12 @@
 package system.allcommonclasses.modalities;
 
-import java.util.ArrayList;
-
 import settings.modalitysettings.FingerprintSettings;
 import system.allcommonclasses.commonstructures.Template;
+import system.allcommonclasses.utilities.RidgeDistance;
 import system.method.feature.Feature;
 import system.method.fingerprintmethods.FingerprintMethod;
+
+import java.util.*;
 
 /**
  * A fingerprint.
@@ -21,13 +22,92 @@ public class Fingerprint extends Biometric{
 	
 	/**
 	 * When creating a fingerprint, it's quantization method must be specified.
-	 * 
-	 * @param method the method determining how the print will be quantized for template generation.
+	 *
 	 */
 	public Fingerprint(){
 		this.minutiae = new ArrayList<Minutia>();
+        this.ridgeDistances = new HashSet<RidgeDistance>();
 	}
-	
+
+    private Set<Minutia> minutiaePoints;
+    private Template template = null;
+    private int userNumber;
+    private int readingNumber;
+
+    private Set<RidgeDistance> ridgeDistances;
+
+    public Set<RidgeDistance> getRidgeDistances() {
+        return ridgeDistances;
+    }
+
+    public int getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(int userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public int getReadingNumber() {
+        return readingNumber;
+    }
+
+    public void setReadingNumber(int readingNumber) {
+        this.readingNumber = readingNumber;
+    }
+
+    public Set<Minutia> getMinutiaePoints() {
+        return minutiaePoints;
+    }
+
+    public void setMinutiaePoints(Set<Minutia> minutiaePoints) {
+        this.minutiaePoints = minutiaePoints;
+    }
+
+
+    public void trimLowQualityPoints(int minQuality, int maxPoints) {
+
+        Set<Minutia> toRemove = new HashSet<Minutia>();
+        List<Minutia> sortMinutia = new ArrayList<Minutia>();
+
+        for(Minutia minutia : this.getMinutiaePoints()){
+            sortMinutia.add(minutia);
+        }
+
+        Collections.sort(sortMinutia, new MinutiaReverseQualityComparator());
+
+        int n = sortMinutia.size();
+        int minutiaCollected = 0;
+
+        for(int i=0; i<n; i++){
+            Minutia currentMinutia = sortMinutia.get(i);
+            if(currentMinutia.getQuality() < minQuality || minutiaCollected >= maxPoints){
+                toRemove.add(currentMinutia);
+            }else{
+                minutiaCollected++;
+            }
+        }
+
+        this.getMinutiaePoints().removeAll(toRemove);
+//        System.out.println(this.getMinutiaePoints().size() + " points remaining");
+    }
+
+    public void setRidgeDistances(Set<RidgeDistance> ridgeDistances) {
+        this.ridgeDistances = ridgeDistances;
+    }
+
+
+
+    public class MinutiaReverseQualityComparator implements Comparator<Minutia> {
+
+        @Override
+        public int compare(Minutia m1, Minutia m2) {
+            Long q1 = m1.getQuality();
+            Long q2 = m2.getQuality();
+            return q2.compareTo(q1);
+        }
+    }
+
 	@Override
 	public Template quantizeOne(){
 		return Fingerprint.fingerprintMethod.quantizeOne(this);
@@ -52,8 +132,7 @@ public class Fingerprint extends Biometric{
 	
 	/**
 	 * Rotate the fingerprint around the point (0,0)
-	 * 
-	 * @param toRotate reference to the fingerprint that will store the rotated fingerprint
+	 *
 	 * @param degrees the amount of rotation in degrees
 	 */
 	public Fingerprint rotate(double degrees){
@@ -62,8 +141,7 @@ public class Fingerprint extends Biometric{
 	
 	/**
 	 * Rotate the fingerprint around the point (centerX,centerY)
-	 * 
-	 * @param toRotate reference to the fingerprint variable that will store the rotated fingerprint
+	 *
 	 * @param degrees the amount of rotation in degrees
 	 * @param centerX
 	 * @param centerY

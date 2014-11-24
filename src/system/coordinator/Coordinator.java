@@ -1,13 +1,9 @@
 package system.coordinator;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import system.allcommonclasses.*;
 import system.allcommonclasses.commonstructures.RawScores;
 import system.allcommonclasses.commonstructures.Users;
-import system.allcommonclasses.modalities.Biometric;
-import system.allcommonclasses.modalities.Fingerprint;
-import system.hasher.*;
+import system.hasher.Hasher;
+
+import java.sql.SQLException;
 
 /**
  * Coordinates all the stuff. Generates and runs tests.
@@ -23,8 +19,7 @@ public abstract class Coordinator {
 	/**
 	 * Coordinator needs to know how to hash, and who's using the system.
 	 * 
-	 * @param hasher 
-	 * @param enrollees
+	 * @param hasher
 	 */
 	public Coordinator(Hasher hasher, Users users){
 		this.hasher = hasher;
