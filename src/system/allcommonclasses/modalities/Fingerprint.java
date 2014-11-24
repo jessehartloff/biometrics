@@ -1,11 +1,8 @@
 package system.allcommonclasses.modalities;
 
-import java.util.ArrayList;
-
 import settings.modalitysettings.FingerprintSettings;
-import system.allcommonclasses.commonstructures.Template;
-import system.method.feature.Feature;
-import system.method.fingerprintmethods.FingerprintMethod;
+
+import java.util.ArrayList;
 
 /**
  * A fingerprint.
@@ -49,8 +46,7 @@ public class Fingerprint extends Biometric{
 	
 	/**
 	 * Rotate the fingerprint around the point (0,0)
-	 * 
-	 * @param toRotate reference to the fingerprint that will store the rotated fingerprint
+	 *
 	 * @param degrees the amount of rotation in degrees
 	 */
 	public Fingerprint rotate(double degrees){
@@ -59,8 +55,7 @@ public class Fingerprint extends Biometric{
 	
 	/**
 	 * Rotate the fingerprint around the point (centerX,centerY)
-	 * 
-	 * @param toRotate reference to the fingerprint variable that will store the rotated fingerprint
+	 *
 	 * @param degrees the amount of rotation in degrees
 	 * @param centerX
 	 * @param centerY
@@ -92,8 +87,7 @@ public class Fingerprint extends Biometric{
 
 	/**
 	 * Translates a fingerprint by (dx,dy)
-	 * 
-	 * @param toTranslate reference to the fingerprint variable that will store the translated fingerprint
+	 *
 	 * @param dx
 	 * @param dy
 	 */

@@ -24,14 +24,13 @@ public class BiometricSystem {
 	/**
 	 * Actually runs the "real part" of the program.
 	 * Processes the choices of the user as set in "Main.java" using enumerators, and runs the appropriate tests.
-	 * @param parameters
 	 * @return
 	 */
 	public Results go(){
-		//TODO refactor: use loggers
+		//TODO use loggers
 
         //TODO refactor: make this generic for method. Will require casting later
-		Method method = MethodFactory.makeMethod("NGONSALLROTATIONS");
+		Method method = MethodFactory.makeMethod("NGONS");
 
         //TODO refactor: method trains it's quantizer (and maybe other things later)
 		this.trainTheSystem();
