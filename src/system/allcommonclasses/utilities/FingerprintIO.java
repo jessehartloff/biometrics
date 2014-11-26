@@ -1,17 +1,12 @@
 package system.allcommonclasses.utilities;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
 import system.allcommonclasses.commonstructures.User;
 import system.allcommonclasses.commonstructures.Users;
 import system.allcommonclasses.modalities.Fingerprint;
 import system.allcommonclasses.modalities.Minutia;
+
+import java.io.*;
+import java.util.ArrayList;
 
 
 /**
@@ -118,7 +113,7 @@ public class FingerprintIO {
 			dis.readLine();
 			dis.readLine();
 			
-			Long index = 0L;
+			int index = 0;
 			
 			while (dis.available() != 0) {
 				String minutiaText = dis.readLine();

@@ -2,12 +2,9 @@ package system.allcommonclasses.utilities;
 
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.NormOps;
 import org.ejml.ops.SingularOps;
-
-import system.allcommonclasses.commonstructures.Users;
 
 /**
  * <p>
@@ -120,7 +117,7 @@ public class PrincipleComponentAnalysis {
         }
 
         // Compute SVD and save time by not computing U
-        SingularValueDecomposition<DenseMatrix64F> svd =
+        org.ejml.interfaces.decomposition.SingularValueDecomposition<DenseMatrix64F> svd =
                 DecompositionFactory.svd(A.numRows, A.numCols, false, true, false);
         if( !svd.decompose(A) )
             throw new RuntimeException("SVD failed");

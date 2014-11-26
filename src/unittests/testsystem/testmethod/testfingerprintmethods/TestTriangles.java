@@ -1,15 +1,12 @@
 package unittests.testsystem.testmethod.testfingerprintmethods;
 
-import static org.junit.Assert.assertTrue;
-
-import java.lang.reflect.Method;
-import java.math.BigInteger;
-
-import settings.AllSettings;
-import settings.fingerprintmethodsettings.TriangleSettings;
 import system.allcommonclasses.modalities.Minutia;
 import system.method.fingerprintmethods.Triangles;
 import system.method.fingerprintmethods.Triangles.Triangle;
+
+import java.lang.reflect.Method;
+
+import static org.junit.Assert.assertTrue;
 
 public class TestTriangles {
 

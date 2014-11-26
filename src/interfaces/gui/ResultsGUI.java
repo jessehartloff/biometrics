@@ -1,17 +1,14 @@
 package interfaces.gui;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.math.plot.*;
+import system.allcommonclasses.commonstructures.Histogram;
+import system.allcommonclasses.commonstructures.Results;
+import system.biometricsystem.RatesPoint;
 
 import javax.swing.*;
-
-import system.allcommonclasses.commonstructures.*;
-import system.biometricsystem.RatesPoint;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ResultsGUI {
 
